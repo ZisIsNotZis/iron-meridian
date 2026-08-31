@@ -1,0 +1,33 @@
+display_name: Targetabilities
+description: Reusable state-dependent target-domain and interaction profiles.
+status: designed
+kind: collection_contract
+collection_name: targetabilities
+source_documents: [design/targetabilities.md, design/targetabilities/README.md]
+source_documents_status: deleted_after_migration
+schema_id: profile
+object_schema:
+  required_fields: [id, kind, status, references, display_name, domains_by_state, detection_requirements, attack_permissions, legal_attack_domains, transitions, feedback]
+  field_types:
+    object_id: dotted_id
+    kind: {type: enum, values: [targetability]}
+    status: status
+    references: list_of_dotted_ids
+    display_name: string
+    domains_by_state: state_domain_records
+    detection_requirements: detection_requirement_list
+    attack_permissions: attack_permission_list
+    legal_attack_domains: list_of_target_domains
+    transitions: transition_list
+    feedback: string
+domains: [ground, low_air, high_air, naval_surface, submerged, structure, special_asset]
+ownership:
+  targetability_owns: [legal_interaction_domains, state_transitions]
+  weapon_owns: [weapon_legality]
+  sensing_owns: [detection_strength]
+rules:
+  detection_requirements_explicit: true
+  platform_name_implies_detection: false
+  carrier_may_reference_multiple_profiles: true
+  weapon_matchup_matrix_owned_by: weapon_objects
+  detection_strength_owned_by: sensing_objects

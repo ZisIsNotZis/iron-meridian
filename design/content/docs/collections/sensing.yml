@@ -1,0 +1,69 @@
+display_name: Sensing
+description: Reusable observation, information-sharing, concealment, and relay profiles.
+status: designed
+kind: collection_contract
+collection_name: sensing
+source_documents: [design/sensing.md, design/sensing/README.md]
+source_documents_status: deleted_after_migration
+schema_id: profile
+object_schema:
+  required_fields: [id, kind, status, references, display_name, detection, information_flow, sensing_rules, feedback]
+  field_types:
+    object_id: dotted_id
+    kind: {type: enum, values: [sensing]}
+    status: status
+    references: list_of_dotted_ids
+    display_name: string
+    detection: detection_record
+    information_flow: information_flow_record
+    sensing_rules: sensing_rule_record
+    feedback: string
+detection_components: [visual_detection, radar, concealment, shared_vision, designation, jamming, decoys]
+information_levels:
+  - {level: unknown, available: [none], lifetime: until_legal_source_detects}
+  - {level: contact, available: [approximate_position, platform_domain, freshness], lifetime: until_source_memory_expires}
+  - {level: identified, available: [contact, faction, name, class, legal_target_domains], lifetime: while_visible_or_designated}
+  - {level: detailed, available: [identified, current_health, status, order, cooldowns], lifetime: while_ordinarily_visible}
+v1_rules:
+  shared_team_vision: false
+  own_entity_information: detailed
+  radar_and_relay_result: contact
+  ordinary_vision_result: detailed
+  designation_result: identified
+  designation_reveals_health: false
+  designation_bypasses_domain_permission: false
+  stale_contact_position: last_authoritative_position
+  stale_contacts_direct_attack_targets: false
+  explored_terrain_persists: true
+  hidden_entity_data_persists: false
+  detection_order: [movement, detection, target_acquisition]
+  strongest_valid_source_wins: true
+  equal_strength_tiebreak: source_entity_id
+  projectiles_and_sounds_create_contacts: false
+  observation_fields: [lastSeenTick, sourceKind]
+  visibility_loss: detailed_to_stale_contact_immediately
+  stale_contact_expiry: source_memory_expiry
+  stale_contact_moves_with_hidden_entity: false
+  ordinary_vision:
+    shape: circle
+    center: observer_entity_center
+    distance_test: target_collision_center_within_vision_radius
+    strength_test: source_strength_minus_concealment_strength_greater_or_equal_zero
+    close_reveal_uses_strength_test: true
+    concealment_owner: target_platform_state
+  line_of_sight:
+    ray: integer_cell_traversal_observer_center_to_target_center
+    cover_behavior: cover_cell_blocks_after_revealing_cover
+    bypass_conditions: [close_reveal_range, another_successful_source]
+    tie_break: [lower_y, lower_x]
+    structure_detection_center: declared_center
+    footprint_adds_second_vision_rule: false
+  radar_and_relay:
+    clear_vision_ray_required: false
+    range_and_permission_required: true
+    jamming_effect: subtract_declared_range_before_distance_test
+  firing_reveal:
+    result: contact
+    automatic_detailed_view: false
+    duration_owner: sensing_profile
+  designation_and_relay_delay_unit: simulation_ticks

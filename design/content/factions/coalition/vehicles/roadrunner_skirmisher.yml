@@ -1,0 +1,34 @@
+display_name: "Roadrunner Skirmisher"
+description: "Roadrunner Skirmisher migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: vehicle
+tier: established
+battlefield_roles: ["mobile_harassment", "anti_infantry_and_anti_support_targets_exposed_infantry", "artillery", "repair_assets", "and_harvesters"]
+hpmax: 240
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: ["targetabilities.ground"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 7.5
+visionrange: 7.5
+alertrange: 10
+weapon_mounts: [{weapon: "weapons.default_resolution", mount_name: "twin_rapid_fire_cannons", damage: "damages.machine_gun_autocannon", targetability: ["targetabilities.ground"], attackrange: 4.5, attackdamage: 18, attackperiod: 18, projectile_speed: 16, delivery: "projectile", hit_model: "point", tracking: "none", acquisition: "direct", requires_observation: true}]
+skill_bindings: [{skill: "skills.default_lifecycle", skill_name: "Break contact", activation: "active", interruption_conditions: ["movement", "emp"]}]
+production: {cost: {resource: 350}, buildtime: 105, producer: "factions.coalition.buildings.vehicle_assembly", queue: "vehicle", category: "established_skirmisher"}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.light", "locomotors.wheeled", "targetabilities.ground"]
+design:
+  tactical_identity: "Mobile harassment primary; anti-infantry and anti-support secondary. Targets exposed infantry, artillery, repair assets, and harvesters."
+  offense_behavior: "Dual rapid-fire cannons with suppression; light armor, low health, weak against heavy armor."
+  locomotion_behavior: "Wheeled; very fast on roads and firm ground, poor off-road. Orbit or strafe attack movement."
+  targetability_behavior: "Ground/vehicle; light armor and high visibility while firing."
+  acquisition_behavior: "The twin cannons use Direct acquisition against observed legal ground-personnel or light targets. Break contact targets the Roadrunner itself and does not preserve an attack target."
+  lock_behavior: "No lock or post-launch tracking; point impacts resolve from the firing position. The 15-tick escape activation is command-linked, and damage or EMP cancels it before the burst."
+  production_behavior: "Cost: `350 resource`; build time: `105 ticks`; facility: `Vehicle Assembly`; prerequisites: `Coalition HQ operational`; queue/category: `vehicle / established skirmisher`; replacement/capacity: `no per-unit cap; one FIFO vehicle queue; replacement competes with new units`."
+  player_decision: "Harass the enemy's edges and escape, or commit to a support kill while risking a trap. Counter with terrain, mines, area fire, fast interceptors, and disciplined screens."
+  visual_identity: "Narrow high-clearance chassis; weapons sweep during orbiting and the retreat skill leaves a low blue-gray smoke ribbon."
+  design_rationale: "# Roadrunner Skirmisher\n\n## Gameplay identity\n\n- **Roles:** Mobile harassment primary; anti-infantry and anti-support secondary. Targets exposed infantry, artillery, repair assets, and harvesters.\n- **Locomotion:** Wheeled; very fast on roads and firm ground, poor off-road. Orbit or strafe attack movement.\n- **Targetability:** Ground/vehicle; light armor and high visibility while firing.\n- **Offense/defense:** Dual rapid-fire cannons with suppression; light armor, low health, weak against heavy armor.\n- **Skill:** **Break contact** — emits smoke and performs a short retreat burst, but cannot attack during the burst and leaves a readable smoke trail.\n- **Production:** Cost: `350 resource`; build time: `105 ticks`; facility: `Vehicle Assembly`; prerequisites: `Coalition HQ operational`; queue/category: `vehicle / established skirmisher`; replacement/capacity: `no per-unit cap; one FIFO vehicle queue; replacement competes with new units`.\n- **Player experience:** Harass the enemy's edges and escape, or commit to a support kill while risking a trap. Counter with terrain, mines, area fire, fast interceptors, and disciplined screens.\n- **Asset design:** See [entity asset manifest](assets.md).\n\n## Entity specification\n\nIntentional harassment override: very high speed and low durability.\n\n| HP | Armor | Move | Footprint radius | Vision | Alert radius |\n|---:|---|---:|---:|---:|---:|\n| 240 | Light | 7.5 cells/s | 0.40 cell | 7.5 cells | 10.0 cells |\n\n| Weapon | Damage family / domains | Range | Damage/event; period | Delivery / hit / tracking |\n|---|---|---:|---:|---|\n| Twin rapid-fire cannons | Machine gun/autocannon + suppression / ground-personnel, light | 4.5 | 18; 18 ticks (0/3/15), 10 suppression | Projectile 16 cells/s; point; direct, no homing |\n\n**Break contact:** 15-tick activation; +50% move for 60 ticks, leaves smoke, and disables weapons during the burst. 180-tick cooldown; damage or EMP cancels activation.\n\n### Acquisition and lock semantics\n\n- **Vision / alert radius:** 7.5 / 10.0 cells; alerting cannot extend the cannons' 4.5-cell range.\n- **Acquisition:** The twin cannons use Direct acquisition against observed legal ground-personnel or light targets. Break contact targets the Roadrunner itself and does not preserve an attack target.\n- **Lock / tracking:** No lock or post-launch tracking; point impacts resolve from the firing position. The 15-tick escape activation is command-linked, and damage or EMP cancels it before the burst.\n\n\n### Counterplay\n\nUse terrain, mines, area fire, mobile interceptors, disciplined screens, or heavy armor. Deny roads and force the Roadrunner into a committed approach; it cannot shoot during its escape burst."
+presentation: {fallback_policy: "inherit", silhouette: "Narrow high-clearance chassis; weapons sweep during orbiting and the retreat skill leaves a low blue-gray smoke ribbon.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

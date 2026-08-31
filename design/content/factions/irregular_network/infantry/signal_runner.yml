@@ -1,0 +1,27 @@
+display_name: Signal Runner
+description: "Optional Advanced local command relay infantry. Foot movement and ordinary ground movement; vulnerable while maintaining a relay. Ground infantry is visible when active because the relay mast and signal pulse expose its location. Compact carbine gives weak anti-personnel fire. Raise relay deploys a finite obvious local link that shares designated vision and improves selected support response; units remain functional outside it and receive no global aura. The link can be jammed or destroyed by killing the Runner. Production 260 resource / 180 ticks; Cell House plus operational Hideout or Relay Cache; infantry FIFO; one active Raise relay per player, additional Runners reserved as replacements. Body 120 HP, personnel armor, speed 2.8, radius 0.23, footprint 1x1; vision 7.0, alert/acquisition 8.5. Compact carbine uses rifle/small arms, ground personnel, range 3.5, 8 damage/event, period 36, projectile speed 13, point hit, no tracking. Raise relay radius 5.0, setup 30, active 180, cooldown 300; interrupted by movement, EMP, or death."
+status: designed
+scope: near_term
+faction: factions.irregular_network
+platform: infantry
+tier: advanced
+battlefield_roles: [command, relay]
+hpmax: 120
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.8
+visionrange: 7.0
+alertrange: 8.5
+footprint: {radius_cells: 0.23, width_cells: 1, height_cells: 1}
+weapon_mounts:
+  - {weapon: weapons.default_resolution, mount_name: compact_carbine, damage: damages.rifle_small_arms, targetability: [targetabilities.ground], attackrange: 3.5, attackdamage: 8, attackperiod: 36, projectile_speed: 13, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: raise_relay, activation: active, setup_ticks: 30, active_ticks: 180, cooldown_ticks: 300, target: self, targetradius: 5.0, movement_allowed: false, interruption_conditions: [movement, emp, death], design: {player_decision: "Place a fragile coordination point to make an ambush reliable, then decide when to move it.", counterplay: "Raid, jam, or attack the exposed radius."}}
+production: {producer: factions.irregular_network.buildings.cell_house, queue: infantry, category: infantry, cost: {resource: 260}, buildtime: 180, capacity: {max_active: 1, replacement_allowed: true, replacement_scope: per_player, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Collapsible antenna backpack; thin broken-line radio glyph and intermittent blue-white pulse.", readability: "Readable infantry silhouette with footprint, selection, contact, and shadow anchors; active relay has an obvious pulse; remaining bespoke assets are N/A."}
+audio: {identity: "Radio taps and degraded relay cues plus faction fallback for standard events."}
+fx: {identity: "Broken-line glyph and intermittent blue-white pulse expose the finite relay radius."}
+design: {tactical_identity: "Fragile mobile coordination point with finite local reach.", player_decision: "Place a relay to make an ambush reliable, then decide when to move it.", counterplay: "Raids, jamming, and attacking the exposed radius.", offense_behavior: "Compact carbine is weak anti-personnel self-defense.", defense_behavior: "Personnel armor; fragile and visible while relaying.", support_behavior: "Shares designated vision and improves selected support response locally; no global aura and units remain usable outside it.", locomotion_behavior: "Foot, ordinary movement; stationary while raising the relay.", targetability_behavior: "Ground infantry; relay mast and pulse make active location obvious.", acquisition_behavior: "Carbine range 3.5, 8 damage, 36 ticks, projectile speed 13, point hit.", lock_behavior: "Raise relay radius 5, setup 30, active 180, cooldown 300; movement, EMP, or death interrupts.", lifecycle_behavior: "One active relay per player; additional Runners are replacements.", production_behavior: "Cell House plus Hideout or Relay Cache; 260 resource, 180 ticks, optional FIFO.", visual_identity: "Collapsible antenna and broken-line radio glyph.", audio_identity: "Degraded radio relay cues.", fx_identity: "Intermittent blue-white pulse and exact local radius.", design_rationale: "Relay radius is local support, not a global aura; units retain ordinary control outside it."}

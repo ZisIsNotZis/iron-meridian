@@ -1,0 +1,72 @@
+display_name: "Lancer"
+description: "Lancer Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "established"
+battlefield_roles: ["precision_tank_destroyer", "protection_condition_damage_against_heavy_armor"]
+hpmax: 400
+armor: "armors.light"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.7
+visionrange: 7
+alertrange: 8.5
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.5
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.anti_armor_penetrator", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Long squared barrel, hydraulic stabilizers, narrow red targeting beam, and a single heavy impact flash."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Long squared barrel, hydraulic stabilizers, narrow red targeting beam, and a single heavy impact flash."
+fx:
+  identity: "Long squared barrel, hydraulic stabilizers, narrow red targeting beam, and a single heavy impact flash."
+design:
+  tactical_identity: "Precision tank destroyer; secondary protection-condition damage against heavy armor."
+  player_decision: "Pick a firing lane and commit to the shot, or stay mobile and accept weaker performance. It fails to fast flankers and mass infantry."
+  counterplay: "Close distance, flank, use artillery/air, break line of sight, or force it to pack and relocate."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Medium armor with a vulnerable side/rear profile; loses value when surrounded."
+  support_behavior: "Threatens heavy armor from behind the Bastion line; it needs screening rather than supplying another unit."
+  locomotion_behavior: "Tracked; slower acceleration and weaker close defense than Bastion."
+  targetability_behavior: "Ground vehicle; ordinary sight and anti-vehicle targeting."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Lancer uses the entity-owned anti-tank timing values; its stabilize state is a deliberate range/immobility tradeoff. Long penetrator | Anti-armor penetrator + protection condition; ground light, heavy | 7.5 / 105 + 15 condition / 90 ticks | Projectile 9 cells/s; point; no tracking after lock Stabilize | 30-tick setup; active until packed; 30-tick recovery; 180-tick cooldown; +1.5 range, +20% condition damage; movement disabled | Break LOS, flank, rush, or force pack"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "anti_armor"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 500
+  buildtime: 135
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Long penetrator"
+    damage: "damages.anti_armor_penetrator"
+    targetability: ["targetabilities.ground"]
+    attackrange: 7.5
+    attackdamage: 105
+    attackperiod: 90
+    delivery: "projectile_9_cells_s_point_no_tracking_after_lock"
+    design:
+      tactical_use: "Long penetrator | Anti-armor penetrator + protection condition; ground light, heavy | 7.5 / 105 + 15 condition / 90 ticks | Projectile 9 cells/s; point; no tracking after lock"
+      counterplay: "Close distance, flank, use artillery/air, break line of sight, or force it to pack and relocate."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Stabilize"
+    activation: "active"
+    setup_ticks: 30
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: false
+    design:
+      player_decision: "Pick a firing lane and commit to the shot, or stay mobile and accept weaker performance. It fails to fast flankers and mass infantry."
+      counterplay: "Close distance, flank, use artillery/air, break line of sight, or force it to pack and relocate."
+      interruption_readability: "Stabilize | 30-tick setup; active until packed; 30-tick recovery; 180-tick cooldown; +1.5 range, +20% condition damage; movement disabled | Break LOS, flank, rush, or force pack"

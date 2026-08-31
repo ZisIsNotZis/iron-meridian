@@ -1,0 +1,19 @@
+display_name: "V1 Vehicle Assembly Recipe"
+description: "Reusable recipe definition."
+status: core
+kind: "recipe"
+product: factions.coalition.buildings.vehicle_assembly
+producer: "construction"
+category: "construction"
+availability: scenarios.v1_meridian_crossing
+prerequisites: [{object: none, state: none}]
+references: [factions.coalition.buildings.vehicle_assembly]
+player_exposed: false
+product_quantity: 1
+availability_semantics:
+  hq_survival_required: true
+  starting_copy: {scenario_completed: true, second_starting_copy: false}
+  rebuild_permission: mode_variant_explicit
+  availability_owner: scenario
+design:
+  meaning: Constructs the same-faction Vehicle Assembly only when a mode variant explicitly permits rebuilding; V1 starts with the building completed.

@@ -1,0 +1,22 @@
+display_name: "Incendiary"
+description: Health damage over time plus a persistent hazard.
+status: designed
+kind: "damage"
+damage_channel: health_over_time
+references: [armors.personnel, armors.light, armors.heavy, armors.reinforced_structure]
+damage_interactions:
+  - {armor: armors.personnel, multiplier_percent: 110}
+  - {armor: armors.light, multiplier_percent: 70}
+  - {armor: armors.heavy, multiplier_percent: 35}
+  - {armor: armors.reinforced_structure, multiplier_percent: 50}
+damage_over_time:
+  minimum_damage_per_tick: 10
+  maximum_damage_per_tick: 20
+  duration_ticks: 60
+  application_rule: refresh
+  source_area_key: source_area
+status_effects: [statuses.incendiary]
+design:
+  channel: Health damage over time plus a persistent hazard.
+  resolution_rule: One hazard per source/area, with refresh rather than infinite stacking.
+  feedback: Movement, spacing, or clearing the source counters the hazard.

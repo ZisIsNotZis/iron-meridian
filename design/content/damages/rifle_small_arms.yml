@@ -1,0 +1,16 @@
+display_name: "Rifle / Small Arms"
+description: Health damage; anti-personnel family.
+status: designed
+kind: "damage"
+damage_channel: health
+references: [armors.personnel, armors.light, armors.heavy, armors.reinforced_structure]
+damage_interactions:
+  - {armor: armors.personnel, multiplier_percent: 100}
+  - {armor: armors.light, multiplier_percent: 35}
+  - {armor: armors.heavy, multiplier_percent: 5}
+  - {armor: armors.reinforced_structure, multiplier_percent: 5}
+resolution: {formula: "floor(baseDamage * multiplier_percent / 100)", rounding: floor, minimum_positive_damage: 1}
+design:
+  channel: Health damage; anti-personnel family.
+  resolution_rule: Apply floor(baseDamage × ratio / 100); a positive non-zero result floors to one damage.
+  feedback: Read as effective against personnel, reduced against light armor, and ineffective against heavy armor or structures.

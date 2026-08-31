@@ -1,0 +1,48 @@
+kind: implementation_contract
+document_id: design.implementation
+title: Implementation Design
+stages:
+  - name: v1_vertical_slice
+    scope: Authoritative V1 boundary and exit criteria are in V1 Scope; these steps describe delivery sequencing only.
+    steps:
+      - Create the Vite, TypeScript, and Phaser shell plus a browser-independent headless simulation.
+      - Compile the canonical V1 scenario, map, recipes, entities, and reusable objects; reject unresolved references and undeclared values.
+      - Implement fixed-rate simulation, command boundary, deterministic seed, state digest, and invariant checks.
+      - Add map, HQs, processors, production, construction, resource loop, selected units, combat, objective, fog, and scripted opponent.
+      - Add selection, move, attack, stop, harvest, produce, construct, capture, camera, pause, restart, and feedback.
+      - Add placeholder presentation and run the complete playtest and release gates.
+    excludes: [external packages, user saves and replays, multiplayer, MCP, air, naval, transport, hidden-faction content]
+  - name: near_term_solo_game
+    scope: Authored expansion after the vertical slice.
+    steps:
+      - Expand only authored roster, recipe, and technology objects.
+      - Add the four maps, campaign missions, cast, and AI fixtures.
+      - Implement local saves, checkpoints, replays, and local declarative package validation behind an explicit unranked/local capability.
+      - Resolve an immutable content digest before scenario load and validate it before state replacement or verified playback.
+      - Complete visual, audio, accessibility, localization, performance, and browser gates before release.
+    excludes: []
+  - name: far_vision
+    scope: Extensions require promotion of their owning deferred contracts.
+    steps: [Air, naval, transport, Irregular Network, multiplayer, MCP, distributed modding, sharing, and ranked operations follow their owning contracts.]
+    excludes: [invented protocols or rules]
+boundaries:
+  - Simulation stays engine-independent with plain records and explicit systems.
+  - The application shell owns clock driving, input translation, rendering, audio, persistence adapters, package installation, and browser services.
+  - Simulation owns authoritative state and has no DOM, engine, filesystem, network, wall clock, or telemetry dependency.
+pipeline:
+  - Markdown and design objects.
+  - Structural and semantic validation.
+  - Canonical content records.
+  - Resolved content manifest.
+  - Immutable simulation inputs.
+  - Generated runtime records, indexes, bundles, and atlases are disposable outputs carrying source ID and digest.
+acceptance:
+  - Before V1, audits pass; the scenario loads without implicit defaults; headless simulation runs; seed plus accepted commands reproduces digests; invalid commands cannot mutate state; views contain no hidden state; deferred features are not exposed; browser E2E, accessibility, visual smoke, and the 100-entity benchmark pass; and a human can complete a readable battle.
+  - Near-term additionally requires save/restore equivalence, verified replay, migration and package-failure fixtures, campaign/skirmish coverage, asset provenance, browser support, and the release checklist in testing.
+failure_recovery:
+  - Simulation errors stop at documented stable boundaries and produce diagnostics, not invented gameplay.
+  - UI, asset, and service errors degrade presentation or disable optional features while preserving simulation.
+  - Package and artifact errors are transactional and preserve prior valid state.
+  - Build/release errors block promotion instead of shipping stale output.
+  - Telemetry is an observer and never blocks the clock or changes a state hash.
+deferred: [air, naval, transport, Irregular Network, multiplayer, MCP, distributed scripts and ranked package trust, sharing and moderation services, ranked operations, ECS, renderer abstraction, desktop wrappers, large-scale optimization]

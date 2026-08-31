@@ -1,0 +1,59 @@
+display_name: "Aegis Emplacement"
+description: "Aegis Emplacement Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "anti_air_defense"
+tier: "established"
+hpmax: 650
+building_roles: ["local_anti_air_zone_that_protects_a_position_while_leaving_ground_approaches_open"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 2, height_cells: 2, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground", "targetabilities.low_air", "targetabilities.high_air"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Twin elevated flak barrels, rotating red tracking lamp, short tracer lattice, airburst bloom, and sharp warning chirp."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Twin elevated flak barrels, rotating red tracking lamp, short tracer lattice, airburst bloom, and sharp warning chirp."
+fx:
+  identity: "Twin elevated flak barrels, rotating red tracking lamp, short tracer lattice, airburst bloom, and sharp warning chirp."
+design:
+  counterplay: "Ground assault, artillery, fighters outside the envelope, baiting fire, and attacking the emplacement itself."
+  defense_behavior: "Structure; ordinary sight and structure-capable attacks; high-air and low-air targets remain separate weapon domains."
+  design_rationale: "Flak battery; low air, high air; range 8.0, damage 36, period 30 ticks (3 windup / 3 recovery / 24 cooldown); projectile 13 cells/s, area 0.35 cells, tracking within 45° at 90°/s."
+construction:
+  cost:
+    resource: 550
+  buildtime: 300
+  builder: "factions.directorate.buildings.construction_yard"
+  prerequisites:
+    - object: "factions.directorate.buildings.air_command"
+      state: "operational"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+  builder_range: 9
+production:
+  max_operational: 4
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Flak battery"
+    targetability: ["targetabilities.low_air", "targetabilities.high_air"]
+    attackrange: 8
+    attackdamage: 36
+    attackperiod: 30
+    projectile_speed: 13
+    area_radius_cells: 0.35
+    firing_arc_degrees: 360
+    tracking: "within_45_degrees_at_90_degrees_per_second"
+    delivery: "projectile"

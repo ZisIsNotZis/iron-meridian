@@ -1,0 +1,12 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_migration_gate
+type: object
+additionalProperties: false
+required: [kind, document_id, title, purpose, unresolved, decision_rule]
+properties:
+  kind: {const: migration_gate}
+  document_id: {type: string, minLength: 1}
+  title: {type: string, minLength: 1}
+  purpose: {type: string, minLength: 1}
+  unresolved: {type: array, items: {type: object, additionalProperties: false, required: [source, question, candidate_homes, decision, blocking], properties: {source: {type: string}, question: {type: string}, candidate_homes: {type: array, items: {type: string}}, decision: {type: string}, blocking: {type: boolean}}}}
+  decision_rule: {type: object, additionalProperties: false, required: [require_named_owner, forbid_untyped_fallback], properties: {require_named_owner: {type: boolean}, forbid_untyped_fallback: {type: boolean}}}

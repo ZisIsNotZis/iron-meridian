@@ -1,0 +1,73 @@
+display_name: "Rifle Squad"
+description: "Rifle Squad Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "infantry"
+tier: "field"
+battlefield_roles: ["primary_line_holder_and_anti_personnel_screen", "capture_and_escort_target_profile_is_personnel_and_exposed_light_targets"]
+hpmax: 180
+armor: "armors.personnel"
+locomotor: "locomotors.default_ground"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 3
+visionrange: 6.5
+alertrange: 8
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.22
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.default_ground", "damages.rifle_small_arms", "targetabilities.low_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.barracks"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Uniformed rifle blocks, entrenching tools, synchronized muzzle flashes, and compact command pips communicate disciplined mass."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Uniformed rifle blocks, entrenching tools, synchronized muzzle flashes, and compact command pips communicate disciplined mass."
+fx:
+  identity: "Uniformed rifle blocks, entrenching tools, synchronized muzzle flashes, and compact command pips communicate disciplined mass."
+design:
+  tactical_identity: "Primary line-holder and anti-personnel screen; secondary capture and escort. Target profile is personnel and exposed light targets."
+  player_decision: "Decide whether to occupy space now or preserve mobility for a flank and retreat. Its failure mode is being caught in open ground or overcommitted into armor."
+  counterplay: "Explosives, armored vehicles, area denial, and flanking. Do not require a dedicated counter unit."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Personnel protection; survives through numbers, cover, and formation support rather than personal armor."
+  support_behavior: "Holds ground, screens specialists, and captures objectives; no external system is required."
+  locomotion_behavior: "Foot; enters transports and selected structures. Ordinary infantry collision and crush rules apply."
+  targetability_behavior: "Ground personnel; visible to ordinary sight and affected by standard anti-personnel weapons. No special concealment."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Numeric representation follows the [numeric policy](../../../../../numerics.md); the values below are this card's initial data. `Override` identifies deliberate unit deviations. Service rifle | Rifle; ground personnel, low air | 4.5 / 22 / 30 ticks | Projectile 14 cells/s; point; no tracking Dig In | 30-tick setup; 90-tick active; 30-tick recovery; 180-tick cooldown; +25% protection, suppression resistance, and no movement while active | Interrupt setup, flank, area fire, or force relocation"
+production:
+  producer: "factions.directorate.buildings.barracks"
+  queue: "default_queue"
+  category: "infantry_line"
+  prerequisites: ["factions.directorate.buildings.barracks", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 100
+  buildtime: 45
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Service rifle"
+    damage: "damages.rifle_small_arms"
+    targetability: ["targetabilities.ground", "targetabilities.low_air"]
+    attackrange: 4.5
+    attackdamage: 22
+    attackperiod: 30
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Service rifle | Rifle; ground personnel, low air | 4.5 / 22 / 30 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Explosives, armored vehicles, area denial, and flanking. Do not require a dedicated counter unit."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Dig In"
+    activation: "active"
+    setup_ticks: 30
+    active_ticks: 90
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: true
+    design:
+      player_decision: "Decide whether to occupy space now or preserve mobility for a flank and retreat. Its failure mode is being caught in open ground or overcommitted into armor."
+      counterplay: "Explosives, armored vehicles, area denial, and flanking. Do not require a dedicated counter unit."
+      interruption_readability: "Dig In | 30-tick setup; 90-tick active; 30-tick recovery; 180-tick cooldown; +25% protection, suppression resistance, and no movement while active | Interrupt setup, flank, area fire, or force relocation"

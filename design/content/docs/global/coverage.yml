@@ -1,0 +1,34 @@
+kind: migration_gate
+document_id: design.schema.coverage
+title: Schema coverage ambiguities
+purpose: Migration gate recording documents whose ownership cannot be determined without inventing a new object or changing the content tree.
+unresolved:
+  - {source: design/ai/near-term.md, question: AI profile versus system-level AI rules, candidate_homes: [ai_contract, ai_profile], decision: pending, blocking: true}
+  - {source: design/air-operations.md, question: global operation contract versus reusable operation object, candidate_homes: [air_operations_contract, air_operation_profile], decision: pending, blocking: true}
+  - {source: design/armors.md, question: collection rules versus armor object data, candidate_homes: [armor_contract, armor_profile], decision: pending, blocking: true}
+  - {source: design/collisions.md, question: collection rules versus collision profile data, candidate_homes: [collision_contract, collision_profile], decision: pending, blocking: true}
+  - {source: design/combat/interactions.md, question: global combat resolution contract versus damage/weapon-owned behavior, candidate_homes: [combat_contract, damage_profile, weapon_profile], decision: pending, blocking: true}
+  - {source: design/control.md, question: global player-control rules versus command schema, candidate_homes: [control_contract, command_schema], decision: pending, blocking: true}
+  - {source: design/damages.md, question: collection rules versus damage object data, candidate_homes: [damage_contract, damage_profile], decision: pending, blocking: true}
+  - {source: design/economy/README.md, question: system rules versus resource/economy objects, candidate_homes: [economy_contract, economy_profile], decision: pending, blocking: true}
+  - {source: design/interactions/README.md, question: global interaction rules versus skills or locomotor-owned transitions, candidate_homes: [interaction_contract, skill_profile, locomotor_profile], decision: pending, blocking: true}
+  - {source: design/locomotors.md, question: collection rules versus locomotor profile data, candidate_homes: [locomotor_contract, locomotor_profile], decision: pending, blocking: true}
+  - {source: design/movement/README.md, question: global movement rules versus locomotor data, candidate_homes: [movement_contract, locomotor_profile], decision: pending, blocking: true}
+  - {source: design/naval-operations.md, question: global operation contract versus naval object data, candidate_homes: [naval_operations_contract, naval_profile], decision: pending, blocking: true}
+  - {source: design/numerics.md, question: numeric authoring rules; concrete values belong to owning object schema, candidate_homes: [numerics_contract, owning_object_schema], decision: pending, blocking: true}
+  - {source: design/objectives/README.md, question: objective system rules versus scenario-owned objective instances, candidate_homes: [objective_contract, scenario_objective], decision: pending, blocking: true}
+  - {source: design/presentation/*.md, question: global presentation contracts versus indexed asset/audio/FX objects, candidate_homes: [presentation_contract, asset_profile], decision: pending, blocking: true}
+  - {source: design/production/README.md, question: production system rules versus recipe and production-profile objects, candidate_homes: [production_contract, recipe_profile, production_profile], decision: pending, blocking: true}
+  - {source: design/production-tiers.md, question: progression rules versus tech/tier objects, candidate_homes: [production_tier_contract, tech_profile], decision: pending, blocking: true}
+  - {source: design/progression/README.md, question: progression system rules versus campaign or tech objects, candidate_homes: [progression_contract, campaign_profile, tech_profile], decision: pending, blocking: true}
+  - {source: design/skills.md, question: skill system contract versus reusable skill objects, candidate_homes: [skill_contract, skill_profile], decision: pending, blocking: true}
+  - {source: design/sensing.md, question: sensing system contract versus sensing profile values, candidate_homes: [sensing_contract, sensing_profile], decision: pending, blocking: true}
+  - {source: design/status-effects.md, question: status system contract versus status objects, candidate_homes: [status_contract, status_profile], decision: pending, blocking: true}
+  - {source: design/targetabilities.md, question: targetability system contract versus profile objects, candidate_homes: [targetability_contract, targetability_profile], decision: pending, blocking: true}
+  - {source: design/transport.md, question: transport system contract versus carrier/skill data, candidate_homes: [transport_contract, carrier_profile, skill_profile], decision: pending, blocking: true}
+  - {source: design/units/README.md, question: unit system rules versus faction-owned units, candidate_homes: [unit_contract, unit_profile], decision: pending, blocking: true}
+  - {source: design/v1/README.md, question: V1 scope contract versus scenario data, candidate_homes: [v1_scope, scenario_profile], decision: resolved, blocking: false}
+  - {source: design/world/*.md, question: narrative/system material versus program-addressable world objects, candidate_homes: [world_contract, world_object], decision: pending, blocking: true}
+decision_rule:
+  require_named_owner: true
+  forbid_untyped_fallback: true

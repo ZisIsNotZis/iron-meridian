@@ -1,0 +1,9 @@
+display_name: "Fixed-wing"
+description: Committed pass movement for fixed-wing aircraft.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [parked, taking_off, loitering, attack_run, turning, returning, landing, destroyed]
+design:
+  movement_rules: Fixed-wing units use air-only paths and cannot stop over a target. An attack run follows the carrier's pass distance and commitment values, then enters a turn or return path.
+  interaction_rules: Attack runs and landing are committed states. A movement order cannot teleport a plane out of a committed run. Fixed-wing units cannot crush ground units or use ground transports; air facilities own parking, rearm, sortie capacity, and failed-landing outcomes.

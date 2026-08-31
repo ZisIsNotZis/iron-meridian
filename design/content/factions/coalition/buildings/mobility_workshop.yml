@@ -1,0 +1,36 @@
+display_name: "Mobility Workshop"
+description: "Mobility Workshop migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: advanced
+building_roles: ["advanced_mobility", "sustainment_unlock"]
+hpmax: 600
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 3, height_cells: 3, facings: "cardinal"}
+construction:
+  cost: {resource: 750}
+  buildtime: 390
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}, {object: "factions.coalition.buildings.vehicle_assembly", state: "operational"}]
+production: {max_operational: 1, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "advanced mobility and sustainment unlock"
+  construction_behavior: "Buildable terrain inside shared anchors; route staging requires a clear service cell and does not bypass impassable terrain."
+  production_behavior: "Role: advanced mobility and sustainment unlock; cost: `750 resource`; build time: `390 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ and Vehicle Assembly operational`; queue/category: `construction / technology`; replacement/capacity: `maximum 1 operational workshop; no production queue; one builder assignment`."
+  defense_behavior: "Structure; visible support target; EMP disables its active logistics skill."
+  capture_behavior: "**Route staging** — marks one allied ground or amphibious vehicle within `6` cells for +25% movement for 60 ticks; 240-tick cooldown and no stacking."
+  repair_behavior: "Buy map access and tempo or keep the advanced investment for combat production."
+  lifecycle_behavior: "Attack or EMP the workshop; force the staged unit into terrain or wait out the visible burst."
+  player_decision: "Buy map access and tempo or keep the advanced investment for combat production."
+  counterplay: "Attack or EMP the workshop; force the staged unit into terrain or wait out the visible burst."
+  visual_identity: "Folding ramps, route-map projector, blue tire-track hologram, and a short hydraulic burst when staging activates."
+  design_rationale: "# Mobility Workshop\n\n## Gameplay identity\n\n- **Footprint:** `3 × 3` cells; four facings; one vehicle service edge.\n- **Health / protection:** 600 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; visible support target; EMP disables its active logistics skill.\n- **Production:** Role: advanced mobility and sustainment unlock; cost: `750 resource`; build time: `390 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ and Vehicle Assembly operational`; queue/category: `construction / technology`; replacement/capacity: `maximum 1 operational workshop; no production queue; one builder assignment`.\n- **Skill / passive:** **Route staging** — marks one allied ground or amphibious vehicle within `6` cells for +25% movement for 60 ticks; 240-tick cooldown and no stacking.\n- **Placement:** Buildable terrain inside shared anchors; route staging requires a clear service cell and does not bypass impassable terrain.\n- **Player decision:** Buy map access and tempo or keep the advanced investment for combat production.\n- **Counterplay:** Attack or EMP the workshop; force the staged unit into terrain or wait out the visible burst.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Folding ramps, route-map projector, blue tire-track hologram, and a short hydraulic burst when staging activates.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

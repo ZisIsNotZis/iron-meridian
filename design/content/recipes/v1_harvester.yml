@@ -1,0 +1,17 @@
+display_name: "V1 Harvester Recipe"
+description: "Reusable recipe definition."
+status: core
+kind: "recipe"
+product: factions.coalition.vehicles.harvester
+producer: factions.coalition.buildings.vehicle_assembly
+category: "economy"
+availability: scenarios.v1_meridian_crossing
+prerequisites: [{object: factions.coalition.buildings.vehicle_assembly, state: operational}, {object: factions.coalition.buildings.coalition_hq, state: operational}]
+references: [factions.coalition.vehicles.harvester, factions.coalition.buildings.vehicle_assembly, factions.coalition.buildings.coalition_hq]
+player_exposed: true
+product_quantity: 1
+availability_semantics:
+  hq_survival_required: true
+  queue_competition: {shared_queue: true, queue_count: 1, competing_categories: [combat_vehicles]}
+design:
+  meaning: Queues one replacement Harvester in an operational Vehicle Assembly. The Harvester card owns its cost, buildtime, capacity, cargo, and economy values.

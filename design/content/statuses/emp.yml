@@ -1,0 +1,13 @@
+display_name: "EMP"
+description: Electronic disable status.
+status: designed
+kind: "status"
+application:
+  duration_cap_ticks: 90
+  resistance_order: before_duration
+disabled_capabilities: [electronic_weapons, electronic_skills, radar, relays]
+resolution_rules: EMP disables listed electronic capabilities without changing physical armor.
+design:
+  application_rules: An EMP applies a declared disable duration, capped at 90 ticks.
+  resolution_rule: Electronic weapons, skills, radar, and relays are disabled. Explicitly non-electronic exceptions remain usable. EMP does not alter physical armor.
+  counterplay: Electronic protection may reduce severity or duration; it does not silently grant immunity to other status families.

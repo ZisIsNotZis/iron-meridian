@@ -1,0 +1,38 @@
+kind: performance_contract
+source_document: design/presentation/performance.md
+target: "Stable 60 FPS on the ordinary V1 desktop-browser baseline while the simulation runs at its authoritative rate."
+validation: "Validate representative play and a 100-entity stress scene; report average and tail frame time, not only a peak."
+baseline:
+  browsers: [current_Chromium, current_Firefox, current_Safari]
+  hardware: 4_core_cpu_with_integrated_graphics
+  viewport_css_px: [1280, 720]
+  hardware_acceleration: enabled
+budgets:
+  initial_download_compressed_mb: 15
+  decoded_presentation_assets_mb: 128
+  simulation_plus_ui_memory_mb: 256
+  first_interactive_load_warm_cache_seconds: 5
+  stress_scene_frame_time_ms_max: 16.7
+  simulation_ticks_per_second: 30
+  slow_render_rule: "A slow render frame may repeat a view but may not drop or merge simulation ticks."
+acceptance_run:
+  duration_minutes: 10
+  map: Meridian_Crossing
+  viewport_css_px: [1280, 720]
+  enabled: [both_players_active, fog, construction, harvesting, combat, minimap, full_v1_feedback_set]
+  follow_up: 100_entity_stress_scene
+  pass_criteria:
+    average_fps_min: 55
+    frame_time_95th_percentile_ms_max: 20
+    unbounded_memory_growth: false
+    missed_input_acknowledgement: false
+    headless_simulation_tick_divergence: 0
+  record: [browser, device_class, content_revision, entity_count, frame_time_percentiles, heap_before, heap_after, simulation_tick_count]
+implementation_preferences: [shared_materials, atlases, pooled_emitters, bounded_particles, low_cost_directional_presentation, no_persistent_per_entity_lights]
+degradation_order: [particle_count, animation_rate, shadow_detail, post_processing]
+preserve: [input_latency, simulation_correctness, selection, state_readability]
+low_end_fallback:
+  disable_first: [post_processing, dynamic_shadows, screen_shake, non_critical_particles]
+  never_remove: [selection_outlines, construction_legality, objective_state, health_status_tracks, accepted_rejected_command_feedback]
+  emitters: "Pooled and capped per effect family; overflow drops presentation events only after the authoritative event has entered the log."
+exceptions: "An entity manifest may request an exception only with a reason and fallback. No single entity may bypass total budgets; a new asset must displace an old one or use the shared placeholder profile."

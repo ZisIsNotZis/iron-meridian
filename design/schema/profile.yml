@@ -1,0 +1,607 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: profile
+type: object
+additionalProperties: false
+required: [display_name, description, status, kind]
+properties:
+  display_name: {type: string, minLength: 1}
+  description: {type: string, minLength: 1}
+  status: {type: string, enum: [core, designed, optional, near-term, deferred, deprecated]}
+  kind: {type: string, enum: [armor, damage, locomotor, targetability, collision, sensing, skill, status, weapon, recipe, production, production-tier]}
+  references:
+    type: array
+    items: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  protection: {type: string, minLength: 1}
+  damage_channel:
+    type: string
+    enum: [health, health_over_time, structural, electronic, suppression, freeze, control, position, protection]
+  damage_interactions:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required: [armor, multiplier_percent]
+      properties:
+        armor: {type: string, pattern: '^armors\.[a-z][a-z0-9_]*$'}
+        multiplier_percent: {type: integer, minimum: 0}
+        interaction_label: {type: string, enum: [effective, reduced, ineffective, amplified, special]}
+        interaction_rule: {type: string, minLength: 1}
+  resolution:
+    type: object
+    additionalProperties: false
+    properties:
+      formula: {type: string, minLength: 1}
+      rounding: {type: string, enum: [floor, ceil, round, none]}
+      minimum_positive_damage: {type: integer, minimum: 0}
+      area_owned_by: {type: string, enum: [damage, weapon, carrier, scenario]}
+      friendly_fire_default: {type: boolean}
+      stacking_rule: {type: string, enum: [refresh, stack, replace, unique_source_area, none]}
+      secondary_effect_rule: {type: string, enum: [none, explicit_status, explicit_transition, explicit_hazard]}
+  damage_over_time:
+    type: object
+    additionalProperties: false
+    required: [minimum_damage_per_tick, maximum_damage_per_tick, duration_ticks]
+    properties:
+      minimum_damage_per_tick: {type: integer, minimum: 0}
+      maximum_damage_per_tick: {type: integer, minimum: 0}
+      duration_ticks: {type: integer, minimum: 0}
+      application_rule: {type: string, enum: [refresh, stack, replace, unique_source_area, none]}
+      source_area_key: {type: string, enum: [source, area, source_area, target, none]}
+  status_effects:
+    type: array
+    items: {type: string, pattern: '^statuses\.[a-z][a-z0-9_]*$'}
+  states:
+    type: array
+    minItems: 1
+    items: {type: string, minLength: 1}
+  state_definitions:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required: [name, stable]
+      properties:
+        name: {type: string, minLength: 1}
+        stable: {type: boolean}
+        locomotor: {type: string, pattern: '^locomotors\.[a-z][a-z0-9_]*$'}
+        targetability: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}
+        sensing: {type: string, pattern: '^sensing\.[a-z][a-z0-9_]*$'}
+        collision: {type: string, pattern: '^collisions\.[a-z][a-z0-9_]*$'}
+        movement_enabled: {type: boolean}
+        weapon_access_enabled: {type: boolean}
+        hpmax: {type: number, minimum: 1}
+        armor: {type: string, pattern: '^armors\.[a-z][a-z0-9_]*$'}
+        visionrange: {type: number, minimum: 0}
+        alertrange: {type: number, minimum: 0}
+        footprint:
+          type: object
+          additionalProperties: false
+          properties:
+            radius_cells: {type: number, minimum: 0}
+            width_cells: {type: number, minimum: 0}
+            height_cells: {type: number, minimum: 0}
+        description: {type: string, minLength: 1}
+  transitions:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [from, to, lifecycle]
+      properties:
+        from: {type: string, minLength: 1}
+        to: {type: string, minLength: 1}
+        lifecycle: {type: string, pattern: '^skills\.[a-z][a-z0-9_]*$'}
+        interruptible: {type: boolean}
+        cancellable: {type: boolean}
+        vulnerable: {type: boolean}
+        interruption_boundary: {type: string, minLength: 1}
+        cancellation_rule: {type: string, minLength: 1}
+  transition_rules:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required: [transition, owner]
+      properties:
+        transition: {type: string, minLength: 1}
+        owner: {type: string, enum: [carrier, transport_or_interaction_contract]}
+        visible: {type: boolean}
+        interruptible: {type: boolean}
+        vulnerable: {type: boolean}
+        timing_owner: {type: string, enum: [carrier]}
+        movement_paused: {type: boolean}
+        requires_stop: {type: boolean}
+        carrier_disabled_weapons_fire: {type: boolean}
+  movement:
+    type: object
+    additionalProperties: false
+    properties:
+      acceleration_cells_per_second_per_tick: {type: number, minimum: 0}
+      deceleration_cells_per_second_per_tick: {type: number, minimum: 0}
+      turn_rate_degrees_per_second: {type: number, minimum: 0}
+      reverse_speed_percent: {type: number, minimum: 0}
+      road_speed_percent: {type: number, minimum: 0}
+      rough_speed_percent: {type: number, minimum: 0}
+      shallow_water_speed_percent: {type: number, minimum: 0}
+      maximum_speed_cells_per_second: {type: number, minimum: 0}
+      reverse_speed_cells_per_second: {type: number, minimum: 0}
+      orbit_radius_cells: {type: number, minimum: 0}
+      orbit_speed_percent: {type: number, minimum: 0}
+      breakoff_distance_cells: {type: number, minimum: 0}
+      charge_distance_cells: {type: number, minimum: 0}
+      ram_speed_percent: {type: number, minimum: 0}
+      attack_run_commitment_ticks: {type: integer, minimum: 0}
+      attack_run_pass_distance: {type: number, minimum: 0}
+      terrain_access:
+        type: array
+        minItems: 1
+        items: {type: string, minLength: 1}
+      attack_movement_reference: {type: string, pattern: '^locomotors\.[a-z][a-z0-9_]*$'}
+      momentum_retained_while_turning: {type: boolean}
+      instantaneous_facing_change: {type: boolean}
+      crush_enabled: {type: boolean}
+      applicability:
+        type: object
+        additionalProperties: false
+        required: [cover, formation, separation, changes_locomotor_domain]
+        properties:
+          cover: {type: boolean}
+          formation: {type: boolean}
+          separation: {type: boolean}
+          changes_locomotor_domain: {type: boolean}
+      reverse_policy_owner: {type: string, enum: [carrier]}
+      altitude_and_air_target_domain_owner: {type: string, enum: [carrier_targetability_profile]}
+  attack_movement:
+    type: object
+    additionalProperties: false
+    properties:
+      policy: {type: string, enum: [direct, orbit, standoff, strafe, charge, ram, deploy_and_fire, stationary, attack_run, teleport_strike]}
+      orbit_radius_cells: {type: number, minimum: 0}
+      orbit_speed_percent: {type: number, minimum: 0}
+      breakoff_distance_cells: {type: number, minimum: 0}
+      charge_distance_cells: {type: number, minimum: 0}
+      ram_speed_percent: {type: number, minimum: 0}
+      attack_run_commitment_ticks: {type: integer, minimum: 0}
+      pass_distance_cells: {type: number, minimum: 0}
+      target_reposition_rule: {type: string, minLength: 1}
+      player_order_interruption: {type: string, minLength: 1}
+      policy_selection_owners:
+        type: array
+        minItems: 1
+        items: {type: string, enum: [weapon, carrier_attachment]}
+  domains:
+    type: array
+    minItems: 1
+    items: {type: string, enum: [ground, low_air, high_air, naval_surface, submerged, structure, special_asset]}
+  additional_domains:
+    type: object
+    additionalProperties: false
+    required: [allowed, owner, declaration]
+    properties:
+      allowed:
+        type: array
+        minItems: 1
+        items: {type: string, enum: [ground, high_air]}
+      owner: {type: string, enum: [carrier]}
+      declaration: {type: string, enum: [carrier_declared]}
+  detection_requirements:
+    type: array
+    items: {type: string, pattern: '^sensing\.[a-z][a-z0-9_]*$'}
+  legal_attack_domains:
+    type: array
+    minItems: 1
+    items: {type: string, enum: [ground, low_air, high_air, naval_surface, submerged, structure, special_asset]}
+  forbidden_target_classes:
+    type: array
+    items: {type: string, minLength: 1}
+  detection:
+    type: object
+    additionalProperties: false
+    properties:
+      radar_range_cells: {type: number, minimum: 0}
+      radar_refresh_ticks: {type: integer, minimum: 0}
+      contact_memory_ticks: {type: integer, minimum: 0}
+      ordinary_vision_detection_strength: {type: integer, minimum: 0, maximum: 100}
+      detection_strength_scale: {type: integer, minimum: 1}
+      close_reveal_radius_cells: {type: number, minimum: 0}
+      firing_reveal_ticks: {type: integer, minimum: 0}
+      concealment_strength: {type: integer, minimum: 0, maximum: 100}
+      line_of_sight_required: {type: boolean}
+      line_of_sight_rule: {type: string, minLength: 1}
+      source_strength_rule: {type: string, minLength: 1}
+      source_tie_break_rule: {type: string, minLength: 1}
+      close_reveal_uses_strength_test: {type: boolean}
+  information_flow:
+    type: object
+    additionalProperties: false
+    properties:
+      designation_ticks: {type: integer, minimum: 0}
+      designation_relay_delay_ticks: {type: integer, minimum: 0}
+      observation_relay_delay_ticks: {type: integer, minimum: 0}
+      jamming_range_reduction_cells: {type: number, minimum: 0}
+      decoy_duration_ticks: {type: integer, minimum: 0}
+      observation_levels:
+        type: array
+        minItems: 1
+        items:
+          oneOf:
+            - {type: string, enum: [unknown, contact, identified, detailed]}
+            - type: object
+              additionalProperties: false
+              required: [name, player_information, lifetime_rule]
+              properties:
+                name: {type: string, enum: [unknown, contact, identified, detailed]}
+                player_information: {type: string, minLength: 1}
+                lifetime_rule: {type: string, minLength: 1}
+      shared_vision: {type: boolean}
+      stale_contact_allowed: {type: boolean}
+      stale_contact_attackable: {type: boolean}
+      terrain_memory: {type: string, enum: [none, explored, persistent]}
+  sensing_rules: {type: string, minLength: 1}
+  family: {type: string, enum: [transform, deploy, active_weapon, support, mobility, transport, electronic_warfare, control, information, infiltration, lifecycle]}
+  effect: {type: string, minLength: 1}
+  lifecycle:
+    type: object
+    additionalProperties: false
+    properties:
+      setup_ticks: {type: integer, minimum: 0}
+      windup_ticks: {type: integer, minimum: 0}
+      active_ticks: {type: integer, minimum: 0}
+      recovery_ticks: {type: integer, minimum: 0}
+      cooldown_ticks: {type: integer, minimum: 0}
+      warning_ticks: {type: integer, minimum: 0}
+      target_range_cells: {type: number, minimum: 0}
+      area_radius_cells: {type: number, minimum: 0}
+      interrupt_damage_percent: {type: number, minimum: 0}
+      interrupt_window_ticks: {type: integer, minimum: 0}
+      cooldown_start: {type: string, enum: [activation, resolution, interruption, recovery]}
+  target_rules:
+    type: object
+    additionalProperties: false
+    properties:
+      legal_domains:
+        type: array
+        items: {type: string, enum: [ground, low_air, high_air, naval_surface, submerged, structure, special_asset]}
+      forbidden_target_classes:
+        type: array
+        items: {type: string, minLength: 1}
+      requires_observation: {type: boolean}
+      requires_current_observation: {type: boolean}
+      requires_lock: {type: boolean}
+      self_targetable: {type: boolean}
+      area_targeting: {type: boolean}
+  costs:
+    type: object
+    additionalProperties: false
+    properties:
+      credits: {type: integer, minimum: 0}
+      resource: {type: string, minLength: 1}
+      resource_amount: {type: integer, minimum: 0}
+      uses: {type: integer, minimum: 0}
+      recharge_ticks: {type: integer, minimum: 0}
+  effects:
+    type: object
+    additionalProperties: false
+    properties:
+      damage: {type: string, pattern: '^damages\.[a-z][a-z0-9_]*$'}
+      status_effects:
+        type: array
+        items: {type: string, pattern: '^statuses\.[a-z][a-z0-9_]*$'}
+      locomotor_state: {type: string, minLength: 1}
+      targetability: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}
+      movement_policy: {type: string, minLength: 1}
+      capability_changes:
+        type: array
+        items: {type: string, minLength: 1}
+      resolution_rule: {type: string, minLength: 1}
+      heal_per_second: {type: number, minimum: 0}
+      condition_per_tick: {type: number, minimum: 0}
+      suppression_points_per_second: {type: number, minimum: 0}
+      resource_amount: {type: number, minimum: 0}
+      cargo_fraction: {type: number, minimum: 0, maximum: 1}
+      production_pause: {type: boolean}
+      weapon_lock: {type: boolean}
+      creates_hazard: {type: boolean}
+  interruptions:
+    type: object
+    additionalProperties: false
+    properties:
+      interruptible: {type: boolean}
+      interrupt_damage_percent: {type: number, minimum: 0}
+      interrupt_window_ticks: {type: integer, minimum: 0}
+      movement_cancels: {type: boolean}
+      damage_cancels: {type: boolean}
+      emp_cancels: {type: boolean}
+      cancellation_rule: {type: string, minLength: 1}
+  application:
+    type: object
+    additionalProperties: false
+    properties:
+      minimum_points: {type: integer, minimum: 0}
+      maximum_points: {type: integer, minimum: 0}
+      track_cap: {type: integer, minimum: 0}
+      duration_ticks: {type: integer, minimum: 0}
+      duration_cap_ticks: {type: integer, minimum: 0}
+      source_damage: {type: string, pattern: '^damages\.[a-z][a-z0-9_]*$'}
+      application_rule: {type: string, enum: [add, refresh, stack, replace, unique_source_area]}
+      resistance_order: {type: string, enum: [before_amount, before_duration, after_amount, none]}
+  thresholds:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required: [name, points]
+      properties:
+        name: {type: string, minLength: 1}
+        points: {type: integer, minimum: 0}
+        movement_modifier_percent: {type: number}
+        fire_rate_modifier_percent: {type: number}
+        capabilities_locked:
+          type: array
+          items: {type: string, minLength: 1}
+        targetability: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}
+        locomotor_state: {type: string, minLength: 1}
+  platform_consequences:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [platform, threshold, outcome]
+      properties:
+        platform: {type: string, minLength: 1}
+        threshold: {type: string, minLength: 1}
+        outcome: {type: string, enum: [immobilize, crushable, instant_destroy, capability_lock, vulnerability_change, none]}
+        condition: {type: string, minLength: 1}
+  resistance:
+    type: object
+    additionalProperties: false
+    properties:
+      percent: {type: number, minimum: 0, maximum: 100}
+      formula: {type: string, minLength: 1}
+      affects: {type: string, enum: [amount, duration, amount_and_duration, none]}
+  decay:
+    type: object
+    additionalProperties: false
+    properties:
+      quiet_delay_ticks: {type: integer, minimum: 0}
+      points_per_tick: {type: number, minimum: 0}
+      duration_ticks: {type: integer, minimum: 0}
+      rule: {type: string, enum: [linear, refresh, none]}
+  stacking:
+    type: object
+    additionalProperties: false
+    properties:
+      rule: {type: string, enum: [stack, refresh, replace, unique_source_area, none]}
+      maximum_stacks: {type: integer, minimum: 1}
+      maximum_per_source: {type: integer, minimum: 1}
+      refreshes_duration: {type: boolean}
+  resolution_rules: {type: string, minLength: 1}
+  disabled_capabilities:
+    type: array
+    items: {type: string, minLength: 1}
+  occupancy:
+    type: object
+    additionalProperties: false
+    properties:
+      minimum_separation_distance: {type: number, minimum: 0}
+      default_footprint_width_cells: {type: number, minimum: 0}
+      default_footprint_height_cells: {type: number, minimum: 0}
+      building_clearance_cells: {type: number, minimum: 0}
+      projectile_impact_radius_distance: {type: number, minimum: 0}
+      footprint_rule: {type: string, enum: [circle, rectangle, declared_by_carrier, none]}
+      visual_bounds_separate: {type: boolean}
+      terrain_blocking: {type: boolean}
+  crush:
+    type: object
+    additionalProperties: false
+    properties:
+      speed_cells_per_second: {type: number, minimum: 0}
+      mass_ratio:
+        type: object
+        additionalProperties: false
+        required: [numerator, denominator]
+        properties:
+          numerator: {type: integer, minimum: 1}
+          denominator: {type: integer, minimum: 1}
+      recovery_ticks: {type: integer, minimum: 0}
+      boarding_interaction_range_cells: {type: number, minimum: 0}
+      requires_crushable_target: {type: boolean}
+      requires_overlapping_locomotor_domains: {type: boolean}
+      requires_frozen_target: {type: boolean}
+      target_domains:
+        type: array
+        items: {type: string, enum: [ground, low_air, high_air, naval_surface, submerged, structure, special_asset]}
+      failure_rule: {type: string, minLength: 1}
+  boarding:
+    type: object
+    additionalProperties: false
+    properties:
+      enabled: {type: boolean}
+      allowed_platforms:
+        type: array
+        items: {type: string, minLength: 1}
+      interaction_range_cells: {type: number, minimum: 0}
+      movement_paused: {type: boolean}
+      targetability_during_interaction: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}
+  damage: {type: string, pattern: '^damages\.[a-z][a-z0-9_]*$'}
+  targetabilities:
+    type: array
+    items: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}
+  delivery:
+    type: object
+    additionalProperties: false
+    properties:
+      range_cells: {type: number, minimum: 0}
+      projectile_type: {type: string, minLength: 1}
+      projectile_speed_cells_per_second: {type: number, minimum: 0}
+      point_hit_radius_distance: {type: number, minimum: 0}
+      beam_lifetime_ticks: {type: integer, minimum: 0}
+      attack_run_pass_distance: {type: number, minimum: 0}
+      attack_run_pass_distance_cells: {type: number, minimum: 0}
+      line_of_fire_tolerance_distance: {type: number, minimum: 0}
+      homing: {type: boolean}
+      post_launch_tracking: {type: boolean}
+      area_inner_radius_cells: {type: number, minimum: 0}
+      area_outer_radius_cells: {type: number, minimum: 0}
+      area_falloff_percent: {type: number, minimum: 0, maximum: 100}
+      indirect_fire: {type: boolean}
+  timing:
+    type: object
+    additionalProperties: false
+    properties:
+      damage_per_event: {type: integer, minimum: 0}
+      ready_period_ticks: {type: integer, minimum: 0}
+      windup_ticks: {type: integer, minimum: 0}
+      recovery_ticks: {type: integer, minimum: 0}
+      cooldown_ticks: {type: integer, minimum: 0}
+      firing_arc_degrees: {type: number, minimum: 0, maximum: 360}
+      tracking_rate_degrees_per_second: {type: number, minimum: 0}
+      lock_cone_degrees: {type: number, minimum: 0, maximum: 360}
+      area_falloff: {type: string, minLength: 1}
+      friendly_fire: {type: boolean}
+      last_known_observation: {type: boolean}
+      ammunition_capacity: {type: integer, minimum: 0}
+      reload_ticks: {type: integer, minimum: 0}
+      rearm_ticks: {type: integer, minimum: 0}
+      warning_ticks: {type: integer, minimum: 0}
+  attack_movement_policy: {type: string, enum: [direct, orbit, standoff, strafe, charge, ram, deploy_and_fire, stationary, attack_run, teleport_strike]}
+  failure_conditions:
+    type: array
+    items: {type: string, minLength: 1}
+  product: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  producer:
+    oneOf:
+      - {type: string, const: construction}
+      - {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  category: {type: string, minLength: 1}
+  availability: {type: string, pattern: '^scenarios\.[a-z][a-z0-9_]*$'}
+  player_exposed: {type: boolean}
+  product_quantity: {type: integer, minimum: 1}
+  availability_semantics:
+    type: object
+    additionalProperties: false
+    properties:
+      hq_survival_required: {type: boolean}
+      queue_competition:
+        type: object
+        additionalProperties: false
+        required: [shared_queue, queue_count, competing_categories]
+        properties:
+          shared_queue: {type: boolean}
+          queue_count: {type: integer, minimum: 1}
+          competing_categories:
+            type: array
+            minItems: 1
+            items: {type: string, enum: [combat_vehicles]}
+      construction_role: {type: string, enum: [only_new_production_building]}
+      recovery:
+        type: object
+        additionalProperties: false
+        required: [recovery_only]
+        properties:
+          recovery_only: {type: boolean}
+          free_respawn: {type: boolean}
+          existing_product_slot_required: {type: boolean}
+      starting_copy:
+        type: object
+        additionalProperties: false
+        required: [scenario_completed, second_starting_copy]
+        properties:
+          scenario_completed: {type: boolean}
+          second_starting_copy: {type: boolean}
+      rebuild_permission: {type: string, enum: [mode_variant_explicit]}
+      availability_owner: {type: string, enum: [scenario]}
+      costly_recovery: {type: boolean}
+  prerequisites:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [object, state]
+      properties:
+        object:
+          oneOf:
+            - {type: string, const: none}
+            - {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+        state: {type: string, enum: [operational, completed, available, none]}
+        quantity: {type: integer, minimum: 1}
+  queue:
+    type: object
+    additionalProperties: false
+    properties:
+      max_items: {type: integer, minimum: 1}
+      progress_per_builder_per_tick: {type: number, minimum: 0}
+      speed_rule: {type: string, minLength: 1}
+      fifo: {type: boolean}
+      active_builder_limit: {type: integer, minimum: 1}
+      cancellation_rule: {type: string, minLength: 1}
+      exit_rule: {type: string, minLength: 1}
+  production_tier:
+    type: object
+    additionalProperties: false
+    properties:
+      commitment_meaning: {type: string, minLength: 1}
+      availability_expectation: {type: string, minLength: 1}
+      counterplay_expectation: {type: string, minLength: 1}
+  presentation:
+    type: object
+    additionalProperties: false
+    properties:
+      icon: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      model: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      animation: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      fallback_policy: {type: string, enum: [inherit, placeholder, unavailable, required_before_release]}
+      silhouette: {type: string, minLength: 1}
+      readability: {type: string, minLength: 1}
+  audio:
+    type: object
+    additionalProperties: false
+    properties:
+      identity: {type: string, minLength: 1}
+      event: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  fx:
+    type: object
+    additionalProperties: false
+    properties:
+      identity: {type: string, minLength: 1}
+      event: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  design:
+    type: object
+    additionalProperties: false
+    properties:
+      protection: {type: string, minLength: 1}
+      damage_interaction_role: {type: string, minLength: 1}
+      channel: {type: string, minLength: 1}
+      resolution_rule: {type: string, minLength: 1}
+      feedback: {type: string, minLength: 1}
+      movement_rules: {type: string, minLength: 1}
+      transition_rules: {type: string, minLength: 1}
+      interaction_rules: {type: string, minLength: 1}
+      state_rules: {type: string, minLength: 1}
+      detection_rules: {type: string, minLength: 1}
+      information_flow: {type: string, minLength: 1}
+      effect: {type: string, minLength: 1}
+      lifecycle: {type: string, minLength: 1}
+      counterplay: {type: string, minLength: 1}
+      target_rules: {type: string, minLength: 1}
+      delivery_rules: {type: string, minLength: 1}
+      timing_rules: {type: string, minLength: 1}
+      occupancy_rules: {type: string, minLength: 1}
+      crush_rules: {type: string, minLength: 1}
+      application_rules: {type: string, minLength: 1}
+      stacking_rules: {type: string, minLength: 1}
+      resistance_rules: {type: string, minLength: 1}
+      meaning: {type: string, minLength: 1}
+      availability: {type: string, minLength: 1}
+      scope: {type: string, enum: [v1, near_term, far_vision, deferred]}
+      rationale: {type: string, minLength: 1}
+      tactical_identity: {type: string, minLength: 1}
+      player_decision: {type: string, minLength: 1}
+      visual_identity: {type: string, minLength: 1}
+      audio_identity: {type: string, minLength: 1}
+      fx_identity: {type: string, minLength: 1}
+      narrative_identity: {type: string, minLength: 1}

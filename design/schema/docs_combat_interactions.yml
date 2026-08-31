@@ -1,0 +1,20 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_combat_interactions
+type: object
+additionalProperties: false
+required: [kind, document_id, title, source_document, ownership, resolution_pipeline, hit_result_closure, domain_matrix, armor_and_damage, status_and_domain_transitions, interaction_examples, status_precedence, authoring_validation, v1_restrictions]
+properties:
+  kind: {const: combat_interaction_contract}
+  document_id: {type: string}
+  title: {type: string}
+  source_document: {type: string}
+  ownership: {type: array, items: {type: string}}
+  resolution_pipeline: {type: object, additionalProperties: false, required: [flow, stages], properties: {flow: {type: string}, stages: {type: array, items: {type: string}}}}
+  hit_result_closure: {type: array, items: {type: string}}
+  domain_matrix: {type: array, items: {type: object, additionalProperties: false, required: [target_state, ground, low_air, high_air, naval_surface, submerged, structure], properties: {target_state: {type: string}, ground: {type: string}, low_air: {type: string}, high_air: {type: string}, naval_surface: {type: string}, submerged: {type: string}, structure: {type: string}}}}
+  armor_and_damage: {type: array, items: {type: string}}
+  status_and_domain_transitions: {type: array, items: {type: string}}
+  interaction_examples: {type: array, items: {type: string}}
+  status_precedence: {type: array, items: {type: string}}
+  authoring_validation: {type: array, items: {type: string}}
+  v1_restrictions: {type: array, items: {type: string}}

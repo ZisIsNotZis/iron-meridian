@@ -1,0 +1,17 @@
+display_name: "V1 Infantry Center Recipe"
+description: "Reusable recipe definition."
+status: core
+kind: "recipe"
+product: factions.coalition.buildings.infantry_center
+producer: "construction"
+category: "construction"
+availability: scenarios.v1_meridian_crossing
+prerequisites: [{object: factions.coalition.buildings.coalition_hq, state: operational}]
+references: [factions.coalition.buildings.infantry_center, factions.coalition.buildings.coalition_hq]
+player_exposed: true
+product_quantity: 1
+availability_semantics:
+  hq_survival_required: true
+  construction_role: only_new_production_building
+design:
+  meaning: Allows the active MCV to place and construct the Coalition Infantry Center. The building card owns its footprint, cost, buildtime, and queue capacity.

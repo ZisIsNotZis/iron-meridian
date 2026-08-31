@@ -1,0 +1,39 @@
+display_name: Locomotors
+description: Reusable movement profiles, states, transitions, and attack movement.
+status: designed
+kind: collection_contract
+collection_name: locomotors
+source_documents: [design/locomotors.md, design/locomotors/README.md]
+source_documents_status: deleted_after_migration
+schema_id: profile
+object_schema:
+  required_fields: [id, kind, status, references, display_name, states, transitions, movement, terrain, collision, attack_movement, transport_restrictions]
+  field_types:
+    object_id: dotted_id
+    kind: {type: enum, values: [locomotor]}
+    status: status
+    references: list_of_dotted_ids
+    display_name: string
+    states: list_of_state_names
+    transitions: list_of_transition_records
+    movement: movement_record
+    terrain: terrain_access_record
+    collision: collision_record
+    attack_movement: attack_movement_record
+    transport_restrictions: transport_restriction_record
+profiles: [foot, wheeled, tracked, walker, burrowing, swimming, surface_naval, submerged, amphibious, hovering, helicopter, fixed_wing, airship, drone, transforming, teleport_phase]
+attack_policies: [direct, orbit, standoff, strafe, charge, ram, deploy_and_fire, stationary, teleport_strike]
+ownership:
+  locomotor_owns: [domain_behavior, stable_states, transition_semantics]
+  carrier_owns: [speed, footprint, weapon_access, endurance, deliberate_exceptions]
+catalog:
+  - {id: locomotors.foot, domain: ground, use: walking_infantry_and_personnel}
+  - {id: locomotors.wheeled, domain: ground, use: fast_road_movement}
+  - {id: locomotors.tracked, domain: ground, use: deliberate_all_terrain_vehicle_movement}
+  - {id: locomotors.helicopter, domain: air, use: hovering_and_orbit_attack_positioning}
+  - {id: locomotors.fixed_wing, domain: air, use: committed_pass_movement}
+  - {id: locomotors.surface_naval, domain: water, use: water_only_vessel_movement}
+  - {id: locomotors.submerged, domain: water_depth, use: depth_state_with_surfacing_vulnerability}
+  - {id: locomotors.amphibious, domain: land_and_water, use: explicit_land_water_transition}
+  - {id: locomotors.hovering, domain: low_clearance, use: hover_without_helicopter_flight_or_ground_contact}
+  - {id: locomotors.transforming, domain: multiple, use: visible_interruptible_locomotor_state_transition}

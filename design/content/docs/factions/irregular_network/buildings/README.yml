@@ -1,0 +1,111 @@
+title: Irregular Network Sites
+source_document: design/factions/irregular-network/buildings/README.md
+document_type: building_roster_contract
+identity: hides small capabilities, opens temporary forward positions, and uses limited salvage to turn enemy investment into a short-lived opportunity
+shared_authority:
+  placement: Buildings and Defenses
+  construction: Buildings and Defenses
+  structure_combat: Buildings and Defenses
+  repair: Buildings and Defenses
+  queue_behavior: Buildings and Defenses
+roster:
+  total_sites: 9
+  standard_sites: 6
+  optional_sites: 3
+  throughput_position: compact hideout and improvised production, not either major faction’s throughput
+  absent_systems: power grid, walls, permanent tunnel network, global stealth, and open-ended captured-unit factory
+shared_build_rules:
+  lifecycle: shared construction lifecycle
+  cost_owner: each building card owns its initial resource cost
+  build_time_owner: each building card owns its build time
+  production_queue: one FIFO queue each
+  queue_reservation: paid when accepted
+  destruction_loss: queued work is lost if its building is destroyed
+  card_schema_references: armor, targetability, collision, sensing, weapon, skill, status, and production objects
+  non_combat_defense: "explicitly declares Defense: None"
+sites:
+  - status: standard
+    site: Safehouse
+    platform_or_footprint: Base anchor; small concealed footprint
+    unique_decision: Establish a fragile construction origin away from the front. In a standard Network match, its destruction is the faction’s base-loss condition.
+  - status: standard
+    site: Scrap Exchange
+    platform_or_footprint: Economy / salvage; compact footprint near wrecks or resource routes
+    unique_decision: Convert a bounded salvage opportunity or process normal resource with poor throughput; the site is visible while active.
+  - status: standard
+    site: Field Workshop
+    platform_or_footprint: Ground production; medium improvised footprint
+    unique_decision: Produce the Network’s low-tech vehicles and deployables through one limited queue.
+  - status: standard
+    site: Cell House
+    platform_or_footprint: Infantry production; small footprint
+    unique_decision: Recruit cheap cells and specialists without a full barracks infrastructure.
+  - status: standard
+    site: Hideout
+    platform_or_footprint: Concealment / recovery site; small footprint
+    unique_decision: Conceal a local force and provide a temporary rally point; scouting and area denial can reveal or destroy it.
+  - status: standard
+    site: Jammer Post
+    platform_or_footprint: Local information denial; compact footprint
+    unique_decision: Create a bounded false/blank signature zone with obvious setup and expiry, not faction-wide invisibility.
+  - status: optional
+    site: Relay Cache
+    platform_or_footprint: Temporary command / designation site; small footprint
+    unique_decision: Extend one local coordination action for a short period; units remain functional without it.
+  - status: optional
+    site: Boat Shed
+    platform_or_footprint: Coastal production / extraction; shoreline footprint
+    unique_decision: Produce or recover a small coastal asset package on suitable maps; no full naval tree.
+  - status: optional
+    site: False Depot
+    platform_or_footprint: Decoy / ambush site; compact footprint
+    unique_decision: Present a believable but limited false signature that consumes attention and expires after being investigated or timed out.
+entity_card_ownership: roster membership and faction exceptions are recorded here; concrete values remain on entity cards or referenced first-class objects
+entity_card_paths:
+  - design/content/factions/irregular_network/buildings/safehouse.yml
+  - design/content/factions/irregular_network/buildings/scrap_exchange.yml
+  - design/content/factions/irregular_network/buildings/field_workshop.yml
+  - design/content/factions/irregular_network/buildings/cell_house.yml
+  - design/content/factions/irregular_network/buildings/hideout.yml
+  - design/content/factions/irregular_network/buildings/jammer_post.yml
+  - design/content/factions/irregular_network/buildings/relay_cache.yml
+  - design/content/factions/irregular_network/buildings/boat_shed.yml
+  - design/content/factions/irregular_network/buildings/false_depot.yml
+production_dependencies:
+  construction_anchor: Safehouse is the default construction anchor and may establish one temporary forward anchor under shared placement rules
+  persistent_anchor: Safehouse remains the persistent base anchor for a standard match; campaign scenarios may define a different objective without changing the building contract
+  standard_queues: Cell House owns the infantry queue and Field Workshop owns the vehicle queue
+  coastal_queue: Boat Shed adds one coastal queue only on a compatible map
+  relationship_owner: production matrix and its recipe references own exact product-to-producer relationships
+  scrap_exchange: does not add a second resource type or permanent salvage economy; it handles the shared resource loop at a stated efficiency or performs one bounded recovery action defined by the mode
+  tactical_sites: Hideout and Jammer Post are not production prerequisites for standard content but gate declared advanced specialists
+  relay_cache: improves a nearby information action and expires or can be raided
+  boat_shed: map-dependent and must not be built on a land map merely for symmetry
+  false_depot: produces no units and cannot satisfy a production or construction dependency
+targetability_and_defenses:
+  targetability: ordinary structure-domain targetability; sites are not immune to detection or damage
+  concealment: Safehouse and Hideout may begin concealed only while their local concealment state is valid
+  reveal_sources: sensor, scout, attack, or expiry can reveal the state according to shared sensing and targetability rules
+  armor_semantics: concealment changes information, not armor
+  universal_gun_platform: none
+  local_defense: Jammer Post or Hideout may own a short-range local disruption effect; nearby Network units provide actual ambush damage
+  false_depot_weapon: none; its value is the decision to investigate or ignore it
+  special_effect_requirements: visible setup, bounded duration, and clear counter
+temporary_lifecycle:
+  states: [planned, blueprint, setup, operational, expiring, removed]
+  setup: visible and interruptible
+  expiring: stops accepting new work, shows a countdown, then removes itself without wreckage or a free replacement
+  destruction_refund: no refund beyond the shared blueprint cancel rule
+  persistent_site: Safehouse is persistent for the scenario
+  temporary_capability_sites: Hideout, Jammer Post, Relay Cache, and False Depot
+presentation:
+  blueprints: tarps, chalk grids, salvaged frames, and low-power projectors rather than clean industrial slabs
+  concealed_sites: broken silhouettes and local occlusion, never a magical full invisibility shader
+  operational_effects: radio static, hand signals, short lantern flashes, and deliberate false pings
+  damage: exposed scrap, smoke, and falling canvas
+  ui_states: real, concealed, decoy, setting up, expiring, disabled, or destroyed when the player’s information permits that distinction
+scope_decisions:
+  standard: Safehouse, Scrap Exchange, Field Workshop, Cell House, Hideout, and Jammer Post are the smallest coherent Network infrastructure set
+  optional: Relay Cache, Boat Shed, and False Depot deepen a proven map or campaign need and are not required for a functional land match
+  deferred: tunnel entrances, permanent disguise buildings, a full salvage production tree, drone swarm control, walls, power, and superweapons
+  rejected: global resource bonuses, invisible base footprints, chain sabotage, and conventional major-faction tech ladders; they erase intended asymmetry or add maintenance without a better decision

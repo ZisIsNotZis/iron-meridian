@@ -1,0 +1,72 @@
+display_name: "Aegis Carrier"
+description: "Aegis Carrier Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "advanced"
+battlefield_roles: ["long_range_formation_air_defense", "early_warning_unlike_warden_it_protects_a_position_rather_than_escorting_a_moving_line"]
+hpmax: 420
+armor: "armors.light"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 1.8
+visionrange: 8
+alertrange: 10
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.54
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.air_to_ground_strike", "targetabilities.low_air", "targetabilities.high_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.air_command", "factions.directorate.buildings.heavy_works"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Mast-mounted radar, missile canisters, disciplined tracking cones, and a clean warning lattice."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Mast-mounted radar, missile canisters, disciplined tracking cones, and a clean warning lattice."
+fx:
+  identity: "Mast-mounted radar, missile canisters, disciplined tracking cones, and a clean warning lattice."
+design:
+  tactical_identity: "Long-range formation air defense; secondary early warning. Unlike Warden, it protects a position rather than escorting a moving line."
+  player_decision: "Decide where the Directorate's protected airspace begins, then defend the immobile node. It fails when bypassed, rushed, or forced to redeploy."
+  counterplay: "Ground attack, low-altitude approach where permitted, baiting missiles, waiting out deployment, and striking outside the envelope."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Medium armor; vulnerable to ground raids and close-range aircraft that exploit its setup."
+  support_behavior: "Establishes one defended airspace envelope for a prepared position; the envelope is not global and does not repair allies."
+  locomotion_behavior: "Tracked; slow and deployable. It may not fire the primary missile system while relocating."
+  targetability_behavior: "Ground vehicle; ordinary sight and anti-vehicle targeting. Its warning radar reveals its strategic area, not the whole map."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Aegis Carrier's deployed envelope is local detection and weapon control, never global vision. Surface-to-air missile | Air-to-ground strike; low air, high air | 10.0 / 120 / 90 ticks | Projectile 8 cells/s; point; tracking within 35° cone, 60°/s Deploy Radar | 45-tick setup; active until packed; 45-tick recovery; 240-tick cooldown; 12.0-cell local envelope, movement disabled, close-defense range 3.0 | Raid ground support, bypass envelope, bait missiles, force redeploy"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "anti_air_support"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.air_command", "factions.directorate.buildings.heavy_works"]
+  cost:
+    resource: 650
+  buildtime: 180
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Surface-to-air missile"
+    damage: "damages.air_to_ground_strike"
+    targetability: ["targetabilities.ground", "targetabilities.low_air", "targetabilities.high_air"]
+    attackrange: 10
+    attackdamage: 120
+    attackperiod: 90
+    delivery: "projectile_8_cells_s_point_tracking_within_35_cone_60_s"
+    design:
+      tactical_use: "Surface-to-air missile | Air-to-ground strike; low air, high air | 10.0 / 120 / 90 ticks | Projectile 8 cells/s; point; tracking within 35° cone, 60°/s"
+      counterplay: "Ground attack, low-altitude approach where permitted, baiting missiles, waiting out deployment, and striking outside the envelope."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Deploy Radar"
+    activation: "active"
+    setup_ticks: 45
+    recovery_ticks: 45
+    cooldown_ticks: 240
+    movement_allowed: false
+    design:
+      player_decision: "Decide where the Directorate's protected airspace begins, then defend the immobile node. It fails when bypassed, rushed, or forced to redeploy."
+      counterplay: "Ground attack, low-altitude approach where permitted, baiting missiles, waiting out deployment, and striking outside the envelope."
+      interruption_readability: "Deploy Radar | 45-tick setup; active until packed; 45-tick recovery; 240-tick cooldown; 12.0-cell local envelope, movement disabled, close-defense range 3.0 | Raid ground support, bypass envelope, bait missiles, force redeploy"

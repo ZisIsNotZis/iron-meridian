@@ -1,0 +1,54 @@
+display_name: "Vehicle Plant"
+description: "Vehicle Plant Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle_production"
+tier: "field"
+hpmax: 1050
+building_roles: ["owns_the_directorate_ground_vehicle_queue_and_commits_the_player_to_planned_armored_pressure"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 4, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Heavy slab doors, crane rails, amber queue bars, tracked-vehicle test lights, hydraulic impacts, and dense construction smoke."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Heavy slab doors, crane rails, amber queue bars, tracked-vehicle test lights, hydraulic impacts, and dense construction smoke."
+fx:
+  identity: "Heavy slab doors, crane rails, amber queue bars, tracked-vehicle test lights, hydraulic impacts, and dense construction smoke."
+design:
+  counterplay: "Scout and raid the plant, block its exit, or force the Directorate to replace production infrastructure."
+  defense_behavior: "Structure; ordinary sight and structure-capable attacks; exit and queue state are visible."
+construction:
+  cost:
+    resource: 700
+  buildtime: 360
+  builder: "factions.directorate.buildings.construction_yard"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+production:
+  max_operational: 2
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false
+  queues:
+    - queue_name: "vehicles"
+      category: "vehicle"
+      capacity: 1
+      exit_name: "vehicle_exit"
+      blocked_behavior: "pause"
+exits:
+  - exit_name: "vehicle_exit"
+    direction: "any"
+    exit_type: "vehicle"
+    capacity: 1
+    blocked_behavior: "pause"

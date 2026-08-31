@@ -1,0 +1,64 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: world_character
+title: World character
+type: object
+additionalProperties: false
+required: [display_name, description, kind, status, source_document, source_references, identity, affiliation, relationships, presentation, audio, narrative]
+properties:
+  display_name: {type: string, minLength: 1}
+  description: {type: string, minLength: 1}
+  kind: {const: character}
+  status: {type: string, enum: [core, designed, optional, near-term, deferred, deprecated]}
+  source_document: {type: string, minLength: 1}
+  source_references:
+    type: array
+    items: {type: string, minLength: 1}
+  identity:
+    type: object
+    additionalProperties: false
+    required: [role, background]
+    properties:
+      role: {type: string, minLength: 1}
+      background: {type: string, minLength: 1}
+      beliefs: {type: string, minLength: 1}
+      capabilities: {type: string, minLength: 1}
+      limitations: {type: string, minLength: 1}
+  affiliation:
+    type: object
+    additionalProperties: false
+    required: [organization, position]
+    properties:
+      faction: {type: string, pattern: '^factions\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$'}
+      organization: {type: string, minLength: 1}
+      position: {type: string, minLength: 1}
+      region: {type: string, minLength: 1}
+      sector: {type: string, minLength: 1}
+  relationships:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required: [subject, nature]
+      properties:
+        subject: {type: string, minLength: 1}
+        nature: {type: string, minLength: 1}
+  presentation:
+    type: object
+    additionalProperties: false
+    required: [visual]
+    properties:
+      visual: {type: string, minLength: 1}
+  audio:
+    type: object
+    additionalProperties: false
+    required: [voice]
+    properties:
+      voice: {type: string, minLength: 1}
+  narrative:
+    type: object
+    additionalProperties: false
+    required: [use]
+    properties:
+      use: {type: string, minLength: 1}
+      constraints: {type: string, minLength: 1}

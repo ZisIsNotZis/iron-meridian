@@ -1,0 +1,36 @@
+display_name: "Field Hospital"
+description: "Field Hospital migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: established
+building_roles: ["local_infantry_sustainment"]
+hpmax: 450
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 2, height_cells: 2, facings: "cardinal"}
+construction:
+  cost: {resource: 450}
+  buildtime: 240
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}, {object: "factions.coalition.buildings.infantry_center", state: "operational"}]
+production: {max_operational: 2, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "local infantry sustainment"
+  construction_behavior: "Buildable terrain inside shared anchors; service cells must remain clear and cannot touch route/objective exclusions."
+  production_behavior: "Role: local infantry sustainment; cost: `450 resource`; build time: `240 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ and Infantry Center operational`; queue/category: `construction / repair`; replacement/capacity: `maximum 2 operational hospitals; one active service target per hospital; one builder assignment`."
+  defense_behavior: "Structure; visible support target; no stealth or global healing."
+  capture_behavior: "**Triage station** — one nearby allied infantry group is restored at `8 HP/second` and loses `10 suppression points/second`; service radius `3` cells, one target, interrupted by EMP or destruction."
+  repair_behavior: "Put sustainment behind the line or forward for faster recovery while making the site a raid target."
+  lifecycle_behavior: "Focus the hospital, EMP it, or force infantry away; vehicles, aircraft, and structures receive no service."
+  player_decision: "Put sustainment behind the line or forward for faster recovery while making the site a raid target."
+  counterplay: "Focus the hospital, EMP it, or force infantry away; vehicles, aircraft, and structures receive no service."
+  visual_identity: "Low clinic module, red-white-blue markings, ambulance bay, restrained healing pulse, and clear service-link icon."
+  design_rationale: "# Field Hospital\n\n## Gameplay identity\n\n- **Footprint:** `2 × 2` cells; four facings; two infantry service cells.\n- **Health / protection:** 450 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; visible support target; no stealth or global healing.\n- **Production:** Role: local infantry sustainment; cost: `450 resource`; build time: `240 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ and Infantry Center operational`; queue/category: `construction / repair`; replacement/capacity: `maximum 2 operational hospitals; one active service target per hospital; one builder assignment`.\n- **Skill / passive:** **Triage station** — one nearby allied infantry group is restored at `8 HP/second` and loses `10 suppression points/second`; service radius `3` cells, one target, interrupted by EMP or destruction.\n- **Placement:** Buildable terrain inside shared anchors; service cells must remain clear and cannot touch route/objective exclusions.\n- **Player decision:** Put sustainment behind the line or forward for faster recovery while making the site a raid target.\n- **Counterplay:** Focus the hospital, EMP it, or force infantry away; vehicles, aircraft, and structures receive no service.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Low clinic module, red-white-blue markings, ambulance bay, restrained healing pulse, and clear service-link icon.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

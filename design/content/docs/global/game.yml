@@ -1,0 +1,26 @@
+kind: game_contract
+document_id: design.game
+title: Game Design
+priorities:
+  - Make a good game.
+  - Minimize implementation and maintenance burden.
+  - Make the game easy to extend and mod.
+  - Pursue striking graphics and effects with moderate CPU/GPU usage.
+core_promise: "Command a small front: scout, choose economy versus army timing, build combined arms, contest decisive ground, adapt to enemy composition and position, and convert an advantage into victory. Strategic decisions matter more than frantic actions-per-minute. Losses should be explainable and recovery should come through adaptation, not rubber-banding."
+match_loop:
+  - Scout.
+  - Choose economy or army timing.
+  - Establish a force.
+  - Contest the objective.
+  - Exploit a positional or composition mistake.
+  - Hold the objective or destroy the opponent's ability to fight.
+scope:
+  - The authoritative V1, near-term, and far-vision boundaries live in V1 Scope.
+  - The canonical loadable V1 setup is the V1 Meridian Crossing scenario.
+  - This contract does not repeat the V1 roster, recipes, exclusions, or acceptance targets.
+design_gates:
+  - New players understand the objective and controls.
+  - Defeats are explainable through scouting, timing, composition, positioning, or objective control.
+  - A damaged player can recover through defense, reinforcement, or a raid.
+  - Players want to replay because decisions create variation.
+  - Human playtesting validates fun before content breadth or visual polish expands.

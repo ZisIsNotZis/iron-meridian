@@ -1,0 +1,84 @@
+display_name: "Interceptor"
+description: "Interceptor Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "aircraft"
+tier: "established"
+battlefield_roles: ["air_superiority_and_bomber_interception", "pursuit_of_damaged_aircraft"]
+hpmax: 260
+armor: "armors.light"
+locomotor: "locomotors.fixed_wing"
+targetability: ["targetabilities.high_air"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 8
+visionrange: 8
+alertrange: 11
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.32
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.high_air", "locomotors.fixed_wing", "damages.machine_gun_autocannon", "targetabilities.low_air", "damages.air_to_ground_strike", "targetabilities.ground", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.air_command"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Narrow wings, red intercept brackets, contrails, and clipped lock-on tones."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Narrow wings, red intercept brackets, contrails, and clipped lock-on tones."
+fx:
+  identity: "Narrow wings, red intercept brackets, contrails, and clipped lock-on tones."
+design:
+  tactical_identity: "Air superiority and bomber interception; secondary pursuit of damaged aircraft."
+  player_decision: "Choose a kill commitment or disengage before the fighter is trapped. It fails when baited into anti-air or prolonged ground attack."
+  counterplay: "Ground-based anti-air, screening fighters, baiting the lock, and denying airfield recovery."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Air protection and high speed, but limited staying power under concentrated anti-air."
+  support_behavior: "Keeps bombers and gunships alive by contesting enemy aircraft; it does not improve ground fire."
+  locomotion_behavior: "Fixed-wing; high-air attack runs with strong turn commitment and limited loiter."
+  targetability_behavior: "High air in flight; anti-air and enemy fighters. Ground weapons cannot target it unless a state explicitly lowers its flight profile."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "This card owns its air-domain values; attack and lock resolution follows the referenced first-class profiles. Interceptor cannon | Machine gun/autocannon; low air, high air | 5.5 / 28 / 18 ticks | Attack-run projectile 16 cells/s; point; tracking within 30° cone, 180°/s Air-to-air missile | Air-to-ground strike; low air, high air | 8.0 / 90 / 90 ticks | Projectile 12 cells/s; point; lock tracking within 25° cone, 90°/s Pursuit Lock | 15-tick lock; 90-tick active; 30-tick recovery; 180-tick cooldown; +20% missile damage and +30°/s turn, target must remain visible | Break LOS, retreat, counter-fighter, or bait into anti-air"
+production:
+  producer: "factions.directorate.buildings.air_command"
+  queue: "default_queue"
+  category: "air_superiority"
+  prerequisites: ["factions.directorate.buildings.air_command", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 500
+  buildtime: 120
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Interceptor cannon"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.low_air", "targetabilities.high_air"]
+    attackrange: 5.5
+    attackdamage: 28
+    attackperiod: 18
+    delivery: "attack_run_projectile_16_cells_s_point_tracking_within_30_cone_180_s"
+    design:
+      tactical_use: "Interceptor cannon | Machine gun/autocannon; low air, high air | 5.5 / 28 / 18 ticks | Attack-run projectile 16 cells/s; point; tracking within 30° cone, 180°/s"
+      counterplay: "Ground-based anti-air, screening fighters, baiting the lock, and denying airfield recovery."
+  - weapon: "weapons.default_resolution"
+    mount_name: "Air-to-air missile"
+    damage: "damages.air_to_ground_strike"
+    targetability: ["targetabilities.ground", "targetabilities.low_air", "targetabilities.high_air"]
+    attackrange: 8
+    attackdamage: 90
+    attackperiod: 90
+    delivery: "projectile_12_cells_s_point_lock_tracking_within_25_cone_90_s"
+    design:
+      tactical_use: "Air-to-air missile | Air-to-ground strike; low air, high air | 8.0 / 90 / 90 ticks | Projectile 12 cells/s; point; lock tracking within 25° cone, 90°/s"
+      counterplay: "Ground-based anti-air, screening fighters, baiting the lock, and denying airfield recovery."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Pursuit Lock"
+    activation: "active"
+    setup_ticks: 15
+    active_ticks: 90
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: true
+    design:
+      player_decision: "Choose a kill commitment or disengage before the fighter is trapped. It fails when baited into anti-air or prolonged ground attack."
+      counterplay: "Ground-based anti-air, screening fighters, baiting the lock, and denying airfield recovery."
+      interruption_readability: "Pursuit Lock | 15-tick lock; 90-tick active; 30-tick recovery; 180-tick cooldown; +20% missile damage and +30°/s turn, target must remain visible | Break LOS, retreat, counter-fighter, or bait into anti-air"

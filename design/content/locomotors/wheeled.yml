@@ -1,0 +1,11 @@
+display_name: "Wheeled"
+description: Fast road movement with poor rough-ground performance.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [grounded, moving, reversing, boarding, interacting]
+movement:
+  reverse_policy_owner: carrier
+design:
+  movement_rules: Wheeled units receive the road advantage and rough-ground penalty defined by their owning unit or scenario. They use ground cells, cannot enter deep water, and retain vehicle collision and crush rules.
+  interaction_rules: Wheeled units can board only transport contracts that accept vehicles. Turning, stopping, and separation are continuous; no instantaneous facing changes are allowed. A deployed state is never implied by wheels.

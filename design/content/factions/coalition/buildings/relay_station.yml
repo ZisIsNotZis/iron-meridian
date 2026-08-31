@@ -1,0 +1,36 @@
+display_name: "Relay Station"
+description: "Relay Station migrated from its Coalition design card."
+status: optional
+faction: factions.coalition
+platform: building
+tier: advanced
+building_roles: ["temporary_forward_relay"]
+hpmax: 350
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 2, height_cells: 2, facings: "cardinal"}
+construction:
+  cost: {resource: 400}
+  buildtime: 180
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.signals_laboratory", state: "operational"}]
+production: {max_operational: 3, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "temporary forward relay"
+  construction_behavior: "Builder anchor required; may be placed on legal forward buildable cells but not routes or objective exclusion zones."
+  production_behavior: "Role: temporary forward relay; cost: `400 resource`; build time: `180 ticks`; facility: `Construction Vehicle`; prerequisites: `Signals Laboratory operational`; queue/category: `construction / temporary support`; replacement/capacity: `maximum 3 operational stations; one active relay bubble per station; one builder assignment`."
+  defense_behavior: "Structure; visible after discovery; EMP disables its relay effect."
+  capture_behavior: "**Forward relay** — 20-tick deployment, 5-cell bubble for 180 ticks, +15% warning radius and -5 lock ticks for allied units inside; 300-tick cooldown, one bubble, no stacking."
+  repair_behavior: "Buy a forward timing window at the cost of a fragile, exposed structure or keep the army independent."
+  lifecycle_behavior: "Scout and destroy/EMP the station, force units outside its bubble, or wait for the bounded duration."
+  player_decision: "Buy a forward timing window at the cost of a fragile, exposed structure or keep the army independent."
+  counterplay: "Scout and destroy/EMP the station, force units outside its bubble, or wait for the bounded duration."
+  visual_identity: "Collapsible mast and blue-white segmented wavefront; setup scaffolding and shutdown pulse make the temporary state obvious."
+  design_rationale: "# Relay Station\n\n## Gameplay identity\n\n- **Footprint:** `2 × 2` cells; four facings; one service cell.\n- **Health / protection:** 350 HP; `reinforcedStructure`; fragile temporary-site override.\n- **Targetability:** Structure; visible after discovery; EMP disables its relay effect.\n- **Production:** Role: temporary forward relay; cost: `400 resource`; build time: `180 ticks`; facility: `Construction Vehicle`; prerequisites: `Signals Laboratory operational`; queue/category: `construction / temporary support`; replacement/capacity: `maximum 3 operational stations; one active relay bubble per station; one builder assignment`.\n- **Skill / passive:** **Forward relay** — 20-tick deployment, 5-cell bubble for 180 ticks, +15% warning radius and -5 lock ticks for allied units inside; 300-tick cooldown, one bubble, no stacking.\n- **Placement:** Builder anchor required; may be placed on legal forward buildable cells but not routes or objective exclusion zones.\n- **Player decision:** Buy a forward timing window at the cost of a fragile, exposed structure or keep the army independent.\n- **Counterplay:** Scout and destroy/EMP the station, force units outside its bubble, or wait for the bounded duration.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Collapsible mast and blue-white segmented wavefront; setup scaffolding and shutdown pulse make the temporary state obvious.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

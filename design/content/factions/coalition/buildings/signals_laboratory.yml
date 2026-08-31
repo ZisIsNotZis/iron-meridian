@@ -1,0 +1,36 @@
+display_name: "Signals Laboratory"
+description: "Signals Laboratory migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: advanced
+building_roles: ["advanced_communications", "targeting_unlock"]
+hpmax: 600
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 3, height_cells: 3, facings: "cardinal"}
+construction:
+  cost: {resource: 800}
+  buildtime: 420
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}, {object: "factions.coalition.buildings.infantry_center", state: "operational"}]
+production: {max_operational: 1, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "advanced communications and targeting unlock"
+  construction_behavior: "Buildable within shared anchors; cannot overlap objective exclusion or routes; benefits from sightline but does not create one by itself."
+  production_behavior: "Role: advanced communications and targeting unlock; cost: `800 resource`; build time: `420 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ and Infantry Center operational`; queue/category: `construction / technology`; replacement/capacity: `maximum 1 operational laboratory; no production queue; one builder assignment`."
+  defense_behavior: "Structure; visible; electronic functions can be disabled by EMP under shared rules."
+  capture_behavior: "**Target analysis** — one visible target designation within `10` cells, 30-tick setup, 120-tick duration, 240-tick cooldown; EMP interrupts it."
+  repair_behavior: "Invest in precision and information or spend the same resource on immediate force."
+  lifecycle_behavior: "Scout and disable/destroy the lab, break its line of sight, or force designation cooldowns; disconnected units retain baseline function."
+  player_decision: "Invest in precision and information or spend the same resource on immediate force."
+  counterplay: "Scout and disable/destroy the lab, break its line of sight, or force designation cooldowns; disconnected units retain baseline function."
+  visual_identity: "Glass antenna room and blue waveform panels; designation is a narrow projected bracket, never a full-map overlay."
+  design_rationale: "# Signals Laboratory\n\n## Gameplay identity\n\n- **Footprint:** `3 × 3` cells; four facings; one service cell.\n- **Health / protection:** 600 HP; `reinforcedStructure`; no global protection effect.\n- **Targetability:** Structure; visible; electronic functions can be disabled by EMP under shared rules.\n- **Production:** Role: advanced communications and targeting unlock; cost: `800 resource`; build time: `420 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ and Infantry Center operational`; queue/category: `construction / technology`; replacement/capacity: `maximum 1 operational laboratory; no production queue; one builder assignment`.\n- **Skill / passive:** **Target analysis** — one visible target designation within `10` cells, 30-tick setup, 120-tick duration, 240-tick cooldown; EMP interrupts it.\n- **Placement:** Buildable within shared anchors; cannot overlap objective exclusion or routes; benefits from sightline but does not create one by itself.\n- **Player decision:** Invest in precision and information or spend the same resource on immediate force.\n- **Counterplay:** Scout and disable/destroy the lab, break its line of sight, or force designation cooldowns; disconnected units retain baseline function.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Glass antenna room and blue waveform panels; designation is a narrow projected bracket, never a full-map overlay.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

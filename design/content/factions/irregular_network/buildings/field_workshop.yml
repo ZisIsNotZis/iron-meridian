@@ -1,0 +1,27 @@
+display_name: Field Workshop
+description: "Core Established improvised vehicle/deployable production site. 3x3 footprint, four cardinal facings, two exit cells on facing edge; buildable ground at shared builder anchor with pathable exits. Construction 600 resource / 300 ticks, operational Safehouse and builder required. Body 600 HP, light armor, no power dependency or global aura; structure targetability and ordinary vision/attack; production activity reveals local concealment. One vehicle FIFO queue, capacity 1, no roster cap, queued work lost on destruction, requires operational Safehouse, no air or naval queue. Patch line repairs one nearby Network vehicle within 1.0 cell at 2 HP/s while docked, does not stack with Wrecker or repair destroyed entities. No weapon. Persistent shared blueprint/constructing/operational/damaged/destroyed lifecycle."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: production
+tier: established
+building_roles: [manufacturing, sustainment]
+hpmax: 600
+armor: armors.light
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 6.0
+alertrange: 8.0
+footprint: {width_cells: 3, height_cells: 3, facings: cardinal, interaction_cells: 2}
+placement: {terrain: buildable_ground, anchor: construction_radius, facing: cardinal}
+construction: {cost: {resource: 600}, buildtime: 300, prerequisites: [{object: factions.irregular_network.buildings.safehouse}]}
+exits: [{exit_name: vehicle_exit, direction: any, exit_type: vehicle, capacity: 1, blocked_behavior: pause}]
+production: {queues: [{queue_name: vehicle, category: vehicle, capacity: 1, exit_name: vehicle_exit, blocked_behavior: pause}], max_operational: 1, replacement_allowed: false, replacement_scope: none}
+repair: {available: true, target: allied_units, rate_per_tick: 2, range_cells: 1.0, interrupted_by_damage: true}
+lifecycle: {states: [blueprint, constructing, operational, damaged, destroyed], destruction_behavior: remove}
+presentation: {fallback_policy: inherit, silhouette: "Shipping containers, open welding bays, and hanging engine blocks; queue progress is a pulsing work lamp and visible exhaust plume.", readability: "Construction, queue commitment, exit blocking, repair, damage, and destruction remain visible."}
+audio: {identity: "Welding, engine assembly, work lamp, queue, damage, and destruction use faction fallback."}
+fx: {identity: "Welding sparks and exhaust plume make low-throughput production visible."}
+design: {construction_behavior: "600 resource, 300 ticks, Safehouse/builder construction.", production_behavior: "One FIFO vehicle queue, capacity 1, no roster cap; queued work lost on destruction; no air/naval queue.", defense_behavior: "No static weapon or area defense; 600 HP light armor.", capture_behavior: "No capture behavior is declared.", repair_behavior: "Patch line repairs one docked Network vehicle at 2 HP/s and does not stack or repair destroyed entities.", lifecycle_behavior: "Persistent shared construction lifecycle; no temporary expiry.", player_decision: "Build early for mobility while exposing a weak low-throughput anchor, or delay to protect base/economy.", counterplay: "Attack workshop or exits, raid during queue commitment, and use bounded sabotage to pause production.", visual_identity: "Containers, welding bays, hanging engine blocks.", audio_identity: "Welding and engine assembly.", fx_identity: "Work lamp and exhaust plume.", design_rationale: "One limited vehicle queue preserves Network throughput as a cost."}

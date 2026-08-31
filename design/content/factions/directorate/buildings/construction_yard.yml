@@ -1,0 +1,42 @@
+display_name: "Construction Yard"
+description: "Construction Yard Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "base_anchor"
+tier: "field"
+hpmax: 1500
+building_roles: ["directorate_hq_and_sole_normal_construction_anchor", "its_survival_is_the_player_s_base_decision"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 4, height_cells: 4, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Four-block armored command slab, red alignment beacons, gantry construction animation, low siren on critical damage, and one restrained HQ-collapse event."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Four-block armored command slab, red alignment beacons, gantry construction animation, low siren on critical damage, and one restrained HQ-collapse event."
+fx:
+  identity: "Four-block armored command slab, red alignment beacons, gantry construction animation, low siren on critical damage, and one restrained HQ-collapse event."
+design:
+  counterplay: "Raid construction vehicles, processor and production buildings, then focus the HQ; indirect fire and air pressure bypass its local defenses."
+  defense_behavior: "Structure; visible to ordinary sight and structure-capable weapons; no stealth or invulnerability state."
+construction:
+  cost:
+    resource: 0
+  buildtime: 0
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  builder_range: 12
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+production:
+  max_operational: 1
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false

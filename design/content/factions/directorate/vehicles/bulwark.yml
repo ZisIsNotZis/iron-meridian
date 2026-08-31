@@ -1,0 +1,74 @@
+display_name: "Bulwark"
+description: "Bulwark Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "advanced"
+battlefield_roles: ["formation_anchor_and_mobile_cover", "protection_for_vulnerable_support"]
+hpmax: 700
+armor: "armors.heavy"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 1.7
+visionrange: 6.5
+alertrange: 8
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.68
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.heavy", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.explosive_area", "targetabilities.structure", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.heavy_works", "factions.directorate.buildings.recovery_depot"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Fold-out armor fins, ground anchors, white shield grid, and a low bracing pulse."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Fold-out armor fins, ground anchors, white shield grid, and a low bracing pulse."
+fx:
+  identity: "Fold-out armor fins, ground anchors, white shield grid, and a low bracing pulse."
+design:
+  tactical_identity: "Formation anchor and mobile cover; secondary protection for vulnerable support."
+  player_decision: "Decide where the army becomes difficult to dislodge, accepting that the decision fixes the formation in place. It fails when bypassed or surrounded."
+  counterplay: "Flank, bypass, artillery, aircraft, rear attacks, and striking the units it cannot cover."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Heavy armor with a reinforced frontal profile."
+  support_behavior: "Projects local frontal cover to nearby units while deployed; its protection ends at the readable coverage boundary."
+  locomotion_behavior: "Tracked; slow and broad, with strong collision. Deployment changes its movement state."
+  targetability_behavior: "Ground vehicle; ordinary sight and anti-vehicle targeting in both states."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Bulwark's frontal protection and cover are explicit state modifiers, not a new armor system. Low-rate cannon | Explosive; ground light, heavy, structure | 5.5 / 55 / 90 ticks | Projectile 9 cells/s; point; no tracking Brace Array | 30-tick setup; 150-tick active; 30-tick recovery; 240-tick cooldown; 120° frontal arc, +35% frontal protection, allies within 1.5 cells receive -15% incoming damage; movement disabled | Flank, bypass, artillery, air, or attack uncovered allies"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "armored_support"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.heavy_works", "factions.directorate.buildings.recovery_depot"]
+  cost:
+    resource: 700
+  buildtime: 195
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Low-rate cannon"
+    damage: "damages.explosive_area"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 5.5
+    attackdamage: 55
+    attackperiod: 90
+    delivery: "projectile_9_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Low-rate cannon | Explosive; ground light, heavy, structure | 5.5 / 55 / 90 ticks | Projectile 9 cells/s; point; no tracking"
+      counterplay: "Flank, bypass, artillery, aircraft, rear attacks, and striking the units it cannot cover."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Brace Array"
+    activation: "active"
+    setup_ticks: 30
+    active_ticks: 150
+    recovery_ticks: 30
+    cooldown_ticks: 240
+    targetrange: 1.5
+    movement_allowed: false
+    design:
+      player_decision: "Decide where the army becomes difficult to dislodge, accepting that the decision fixes the formation in place. It fails when bypassed or surrounded."
+      counterplay: "Flank, bypass, artillery, aircraft, rear attacks, and striking the units it cannot cover."
+      interruption_readability: "Brace Array | 30-tick setup; 150-tick active; 30-tick recovery; 240-tick cooldown; 120° frontal arc, +35% frontal protection, allies within 1.5 cells receive -15% incoming damage; movement disabled | Flank, bypass, artillery, air, or attack uncovered allies"

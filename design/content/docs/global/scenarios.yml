@@ -1,0 +1,19 @@
+kind: scenario_contract
+document_id: design.scenarios
+title: Scenarios
+ownership:
+  - Scenarios canonically own playable match setup: map, factions, players, initial entities, available recipes, mode rules, and victory conditions.
+  - Scenarios do not redefine entity costs, map geometry, economy rates, or combat values; referenced objects own them.
+  - V1 Scope selects the shipped scenario; this contract owns exact setup semantics.
+schema_fields:
+  - Identity: id, version, mode, status.
+  - Content: map, faction slots, content references, available recipes.
+  - Setup: player positions/facing, completed buildings, initial units, bank.
+  - Rules: fog, progression, pause, surrender, defeat, victory, AI binding.
+  - Acceptance: intended duration, active-entity target, deterministic fixture.
+constraints:
+  - Scenario is a closed content boundary; unlisted recipe, unit, building, or tech node is unavailable even if its faction card exists.
+  - Initial entities are created in listed order and receive stable spawn keys; simulation turns keys into match-local IDs under architecture determinism rules.
+  - Metadata is descriptive only when naming controller or UI mode; gameplay choices use explicit fields validated against system contracts.
+  - A scenario must not rely on absence of a field to enable a feature.
+index: [scenarios.v1_meridian_crossing is the one canonical vertical-slice match]

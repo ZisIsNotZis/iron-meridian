@@ -1,0 +1,52 @@
+kind: brand_direction
+source_document: design/presentation/logo/README.md
+title: IRON_MERIDIAN
+authority: "Canonical global logo direction; final SVG, raster, and font files may be added later, must preserve these rules, and must not become gameplay dependencies."
+brand_idea: "A serious near-future conflict about industrial power, information, and the decisive line between them."
+mark_character: "A military map instrument machined from metal: exact, weighty, and directional; it supports a sober strategy game rather than parody, nostalgia, or generic science-fiction spectacle."
+readable_ideas:
+  - {name: meridian, meaning: "a vertical or axial line that divides and aligns the field"}
+  - {name: iron, meaning: "a compact, engineered mass with hard geometry and material weight"}
+  - {name: crossing, meaning: "two forces meeting at a controlled intersection, not an ornamental explosion"}
+primary_mark:
+  emblem: "A compact emblem built from a strong vertical meridian crossing a shorter horizontal bar or notch."
+  negative_space: "Suggests a map crosshair or bridge span without drawing a literal compass, national flag, skull, eagle, or weapon."
+  small_size: "Recognizable as a one-color silhouette at small UI sizes."
+  wordmark: "IRON MERIDIAN in uppercase, with modest tracking and a stable rectangular rhythm."
+  typography: "A sturdy condensed or semi-condensed sans serif with open counters and plain numerals."
+  typography_exclusion: "Avoid distressed stencil breaks: the world is worn, but the product identity is controlled and legible."
+colors:
+  default_iron: '#171A1D'
+  default_off_white: '#E7E1D4'
+  optional_signal_amber: '#D59A32'
+  amber_usage: "Meridian highlight, objective state, or active navigation—not a faction color and not the only warning cue."
+  surface: "The mark may use a very small value shift or brushed-metal texture in title presentation, but the gameplay HUD version is flat color."
+  exclusions: [gradients, bloom, animation, texture_detail_as_recognition]
+  faction_boundary: "Faction colors remain owned by faction presentation documents. The global mark must not imply that amber, iron, or any other brand color belongs to one faction."
+required_variants:
+  - {variant: full_lockup, contents: emblem_plus_IRON_MERIDIAN_wordmark, use: title_campaign_loading_surfaces}
+  - {variant: horizontal_lockup, contents: same_geometric_mark, use: title_bars_and_wide_menus}
+  - {variant: emblem_only, contents: emblem, use: favicon_loading_indicator_compact_HUD_browser_PWA}
+  - {variant: one_color_light, contents: same_geometric_mark, use: light_backgrounds}
+  - {variant: one_color_dark, contents: same_geometric_mark, use: dark_backgrounds}
+  - {variant: monochrome_small_size, contents: simplified_interior_spacing, use: small_sizes}
+size_rules:
+  emblem_min_css_px: [16, 16]
+  full_lockup_min_width_px: 320
+  clear_space: "At least one meridian-bar width around the mark."
+  exclusions: [shadows, outlines_that_disappear_at_required_sizes]
+motion_and_sound:
+  title_reveal: "Optional one short reveal: a line aligns, a crossing locks, and the wordmark resolves."
+  duration_seconds_max: 2
+  motion_exclusions: [camera_shake, particle_burst, loud_impact]
+  reduced_motion: "Static mark is the source of truth; motion respects reduced-motion settings."
+  logo_sting: "If added, use a low mechanical lock and a brief radio tone; it must not resemble an alarm, weapon report, or objective warning."
+usage_rules:
+  - keep_away_from_central_objective_iconography
+  - use_full_lockup_on_title_campaign_loading_surfaces
+  - use_emblem_only_in_compact_controls_and_browser_or_pwa_surfaces
+  - never_recolor_dynamically_for_health_ownership_capture_or_faction
+  - do_not_put_mark_on_every_unit_projectile_or_building
+  - preserve_proportions_across_light_and_dark_backgrounds
+  - do_not_stretch_bevel_camouflage_or_add_faction_specific_versions
+delivery_boundary: "Direction only for V1; no binary logo, font, texture, or audio asset is required. Future optimized files may be added in this directory with previews and source/license notes."

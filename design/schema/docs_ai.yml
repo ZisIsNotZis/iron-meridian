@@ -1,0 +1,35 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_ai
+type: object
+additionalProperties: false
+required: [kind, source_document]
+properties:
+  kind: {type: string}
+  source_document: {type: string, minLength: 1}
+  status: {type: string}
+  references: {type: array, items: {}}
+  purpose: {type: string, minLength: 1}
+  ownership: {type: string, minLength: 1}
+  boundary: {type: string, minLength: 1}
+  difficulty: {type: string, minLength: 1}
+  authority_boundary: {type: string, minLength: 1}
+  v1_controller: {type: object}
+  reusable_near_term_behaviors: {type: array, items: {}}
+  blackboard: {type: string, minLength: 1}
+  difficulty_levels: {type: object}
+  difficulty_exclusion: {type: string, minLength: 1}
+  mission_scripting: {type: string, minLength: 1}
+  mission_behavior: {type: string, minLength: 1}
+  evaluation: {type: string, minLength: 1}
+  player_experience_expectations: {type: array, items: {}}
+  observation_boundary: {type: string, minLength: 1}
+  decision_cadence: {type: object}
+  blackboard_fields: {type: array, items: {}}
+  ordering: {type: object}
+  states: {type: array, items: {}}
+  profiles: {type: array, items: {}}
+  difficulty_invariants: {type: string, minLength: 1}
+  role_choice: {type: string, minLength: 1}
+  fixture_definition: {type: string, minLength: 1}
+  fixtures: {type: array, items: {}}
+  fixture_rule: {type: string, minLength: 1}

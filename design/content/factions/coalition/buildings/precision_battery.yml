@@ -1,0 +1,36 @@
+display_name: "Precision Battery"
+description: "Precision Battery migrated from its Coalition design card."
+status: optional
+faction: factions.coalition
+platform: building
+tier: strategic
+building_roles: ["strategic_indirect_support"]
+hpmax: 650
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 3, height_cells: 3, facings: "cardinal"}
+construction:
+  cost: {resource: 900}
+  buildtime: 450
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.signals_laboratory", state: "operational"}]
+production: {max_operational: 2, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "strategic indirect support"
+  construction_behavior: "Requires shared builder anchor, legal line-of-fire and clear service cells; cannot occupy primary routes or objective exclusion."
+  production_behavior: "Role: strategic indirect support; cost: `900 resource`; build time: `450 ticks`; facility: `Construction Vehicle`; prerequisites: `Signals Laboratory operational`; queue/category: `construction / strategic defense`; replacement/capacity: `maximum 2 operational batteries; one weapon per battery; one builder assignment`."
+  defense_behavior: "Structure; visible firing position; weapon and guidance are disabled by EMP."
+  capture_behavior: "**Precision bombardment** — 30-tick setup, designated point within `12` cells, 120 damage/event, 90-tick period, projectile 7 cells/s, area hit with `0.8`-cell radius and 50% edge damage, indirect point designation, no tracking; 240-tick cooldown."
+  repair_behavior: "Invest in long-range area denial against a static position or choose more mobile forces and preserve flexibility."
+  lifecycle_behavior: "Attack during setup/reload, move out of the warning, flank the battery, use aircraft, or EMP its guidance."
+  player_decision: "Invest in long-range area denial against a static position or choose more mobile forces and preserve flexibility."
+  counterplay: "Attack during setup/reload, move out of the warning, flank the battery, use aircraft, or EMP its guidance."
+  visual_identity: "Folding artillery cradle, pale projected impact reticle, counter-battery warning pulse, and restrained dust plume."
+  design_rationale: "# Precision Battery\n\n## Gameplay identity\n\n- **Footprint:** `3 × 3` cells; four facings; firing direction and crew side are visible.\n- **Health / protection:** 650 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; visible firing position; weapon and guidance are disabled by EMP.\n- **Production:** Role: strategic indirect support; cost: `900 resource`; build time: `450 ticks`; facility: `Construction Vehicle`; prerequisites: `Signals Laboratory operational`; queue/category: `construction / strategic defense`; replacement/capacity: `maximum 2 operational batteries; one weapon per battery; one builder assignment`.\n- **Skill / passive:** **Precision bombardment** — 30-tick setup, designated point within `12` cells, 120 damage/event, 90-tick period, projectile 7 cells/s, area hit with `0.8`-cell radius and 50% edge damage, indirect point designation, no tracking; 240-tick cooldown.\n- **Placement:** Requires shared builder anchor, legal line-of-fire and clear service cells; cannot occupy primary routes or objective exclusion.\n- **Player decision:** Invest in long-range area denial against a static position or choose more mobile forces and preserve flexibility.\n- **Counterplay:** Attack during setup/reload, move out of the warning, flank the battery, use aircraft, or EMP its guidance.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Folding artillery cradle, pale projected impact reticle, counter-battery warning pulse, and restrained dust plume.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

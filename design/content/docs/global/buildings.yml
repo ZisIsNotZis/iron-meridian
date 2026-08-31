@@ -1,0 +1,70 @@
+kind: building_contract
+document_id: design.buildings
+title: Buildings and Defenses
+ownership:
+  - Buildings are persistent battlefield entities that anchor production and economy, shape a small amount of local territory, and give the opponent a valuable target.
+  - A building earns its footprint by creating a clear decision; it is not a passive wall or a second unit roster.
+  - Construction placement and resource/queue behavior remain canonical in construction and economy.
+  - Weapon resolution, repair, and target domains remain canonical in combat and first-class type collections.
+  - Faction files define identity, roster membership, and deliberate exceptions; they do not copy shared systems.
+roles:
+  - Base anchor: command and construction origin whose loss can end the match; HQ or Construction Yard.
+  - Economy: converts or protects the resource lifecycle; Processor or Refinery.
+  - Production: owns one production queue for a platform family; Barracks, Assembly, Air Command, or Naval Yard.
+  - Tech or doctrine: unlocks or improves a bounded advanced choice; Training, Signals, or Heavy Works.
+  - Repair or logistics: restores living assets or improves recovery at a committed location; Repair Bay.
+  - Detection or control: provides local information or a bounded control effect; Sensor Post or Signal Station.
+  - Point defense: static local weapon with a clear target profile; personnel, anti-vehicle, or anti-air defense.
+  - Area defense: creates a warning zone or denies a route without becoming a wall; mine-free V1, later artillery or freeze zone.
+  - Temporary site: faction-specific, time-limited forward capability; Network hideout or relay.
+  - Roles are not mandatory buildings. Normally one building owns a role; duplication requires fundamentally different locations or target profiles.
+schema_fields:
+  - Identity: name, faction, platform, status, production tier.
+  - Role: primary capability and the player decision it creates.
+  - Footprint: rectangular size class, facing, exits, interaction cells.
+  - Placement: legal anchors, terrain restrictions, route/objective exclusions.
+  - Targetability: domain, armor class, detection state, vulnerable states.
+  - Production: queue owner, produced platforms, prerequisites, loss consequence.
+  - Repair: serviced domains, radius, channel, and what it cannot restore.
+  - Defense: target profile, hit model, arc/range policy, warning, counterplay.
+  - Special: one bounded action, cost/cooldown, setup, and interruption.
+  - Lifecycle: blueprint, construction, operational, damaged, disabled, destroyed.
+  - Presentation: silhouette, faction materials, UI state, audio, animation, FX.
+lifecycle:
+  - planned → blueprint → constructing → operational → damaged → destroyed.
+  - planned → cancelled.
+  - Planned is a local UI preview with no simulation effect.
+  - Blueprint reserves cost, blocks the footprint, is visible and vulnerable, and can be cancelled under construction's refund rule.
+  - Constructing receives builder progress; it is not a full producer or defense, and V1 uses no reduced emergency function unless needed for readability.
+  - Operational enables all declared queues, weapons, sensing, and interactions.
+  - Damaged does not silently disable a building; an explicit threshold may disable a queue with visible state and repair path.
+  - Destroyed leaves after the shared combat destruction phase; queue, sensing, and weapons stop, and queued work is lost unless explicitly retained.
+constraints:
+  - Buildings use the logical map grid and shared placement validator.
+  - Each card owns rectangular footprint, facing restrictions, construction cost/time, health, and exit/interaction cells.
+  - Rotation is in 90° steps and is revalidated against the complete footprint.
+  - Buildings may touch but have no automatic adjacency, power, or wall-connection rule.
+  - V1 has one builder, no selling, no instant rebuilding, no parallel queues, no power grid, and no walls.
+  - A completed building is never moved by placement.
+  - Buildings are stationary structure-domain targets with footprint collision and reinforcedStructure armor by default; lighter armor requires visible tradeoff.
+  - Terrain and footprint do not make a building untargetable.
+  - Every defense declares target domains and detection, weapon family and hit model, range and arc/turning, activation, positional weakness, warning, and counterplay.
+  - Buildings do not acquire targets through hidden global vision; sensors provide information but defenses need their own legal target and line-of-fire/lock rules.
+  - Static weapons may rotate; turning and windup remain observable.
+  - Anti-personnel defenses lose to armor or indirect fire; anti-vehicle defenses can be flanked, outranged, or disabled; anti-air defenses cannot replace mobile army control; detection structures deal no automatic damage unless their card also owns a weapon.
+  - No V1 defense uses walls, hidden mines, a power dependency, or a global firing network.
+  - Each production building owns at most one FIFO queue in V1; the vertical slice uses one generic Assembly queue.
+  - A tier changes commitment and availability, not merely hit points.
+  - Repair restores health under shared combat rules, has declared radius/domains/channel, does not revive destroyed entities or clear EMP/freeze by default, and processor harvester repair is an economy interaction.
+  - Destroying a building removes capability, not banked resource; processor destruction interrupts unloading and production destruction blocks new orders and loses queued work.
+  - A special structure owns one bounded active interaction with cooldown, warning, target/range limit, and counterplay; it is not a passive percentage aura.
+  - Strong effects require setup, line of sight, visible location, or meaningful opportunity cost.
+  - Directorate favors deliberate hardpoints and protected throughput; Coalition favors sensors, relays, and relocatable precision; Irregular Network favors concealed, temporary, low-footprint sites. These do not alter shared construction or combat semantics.
+  - Core means needed for a coherent faction and likely to ship; optional fills a map, matchup, or campaign need; deferred is postponed for rules, assets, or maintenance; rejected conflicts with another owner or Rule zero.
+  - Two major factions target 12–16 meaningful buildings each; Irregular Network uses a smaller temporary/captured-capability roster and need not mirror them.
+presentation:
+  - Every building needs readable silhouette, footprint preview, construction progress, operational/damaged/disabled state, and destruction event.
+  - UI shows cost reservation, queue state, repair/disable reason, weapon range or defense arc, and placement failure reason.
+  - Construction uses a distinct blueprint pulse; completed structures use a persistent faction accent; heavy attacks use a short damage flash and debris burst.
+  - Exact art, audio, animation, and FX assets belong to presentation and faction asset directories.
+  - Before adding a building, identify its player decision, why existing buildings cannot provide it, how an enemy scouts and counters it, and the cheapest understandable replacement. If the answer is only more damage, range, or prerequisite, keep the existing structure and tune its data.

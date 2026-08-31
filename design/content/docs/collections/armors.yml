@@ -1,0 +1,31 @@
+display_name: Armors
+description: Reusable protection profiles independent of carrier platform, locomotion, health, collision, and targetability.
+status: designed
+kind: collection_contract
+collection_name: armors
+source_documents: [design/armors.md, design/armors/README.md]
+source_documents_status: deleted_after_migration
+schema_id: profile
+object_schema:
+  required_fields: [id, kind, status, references, display_name, protection, damage_interactions]
+  field_types:
+    object_id: dotted_id
+    kind: {type: enum, values: [armor]}
+    status: status
+    references: list_of_dotted_ids
+    display_name: string
+    protection: string
+    damage_interactions: list_of_damage_interaction_records
+interaction_results: [effective, reduced, ineffective, special]
+reference_direction:
+  weapons_reference: damage_objects
+  targets_reference: armor_objects
+object_excludes: [unit_specific_health, movement, collision, art]
+ownership:
+  carrier_owns: [health, movement, collision, targetability, art]
+  armor_owns: [protection, damage_interactions]
+rules:
+  separate_armor_condition: true
+  separate_state_rules: [freeze, crush, emp, platform_transition]
+  absolute_immunity_requires_obvious_counter: true
+  deferred: [directional_armor, individual_plates, penetration_angles, crew_compartments]

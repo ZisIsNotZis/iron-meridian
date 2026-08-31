@@ -1,0 +1,17 @@
+display_name: "V1 Resource Exchange Recipe"
+description: "Reusable recipe definition."
+status: core
+kind: "recipe"
+product: factions.coalition.buildings.resource_exchange
+producer: "construction"
+category: "construction"
+availability: scenarios.v1_meridian_crossing
+prerequisites: [{object: factions.coalition.buildings.coalition_hq, state: operational}]
+references: [factions.coalition.buildings.resource_exchange, factions.coalition.buildings.coalition_hq, factions.coalition.vehicles.mcv]
+player_exposed: false
+product_quantity: 1
+availability_semantics:
+  starting_copy: {scenario_completed: true, second_starting_copy: false}
+  recovery: {recovery_only: true}
+design:
+  meaning: Allows the active MCV to replace a destroyed Resource Exchange while the Coalition HQ remains operational. The building card owns footprint, cost, buildtime, processor capacity, and harvester service values.

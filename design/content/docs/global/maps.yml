@@ -1,0 +1,41 @@
+kind: map_contract
+document_id: design.maps
+title: Map Design
+ownership:
+  - Maps are authored combat spaces, not procedural terrain demos; they make economy-versus-army timing, scouting, construction, retreat, and objective contest legible.
+  - Simulation owns terrain flags, occupancy, routes, resource reserves, and objective coordinates; rendering only presents them.
+  - Logical geometry is authoritative; collision, construction, pathfinding, sensing, and objective checks use same cell and world coordinates.
+schema_fields:
+  - Fixed logical grid and world transform.
+  - Playable cells, buildable cells, primary-route/no-build cells, and terrain movement flags.
+  - Symmetric or intentionally authored starting locations, HQ anchors, processors, harvesters, and builders.
+  - Resource-node positions and finite reserves.
+  - Objective position, radius, and exclusion markers.
+  - Spawn/exit points and deterministic navigation connectivity for each V1 locomotor.
+  - Fog-of-war reveal rules and authored visual layers for terrain, cover, and landmarks.
+principles:
+  - V1's single authored battlefield is Meridian Crossing; child map owns cell layers, anchors, route geometry, validation invariants, dimensions, radii, reserves, and route coordinates.
+  - It provides mirrored bases, three traversable approaches, central objective, home resources, contested resource, early scout choice, first army timing, safe home harvest, dangerous expansion/raid choice, and a contest that cannot be ignored forever.
+  - Match duration and population targets belong to V1 Scope.
+constraints:
+  - Starting economy, route length, objective distance, buildable area, and sightlines are horizontally mirrored; decorative landmarks, cover, and texture may vary only without changing measured opportunities; deliberate asymmetry belongs in child map with compensation.
+  - V1 basic fog permanently retains discovered terrain, shows enemy units/buildings only while revealed, and gives no objective-wide vision; ordinary sensing and concealment apply.
+  - Terrain affects locomotion and line of sight through shared flags, not secretly damage.
+  - Map offers visible retreat from likely objective positions and enough home buildable space for recovery; contested field and objective are pressure points, not mandatory all-in traps.
+  - Near-term skirmish is repeatable solo mode for Directorate and Coalition: two human-or-AI slots, selected map, one faction per slot, shared land rules, player chooses factions/difficulty/map, no hidden handicaps/random bonuses.
+index:
+  - Meridian Crossing: mirrored three-route objective contest; teaching and balance reference.
+  - Relay Yard: compact cross-route map rewarding scouting and short counterattacks.
+  - Three Arches: three separated approaches with risky center crossing and safer flank rotations.
+  - Salt Line: long sightlines and contested southern income route testing patience and recovery.
+rules:
+  - All four near-term maps use one resource, one primary objective, same victory condition, and same faction/unit rules; geometry and resource distance may vary but no new mechanic or map-only counter.
+  - Near-term slots are two, player versus one AI, no team games.
+  - Near-term factions are Directorate or Coalition for either slot.
+  - Near-term difficulty is Recruit, Regular, Veteran, or Commander; behavior changes only.
+  - Victory is enemy HQ destruction or continuous hold of primary objective for objective contract's duration; defeat is own HQ destruction, surrender, or authored campaign failure.
+  - Fog is enabled with no shared vision or observer mode; default skirmish progression is disabled, and explicit mode may enable veterancy.
+  - Pause is local against AI and orders are disabled while paused; restart rebuilds exact setup and clears result; continuity is none.
+  - Result reports map, factions, difficulty, duration, victory cause, objective hold time, and decisive event summary.
+  - Skirmish does not offer aircraft, naval, transport, custom rules, or Irregular Network until those systems leave far-vision placeholder.
+deferred: [procedural maps, map hazards, destructible terrain, bridges and naval waterways, elevation, weather, day/night, teleport routes, neutral creeps, random resource placement, hidden objectives, asymmetric tournament balancing, multiple maps, aircraft, naval topology, faction-specific terrain rules]

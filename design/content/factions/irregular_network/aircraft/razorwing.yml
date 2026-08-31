@@ -1,0 +1,27 @@
+display_name: Razorwing
+description: "Core Advanced authored strike aircraft. Fixed-wing high-air attack-run with turning commitment and return-to-base cycle; exposed to anti-air and fighters, cannot hover or capture. Light rockets use explosive/area against ground light vehicles and structures, range 5.5, 55 damage/event, salvo period 30, attack-run projectile speed 12, area radius 0.6, no tracking. Autocannon uses machine gun/autocannon against ground personnel and light vehicles, range 3.5, 18 damage/event, period 12, attack-run tracer, point hit, no tracking, only during run. Breakaway flare is withdrawal-only, active 45, cooldown 180; missile tracking turn rate -50 percent while exiting, direct anti-air remains valid, visible flare. Not producible: N/A resource/ticks, no queue/replacement; authored campaign strike asset. Body 300 HP, light armor, speed 9.0, radius 0.42, footprint 2x1, vision 8.0, alert/acquisition 10.0."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: aircraft
+tier: advanced
+battlefield_roles: [strike, harassment]
+hpmax: 300
+armor: armors.light
+locomotor: locomotors.fixed_wing
+targetability: [targetabilities.high_air]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 9.0
+visionrange: 8.0
+alertrange: 10.0
+footprint: {radius_cells: 0.42, width_cells: 2, height_cells: 1}
+movement: {attack_movement: attack_run, attack_run_commitment_ticks: 30}
+weapon_mounts:
+  - {weapon: weapons.default_resolution, mount_name: rocket_pods, damage: damages.explosive_area, targetability: [targetabilities.ground], attackrange: 5.5, attackdamage: 55, attackperiod: 30, projectile_speed: 12, area_radius_cells: 0.6, delivery: attack_run_projectile, hit_model: area, tracking: none, acquisition: direct}
+  - {weapon: weapons.default_resolution, mount_name: autocannon, damage: damages.machine_gun_autocannon, targetability: [targetabilities.ground], attackrange: 3.5, attackdamage: 18, attackperiod: 12, delivery: attack_run_short_tracer, hit_model: point, tracking: none, acquisition: direct}
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: breakaway_flare, activation: active, active_ticks: 45, cooldown_ticks: 180, target: withdrawal, design: {player_decision: "Choose a narrow strike window and escape route.", counterplay: "Layer anti-air, use fighters, and force repeat runs."}}]
+presentation: {fallback_policy: inherit, silhouette: "Narrow patched wings and stolen engine pods; rockets leave irregular staggered trails and flares burn dull violet.", readability: "Attack-run commitment, weapon events, withdrawal, and flare are readable; authored assets are N/A until production."}
+audio: {identity: "Engine, rocket, autocannon, flare, damage, and destruction use faction fallback."}
+fx: {identity: "Irregular rocket trails and dull-violet flare mark the attack run and exit."}
+design: {tactical_identity: "Fragile high-speed strike aircraft for one narrow attack window.", player_decision: "Strike when anti-air is displaced, then commit to an escape route.", counterplay: "Layer anti-air, fighters, and force repeat runs.", offense_behavior: "Rockets efficiently hit light vehicles/structures; autocannon harasses personnel/light vehicles; poor heavy-armor and spread-infantry performance.", defense_behavior: "Fragile light air protection; survival depends on timing and approach concealment.", support_behavior: "No repair, transport, detection, or control support; flare is self-defense only.", locomotion_behavior: "Fixed-wing high-air attack-run with turning commitment and return cycle.", targetability_behavior: "High-air only; cannot hover or capture; anti-air/fighter detection required.", acquisition_behavior: "Rocket area range 5.5/55/30/speed 12/radius .6; autocannon range 3.5/18/12; attack-run only.", lock_behavior: "Breakaway flare withdrawal-only, active 45, cooldown 180, missile turn rate halved but direct fire valid.", lifecycle_behavior: "Authored asset; no queue or replacement.", production_behavior: "Scenario-provided; N/A resource and ticks.", visual_identity: "Patched wings, stolen pods, staggered trails, dull violet flare.", audio_identity: "Stolen engine and attack-run cues.", fx_identity: "Irregular rocket trails and withdrawal flare.", design_rationale: "Attack-run access and speed are paid for by fragile light armor and poor heavy-armor efficiency."}

@@ -1,0 +1,27 @@
+display_name: Hunter Team
+description: "Core Established anti-armor ambush infantry. Slow foot movement while carrying the launcher; local temporary concealment and cover, crushable when revealed. Recoilless anti-armor weapon delivers high single-target health damage against medium and heavy ground vehicles and is poor against infantry and aircraft. Personnel armor makes one exposed team easy to punish. Anchor shot braces for a stronger armor strike and immobilization chance; setup reveals the team. Production 240 resource / 150 ticks; Cell House plus operational Field Workshop; infantry FIFO; no hard roster cap, one queue slot per order. Body 190 HP, personnel armor, speed 2.5 cells/s, radius 0.24, footprint 1x1; vision 6.5, alert/acquisition 8.0. Recoilless rifle uses anti-armor penetrator, range 7.5, 105 damage/event, 90 ticks, projectile speed 9, point hit, no tracking after launch, lock acquisition 15 ticks cancelled by movement, EMP, or lost legal target. Anchor shot setup 30 ticks, cooldown 150, next shot +20 percent damage and +1.0 range; team cannot move and is revealed during setup."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: infantry
+tier: established
+battlefield_roles: [anti_armor, ambush]
+hpmax: 190
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.5
+visionrange: 6.5
+alertrange: 8.0
+footprint: {radius_cells: 0.24, width_cells: 1, height_cells: 1}
+weapon_mounts:
+  - {weapon: weapons.default_resolution, mount_name: recoilless_rifle, damage: damages.anti_armor_penetrator, targetability: [targetabilities.ground], attackrange: 7.5, attackdamage: 105, attackperiod: 90, projectile_speed: 9, delivery: projectile, hit_model: point, tracking: none, acquisition: lock}
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: anchor_shot, activation: active, setup_ticks: 30, cooldown_ticks: 150, movement_allowed: false, target: self, interruption_conditions: [movement, emp], design: {player_decision: "Choose the firing lane and commit to a high-value ambush, or remain mobile and deal less damage.", counterplay: "Scouts, infantry screens, flanking, and artillery."}}
+production: {producer: factions.irregular_network.buildings.cell_house, queue: infantry, category: infantry, cost: {resource: 240}, buildtime: 150, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Folded tripod and salvaged optical sight; anchored shots kick up a sharp dust ring and leave a visible cable/brace line.", readability: "Readable infantry silhouette with footprint, selection, contact, and shadow anchors; icon, model, animation, audio, and undeclared effects inherit or remain N/A until production."}
+audio: {identity: "Selection, acknowledgement, attack/skill, damage, and destruction cues use faction fallback; bespoke files are N/A until audio production."}
+fx: {identity: "Muzzle flash and brace cable make the reveal readable; faction-flavored declared events inherit the global contract."}
+design: {tactical_identity: "High-value anti-armor ambush with a mobility-versus-commitment trade.", player_decision: "Pre-position for one decisive shot, then survive the reveal and displacement.", counterplay: "Scouts, artillery, infantry screens, and forcing an early shot.", offense_behavior: "Recoilless rifle targets ground light and heavy vehicles; high single-target damage and poor infantry/air performance.", defense_behavior: "Personnel armor and local concealment; concealment changes information, not armor, and area damage remains valid.", support_behavior: "Anchor shot improves its own anti-armor shot; no repair, transport, or command support.", locomotion_behavior: "Foot, ordinary cover interaction, slow while carrying launcher; concealed only in a valid prepared hide after bracing.", targetability_behavior: "Ground infantry; concealed while inactive in a valid hide, revealed by firing, close detection, or area damage; crushable when revealed.", acquisition_behavior: "Range 7.5, 105 damage, 90 ticks, projectile speed 9, point hit; 15-tick lock cancelled by movement, EMP, or lost legal target.", lock_behavior: "Anchor shot immobilizes during 30-tick setup, reveals the team, and gives the next shot +20 percent damage and +1 range; cooldown 150.", lifecycle_behavior: "No special lifecycle beyond shared unit states.", production_behavior: "Cell House plus operational Field Workshop; 240 resource, 150 ticks, one queue slot per order, no hard roster cap.", visual_identity: "Folded tripod, optical sight, dust ring, visible brace cable.", audio_identity: "Faction fallback and restrained ambush weapon cues.", fx_identity: "Sharp dust ring and net-tearing muzzle reveal.", design_rationale: "Ambush bonus is a deliberate skill modifier; anti-armor uses shared damage ratios."}

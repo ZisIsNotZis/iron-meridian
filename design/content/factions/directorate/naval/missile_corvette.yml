@@ -1,0 +1,72 @@
+display_name: "Missile Corvette"
+description: "Missile Corvette Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "naval"
+tier: "established"
+battlefield_roles: ["fast_surface_pressure_and_flexible_missile_screen", "anti_air_coverage_over_water"]
+hpmax: 360
+armor: "armors.light"
+locomotor: "locomotors.surface_naval"
+targetability: ["targetabilities.naval_surface"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 4.5
+visionrange: 7
+alertrange: 9
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.42
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.naval_surface", "locomotors.surface_naval", "damages.air_to_ground_strike", "targetabilities.ground", "targetabilities.high_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.naval_yard"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Sloped missile boxes, bright launch plumes, tight wake lines, and terse target telemetry."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Sloped missile boxes, bright launch plumes, tight wake lines, and terse target telemetry."
+fx:
+  identity: "Sloped missile boxes, bright launch plumes, tight wake lines, and terse target telemetry."
+design:
+  tactical_identity: "Fast surface pressure and flexible missile screen; secondary anti-air coverage over water."
+  player_decision: "Use mobility to choose the fight and create a missile angle, or preserve the corvette instead of trading into a heavier line. It fails when pinned or surprised by submarines."
+  counterplay: "Heavy ships, submarines, aircraft, shore batteries, and denying maneuver room."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Light naval protection; survives through speed and spacing."
+  support_behavior: "Screens heavier ships and contests air approaches over water; its flexible missiles do not make it a heavy combatant."
+  locomotion_behavior: "Naval surface; fast acceleration and turning, vulnerable to collision and concentrated fire."
+  targetability_behavior: "Naval surface; ordinary sight, naval weapons, aircraft, and shore weapons where applicable."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Corvette is a light surface escort with a flexible but non-heavy missile profile. Guided missile | Air-to-ground strike; naval surface, low/high air | 7.0 / 65 / 60 ticks | Projectile 11 cells/s; point; tracking within 30° cone, 75°/s Salvo Spread | 15-tick setup; three shots at 15-tick intervals; 30-tick recovery; 210-tick cooldown; shots may select two visible targets; steering -40% during volley | Attack during launch, spread, heavy ship, submarine, or deny maneuver room"
+production:
+  producer: "factions.directorate.buildings.naval_yard"
+  queue: "default_queue"
+  category: "escort"
+  prerequisites: ["factions.directorate.buildings.naval_yard", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 450
+  buildtime: 120
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Guided missile"
+    damage: "damages.air_to_ground_strike"
+    targetability: ["targetabilities.ground", "targetabilities.high_air", "targetabilities.naval_surface"]
+    attackrange: 7
+    attackdamage: 65
+    attackperiod: 60
+    delivery: "projectile_11_cells_s_point_tracking_within_30_cone_75_s"
+    design:
+      tactical_use: "Guided missile | Air-to-ground strike; naval surface, low/high air | 7.0 / 65 / 60 ticks | Projectile 11 cells/s; point; tracking within 30° cone, 75°/s"
+      counterplay: "Heavy ships, submarines, aircraft, shore batteries, and denying maneuver room."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Salvo Spread"
+    activation: "active"
+    setup_ticks: 15
+    recovery_ticks: 30
+    cooldown_ticks: 210
+    movement_allowed: true
+    design:
+      player_decision: "Use mobility to choose the fight and create a missile angle, or preserve the corvette instead of trading into a heavier line. It fails when pinned or surprised by submarines."
+      counterplay: "Heavy ships, submarines, aircraft, shore batteries, and denying maneuver room."
+      interruption_readability: "Salvo Spread | 15-tick setup; three shots at 15-tick intervals; 30-tick recovery; 210-tick cooldown; shots may select two visible targets; steering -40% during volley | Attack during launch, spread, heavy ship, submarine, or deny maneuver room"

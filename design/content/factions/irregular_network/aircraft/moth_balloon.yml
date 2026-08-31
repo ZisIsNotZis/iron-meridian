@@ -1,0 +1,25 @@
+display_name: Moth Balloon
+description: "Optional Strategic authored persistent sensor/decoy aircraft/deployable. Slow high-altitude drift with poor turning, can anchor but cannot attack. High-air while drifting/anchored; special asset while anchored, always attackable by anti-air/fighters; visible unless map occlusion. No weapon. Anchor lantern setup 45, active 240, cooldown 360, reveals 7.0-cell area, creates one false signature within 3.0 cells, stops movement and warns. Cut tether recovery 30 ends effects and restores drift. Body 500 HP, light armor, drift 1.8, radius .65, footprint 2x2, vision 12.0, alert/acquisition 14.0. Not producible; at most one authored campaign asset, no queue/replacement."
+status: designed
+scope: near_term
+faction: factions.irregular_network
+platform: aircraft
+tier: strategic
+battlefield_roles: [sensor, decoy]
+hpmax: 500
+armor: armors.light
+locomotor: locomotors.hovering
+targetability: [targetabilities.high_air, targetabilities.special_asset]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 1.8
+visionrange: 12.0
+alertrange: 14.0
+footprint: {radius_cells: 0.65, width_cells: 2, height_cells: 2}
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: anchor_lantern, activation: active, setup_ticks: 45, active_ticks: 240, cooldown_ticks: 360, target: self, targetradius: 7.0, movement_allowed: false, design: {player_decision: "Buy time and information for an operation while presenting a priority target.", counterplay: "Anti-air, fighters, or ignore decoy and attack its support."}}
+  - {skill: skills.default_lifecycle, skill_name: cut_tether, activation: active, recovery_ticks: 30, target: self}
+presentation: {fallback_policy: inherit, silhouette: "Black weather balloon with scavenged lamps; soft lantern pulses and drifting false blip give it ghost-story presence.", readability: "Anchor warning, local false signature, drift, and retreat are visible; authored files are N/A."}
+audio: {identity: "Lantern pulses, low drift, warning, damage, and destruction use faction fallback."}
+fx: {identity: "Soft lantern pulses and local drifting false blip show the finite sensor/decoy effect."}
+design: {tactical_identity: "Persistent local sensor and decoy that buys time at extreme visibility cost.", player_decision: "Buy information for a coordinated operation knowing the opponent can focus it down.", counterplay: "Anti-air, fighters, or ignore the decoy while attacking ground support.", offense_behavior: "None; cannot attack.", defense_behavior: "Moderate durability but no escape speed; always visible outside map occlusion.", support_behavior: "Broad finite observation and one local false signature; no weapon or damage support.", locomotion_behavior: "Slow high-altitude drift with poor turning; anchoring stops movement.", targetability_behavior: "High air while drifting/anchored; special asset anchored and attackable.", acquisition_behavior: "No weapon; Anchor lantern reveals 7-cell area and false signature within 3.", lock_behavior: "Anchor setup 45/active 240/cooldown 360; Cut tether recovery 30.", lifecycle_behavior: "At most one authored asset; no queue or replacement.", production_behavior: "Scenario-provided; N/A resource and ticks.", visual_identity: "Black balloon, scavenged lamps, soft lantern pulses.", audio_identity: "Low drifting atmospheric cue.", fx_identity: "Finite lantern reveal and false blip.", design_rationale: "Persistence and vision are paid for by extreme slowness, no weapon, and high visibility."}

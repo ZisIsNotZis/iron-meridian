@@ -1,0 +1,42 @@
+kind: ai_contract
+source_document: design/ai/README.md
+ownership: "AI owns observation-limited decision behavior, difficulty policy, and AI decision parameters. Unit, economy, combat, map, and objective values remain owned by their respective definitions."
+boundary: "AI consumes the same fog-filtered GameView and submits the same commands as a human. It does not inspect hidden entities, enemy resources, production queues, or the map outside its observation."
+difficulty: "Decision quality, scouting discipline, plan selection, and reaction delay—not hidden income, perfect aim, free units, or omniscience."
+authority_boundary: "AI is a strategic opponent, not a unit-by-unit animation controller. Simulation remains responsible for movement, targeting, weapon resolution, and legal actions."
+v1_controller:
+  type: small_finite_state_controller
+  map: mirror_match_map
+  generalized_planner: false
+  machine_learning: false
+  states: [opening, establish_economy, contest_objective, attack, base_defense, retreat_recover]
+  transitions:
+    - {from: opening, action: "queue prescribed starter force, send one scout route, and begin harvesting", exit: "initial production and construction actions accepted"}
+    - {from: establish_economy, action: "maintain one working harvester, construct required production chain, and keep a small reserve", exit: "attack threshold or objective timing reached"}
+    - {from: contest_objective, action: "scout approaches, send first combined force, and capture when area is safe enough", fallback: "fall back if a superior visible force arrives"}
+    - {from: attack, action: "choose a visible enemy force or base approach and issue a bounded attack group order", exit: "retreat threshold reached; do not repeatedly feed an unwinnable fight"}
+    - {from: base_defense, action: "respond to visible threat near production or HQ, prioritize threatened target, and call nearby units home", exit: "threat gone; return to economy or contest"}
+    - {from: retreat_recover, action: "move damaged or outnumbered units toward safe owned area, resume production, and re-enter through next threshold"}
+  parameters: [minimum_reserve, attack_force_size, retreat_health_or_force_ratio, objective_urgency, scout_interval, decision_interval]
+  determinism: [seeded_tie_breaking, deterministic_ordering]
+  memory: "May remember last-known positions and its own failed plan, but memory is derived from observations."
+reusable_near_term_behaviors:
+  - {name: economy, behavior: "maintain harvesters and production; expand only when income or map control justifies it"}
+  - {name: recon, behavior: "choose patrols and information targets; mark stale knowledge with age"}
+  - {name: force, behavior: "assemble groups by role, choose a target profile, and avoid unsupported specialist attacks"}
+  - {name: objective, behavior: "value capture, denial, and recovery based on hold progress and visible threat"}
+  - {name: defense, behavior: "protect HQ, production, resource, and objective routes in that priority order for the current mission"}
+  - {name: escape_recovery, behavior: "preserve units when a fight is lost and rebuild through available production"}
+blackboard: "Derived state containing owned state, visible threats, last-known contacts, role availability, current plan, and timers; it may be rebuilt from observations and is not a second hidden simulation."
+difficulty_levels:
+  same_rules: "The same faction rules and content apply at every level."
+  levels:
+    - {level: recruit, behavior: "Slow decisions, obvious attack routes, weak retreat discipline, and generous warnings.", advantage: "Longer decision interval only."}
+    - {level: regular, behavior: "Uses scouting, combined groups, objective timing, and basic defense.", advantage: "Normal decision interval."}
+    - {level: veteran, behavior: "Maintains reserves, reacts to visible counters, raids economy, and changes approach after failure.", advantage: "Shorter but still human-readable reaction delay."}
+    - {level: commander, behavior: "Uses multiple visible fronts, deception through ordinary movement, disciplined production, and role-aware retreats.", advantage: "Better plan selection and bounded reaction delay; no hidden information or resource bonus."}
+difficulty_exclusion: "Never make difficulty a damage multiplier. Accessibility assistance must be labeled separately from AI skill and shown in match setup."
+mission_scripting: "Campaign scripts may provide goals, timed reinforcements, escalating threats, and dialogue through the same observable event/command boundary; spawning or unlocking occurs only when the authored scenario says so."
+mission_behavior: "Scripted allied behavior should use the same reusable behaviors where possible, with authored orders reserved for set pieces."
+evaluation: "Use deterministic seeds and fixtures for opening economy, early rush, lost scout, objective disadvantage, damaged force, base raid, and recovery after a failed attack. Review outcome and player experience; a win caused by cheating is a failure."
+player_experience_expectations: [expose_a_plan, make_explainable_mistakes, create_time_to_respond]

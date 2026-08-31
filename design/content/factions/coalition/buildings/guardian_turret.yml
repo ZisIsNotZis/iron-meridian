@@ -1,0 +1,36 @@
+display_name: "Guardian Turret"
+description: "Guardian Turret migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: established
+building_roles: ["local_anti_vehicle_defense"]
+hpmax: 550
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 2, height_cells: 2, facings: "cardinal"}
+construction:
+  cost: {resource: 550}
+  buildtime: 300
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}]
+production: {max_operational: 4, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "local anti-vehicle defense"
+  construction_behavior: "Buildable terrain inside shared anchors; facing is meaningful and its arc cannot be hidden by a footprint or route marker."
+  production_behavior: "Role: local anti-vehicle defense; cost: `550 resource`; build time: `300 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / defense`; replacement/capacity: `maximum 4 operational turrets; one weapon per turret; one builder assignment`."
+  defense_behavior: "Structure; visible; turret is disabled by EMP while its weapon is electronic."
+  capture_behavior: "**Precision missile** — anti-armor penetrator projectile against ground-vehicle within `7.0` cells; 70 damage/event, 45-tick period, projectile `15` cells/s, 15-tick lock, 60° firing arc, 20°/s tracking, point hit. Always active while operational; no power grid."
+  repair_behavior: "Cover the expected armor lane or rotate coverage toward a new threat, accepting a blind side."
+  lifecycle_behavior: "Flank outside the arc, use infantry/indirect fire, outrange it, EMP it, or force it to waste lock time on cheaper targets."
+  player_decision: "Cover the expected armor lane or rotate coverage toward a new threat, accepting a blind side."
+  counterplay: "Flank outside the arc, use infantry/indirect fire, outrange it, EMP it, or force it to waste lock time on cheaper targets."
+  visual_identity: "Low missile cupola, blue directional chevron, lock bracket, launch flash, and a clear reload rotation."
+  design_rationale: "# Guardian Turret\n\n## Gameplay identity\n\n- **Footprint:** `2 × 2` cells; four facings; directional turret arc shown during placement and selection.\n- **Health / protection:** 550 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; visible; turret is disabled by EMP while its weapon is electronic.\n- **Production:** Role: local anti-vehicle defense; cost: `550 resource`; build time: `300 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / defense`; replacement/capacity: `maximum 4 operational turrets; one weapon per turret; one builder assignment`.\n- **Skill / passive:** **Precision missile** — anti-armor penetrator projectile against ground-vehicle within `7.0` cells; 70 damage/event, 45-tick period, projectile `15` cells/s, 15-tick lock, 60° firing arc, 20°/s tracking, point hit. Always active while operational; no power grid.\n- **Placement:** Buildable terrain inside shared anchors; facing is meaningful and its arc cannot be hidden by a footprint or route marker.\n- **Player decision:** Cover the expected armor lane or rotate coverage toward a new threat, accepting a blind side.\n- **Counterplay:** Flank outside the arc, use infantry/indirect fire, outrange it, EMP it, or force it to waste lock time on cheaper targets.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Low missile cupola, blue directional chevron, lock bracket, launch flash, and a clear reload rotation.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

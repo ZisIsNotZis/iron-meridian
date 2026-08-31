@@ -1,0 +1,24 @@
+display_name: "Freeze"
+description: Accumulating freeze status with threshold effects.
+status: designed
+kind: "status"
+application:
+  minimum_points: 10
+  maximum_points: 25
+  track_cap: 100
+  duration_cap_ticks: 120
+  resistance_order: before_amount
+thresholds:
+  - {name: partial, points: 50, movement_modifier_percent: -35, fire_rate_modifier_percent: -20}
+  - {name: full, points: 100}
+decay:
+  quiet_delay_ticks: 30
+  points_per_tick: 2
+  rule: linear
+resistance:
+  formula: floor(raw * (100 - resistance_percent) / 100)
+  affects: amount
+design:
+  application_rules: "Hits apply 10–25 points; the track caps at 100. Partial freeze begins at 50 and full freeze begins at 100."
+  resolution_rule: "At partial freeze, movement is -35% and fire rate is -20%. Full freeze is a platform-specific transition: it may immobilize, enable crush, or destroy an aircraft only when explicitly declared. Duration caps at 120 ticks; decay starts after 30 ticks quiet and removes 2 points/tick."
+  counterplay: "The target must receive visible accumulation and threshold feedback. Resistance reduces application by floor(raw × (100 - resistance) / 100)."

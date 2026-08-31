@@ -1,0 +1,21 @@
+display_name: "Default Weapon Resolution"
+description: Default weapon delivery and resolution contract.
+status: designed
+kind: "weapon"
+delivery:
+  point_hit_radius_distance: 80
+  projectile_speed_cells_per_second: 12
+  beam_lifetime_ticks: 3
+  attack_run_pass_distance_cells: 2
+  line_of_fire_tolerance_distance: 40
+timing:
+  firing_arc_degrees: 360
+  tracking_rate_degrees_per_second: 90
+  lock_cone_degrees: 30
+  area_falloff: Linear from 100% inside inner radius to 50% at outer radius.
+  friendly_fire: false
+  last_known_observation: true
+design:
+  delivery_rules: Point-hit radius, projectile speed, beam lifetime, attack-run pass distance, and line-of-fire tolerance are shared defaults.
+  timing_rules: Indirect fire requires current or permitted last-known observation.
+  counterplay: The carrier attachment or specific weapon owns its actual range, damage, period, geometry, ammunition, and warning when these differ.

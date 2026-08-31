@@ -1,0 +1,82 @@
+display_name: "Hammerhead"
+description: "Hammerhead Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "established"
+battlefield_roles: ["assault_tank_and_breakthrough_pressure", "anti_infantry_crush_threat"]
+hpmax: 620
+armor: "armors.heavy"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.1
+visionrange: 6.5
+alertrange: 8.5
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.62
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.heavy", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.explosive_area", "targetabilities.structure", "damages.machine_gun_autocannon", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Wedge hull, reinforced ram plate, piston-heavy charge, dust shockwave, and deep cannon thump."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Wedge hull, reinforced ram plate, piston-heavy charge, dust shockwave, and deep cannon thump."
+fx:
+  identity: "Wedge hull, reinforced ram plate, piston-heavy charge, dust shockwave, and deep cannon thump."
+design:
+  tactical_identity: "Assault tank and breakthrough pressure; secondary anti-infantry crush threat."
+  player_decision: "Force a breach before the enemy can reposition, or preserve the tank as a threat. It fails when kited, trapped, or attacked from multiple angles."
+  counterplay: "Long-range anti-armor, mines, immobilization, flanking, and baiting the charge."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Heavy frontal armor, weaker sides and rear; vulnerable to dedicated anti-armor and immobilization."
+  support_behavior: "Creates the physical breach that lets slower specialists advance; it does not provide area protection."
+  locomotion_behavior: "Tracked; heavy acceleration, strong collision, broad terrain access, and slow redeployment."
+  targetability_behavior: "Ground vehicle; ordinary sight and anti-vehicle targeting."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Heavy frontal armor is an intentional unit override; it remains a normal ground target under shared rules. Assault cannon pair | Explosive; ground light, heavy, structure | 5.0 / 55 each / 60 ticks | Projectile 9 cells/s; point; no tracking Frontal machine guns | Machine gun/autocannon; ground personnel, light | 4.0 / 18 / 24 ticks | Projectile 14 cells/s; arc 100°; no tracking Ram | 15-tick charge; 30-tick recovery; 180-tick cooldown; 3.0-cell commitment; 90 displacement/crush impact in 0.7-cell point area | Sidestep, immobilize, mine route, or attack flank"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "assault_tank"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 550
+  buildtime: 150
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Assault cannon pair"
+    damage: "damages.explosive_area"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 5
+    attackdamage: 55
+    attackperiod: 60
+    delivery: "projectile_9_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Assault cannon pair | Explosive; ground light, heavy, structure | 5.0 / 55 each / 60 ticks | Projectile 9 cells/s; point; no tracking"
+      counterplay: "Long-range anti-armor, mines, immobilization, flanking, and baiting the charge."
+  - weapon: "weapons.default_resolution"
+    mount_name: "Frontal machine guns"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground"]
+    attackrange: 4
+    attackdamage: 18
+    attackperiod: 24
+    delivery: "projectile_14_cells_s_arc_100_no_tracking"
+    design:
+      tactical_use: "Frontal machine guns | Machine gun/autocannon; ground personnel, light | 4.0 / 18 / 24 ticks | Projectile 14 cells/s; arc 100°; no tracking"
+      counterplay: "Long-range anti-armor, mines, immobilization, flanking, and baiting the charge."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Ram"
+    activation: "active"
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: true
+    design:
+      player_decision: "Force a breach before the enemy can reposition, or preserve the tank as a threat. It fails when kited, trapped, or attacked from multiple angles."
+      counterplay: "Long-range anti-armor, mines, immobilization, flanking, and baiting the charge."
+      interruption_readability: "Ram | 15-tick charge; 30-tick recovery; 180-tick cooldown; 3.0-cell commitment; 90 displacement/crush impact in 0.7-cell point area | Sidestep, immobilize, mine route, or attack flank"

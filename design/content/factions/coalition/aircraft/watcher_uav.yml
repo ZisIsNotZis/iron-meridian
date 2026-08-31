@@ -1,0 +1,33 @@
+display_name: "Watcher UAV"
+description: "Watcher UAV migrated from its Coalition design card."
+status: optional
+faction: factions.coalition
+platform: aircraft
+tier: advanced
+battlefield_roles: ["persistent_reconnaissance", "target_designation_it_does_not_deal_meaningful_damage"]
+hpmax: 140
+armor: armors.light
+locomotor: locomotors.hovering
+targetability: ["targetabilities.high_air"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 5
+visionrange: 10
+alertrange: 12
+skill_bindings: [{skill: "skills.default_lifecycle", skill_name: "Survey sweep", activation: "active", interruption_conditions: ["movement", "emp"]}]
+production: {cost: {resource: 450}, buildtime: 120, producer: "factions.coalition.buildings.air_operations", queue: "aircraft", category: "advanced_reconnaissance", capacity: {max_active: 2, replacement_allowed: false, replacement_competes_with_new: false}}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.light", "locomotors.hovering", "targetabilities.high_air"]
+design:
+  tactical_identity: "Persistent reconnaissance primary; target designation secondary. It does not deal meaningful damage."
+  offense_behavior: "No weapon; air protection and low health. Its value is information."
+  locomotion_behavior: "Drone; hovering/orbit movement with limited endurance and a visible return or expiration behavior."
+  targetability_behavior: "High air; fragile and detectable by ordinary anti-air once revealed. Its sensor signature grows while scanning."
+  acquisition_behavior: "The UAV observes contacts and shares temporary tracks; it does not auto-acquire an attack target and has no damage weapon."
+  lock_behavior: "No weapon lock. Survey tracks last 120 ticks and are information, not guaranteed target positions for another unit's projectile."
+  production_behavior: "Cost: `450 resource`; build time: `120 ticks`; facility: `Air Operations`; prerequisites: `Signals Laboratory operational`; queue/category: `aircraft / advanced reconnaissance`; replacement/capacity: `maximum 2 active Watchers per Air Operations building; rearm and replacement use that building's single FIFO aircraft queue`."
+  player_decision: "Pay for reliable vision or use cheaper scouts and accept gaps. Counter with fighters, AA, jamming, decoys, or attacking its launch facility."
+  visual_identity: "Small fixed-wing drone with a camera gimbal; survey appears as a quiet translucent fan, while detection creates a clear red ping."
+  design_rationale: "# Watcher UAV\n\n## Gameplay identity\n\n- **Roles:** Persistent reconnaissance primary; target designation secondary. It does not deal meaningful damage.\n- **Locomotion:** Drone; hovering/orbit movement with limited endurance and a visible return or expiration behavior.\n- **Targetability:** High air; fragile and detectable by ordinary anti-air once revealed. Its sensor signature grows while scanning.\n- **Offense/defense:** No weapon; air protection and low health. Its value is information.\n- **Skill:** **Survey sweep** — scans a moving wedge and shares a temporary track; the sweep broadcasts the UAV and can be interrupted by jamming or destruction.\n- **Production:** Cost: `450 resource`; build time: `120 ticks`; facility: `Air Operations`; prerequisites: `Signals Laboratory operational`; queue/category: `aircraft / advanced reconnaissance`; replacement/capacity: `maximum 2 active Watchers per Air Operations building; rearm and replacement use that building's single FIFO aircraft queue`.\n- **Player experience:** Pay for reliable vision or use cheaper scouts and accept gaps. Counter with fighters, AA, jamming, decoys, or attacking its launch facility.\n- **Asset design:** See [entity asset manifest](assets.md).\n\n## Entity specification\n\nIntentional information override: no weapon, low HP, and strong temporary sensing.\n\n| HP | Armor | Move | Footprint radius | Vision | Alert radius |\n|---:|---|---:|---:|---:|---:|\n| 140 | Light | 5.0 cells/s | 0.28 cell | 10.0 cells | 12.0 cells |\n\n| Weapon | Damage family / domains | Range | Damage/event; period | Delivery / hit / tracking |\n|---|---|---:|---:|---|\n| None | — | — | — | No attack; designation platform only |\n\n**Survey sweep:** 30-tick scan of a 120° cone to 16 cells; reveals contacts and shares tracks for 120 ticks. 300-tick cooldown; the UAV is broadcast while scanning and EMP interrupts it.\n\n### Acquisition and lock semantics\n\n- **Vision / alert radius:** 10.0 / 12.0 cells; the scan extends observation to its declared 16-cell cone but does not create a weapon attack.\n- **Acquisition:** The UAV observes contacts and shares temporary tracks; it does not auto-acquire an attack target and has no damage weapon.\n- **Lock / tracking:** No weapon lock. Survey tracks last 120 ticks and are information, not guaranteed target positions for another unit's projectile.\n\n\n### Counterplay\n\nFighters, anti-air, jamming, decoys, or attacking the launch facility deny the UAV. It is fragile and becomes especially conspicuous while scanning."
+presentation: {fallback_policy: "inherit", silhouette: "Small fixed-wing drone with a camera gimbal; survey appears as a quiet translucent fan, while detection creates a clear red ping.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

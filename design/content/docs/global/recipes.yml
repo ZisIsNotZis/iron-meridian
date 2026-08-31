@@ -1,0 +1,23 @@
+kind: recipe_contract
+document_id: design.production.recipes
+title: Production Recipes
+ownership:
+  - Recipes are first-class availability records connecting a product entity to production or construction capability.
+  - Recipe does not copy product cost, build time, health, or weapon values; product card owns them and recipe resolves by reference.
+schema_fields:
+  - ID is recipes.<scope>.<product_name>.
+  - Kind is recipe.
+  - Status is designed, core, optional, or deferred.
+  - Product is entity ID.
+  - Producer is building ID or construction.
+  - Category is infantry, vehicle, economy, or construction.
+  - Availability is scenario or faction scope.
+  - Prerequisites are explicit boolean groups or none.
+  - References contain product, producer, and prerequisite objects.
+rules:
+  - Owning scenario decides whether recipe is in match.
+  - Recipe is legal only when product and producer are operational, prerequisites satisfied, queue accepts category, and bank reserves full product-card cost.
+  - construction uses active construction vehicle and building card cost/time rather than a production queue.
+  - Resolution order is scenario/faction availability, prerequisites and producer state, product cost/build time/capacity/replacement, full-cost reservation, FIFO queue or construction blueprint, producer queue and spawn/output rules.
+  - V1 player-facing recipe set is selected by V1 Scope; non-exposed recovery recipes may load for validation but are not player-facing.
+index: [recipes.v1_resource_exchange, recipes.v1_vehicle_assembly, recipes.v1_infantry_center, recipes.v1_lynx_scout_car, recipes.v1_line_rifle, recipes.v1_valiant_mbt, recipes.v1_javelin_team, recipes.v1_harvester, recipes.v1_mcv]

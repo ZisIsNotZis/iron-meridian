@@ -1,0 +1,25 @@
+display_name: Relay Cache
+description: "Optional Advanced temporary local designation and command relay. 2x2 footprint, four cardinal facings, one mast interaction cell; buildable ground within shared builder anchors away from routes/objectives. Construction 450 resource / 270 ticks, operational Safehouse and builder required. Body 320 HP light armor, expires rather than leaving recoverable wreck; visible while setup/relaying and ordinary attack, EMP, jamming, or sabotage can interrupt. No production, repair, or weapon. Raise cache setup 45, active 180, radius 5.0, cooldown 300; shares nearby designated vision and reduces selected local support response by 15 ticks; 30-tick expiry warning, destruction ends effect. Temporary lifecycle removes without wreck."
+status: designed
+scope: near_term
+faction: factions.irregular_network
+platform: temporary_site
+tier: advanced
+building_roles: [command, strategic_threat]
+hpmax: 320
+armor: armors.light
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 6.0
+alertrange: 8.0
+footprint: {width_cells: 2, height_cells: 2, facings: cardinal, interaction_cells: 1}
+placement: {terrain: buildable_ground, anchor: construction_radius, route_exclusion: true, objective_exclusion: true, facing: cardinal}
+construction: {cost: {resource: 450}, buildtime: 270, prerequisites: [{object: factions.irregular_network.buildings.safehouse}]}
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: raise_cache, activation: active, setup_ticks: 45, active_ticks: 180, cooldown_ticks: 300, target: self, targetradius: 5.0, movement_allowed: false, interruption_conditions: [damage, emp, destruction]}]
+lifecycle: {states: [blueprint, constructing, operational, expiring, removed], destruction_behavior: remove, expiry_ticks: 180, expiry_warning_ticks: 30}
+presentation: {fallback_policy: inherit, silhouette: "Folded antenna in a crate, chalk radius, and intermittent blue-white pulse; UI shows exact support radius and expiry countdown.", readability: "Fixed relay, setup, support radius, expiry, damage, and destruction remain explicit."}
+audio: {identity: "Antenna, generator, radio pulse, construction, damage, and destruction use faction fallback."}
+fx: {identity: "Chalk radius and intermittent blue-white pulse mark local support and expiry."}
+design: {construction_behavior: "450 resource, 270 ticks, Safehouse and builder required.", production_behavior: "No queue; nearby Signal Runners and Lookouts may use it as relay, but it produces no units.", defense_behavior: "No static weapon or area defense; 320 HP light armor; EMP/jamming/sabotage/attack can interrupt.", capture_behavior: "No capture behavior is declared.", repair_behavior: "None; no global recovery.", lifecycle_behavior: "Temporary blueprint to constructing, operational, expiring, removed; 30-tick warning and no wreck.", player_decision: "Commit a fragile fixed relay to make one operation reliable or retain flexible local control.", counterplay: "Kill or jam the cache, attack support radius, or disengage until timer expires.", visual_identity: "Folded antenna crate, chalk radius, blue-white pulse.", audio_identity: "Radio pulse and generator.", fx_identity: "Exact support-radius pulse and expiry countdown.", design_rationale: "Relay is local coordination and never makes Network units unusable elsewhere."}

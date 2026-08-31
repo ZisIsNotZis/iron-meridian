@@ -1,0 +1,26 @@
+display_name: Scrap Exchange
+description: "Core Field economy and bounded salvage site. 3x2 footprint with four cardinal facings, two unload interaction cells on long side, one service approach; place within construction anchor radius outside resource/objective exclusions. Construction 450 resource / 270 ticks, operational Safehouse and builder required. Body 500 HP, light armor, ordinary structure targetability and vision; no concealment while processing or recovering salvage; damaged remains operational unless explicit disabled effect. Receives harvester unloading at 75 percent normal throughput and creates no second resource. Repairs docked Network harvesters at 3 HP/s; no general combat repair or revival. Sort salvage channels one eligible wreck within 1.0 cell for 90 ticks, cooldown 300, returns one bounded payout and visibly occupies exchange; hostile damage interrupts. No weapon. Shared blueprint, constructing, operational, damaged, destroyed; no expiry."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: economy
+tier: field
+building_roles: [economy, sustainment]
+hpmax: 500
+armor: armors.light
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 6.0
+alertrange: 8.0
+footprint: {width_cells: 3, height_cells: 2, facings: cardinal, interaction_cells: 2, service_cells: 1}
+placement: {terrain: buildable_ground, anchor: construction_radius, resource_exclusion: true, objective_exclusion: true, facing: cardinal}
+construction: {cost: {resource: 450}, buildtime: 270, prerequisites: [{object: factions.irregular_network.buildings.safehouse}]}
+repair: {available: true, target: allied_units, rate_per_tick: 3, range_cells: 1.0, interrupted_by_damage: true}
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: sort_salvage, activation: active, channel_ticks: 90, cooldown_ticks: 300, target: eligible_wreck, targetrange: 1.0, interruption_conditions: [damage]}]
+lifecycle: {states: [blueprint, constructing, operational, damaged, destroyed], destruction_behavior: remove}
+presentation: {fallback_policy: inherit, silhouette: "Canopy, scales, magnets, and tagged scrap cages; amber conveyor light for normal processing and blue sorting arc for salvage.", readability: "Unload, processing, salvage channel, damage, disabled, and destruction cues are explicit."}
+audio: {identity: "Conveyor, magnets, sorting, unloading, damage, and destruction use faction fallback."}
+fx: {identity: "Steady amber processing light and short blue sorting arc; hostile interruption is readable."}
+design: {construction_behavior: "450 resource, 270 ticks, Safehouse and builder required.", production_behavior: "Shared economy unloading at 75 percent normal throughput; no queue and no second resource.", defense_behavior: "No static weapon or area defense; 500 HP light armor.", capture_behavior: "No capture behavior is declared.", repair_behavior: "Repairs docked Network harvesters at 3 HP/s; no revival or general combat repair.", lifecycle_behavior: "Persistent shared construction lifecycle; no temporary expiry.", player_decision: "Process normal resource safely or expose the site near a wreck for one bounded recovery.", counterplay: "Raid the processor, deny/guard wrecks, and interrupt salvage; destruction stops unloading but not banked resource.", visual_identity: "Canopy, scales, magnets, tagged scrap cages.", audio_identity: "Conveyor and sorting clatter.", fx_identity: "Amber throughput light and blue salvage arc.", design_rationale: "Salvage never creates a second resource type or permanent production capability."}

@@ -1,0 +1,9 @@
+display_name: "Hovering"
+description: Low-clearance hover movement distinct from helicopter flight.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [hovering, moving, anchored, landing, taking_off]
+design:
+  movement_rules: Hovering units pass over ordinary ground obstacles but remain in the declared low-air or high-air target domain. They do not use ground pathfinding and do not receive helicopter orbit behavior unless the carrier opts in.
+  interaction_rules: A hover anchor is a movement state, not automatic concealment or invulnerability. Hovering units cannot crush ground units; landing, anchoring, and low-altitude transitions expose them only as declared by targetability.

@@ -1,0 +1,15 @@
+display_name: "Explosive / Area"
+description: Health damage delivered over an area.
+status: designed
+kind: "damage"
+damage_channel: health
+references: [armors.personnel, armors.light, armors.heavy, armors.reinforced_structure]
+damage_interactions:
+  - {armor: armors.personnel, multiplier_percent: 100}
+  - {armor: armors.light, multiplier_percent: 85}
+  - {armor: armors.heavy, multiplier_percent: 65}
+  - {armor: armors.reinforced_structure, multiplier_percent: 75}
+design:
+  channel: Health damage delivered over an area.
+  resolution_rule: Area geometry is owned by the weapon using this channel.
+  feedback: Coverage and positioning are the counterplay; allies are unaffected unless the owning weapon explicitly enables friendly fire.

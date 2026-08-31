@@ -1,0 +1,27 @@
+display_name: Diver Team
+description: "Core Established submerged infiltration and naval sabotage infantry. Swimming 2.2 cells/s and submerged 1.8; cannot fire while submerged and must surface to capture or attack; shore/target transitions are vulnerable. Submerged targetability requires sonar, depth-capable weapons, or proximity; surfaced state is ground infantry and fully targetable. Personnel armor; depth concealment is not invulnerability. Limpet charge uses siege/structural against naval surface and coastal structures, range 1.0, 100 damage/event, period 90, attached point charge, delayed detonation after 60 ticks, no tracking, warning to target; team must surface/escape. Dive transition 30, submerged endurance 180, cooldown 240; cannot fire, capture, or plant submerged; surfacing recovery 30 and vulnerable. Production 280 resource / 180 ticks from Boat Shed plus Hideout, coastal FIFO, no hard roster cap, one active submerged state and one limpet charge. Body 120 HP, radius .22, footprint 1x1, surfaced vision 4.5, submerged sonar awareness 5.0, alert 6.0."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: naval
+tier: established
+battlefield_roles: [infiltration, naval_sabotage, reconnaissance]
+hpmax: 120
+armor: armors.personnel
+locomotor: locomotors.submerged
+targetability: [targetabilities.ground, targetabilities.submerged]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.2
+visionrange: 4.5
+alertrange: 6.0
+footprint: {radius_cells: 0.22, width_cells: 1, height_cells: 1}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: limpet_charge, damage: damages.siege_structural, targetability: [targetabilities.naval_surface, targetabilities.structure], attackrange: 1.0, attackdamage: 100, attackperiod: 90, delivery: attached_point_charge, hit_model: point, tracking: none, acquisition: direct}]
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: dive, activation: active, setup_ticks: 30, active_ticks: 180, cooldown_ticks: 240, target: self, movement_allowed: true, interruption_conditions: [damage], design: {player_decision: "Time an attack through water and retreat when detected.", counterplay: "Sonar, depth charges, patrols, and guarded docks."}}
+  - {skill: skills.default_lifecycle, skill_name: plant_limpet, activation: active, channel_ticks: 60, cooldown_ticks: 90, target: naval_surface_or_structure, targetrange: 1.0, requires_current_observation: true, interruption_conditions: [damage, displacement], design: {player_decision: "Finish an announced charge or retreat when detection makes it too risky.", counterplay: "Sonar, patrols, target warning, and interrupting the channel."}}
+production: {producer: factions.irregular_network.buildings.boat_shed, queue: coastal, category: naval, cost: {resource: 280}, buildtime: 180, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Low-profile wetsuits and improvised rebreathers; bubbles, sonar pings, and a brief magnetic clamp flash provide fair feedback.", readability: "Submerged, surfacing, limpet warning, and transition vulnerability remain readable; bespoke assets are N/A."}
+audio: {identity: "Bubbles, sonar pings, clamp, warning, damage, and destruction use faction fallback."}
+fx: {identity: "Bubbles and sonar reveal submerged movement; magnetic clamp and warning make sabotage fair."}
+design: {tactical_identity: "Submerged infiltration and delayed naval sabotage with finite endurance.", player_decision: "Finish a charge through water or retreat when detected.", counterplay: "Sonar, depth charges, patrols, and guarded docks.", offense_behavior: "Limpet charge is delayed siege/structural sabotage; no conventional ranged attack.", defense_behavior: "Personnel armor; depth concealment does not stop sonar, depth weapons, proximity, or transition attacks.", support_behavior: "Dive provides submerged reconnaissance; Plant limpet sabotages one ship or structure; no repair or transport.", locomotion_behavior: "Swimming 2.2, submerged 1.8; no fire/capture/plant while submerged.", targetability_behavior: "Submerged requires sonar/depth/proximity; surface/shore state is ground infantry and fully targetable.", acquisition_behavior: "Limpet range 1, 100 damage, 90 ticks, delayed 60, attached point charge, target warning.", lock_behavior: "Dive transition 30/endurance 180/cooldown 240; surfacing recovery 30; Plant limpet channel 60 and interruptible.", lifecycle_behavior: "One active submerged state and one limpet charge.", production_behavior: "Boat Shed plus Hideout; 280 resource, 180 ticks, coastal FIFO.", visual_identity: "Wetsuits, rebreathers, bubbles, sonar, magnetic clamp.", audio_identity: "Sonar and underwater movement cues.", fx_identity: "Bubbles, sonar pings, and clamp flash.", design_rationale: "Submerged non-targetability is constrained by endurance, sonar, bubbles, and transition vulnerability; no permanent stealth."}

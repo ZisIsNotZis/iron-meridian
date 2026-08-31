@@ -1,0 +1,24 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_naval_operations
+type: object
+additionalProperties: false
+required: [kind, document_id, title, source_document, ownership, water_boundary, facility_schema, unit_schema, movement_collision, states, production_launch_repair_capture, commands, sensing_targetability, combat_interactions, transport_shore, edge_cases, presentation_events, scope]
+properties:
+  kind: {const: naval_operations_contract}
+  document_id: {type: string}
+  title: {type: string}
+  source_document: {type: string}
+  ownership: {type: array, items: {type: string}}
+  water_boundary: {type: array, items: {type: string}}
+  facility_schema: {type: array, items: {type: string}}
+  unit_schema: {type: array, items: {type: string}}
+  movement_collision: {type: array, items: {type: string}}
+  states: {type: array, items: {type: string}}
+  production_launch_repair_capture: {type: array, items: {type: string}}
+  commands: {type: array, items: {type: object, additionalProperties: false, required: [command, required_payload, accepted_when], properties: {command: {type: string}, required_payload: {type: string}, accepted_when: {type: string}}}}
+  sensing_targetability: {type: array, items: {type: string}}
+  combat_interactions: {type: array, items: {type: string}}
+  transport_shore: {type: array, items: {type: string}}
+  edge_cases: {type: array, items: {type: string}}
+  presentation_events: {type: array, items: {type: string}}
+  scope: {type: array, items: {type: string}}

@@ -1,0 +1,7 @@
+display_name: "Light Armor"
+description: Scouts, carriers, technicals, and light combat vehicles.
+status: designed
+kind: "armor"
+protection: Scouts, carriers, technicals, and light combat vehicles. Resists incidental infantry fire but is threatened by anti-armor and focused fire.
+design:
+  damage_interaction_role: This profile is the light column in reusable damage interaction objects.

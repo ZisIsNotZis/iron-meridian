@@ -1,0 +1,27 @@
+kind: "economy_contract"
+document_id: "gameplay.economy"
+title: "Economy Design"
+source_document: "design/economy/README.md"
+ownership: 
+  - "not_applicable"
+resource_lifecycle: 
+  currency: "not_applicable"
+  flow: "not_applicable"
+  rules: 
+    - "not_applicable"
+  scenario_start: "not_applicable"
+income_spending: 
+  - "not_applicable"
+harvester_behavior: 
+  flow: "not_applicable"
+  rules: 
+    - "not_applicable"
+  authority: "not_applicable"
+edge_cases_ordering: 
+  - "not_applicable"
+acceptance_cases: 
+  - "not_applicable"
+recovery_counterplay: 
+  - "not_applicable"
+deferred: 
+  - "not_applicable"

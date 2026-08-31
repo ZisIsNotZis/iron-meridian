@@ -1,0 +1,12 @@
+kind: character_index
+source_document: design/world/characters/README.md
+purpose: "Characters provide a human voice for the four-mission campaign without creating a second simulation system."
+ownership: "A character owns role, allegiance, visual/audio identity, and dialogue boundaries. Mission files own the exact line, trigger, and presentation context."
+campaign_cast:
+  - {name: Mara Venn, record: world.characters.mara_venn, faction: Directorate, role: field_commander, campaign_use: "player voice for Contact and Breakthrough"}
+  - {name: Ilya Orsik, record: world.characters.ilya_orsik, faction: Coalition, role: operations_commander, campaign_use: "player voice for Isolation and Decision"}
+  - {name: Sera Vale, record: world.characters.sera_vale, organization: "Rail and Works Authority", role: rail_and_civilian_liaison, campaign_use: "frames the cost of holding the crossing"}
+  - {name: Tomas Rusk, record: world.characters.tomas_rusk, faction: Coalition, role: intelligence_officer, campaign_use: "reports turn uncertainty into actionable reconnaissance"}
+constraints:
+  cast_size: "The cast is intentionally small."
+  authority: "No character has authority to redefine a faction, reveal hidden information without a mission trigger, or replace the HUD’s objective and failure feedback."

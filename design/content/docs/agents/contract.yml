@@ -1,0 +1,77 @@
+kind: agent_control_contract
+source_document: design/agents/README.md
+purpose: "Externally visible MCP adapter for local and remote agents. MCP is a client boundary, not a gameplay authority."
+agent_promise: "An agent receives the same filtered observation as a human player and submits the same ordinary commands. It cannot read hidden state, mutate state directly, run arbitrary scripts, or receive extra reaction time."
+availability:
+  v1: "No MCP endpoint; tests may call the local command boundary directly."
+  near_term: "A local MCP adapter may exercise this contract against a loopback match."
+  full_game: "Authenticated remote MCP sessions use stable tools; transport may be stdio or streamable HTTP, with identical tool semantics and schemas."
+session_pinning: [match, player_slot, content_digest, protocol_version, permission_scope]
+slow_agent_rule: "Simulation continues when an agent is slow, disconnected, or thinking; adapter never blocks a simulation tick."
+session_schema:
+  required_fields: [agentSessionId, principalId, matchId, playerId, scope, protocolVersion, contentDigest, createdAtTick, expiresAtTick, status, eventCursor]
+  types: {playerId: integer, createdAtTick: non_negative_integer, expiresAtTick: non_negative_integer, contentDigest: sha256_hex, scope: [observe, act], status: [active, expired, closed, revoked], eventCursor: opaque_cursor}
+identity_rule: "Tokens are never treated as player identity by the simulation."
+permissions:
+  authentication: "Hosting service authenticates before accepting a tool call; adapter receives authenticated principal and issues scoped session."
+  tokens: opaque_short_lived_revocable
+  observe: filtered_GameView_and_permitted_events_only
+  act: ordinary_commands_for_bound_player_slot_only
+  forbidden_scopes: [hidden_debug, administration, arbitrary_query, resource_editing, teleportation, direct_damage]
+tools:
+  - {name: ra2_session_open, input_fields: [matchId, playerId, scope], input_types: {matchId: string, playerId: integer, scope: [observe, act]}, output_fields: [session, view, cursor], output_types: {session: AgentSession, view: GameView, cursor: string}, behavior: "Creates a session for an already authorized match slot; does not create a match, select a faction, or bypass the lobby. Requested scope is a subset of the principal grant."}
+  - {name: ra2_game_observe, input_fields: [agentSessionId, cursor, includeEvents, maxEvents], input_types: {agentSessionId: string, cursor: string_or_null, includeEvents: boolean, maxEvents: integer_default_128}, output_fields: [view, events, nextCursor, serverTick, complete], output_types: {view: GameView, events: [EventView], nextCursor: string, serverTick: non_negative_integer, complete: boolean}, behavior: "Gets a fresh filtered view; missing or expired cursor returns a recoverable error and no guessed delta. maxEvents is clamped to 128."}
+  - {name: ra2_game_act, input_fields: [agentSessionId, batchSequence, commands], input_types: {agentSessionId: string, batchSequence: integer, commands: [command]}, output_fields: [batchSequence, accepted, results, serverTick, nextCursor], behavior: "Submits an all-or-nothing batch of ordinary player commands; it does not translate natural language into privileged actions. Each result includes clientSequence, commandSequence, accepted, authoritativeTick, reason, and eventIds."}
+  - {name: ra2_game_events, input_fields: [agentSessionId, cursor, maxEvents, waitTicks], input_types: {agentSessionId: string, cursor: string, maxEvents: integer_default_128, waitTicks: integer_default_0}, output_fields: [nextCursor, events], behavior: "Reads bounded filtered events; optional long-polling is capped at 30 ticks and a slow agent does not pause the match."}
+  - {name: ra2_session_close, input_fields: [agentSessionId], input_types: {agentSessionId: string}, output_fields: [agentSessionId, status], output_types: {agentSessionId: string, status: closed}, behavior: "Closes the adapter session without surrendering the bound player; slot behavior follows multiplayer disconnect policy."}
+action_contract:
+  batch_commands_max: 8
+  request_bytes_max: 131072
+  subjects_per_command_max: 16
+  subject_rule: sorted_deduplicated
+  command_fields: [playerId, sequence, applyAtTick, kind, subjectIds, targetId, point, recipeId, skillId, mode]
+  command_example: {playerId: 1, sequence: 44, applyAtTick: 300, kind: move, subjectIds: [101, 102], targetId: omitted_for_move, point: {x: 20, y: 14}, recipeId: omitted_for_move, skillId: omitted_for_move, mode: omitted_for_move}
+  validation: [player_matches_bound_session, ownership_matches_bound_player, visibility_checked, application_tick_checked]
+  batch_result: [batchSequence, accepted, results, serverTick, nextCursor]
+  idempotency: "Repeated batchSequence returns the original result; reusing it with different content is sequence-conflict."
+  accepted_later_events: [blocked, target_lost]
+observation_invariants:
+  owned_entities: [legal_production, construction, orders, cooldowns, cargo, visible_status]
+  enemy_entities: currently_observed_fields_only
+  hidden_entities: absent_never_zero_filled
+  stale_contacts: [last_known_tick, stale_marker]
+  scoped: [queues, resources, construction_previews, objectives]
+  cursor_recovery: fresh_view_never_arbitrary_hidden_event_range
+  reobserve_after: [expired_cursor, reconnect, ownership_change, entity_destruction, stale_information_rejection, victory_or_defeat]
+error_contract:
+  fields: [code, message, retryable, requestId, serverTick, details]
+  stable_errors:
+    - {code: unauthenticated, meaning: credential_missing_expired_or_revoked, recovery: reauthenticate}
+    - {code: forbidden, meaning: principal_lacks_requested_scope_or_slot, recovery: request_authorization}
+    - {code: session_not_found, meaning: session_does_not_exist_or_is_not_visible, recovery: open_valid_session}
+    - {code: session_expired, meaning: agent_session_lifetime_ended, recovery: open_new_session_and_reobserve}
+    - {code: match_finished, meaning: match_is_terminal, recovery: read_final_view_no_action_possible}
+    - {code: invalid_input, meaning: JSON_shape_field_or_limit_is_invalid, recovery: correct_request}
+    - {code: sequence_conflict, meaning: sequence_reused_with_different_content, recovery: reconcile_local_log}
+    - {code: cursor_expired, meaning: cursor_is_outside_retained_history, recovery: request_fresh_observation}
+    - {code: content_mismatch, meaning: agent_and_match_manifest_or_protocol_differ, recovery: reconnect_compatibly}
+    - {code: rate_limited, meaning: frequency_or_concurrency_limit_exceeded, recovery: back_off_for_retry_interval}
+    - {code: timeout, meaning: tool_wait_or_bounded_processing_expired, recovery: reobserve_match_continued}
+    - {code: command_rejected, meaning: command_batch_failed_validation, recovery: inspect_stable_reasons_then_reobserve}
+    - {code: service_unavailable, meaning: adapter_unavailable, recovery: retry_with_backoff_do_not_assume_action_applied}
+  detail_rule: "Errors never reveal whether an unseen entity, position, resource, or order exists."
+limits:
+  concurrent_sessions_per_principal: 4
+  observe_calls_per_real_second_per_session: 10
+  action_calls_per_real_second_per_session: 5
+  commands_per_action_batch: 8
+  subjects_per_command: 16
+  events_per_response: 128
+  long_poll_wait_ticks: 30
+  agent_session_lifetime_real_hours: 24
+  cursor_retention: "900 simulation ticks or 5 minutes, whichever comes first"
+  request_body_kib: 128
+  response_body_kib: 512
+fairness: "The service may lower limits under load but advertises a stable rate-limited response and retry interval. Agent calls are timestamped for fairness analysis; wall-clock timing is never simulation input. Agents and humans share command deadlines and fog rules."
+audit: "Each accepted or rejected action records principal, agent session, player, batch sequence, command sequences, request ID, authoritative tick, result, and content digest; audit records are access-controlled."
+acceptance: [agent_replaces_human_without_semantic_change, hidden_state_unobtainable_through_errors_cursors_ids_timing, duplicate_action_delivery_cannot_duplicate_commands, expired_cursor_recovers_through_fresh_filtered_view, stale_plans_fail_safely_then_reobserve, latency_never_stalls_tick_or_grants_later_deadline, manifest_mismatch_prevents_action, every_tool_action_terminal_result_auditable]

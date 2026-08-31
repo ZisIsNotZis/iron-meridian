@@ -1,0 +1,26 @@
+display_name: Wrecker
+description: "Core Established mobile repair and wreck-denial vehicle. Tracked speed 2.4 cells/s, stationary during repair; ground vehicle, light armor, ordinary detection, valuable support target. Defensive machine gun uses machine gun/autocannon against ground personnel, range 3.5, 12 damage/event, 36 ticks, projectile speed 14, point hit, no tracking. Tow and patch targets one nearby allied vehicle or eligible wreck at range 1.0, channels 30 ticks, restores 6 HP/tick or tows 2.0 cells over 30 ticks, cooldown 30, stationary while active, visible cable, hostile hit interrupts under shared repair grace. Production 400 resource / 180 ticks from Field Workshop, vehicle FIFO, no hard roster cap, one active channel. Body 340 HP, radius 0.48, footprint 2x2, vision 6.5, alert/acquisition 8.0."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: established
+battlefield_roles: [repair, recovery]
+hpmax: 340
+armor: armors.light
+locomotor: locomotors.tracked
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.4
+visionrange: 6.5
+alertrange: 8.0
+footprint: {radius_cells: 0.48, width_cells: 2, height_cells: 2}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: defensive_machine_gun, damage: damages.machine_gun_autocannon, targetability: [targetabilities.ground], attackrange: 3.5, attackdamage: 12, attackperiod: 36, projectile_speed: 14, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}]
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: tow_and_patch, activation: active, channel_ticks: 30, cooldown_ticks: 30, target: allied_vehicle_or_wreck, targetrange: 1.0, movement_allowed: false, interruption_conditions: [damage, separation], design: {player_decision: "Keep a damaged force alive behind a screen or secure a wreck before the opponent.", counterplay: "Raid the repair lane and deny recovery space."}}]
+repair: {available: true, target: allied_units, rate_per_tick: 6, range_cells: 1.0, interrupted_by_damage: true}
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 400}, buildtime: 180, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Heavy winch and folding crane; blue welding arcs and a taut cable make support relationship obvious.", readability: "Repair, tow, cable, damaged, and destruction states remain readable; bespoke assets are N/A until production."}
+audio: {identity: "Winch, crane, welding, selection, damage, repair, and destruction use faction fallback."}
+fx: {identity: "Blue welding arcs and taut cable show active support and interruption."}
+design: {tactical_identity: "Durable exposed repair support and bounded wreck recovery.", player_decision: "Keep damaged force alive behind a screen or secure a wreck before the opponent.", counterplay: "Raids, focus fire, and denying the repair lane.", offense_behavior: "Short-range defensive gun is weak against combat units.", defense_behavior: "Light armor; valuable support target; stationary while active.", support_behavior: "Tow and patch repairs 6 HP/tick or tows 2 cells; recovered assets return only bounded health/salvage, never a recipe.", locomotion_behavior: "Tracked, slow ordinary ground movement; stationary during repair.", targetability_behavior: "Ground vehicle, ordinary vision and detection.", acquisition_behavior: "Defensive gun range 3.5, 12 damage, 36 ticks, point projectile, no tracking.", lock_behavior: "Range 1, channel 30, cooldown 30, cable visible; hostile hit/separation interrupts under repair grace.", lifecycle_behavior: "One active Tow and patch channel.", production_behavior: "Field Workshop vehicle FIFO; 400 resource, 180 ticks, replaceable.", visual_identity: "Heavy winch, crane, blue welding arcs.", audio_identity: "Winch and welding support cues.", fx_identity: "Taut cable and blue repair arc.", design_rationale: "Support durability is above a technical but armor remains light; one active repair source and no wreck-to-unit conversion follow shared rules."}

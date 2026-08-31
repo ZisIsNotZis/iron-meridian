@@ -1,0 +1,23 @@
+display_name: "Suppression"
+description: Accumulating suppression status with threshold effects.
+status: designed
+kind: "status"
+application:
+  minimum_points: 10
+  maximum_points: 25
+  track_cap: 100
+  resistance_order: before_amount
+thresholds:
+  - {name: partial, points: 50, movement_modifier_percent: -20, fire_rate_modifier_percent: -15}
+  - {name: full, points: 100, capabilities_locked: [stable_firing_skills]}
+decay:
+  quiet_delay_ticks: 30
+  points_per_tick: 5
+  rule: linear
+resistance:
+  formula: floor(raw * (100 - resistance_percent) / 100)
+  affects: amount
+design:
+  application_rules: Hits apply 10–25 points; the track caps at 100. Partial suppression begins at 50 and full suppression begins at 100.
+  resolution_rule: At partial suppression, movement is -20% and fire rate is -15%. At full suppression, stable-firing skills are locked. Decay starts after 30 ticks quiet at 5 points/tick.
+  counterplay: Suppression is visible and bounded; resistance uses the shared integer conversion rule.

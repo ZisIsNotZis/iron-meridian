@@ -1,0 +1,72 @@
+display_name: "Rocket Section"
+description: "Rocket Section Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "infantry"
+tier: "established"
+battlefield_roles: ["long_range_anti_vehicle_and_anti_air_infantry", "deterrent_around_structures"]
+hpmax: 170
+armor: "armors.personnel"
+locomotor: "locomotors.default_ground"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.4
+visionrange: 7
+alertrange: 8.5
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.24
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.default_ground", "damages.anti_armor_penetrator", "targetabilities.high_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.barracks"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Shoulder racks, red tracking optics, smoke trails, and ordered three-round salvos."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Shoulder racks, red tracking optics, smoke trails, and ordered three-round salvos."
+fx:
+  identity: "Shoulder racks, red tracking optics, smoke trails, and ordered three-round salvos."
+design:
+  tactical_identity: "Long-range anti-vehicle and anti-air infantry; secondary deterrent around structures."
+  player_decision: "Pre-place a denial screen or keep the section mobile to avoid being bypassed. It fails when rushed, flanked, or forced to shoot cheap targets."
+  counterplay: "Fast infantry/vehicles, line-of-sight denial, artillery, and air attacks from outside the lock window."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Personnel protection; fragile to fast assaults, artillery, and suppression."
+  support_behavior: "Extends the army's anti-vehicle and anti-air threat from prepared ground; it does not provide radar or a network link."
+  locomotion_behavior: "Foot with cumbersome movement; may enter transports. Cannot fire the main launcher during setup or relocation."
+  targetability_behavior: "Ground personnel; ordinary sight. Its launcher does not change its own target domain."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The section uses the shared personnel armor and status rules. Its long-range launcher and deploy state are deliberate overrides of the Infantry role profile. Guided rocket | Anti-armor penetrator; ground light/heavy, low/high air | 7.5 / 105 / 90 ticks | Projectile 9 cells/s; point; tracking within 30° cone, 90°/s Launcher Emplacement | 30-tick setup; active until packed; 30-tick recovery; 180-tick cooldown; +1.0 range and +15% lock damage, movement disabled | Interrupt setup, flank, rush, or force pack"
+production:
+  producer: "factions.directorate.buildings.barracks"
+  queue: "default_queue"
+  category: "anti_armor_infantry"
+  prerequisites: ["factions.directorate.buildings.barracks", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 260
+  buildtime: 90
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Guided rocket"
+    damage: "damages.anti_armor_penetrator"
+    targetability: ["targetabilities.ground", "targetabilities.high_air"]
+    attackrange: 7.5
+    attackdamage: 105
+    attackperiod: 90
+    delivery: "projectile_9_cells_s_point_tracking_within_30_cone_90_s"
+    design:
+      tactical_use: "Guided rocket | Anti-armor penetrator; ground light/heavy, low/high air | 7.5 / 105 / 90 ticks | Projectile 9 cells/s; point; tracking within 30° cone, 90°/s"
+      counterplay: "Fast infantry/vehicles, line-of-sight denial, artillery, and air attacks from outside the lock window."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Launcher Emplacement"
+    activation: "active"
+    setup_ticks: 30
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: false
+    design:
+      player_decision: "Pre-place a denial screen or keep the section mobile to avoid being bypassed. It fails when rushed, flanked, or forced to shoot cheap targets."
+      counterplay: "Fast infantry/vehicles, line-of-sight denial, artillery, and air attacks from outside the lock window."
+      interruption_readability: "Launcher Emplacement | 30-tick setup; active until packed; 30-tick recovery; 180-tick cooldown; +1.0 range and +15% lock damage, movement disabled | Interrupt setup, flank, rush, or force pack"

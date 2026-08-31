@@ -1,0 +1,114 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_presentation
+type: object
+additionalProperties: false
+required: [kind, source_document]
+properties:
+  kind: {type: string}
+  source_document: {type: string, minLength: 1}
+  title: {type: string}
+  authority: {type: string}
+  goal: {type: string}
+  priority_order: {type: array, items: {}}
+  ownership: {type: string}
+  focused_contracts: {type: array, items: {}}
+  v1_visual_target: {type: object}
+  first_readable_asset_set: {type: array, items: {}}
+  readability_rules: {type: object}
+  information_grammar: {type: object}
+  animation_direction: {type: object}
+  audio_direction: {type: object}
+  fx_direction: {type: object}
+  camera: {type: object}
+  performance_budgets: {type: object}
+  asset_ownership: {type: object}
+  principles: {type: object}
+  audio_controls: {type: array, items: {}}
+  audio_equivalence: {type: string}
+  input: {type: array, items: {}}
+  pause: {type: string}
+  localization: {type: string}
+  v1_acceptance_profile: {type: object}
+  release_blockers: {type: string}
+  acceptance_checks: {type: array, items: {}}
+  determinism: {type: string}
+  shared_vocabulary: {type: array, items: {}}
+  entity_rule: {type: string}
+  implementation_options: {type: array, items: {}}
+  anchors: {type: object}
+  layers: {type: array, items: {}}
+  owned_values: {type: array, items: {}}
+  purpose: {type: string}
+  entity_layout: {type: object}
+  authoritative_records: {type: string}
+  shared_assets: {type: string}
+  manifest_fields: {type: array, items: {}}
+  manifest_value_rule: {type: string}
+  resolution_order: {type: array, items: {}}
+  missing_asset_rule: {type: string}
+  naming: {type: object}
+  required_state_coverage: {type: object}
+  icon_system: {type: object}
+  icon_matrix: {type: array, items: {}}
+  model_sprite_standard: {type: object}
+  owned_presentation_values: {type: string}
+  animation_state_matrix: {type: array, items: {}}
+  effect_vocabulary: {type: array, items: {}}
+  fallbacks: {type: object}
+  event_fields: {type: array, items: {}}
+  mixer: {type: string}
+  shared_events: {type: array, items: {}}
+  identity: {type: string}
+  buses: {type: array, items: {}}
+  mix_values: {type: string}
+  default: {type: string}
+  controls: {type: object}
+  v1_values: {type: object}
+  interpolation: {type: string}
+  alert_jump: {type: object}
+  screen_shake: {type: object}
+  forbidden_effects: {type: array, items: {}}
+  shared_event_families: {type: array, items: {}}
+  required_fields: {type: array, items: {}}
+  implementation: {type: array, items: {}}
+  persistent_effect_rule: {type: string}
+  lod_rule: {type: string}
+  display_name: {type: string}
+  hud_wireframe: {type: object}
+  minimap: {type: object}
+  ui_states: {type: array, items: {}}
+  unavailable_command: {type: string}
+  alert_order: {type: array, items: {}}
+  alert_tie_break: {type: array, items: {}}
+  interaction_mapping: {type: object}
+  visual_mappings: {type: array}
+  visual_fallback: {type: string}
+  animation_profile: {type: object}
+  fx_profile: {type: array}
+  fx_cap: {type: string}
+  audio_profile: {type: object}
+  placeholder_assets: {type: array, items: {}}
+  placeholder_rule: {type: string}
+  battlefield_channels: {type: object}
+  persistent_hud: {type: object}
+  channel_rule: {type: string}
+  target: {type: string}
+  validation: {type: string}
+  baseline: {type: object}
+  budgets: {type: object}
+  acceptance_run: {type: object}
+  implementation_preferences: {type: array, items: {}}
+  degradation_order: {type: array, items: {}}
+  preserve: {type: array, items: {}}
+  low_end_fallback: {type: object}
+  exceptions: {type: string}
+  brand_idea: {type: string}
+  mark_character: {type: string}
+  readable_ideas: {type: array, items: {}}
+  primary_mark: {type: object}
+  colors: {type: object}
+  required_variants: {type: array, items: {}}
+  size_rules: {type: object}
+  motion_and_sound: {type: object}
+  usage_rules: {type: array, items: {}}
+  delivery_boundary: {type: string}

@@ -1,0 +1,48 @@
+display_name: "Ore Refinery"
+description: "Ore Refinery Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "economy_processor"
+tier: "field"
+hpmax: 900
+building_roles: ["converts_harvester_cargo_into_banked_resource_and_services_the_economy_loop"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 3, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Armored hopper towers, amber cargo lamps, conveyor motion, measured unloading clanks, smoke and sparks when damaged."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Armored hopper towers, amber cargo lamps, conveyor motion, measured unloading clanks, smoke and sparks when damaged."
+fx:
+  identity: "Armored hopper towers, amber cargo lamps, conveyor motion, measured unloading clanks, smoke and sparks when damaged."
+design:
+  counterplay: "Attack the harvester route, docked harvester, or refinery; the opponent cannot steal banked resource through destruction."
+  defense_behavior: "Structure; ordinary sight and structure-capable weapons; docked harvester remains separately targetable."
+construction:
+  cost:
+    resource: 500
+  buildtime: 300
+  builder: "factions.directorate.buildings.construction_yard"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+  exit_clearance_cells: 1
+production:
+  max_operational: 3
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false
+economy:
+  resource_type: "ore"
+  unload_amount: 40
+  unload_period_ticks: 1
+  condition_rate_per_tick: 5

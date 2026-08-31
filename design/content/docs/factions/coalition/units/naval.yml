@@ -1,0 +1,17 @@
+display_name: "Coalition Naval Units"
+description: "Sea-denial and route-control units that are map-dependent rather than a second copy of the ground army."
+source_document: "design/factions/coalition/units/naval/README.md"
+platform_constraints: ["Surface and submerged rules remain shared.", "Landing craft use shared transport operations."]
+entries:
+  - object: "factions.coalition.naval.swift_torpedo_boat"
+    status: "core"
+    decision: "Use speed to threaten a capital target or retreat before screening fire catches it."
+  - object: "factions.coalition.naval.guardian_missile_corvette"
+    status: "core"
+    decision: "Hold a protected denial zone or advance and expose the corvette."
+  - object: "factions.coalition.naval.seawatch_submersible"
+    status: "core"
+    decision: "Stay hidden for a surprise strike or surface/retreat when detected."
+  - object: "factions.coalition.naval.tideway_landing_craft"
+    status: "optional"
+    decision: "Turn water access into an infantry flank, or spend the slot on direct naval power."

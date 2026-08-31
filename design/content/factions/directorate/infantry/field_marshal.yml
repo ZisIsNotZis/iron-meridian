@@ -1,0 +1,75 @@
+display_name: "Field Marshal"
+description: "Field Marshal Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "infantry"
+tier: "advanced"
+battlefield_roles: ["formation_command_and_attack_coordination", "target_designation_it_is_a_force_multiplier_not_a_high_dps_hero"]
+hpmax: 220
+armor: "armors.personnel"
+locomotor: "locomotors.default_ground"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.6
+visionrange: 7
+alertrange: 9
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.22
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.default_ground", "damages.rifle_small_arms", "targetabilities.low_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.barracks", "factions.directorate.buildings.heavy_works"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "White command coat, map-table hologram, radio chirps, and synchronized allied weapon flashes."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "White command coat, map-table hologram, radio chirps, and synchronized allied weapon flashes."
+fx:
+  identity: "White command coat, map-table hologram, radio chirps, and synchronized allied weapon flashes."
+design:
+  tactical_identity: "Formation command and attack coordination; secondary target designation. It is a force multiplier, not a high-DPS hero."
+  player_decision: "Put command close enough to matter without handing the opponent a valuable kill. It fails when isolated, overstacked, or forced to chase."
+  counterplay: "Raid the command unit, break line of sight, spread targets, or force the formation to move during its setup/recovery."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Reinforced personnel protection but high strategic value; vulnerable to snipers, artillery, and focused fire."
+  support_behavior: "Coordinates nearby fire through one visible designation; it does not create a mandatory faction-wide command network."
+  locomotion_behavior: "Foot; transportable and deliberately slower than Rifle Squads. Ground state, no special transition."
+  targetability_behavior: "Ground personnel; visible to ordinary sight. Its command radius is shown to both players."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Marshal follows the shared personnel rules; the reinforced protection and designation skill are intentional Directorate overrides. Service pistol | Rifle; ground personnel, low air | 4.0 / 8 / 36 ticks | Projectile 14 cells/s; point; no tracking Coordinated Fire | 15-tick setup; 90-tick active; 30-tick recovery; 240-tick cooldown; visible target within 8.0 cells; allies within 5.0 cells gain +15% damage to that target | Break LOS, kill/force movement, spread targets; Marshal is revealed while active"
+production:
+  producer: "factions.directorate.buildings.barracks"
+  queue: "default_queue"
+  category: "command_specialist"
+  prerequisites: ["factions.directorate.buildings.barracks", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.heavy_works"]
+  cost:
+    resource: 450
+  buildtime: 150
+  capacity:
+    max_active: 1
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Service pistol"
+    damage: "damages.rifle_small_arms"
+    targetability: ["targetabilities.ground", "targetabilities.low_air"]
+    attackrange: 4
+    attackdamage: 8
+    attackperiod: 36
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Service pistol | Rifle; ground personnel, low air | 4.0 / 8 / 36 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Raid the command unit, break line of sight, spread targets, or force the formation to move during its setup/recovery."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Coordinated Fire"
+    activation: "active"
+    setup_ticks: 15
+    active_ticks: 90
+    recovery_ticks: 30
+    cooldown_ticks: 240
+    targetrange: 8
+    movement_allowed: true
+    design:
+      player_decision: "Put command close enough to matter without handing the opponent a valuable kill. It fails when isolated, overstacked, or forced to chase."
+      counterplay: "Raid the command unit, break line of sight, spread targets, or force the formation to move during its setup/recovery."
+      interruption_readability: "Coordinated Fire | 15-tick setup; 90-tick active; 30-tick recovery; 240-tick cooldown; visible target within 8.0 cells; allies within 5.0 cells gain +15% damage to that target | Break LOS, kill/force movement, spread targets; Marshal is revealed while active"

@@ -1,0 +1,84 @@
+display_name: "Bastion"
+description: "Bastion Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "field"
+battlefield_roles: ["general_purpose_line_tank_and_formation_backbone", "anti_light_pressure"]
+hpmax: 520
+armor: "armors.heavy"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.4
+visionrange: 7
+alertrange: 9
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.55
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.heavy", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.explosive_area", "targetabilities.structure", "damages.machine_gun_autocannon", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Repeated slab armor, standardized turret rings, synchronized cannon reports, and low mechanical rumble."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Repeated slab armor, standardized turret rings, synchronized cannon reports, and low mechanical rumble."
+fx:
+  identity: "Repeated slab armor, standardized turret rings, synchronized cannon reports, and low mechanical rumble."
+design:
+  tactical_identity: "General-purpose line tank and formation backbone; secondary anti-light pressure."
+  player_decision: "Use reliable numbers to establish a line or mix specialists before pushing. It fails when asked to win a specialized duel."
+  counterplay: "Dedicated anti-armor, flanking, artillery, air attack, and refusing a frontal trade."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Light-to-medium armor; dependable but not an assault tank."
+  support_behavior: "Provides the formation's dependable body count and screens specialists; no special support system is attached."
+  locomotion_behavior: "Tracked; reliable cross-country movement with deliberate turning and strong ground collision."
+  targetability_behavior: "Ground vehicle; ordinary sight, anti-vehicle and anti-armor targeting."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Bastion is the explicit armored-line values with a small damage tradeoff for replaceability. Stabilized cannon | Explosive; ground light, heavy, structure | 6.0 / 82 / 72 ticks | Projectile 10 cells/s; point; no tracking Coaxial gun | Machine gun/autocannon; ground personnel, light | 5.0 / 12 / 24 ticks | Projectile 14 cells/s; point; no tracking Fire on Advance | 15-tick setup; 90-tick active; 15-tick recovery; 180-tick cooldown; movement allowed at 70%, cannon damage -15% | Flank, focus, or disengage during reduced accuracy"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "main_battle_tank"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 400
+  buildtime: 105
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Stabilized cannon"
+    damage: "damages.explosive_area"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 6
+    attackdamage: 82
+    attackperiod: 72
+    delivery: "projectile_10_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Stabilized cannon | Explosive; ground light, heavy, structure | 6.0 / 82 / 72 ticks | Projectile 10 cells/s; point; no tracking"
+      counterplay: "Dedicated anti-armor, flanking, artillery, air attack, and refusing a frontal trade."
+  - weapon: "weapons.default_resolution"
+    mount_name: "Coaxial gun"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground"]
+    attackrange: 5
+    attackdamage: 12
+    attackperiod: 24
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Coaxial gun | Machine gun/autocannon; ground personnel, light | 5.0 / 12 / 24 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Dedicated anti-armor, flanking, artillery, air attack, and refusing a frontal trade."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Fire on Advance"
+    activation: "active"
+    setup_ticks: 15
+    active_ticks: 90
+    recovery_ticks: 15
+    cooldown_ticks: 180
+    movement_allowed: true
+    design:
+      player_decision: "Use reliable numbers to establish a line or mix specialists before pushing. It fails when asked to win a specialized duel."
+      counterplay: "Dedicated anti-armor, flanking, artillery, air attack, and refusing a frontal trade."
+      interruption_readability: "Fire on Advance | 15-tick setup; 90-tick active; 15-tick recovery; 180-tick cooldown; movement allowed at 70%, cannon damage -15% | Flank, focus, or disengage during reduced accuracy"

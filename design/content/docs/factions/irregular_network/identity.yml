@@ -1,0 +1,25 @@
+title: Irregular Network Identity
+source_document: design/factions/irregular-network/identity.md
+document_type: faction_identity
+symbol:
+  official_logo: none
+  recognition_mark: short broken line forming an incomplete knot
+  alternate_encoding: three offset bars
+  application: often painted by hand or encoded
+  cell_variation: different cells alter the mark slightly
+  recognition_purpose: common geometry lets allies recognize one another without giving an observer a perfect organizational map
+title_treatment:
+  style: spare and provisional
+  elements: stamped text, overwritten labels, clipped photographs, and route marks
+  prohibition: never turn the Network into a polished secret corporation
+presentation_ownership:
+  owned_here: identity principles
+  owned_elsewhere:
+    content: faction palette, materials, silhouettes, spaces, voice, audio, effects, and animation direction live in Network assets
+    path: design/factions/irregular-network/assets.md
+  individual_gameplay:
+    content: unit records
+    path: design/content/factions/irregular_network/
+  global_rules:
+    content: presentation rules
+    path: design/presentation/README.md

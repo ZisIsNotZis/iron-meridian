@@ -1,0 +1,36 @@
+display_name: "Vehicle Assembly"
+description: "Vehicle Assembly migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: established
+building_roles: ["ground_vehicle_production"]
+hpmax: 750
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 3, height_cells: 3, facings: "cardinal"}
+construction:
+  cost: {resource: 700}
+  buildtime: 360
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}]
+production: {max_operational: 2, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "ground-vehicle production"
+  construction_behavior: "Buildable terrain inside shared anchor rules; exit must open onto legal ground and cannot block a primary route."
+  production_behavior: "Role: ground-vehicle production; cost: `700 resource`; build time: `360 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / vehicle production`; replacement/capacity: `maximum 2 operational assemblies; one FIFO vehicle queue per assembly; one builder assignment`."
+  defense_behavior: "Structure; visible high-value production target; exit blockage pauses completed production."
+  capture_behavior: "**Rapid sortie** — passive queue production; no acceleration button or parallel queue."
+  repair_behavior: "Protect throughput centrally or move production toward the threatened lane for faster response."
+  lifecycle_behavior: "Raid the building, block its exit, or force a queue choice between army and economic replacement; destroyed queued work is lost."
+  player_decision: "Protect throughput centrally or move production toward the threatened lane for faster response."
+  counterplay: "Raid the building, block its exit, or force a queue choice between army and economic replacement; destroyed queued work is lost."
+  visual_identity: "Open assembly cradle, moving gantry, blue runway markings, rolling-door spawn animation, and a mechanical completion tone."
+  design_rationale: "# Vehicle Assembly\n\n## Gameplay identity\n\n- **Footprint:** `3 × 3` cells; four facings; one broad vehicle exit.\n- **Health / protection:** 750 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; visible high-value production target; exit blockage pauses completed production.\n- **Production:** Role: ground-vehicle production; cost: `700 resource`; build time: `360 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / vehicle production`; replacement/capacity: `maximum 2 operational assemblies; one FIFO vehicle queue per assembly; one builder assignment`.\n- **Skill / passive:** **Rapid sortie** — passive queue production; no acceleration button or parallel queue.\n- **Placement:** Buildable terrain inside shared anchor rules; exit must open onto legal ground and cannot block a primary route.\n- **Player decision:** Protect throughput centrally or move production toward the threatened lane for faster response.\n- **Counterplay:** Raid the building, block its exit, or force a queue choice between army and economic replacement; destroyed queued work is lost.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Open assembly cradle, moving gantry, blue runway markings, rolling-door spawn animation, and a mechanical completion tone.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

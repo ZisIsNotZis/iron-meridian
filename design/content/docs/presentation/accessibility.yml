@@ -1,0 +1,30 @@
+kind: accessibility_contract
+source_document: design/presentation/accessibility.md
+principles:
+  color: "Never use color as the only ownership, status, legality, or objective cue."
+  display: [scalable_ui_and_text, high_contrast, color_blind_safe_palettes, reduced_motion]
+  independent_reduction: [camera_shake, flashing, bloom, alert_intensity]
+  flashing: "No critical state depends on sustained flashing."
+audio_controls: [master, music, effects, voice, ui]
+audio_equivalence: "Important voiced or spatial cues have captions or an equivalent visual cue."
+input: [keyboard_mouse, remapping, hold_toggle_choices_for_repeated_actions]
+pause: "Pause must preserve readable state inspection."
+localization: "Tooltips and command results use plain text plus icon and tolerate localization expansion without hiding critical controls."
+v1_acceptance_profile:
+  body_text_min_css_px: 16
+  critical_hud_and_command_min_css_px: 14
+  normal_text_contrast_ratio: 4.5
+  large_text_and_control_contrast_ratio: 3
+  team_identity: [color, shape_or_pattern]
+  status_and_objective_identity: [text, icon]
+  focus_order: [top_bar, world_or_selection, command_bar, production_queue, minimap, system_controls]
+  keyboard: "Tab moves through actionable controls; Enter activates; Escape backs out of a transient mode."
+  hotkeys: "Hotkeys are remappable, conflicts are reported before saving, and the command palette remains usable if every hotkey is unbound."
+  reduced_motion: [remove_camera_easing, remove_screen_shake, remove_looping_ambient_motion, remove_nonessential_particle_animation]
+  reduced_flash: [remove_full_screen_flashes, limit_emphasis_to_brief_outline_or_icon_change]
+  warning_rule: "No V1 effect uses repeated flashing as the only warning."
+  captions: "Important audio warnings have a caption/event equivalent, and captions identify speaker or event source where relevant."
+  ui_scale: [100_percent, 125_percent, 150_percent]
+  ui_scale_requirement: "UI scale must not clip the command bar or hide selected-entity health."
+release_blockers: "A failure is a release blocker when it hides an essential command, state, or warning rather than merely changing aesthetics."
+acceptance_checks: [keyboard_only_selection_order_construction, color_safe_ownership_and_objective_reading, 150_percent_ui_scale, reduced_motion_and_flash, muted_audio_with_captions, focus_recovery_after_pause_and_rejection, zoomed_out_and_zoomed_in_viewports]

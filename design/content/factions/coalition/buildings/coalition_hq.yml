@@ -1,0 +1,33 @@
+display_name: "Coalition HQ"
+description: "Coalition HQ migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: strategic
+building_roles: ["starting_base_anchor", "loss_condition"]
+hpmax: 1
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 4, height_cells: 4, facings: "cardinal"}
+construction:
+  cost: {resource: 0}
+  buildtime: 0
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "starting base anchor and loss condition"
+  construction_behavior: "Starting completed asset or within the shared HQ/construction placement rules; cannot overlap routes, objective exclusion, resources, units, or buildings."
+  production_behavior: "Role: starting base anchor and loss condition; cost: `0 resource`; build time: `0 ticks`; facility: `scenario start`; prerequisites: `none`; queue/category: `none / base anchor`; replacement/capacity: `one starting HQ per player; not producible or rebuildable in V1`."
+  defense_behavior: "Structure; always visible when discovered; no stealth or hidden global targeting."
+  capture_behavior: "**Command anchor** — provides the shared `12`-cell construction anchor; no combat aura and no production queue."
+  repair_behavior: "Preserve a safe anchor or expose it near a contested resource/objective to shorten response time."
+  lifecycle_behavior: "Scout the construction vehicle and attack the HQ through an opened lane; base defenses and relocation do not remove the destruction victory condition."
+  player_decision: "Preserve a safe anchor or expose it near a contested resource/objective to shorten response time."
+  counterplay: "Scout the construction vehicle and attack the HQ through an opened lane; base defenses and relocation do not remove the destruction victory condition."
+  visual_identity: "Low modular command block, blue-white mast, rotating map table, construction grid pulse, and a restrained evacuation siren at low health."
+  design_rationale: "# Coalition HQ\n\n## Gameplay identity\n\n- **Footprint:** `4 × 4` cells; four cardinal facings; one construction-vehicle exit on the exposed service side.\n- **Health / protection:** 1,200 HP; `reinforcedStructure`; no special resistance override.\n- **Targetability:** Structure; always visible when discovered; no stealth or hidden global targeting.\n- **Production:** Role: starting base anchor and loss condition; cost: `0 resource`; build time: `0 ticks`; facility: `scenario start`; prerequisites: `none`; queue/category: `none / base anchor`; replacement/capacity: `one starting HQ per player; not producible or rebuildable in V1`.\n- **Skill / passive:** **Command anchor** — provides the shared `12`-cell construction anchor; no combat aura and no production queue.\n- **Placement:** Starting completed asset or within the shared HQ/construction placement rules; cannot overlap routes, objective exclusion, resources, units, or buildings.\n- **Player decision:** Preserve a safe anchor or expose it near a contested resource/objective to shorten response time.\n- **Counterplay:** Scout the construction vehicle and attack the HQ through an opened lane; base defenses and relocation do not remove the destruction victory condition.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Low modular command block, blue-white mast, rotating map table, construction grid pulse, and a restrained evacuation siren at low health.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

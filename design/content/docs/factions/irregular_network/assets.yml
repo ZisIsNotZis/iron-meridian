@@ -1,0 +1,15 @@
+display_name: Irregular Network Assets
+description: Faction-wide presentation language for the Irregular Network.
+source_document: design/factions/irregular-network/assets.md
+visual_language: "No uniform paint scheme: use faded Union leftovers, civilian colors, tar black, canvas, oxidized metal, chalk, repair numbers, and occasional local tape."
+audio_language: "Dialogue is personal, coded, and situational. Use muted engines, cloth and tools, hand taps, whistles, degraded radio, found percussion, and quiet melodic fragments."
+fx_language: "Effects emphasize surprise and disappearance: brief cover flashes, settling dust, cut power, dropped markers, improvised smoke, and quick extraction."
+animation_rules: "Animation clearly shows setup, concealment failure, salvage, and withdrawal without particle-heavy spectacle."
+canonical_content:
+  - "Silhouettes communicate role before camouflage; concealment is a state, not erased identification."
+  - "Spaces are temporary and opportunistic: workshops, caches, false walls, removable panels, civilian conversions, mismatched parts, and locally meaningful markings."
+  - "All choices follow the global asset contract and presentation rules."
+scope:
+  - "This document owns faction-wide presentation language."
+  - "Specific unit and building mappings belong beside those objects when their asset directories are created."
+  - "Global references: design/presentation/assets.md and design/presentation/README.md."

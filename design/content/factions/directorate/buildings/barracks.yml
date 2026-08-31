@@ -1,0 +1,54 @@
+display_name: "Barracks"
+description: "Barracks Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "infantry_production"
+tier: "field"
+hpmax: 650
+building_roles: ["owns_the_directorate_infantry_queue_and_creates_the_decision_between_cheap_line_presence_and_specialist_bodies"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 2, height_cells: 2, facings: cardinal}
+exits:
+  - exit_name: "infantry_exit"
+    direction: "any"
+    exit_type: "infantry"
+    capacity: 1
+    blocked_behavior: "pause"
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Repeated troop doors, red unit-number plates, marching-light strips, assembly claxons, and compact completion pulse."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Repeated troop doors, red unit-number plates, marching-light strips, assembly claxons, and compact completion pulse."
+fx:
+  identity: "Repeated troop doors, red unit-number plates, marching-light strips, assembly claxons, and compact completion pulse."
+design:
+  counterplay: "Raid the building or exit, interrupt production by destruction, and attack queued capability rather than already-fielded infantry."
+  defense_behavior: "Structure; ordinary sight and structure-capable attacks; queue lights reveal operational state."
+construction:
+  cost:
+    resource: 400
+  buildtime: 240
+  builder: "factions.directorate.buildings.construction_yard"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+production:
+  max_operational: 2
+  replacement_allowed: true
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false
+  queues:
+    - queue_name: "infantry"
+      category: "infantry"
+      capacity: 1
+      exit_name: "infantry_exit"
+      blocked_behavior: "pause"

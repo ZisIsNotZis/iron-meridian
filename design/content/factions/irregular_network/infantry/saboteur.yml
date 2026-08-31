@@ -1,0 +1,25 @@
+display_name: Saboteur
+description: "Core Advanced infiltration infantry. Foot movement; concealment while outside detection, but no conventional attack. Capture interaction is replaced by sabotage on valid targets. Ground infantry is hidden only while undetected and inactive; detection, area damage, and structure security reveal it. No meaningful direct weapon. Personnel armor makes it a timing and information piece. Infiltrate channels at a valid structure or special asset and applies one announced bounded disruption: production pause, sensor blackout, or temporary weapon lock; the Saboteur is consumed or forced out after completion. No chain effects or permanent lockout. Production 300 resource / 210 ticks; Cell House plus operational Hideout or Relay Cache; infantry FIFO; no hard roster cap, each completed infiltration consumes the specialist. Body 95 HP, personnel armor, speed 2.8, radius 0.22, footprint 1x1; vision 6.0, alert/acquisition 7.0. No direct weapon, range 0, damage 0, no acquisition. Infiltrate range 1.0, channel 60 ticks, cooldown 300, consumed on completion, effect duration 120, structure warning at start, interruptible."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: infantry
+tier: advanced
+battlefield_roles: [infiltration, sabotage]
+hpmax: 95
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.8
+visionrange: 6.0
+alertrange: 7.0
+footprint: {radius_cells: 0.22, width_cells: 1, height_cells: 1}
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: infiltrate, activation: active, channel_ticks: 60, cooldown_ticks: 300, duration_ticks: 120, target: structure_or_special_asset, targetrange: 1.0, requires_observation: true, interruption_conditions: [damage, detection], design: {player_decision: "Decide whether the opening is worth losing the specialist and exposing the plan.", counterplay: "Detection, structure spacing, patrols, and delaying vulnerable production windows."}}
+production: {producer: factions.irregular_network.buildings.cell_house, queue: infantry, category: infantry, cost: {resource: 300}, buildtime: 210, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Reversible armband and tool roll; successful infiltration leaves a brief legible red maintenance fault.", readability: "Readable infantry silhouette with footprint, selection, contact, and shadow anchors; command and sabotage warning are visible; bespoke files are N/A until production."}
+audio: {identity: "Selection, acknowledgement, skill warning, damage, and destruction use faction fallback; bespoke files are N/A."}
+fx: {identity: "Successful infiltration leaves a legible red maintenance fault rather than unexplained failure; setup warning and disruption remain visible."}
+design: {tactical_identity: "Consumed infiltration timing piece for one bounded capability disruption.", player_decision: "Trade a fragile specialist for a 120-tick production pause, sensor blackout, or weapon lock.", counterplay: "Detection, structure spacing, patrols, and delaying exposed production.", offense_behavior: "No meaningful direct weapon; cannot auto-acquire hostile targets.", defense_behavior: "Personnel armor; concealment is only undetected inactive state and area damage remains valid.", support_behavior: "One structure/special-asset disruption; no direct repair, transport, or combat support.", locomotion_behavior: "Foot; concealment while outside detection, no conventional attack; capture replaced by sabotage.", targetability_behavior: "Ground infantry profile against structure interaction; detection, area damage, or structure security reveals it.", acquisition_behavior: "No weapon acquisition; Infiltrate requires a valid observed structure or special asset at 1.0.", lock_behavior: "60-tick channel, visible structure warning, interruptible, 120-tick selected effect, 300 cooldown, consumed or forced out after completion.", lifecycle_behavior: "Completion consumes the specialist; otherwise shared unit lifecycle.", production_behavior: "Cell House plus operational Hideout or Relay Cache; 300 resource, 210 ticks, no hard roster cap.", visual_identity: "Reversible armband, tool roll, red maintenance fault.", audio_identity: "Personal coded warning and faction fallback.", fx_identity: "Legible red maintenance fault and channel warning.", design_rationale: "Consumed specialist and structure-only target profile are deliberate; sabotage creates no new damage channel."}

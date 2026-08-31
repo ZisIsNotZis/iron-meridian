@@ -1,0 +1,74 @@
+display_name: "Hunter Submarine"
+description: "Hunter Submarine Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "naval"
+tier: "advanced"
+battlefield_roles: ["submerged_ambush_against_surface_ships", "denial_of_narrow_water_routes"]
+hpmax: 420
+armor: "armors.heavy"
+locomotor: "locomotors.submerged"
+targetability: ["targetabilities.submerged", "targetabilities.naval_surface"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.6
+visionrange: 6
+alertrange: 7.5
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.48
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.heavy", "sensing.default_sensing", "collisions.default_collision", "targetabilities.submerged", "targetabilities.naval_surface", "locomotors.submerged", "damages.naval_torpedo", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.naval_yard", "factions.directorate.buildings.heavy_works"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Dark low-profile hull, faint wake only when exposed, green sonar rings, and a muted torpedo launch."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Dark low-profile hull, faint wake only when exposed, green sonar rings, and a muted torpedo launch."
+fx:
+  identity: "Dark low-profile hull, faint wake only when exposed, green sonar rings, and a muted torpedo launch."
+design:
+  tactical_identity: "Submerged ambush against surface ships; secondary denial of narrow water routes."
+  player_decision: "Choose the ambush lane and wait, or surface/retreat before detection closes. It fails when forced into open water without information."
+  counterplay: "Sonar, depth charges, aircraft patrols, forced surfacing, and escort spacing."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Naval protection while submerged, but vulnerable to anti-submerged weapons and detection. A missed ambush leaves a recovery window."
+  support_behavior: "Denies routes through hidden threat rather than granting fleet-wide stealth or detection."
+  locomotion_behavior: "Submerged; slow turn and silent movement, with surfacing and firing transitions."
+  targetability_behavior: "Submerged while hidden; requires sonar or a special detection source. Becomes naval-surface targetable while surfaced or during a visible attack transition."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Submerged targetability and sonar requirements follow the shared domains; Silent Running is a bounded visibility tradeoff. Torpedo | Naval torpedo; naval surface | 8.0 / 150 / 120 ticks | Projectile 6 cells/s; point; tracking within 25° cone, 45°/s Silent Running | 15-tick setup; 120-tick active; 30-tick recovery; 240-tick cooldown; detection signature -50%, move speed -35%, torpedo reload paused | Sonar, depth charge/area attack, patrol aircraft, wait out"
+production:
+  producer: "factions.directorate.buildings.naval_yard"
+  queue: "default_queue"
+  category: "submerged_ambush"
+  prerequisites: ["factions.directorate.buildings.naval_yard", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.heavy_works"]
+  cost:
+    resource: 700
+  buildtime: 195
+  capacity:
+    max_active: 3
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Torpedo"
+    damage: "damages.naval_torpedo"
+    targetability: ["targetabilities.naval_surface"]
+    attackrange: 8
+    attackdamage: 150
+    attackperiod: 120
+    delivery: "projectile_6_cells_s_point_tracking_within_25_cone_45_s"
+    design:
+      tactical_use: "Torpedo | Naval torpedo; naval surface | 8.0 / 150 / 120 ticks | Projectile 6 cells/s; point; tracking within 25° cone, 45°/s"
+      counterplay: "Sonar, depth charges, aircraft patrols, forced surfacing, and escort spacing."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Silent Running"
+    activation: "active"
+    setup_ticks: 15
+    active_ticks: 120
+    recovery_ticks: 30
+    cooldown_ticks: 240
+    movement_allowed: true
+    design:
+      player_decision: "Choose the ambush lane and wait, or surface/retreat before detection closes. It fails when forced into open water without information."
+      counterplay: "Sonar, depth charges, aircraft patrols, forced surfacing, and escort spacing."
+      interruption_readability: "Silent Running | 15-tick setup; 120-tick active; 30-tick recovery; 240-tick cooldown; detection signature -50%, move speed -35%, torpedo reload paused | Sonar, depth charge/area attack, patrol aircraft, wait out"

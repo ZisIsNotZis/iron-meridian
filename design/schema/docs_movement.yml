@@ -1,0 +1,19 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_movement
+type: object
+additionalProperties: false
+required: [kind, document_id, title, source_document, ownership, movement_pipeline, pathfinding, formations, facing_attack_movement, separation_contact, required_fields_failure_states, player_facing_rules, deferred]
+properties:
+  kind: {const: movement_contract}
+  document_id: {type: string}
+  title: {type: string}
+  source_document: {type: string}
+  ownership: {type: array, items: {type: string}}
+  movement_pipeline: {type: object, additionalProperties: false, required: [flow, rules, tie_break, ownership], properties: {flow: {type: string}, rules: {type: array, items: {type: string}}, tie_break: {type: string}, ownership: {type: string}}}
+  pathfinding: {type: array, items: {type: string}}
+  formations: {type: array, items: {type: string}}
+  facing_attack_movement: {type: array, items: {type: string}}
+  separation_contact: {type: array, items: {type: string}}
+  required_fields_failure_states: {type: array, items: {type: string}}
+  player_facing_rules: {type: array, items: {type: string}}
+  deferred: {type: array, items: {type: string}}

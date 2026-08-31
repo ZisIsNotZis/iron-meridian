@@ -1,0 +1,26 @@
+kind: world_relationships
+source_document: design/world/relationships.md
+premise: "The Meridian Crisis is a three-sided political relationship with two visible major governments and one concealed network. The battlefield is the immediate expression of these relationships; it is not an excuse to make every faction mechanically unrelated."
+directorate_and_coalition:
+  shared_continuity: "Both claim to be the lawful continuation of the Meridian Union. Both use Union-trained personnel, equipment, records, and public language."
+  conflict: "Their conflict is therefore a civil succession war with international consequences, not a clean clash between unrelated empires."
+  claims_matrix:
+    - {question: Legitimacy, directorate_claim: "Only a continuous command can secure arsenals and prevent civil war.", coalition_claim: "Authority must be renewed by regions and a transparent parliament."}
+    - {question: Security, directorate_claim: "Central control prevents warlords, sabotage, and foreign coercion.", coalition_claim: "Secret emergency power created the corruption and failed at Aster."}
+    - {question: Economy, directorate_claim: "Standardized planning and protected industry can restore supply.", coalition_claim: "Regional ownership and open contracts can recover innovation and trust."}
+    - {question: Victory, directorate_claim: "Reconnect the Union under one accountable chain of command.", coalition_claim: "Force a negotiated federation without surrendering local autonomy."}
+  cooperation: "They can cooperate tactically against an Irregular operation or foreign pressure in a story mission, but any cooperation is temporary and politically costly."
+irregular_network:
+  position: "The Network opposes restoration of either centralized emergency machine."
+  possible_actions: "It may trade information, guide civilians, or temporarily assist one side when that prevents a worse outcome."
+  default_alignment: "It does not become a secret ally of convenience by default."
+  fragmentation: "Its cells distrust one another enough that Network victory cannot simply mean one unified government taking power."
+  aster_knowledge: "The Network knows more about the Aster archive than the major factions realize, but it does not possess a single perfect explanation."
+  revelation_rule: "Campaign revelations should narrow the possibilities, expose incentives, and force decisions rather than deliver a magical culprit."
+foreign_pressure:
+  actors: "Neighboring states and commercial actors may sell fuel, shelter refugees, or exploit the crisis."
+  initial_product: "They remain background pressure in the initial product. No foreign superpower is required to explain the conflict, and no foreign faction is needed for V1 or the near-term solo game."
+campaign_use:
+  near_term: "The near-term campaign follows the visible Directorate–Coalition contest and lets the Irregular Network appear first as unexplained interference, local actors, or missing assets."
+  far_vision: "Its full faction identity is reserved for far vision."
+  ownership: "The campaign design owns mission sequencing; this document owns the political meaning of those encounters."

@@ -1,0 +1,74 @@
+title: Irregular Network Technology
+source_document: design/factions/irregular-network/tech/README.md
+document_type: technology_graph
+progression_model: small prerequisite graph over operational sites; no conventional age-up or research screen
+ownership:
+  graph: this document
+  card_values: costs, build times, combat values, and presentation belong to cards
+  shared_semantics: technology contract owns evaluation order and prerequisite semantics
+graph:
+  - node: network.safehouse
+    children: [network.cells, network.workshop, network.exchange]
+    unlocks: [Cell House and standard infantry, Field Workshop and standard vehicles, Scrap Exchange and normal processing]
+  - node: network.workshop + network.hideout
+    children: [network.advanced-cells]
+    unlocks: [Breacher, Hunter, Mechanic, Saboteur, Signal Runner]
+  - node: network.workshop + network.jammer
+    children: [network.blackout]
+    unlocks: [Jammer Van and local jamming actions]
+  - node: network.workshop + network.shoreline
+    children: [network.coastal]
+    unlocks: [Boat Shed and coastal products]
+concrete_nodes:
+  - node_id: tech.irregular-network.safehouse
+    operational_requirement: Scenario-started Safehouse
+    unlocks: Network construction origin
+    availability: faction
+  - node_id: tech.irregular-network.cells
+    operational_requirement: Safehouse and operational Cell House
+    unlocks: Standard infantry recipes
+    availability: faction
+  - node_id: tech.irregular-network.workshop
+    operational_requirement: Safehouse and operational Field Workshop
+    unlocks: Standard vehicle recipes
+    availability: faction
+  - node_id: tech.irregular-network.exchange
+    operational_requirement: Safehouse and operational Scrap Exchange
+    unlocks: Shared resource processing and salvage actions
+    availability: faction
+  - node_id: tech.irregular-network.hideout
+    operational_requirement: Safehouse and operational Hideout
+    unlocks: Local concealment and advanced-site prerequisite
+    availability: faction
+  - node_id: tech.irregular-network.advanced-cells
+    operational_requirement: Cells, Workshop, and Hideout
+    unlocks: Advanced infantry recipes
+    availability: faction
+  - node_id: tech.irregular-network.jammer
+    operational_requirement: Workshop and operational Jammer Post
+    unlocks: Jammer Van recipe and blackout support
+    availability: faction
+  - node_id: tech.irregular-network.coastal
+    operational_requirement: Workshop, Safehouse, Boat Shed, and suitable shoreline
+    unlocks: Coastal recipes
+    availability: scenario
+  - node_id: tech.irregular-network.relay
+    operational_requirement: Safehouse and Hideout or forward anchor
+    unlocks: Relay Cache and Relay Truck
+    availability: faction
+unlock_semantics: availability gates only; no stat bonus, global aura, or hidden production queue
+ruleset_resolution:
+  production_matrix: resolved recipe allow-list
+  scenario_may_remove: optional or coastal rows
+  scenario_may_not_add: unlisted product, queue replacement for authored aircraft, or prerequisite satisfaction through a captured major-faction building
+  captured_buildings: usable only when the scenario explicitly declares a compatible capability; never rewrite this graph
+knowledge:
+  monotonic: true
+  site_loss: disables new work that needs the site, but does not delete completed knowledge or alter an existing unit
+  site_rebuild: re-enables only rows whose prerequisites are again satisfied
+campaign_use:
+  opening: safehouse, cells, and exchange
+  authored_reveal: workshop through an authored operation
+  later_reveals: hideout, advanced-cells, and jammer only after the player has seen their counterplay
+  mission_owned_reveals: coastal and authored aircraft
+  progression_boundary: missions may start with a node completed or grant an authored asset, but may not invent a second progression system

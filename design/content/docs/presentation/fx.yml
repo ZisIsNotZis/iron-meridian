@@ -1,0 +1,10 @@
+kind: fx_contract
+source_document: design/presentation/fx.md
+authority: "FX are bounded visualizations of semantic events."
+forbidden_effects: [damage, detection, cover, collision, target_knowledge]
+shared_event_families: [muzzle, projectile, beam, impact, area_warning, status, movement, detection, jam, decoy, construction, repair, capture, destruction]
+ownership: "Faction or entity documents choose material, shape, anchor, and variant; event meaning stays global."
+required_fields: [anchor, facing, layer, fog_visibility, pooling_key, cancellation_rule, fallback]
+implementation: [atlas_backed, pooled, short_lived]
+persistent_effect_rule: "Persistent effects represent a visible state and have an owner and cleanup rule."
+lod_rule: "LOD may reduce detail, never state readability."

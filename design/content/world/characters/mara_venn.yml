@@ -1,0 +1,29 @@
+display_name: Mara Venn
+description: "Directorate field commander, mid-career, responsible for the western rail sector. Venn believes centralized logistics are the only thing preventing the Meridian Union from collapsing into local wars, but she distrusts officials who use emergency language to avoid accountability."
+kind: character
+status: near-term
+source_document: design/world/characters/mara-venn.md
+source_references:
+  - ../../factions/directorate/README.md
+identity:
+  role: field commander
+  background: mid-career
+  beliefs: Centralized logistics are the only thing preventing the Meridian Union from collapsing into local wars.
+  limitations: Distrusts officials who use emergency language to avoid accountability.
+affiliation:
+  faction: factions.directorate
+  organization: Directorate
+  position: field commander
+  sector: western rail sector
+relationships:
+  - subject: Meridian Union
+    nature: Sees centralized logistics as the safeguard against the Union collapsing into local wars.
+  - subject: officials who use emergency language
+    nature: Distrusts them when emergency language avoids accountability.
+presentation:
+  visual: charcoal field coat, red command tab, annotated route maps, no ornamental medals.
+audio:
+  voice: low, precise, short operational sentences; no slogans during play.
+narrative:
+  use: player briefings for Contact and Breakthrough
+  constraints: Success text may show restoration-minded confidence while failure text names a logistical mistake.

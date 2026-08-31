@@ -1,0 +1,23 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_combat
+type: object
+additionalProperties: false
+required: [kind, document_id, title, source_document, ownership, combat_promise, attack_resolution, hit_models, range_vision_acquisition, cooldown_rate_of_fire, damage_and_armor, health_repair_destruction, status_rules, movement_attack_interaction, deterministic_combat_order, acceptance_cases, role_spine]
+properties:
+  kind: {const: combat_contract}
+  document_id: {type: string}
+  title: {type: string}
+  source_document: {type: string}
+  ownership: {type: array, items: {type: string}}
+  combat_promise: {type: array, items: {type: string}}
+  attack_resolution: {type: object, additionalProperties: false, required: [definition, fire_time_validation, fire_failure, impact_time_validation, deterministic_hit_test, v1_hit_test], properties: {definition: {type: string}, fire_time_validation: {type: array, items: {type: string}}, fire_failure: {type: string}, impact_time_validation: {type: array, items: {type: string}}, deterministic_hit_test: {type: string}, v1_hit_test: {type: array, items: {type: string}}}}
+  hit_models: {type: object, additionalProperties: false, required: [ownership_rule, table, area_arc_line_semantics, area_falloff, v1_friendly_fire], properties: {ownership_rule: {type: string}, table: {type: array, items: {type: object, additionalProperties: false, required: [model, meaning, counterplay], properties: {model: {type: string}, meaning: {type: string}, counterplay: {type: string}}}}, area_arc_line_semantics: {type: array, items: {type: string}}, area_falloff: {type: string}, v1_friendly_fire: {type: string}}}
+  range_vision_acquisition: {type: object, additionalProperties: false, required: [distance, information, policies, auto_attack, v1_auto_attack, targetability], properties: {distance: {type: string}, information: {type: string}, policies: {type: array, items: {type: object, additionalProperties: false, required: [name, rule], properties: {name: {type: string}, rule: {type: string}}}}, auto_attack: {type: string}, v1_auto_attack: {type: array, items: {type: string}}, targetability: {type: string}}}
+  cooldown_rate_of_fire: {type: object, additionalProperties: false, required: [states, timing_definition, minimum_repeat_period, interruption, burst, v1_exclusions, facing], properties: {states: {type: string}, timing_definition: {type: string}, minimum_repeat_period: {type: string}, interruption: {type: string}, burst: {type: string}, v1_exclusions: {type: array, items: {type: string}}, facing: {type: string}}}
+  damage_and_armor: {type: object, additionalProperties: false, required: [formula, ownership, application_order, same_tick_order, channels], properties: {formula: {type: array, items: {type: string}}, ownership: {type: string}, application_order: {type: string}, same_tick_order: {type: string}, channels: {type: array, items: {type: object, additionalProperties: false, required: [name, meaning], properties: {name: {type: string}, meaning: {type: string}}}}}}
+  health_repair_destruction: {type: object, additionalProperties: false, required: [health, destruction, repair, v1_repair], properties: {health: {type: string}, destruction: {type: string}, repair: {type: string}, v1_repair: {type: string}}}
+  status_rules: {type: object, additionalProperties: false, required: [general, suppression, emp, freeze, freeze_platform_rule], properties: {general: {type: string}, suppression: {type: string}, emp: {type: string}, freeze: {type: array, items: {type: string}}, freeze_platform_rule: {type: string}}}
+  movement_attack_interaction: {type: array, items: {type: string}}
+  deterministic_combat_order: {type: object, additionalProperties: false, required: [steps, presentation, zero_health], properties: {steps: {type: array, items: {type: string}}, presentation: {type: string}, zero_health: {type: string}}}
+  acceptance_cases: {type: array, items: {type: string}}
+  role_spine: {type: array, items: {type: string}}

@@ -1,0 +1,17 @@
+kind: world_index
+source_document: design/world/README.md
+premise: "Iron Meridian is an original, 1990s-adjacent political-industrial war setting. Its drama comes from institutions, logistics, and competing ideas of legitimacy; its technology remains within recognizable late-Cold-War and early-digital plausibility."
+canonical_documents:
+  - {name: History, source: design/world/history.md, destination: design/content/docs/world/history.yml, ownership: "the Union, failed reform, border war, and Meridian Crisis"}
+  - {name: Geography, source: design/world/geography.md, destination: design/content/docs/world/geography.yml, ownership: "regions, infrastructure, climate, and battlefield logic"}
+  - {name: Technology, source: design/world/technology.md, destination: design/content/docs/world/technology.yml, ownership: "technological ceiling, industrial base, and visual plausibility rules"}
+  - {name: Organizations, source: design/world/organizations.md, destination: design/content/docs/world/organizations.yml, ownership: "institutions that became the Directorate, Coalition, and Irregular Network"}
+  - {name: Relationships, source: design/world/relationships.md, destination: design/content/docs/world/relationships.yml, ownership: "current political claims, alliances, fractures, and the hidden faction’s position"}
+  - {name: Identity, source: design/world/identity.md, destination: design/content/docs/world/identity.yml, ownership: "global symbols, naming, tone, and setting-level visual/audio motifs"}
+  - {name: Characters, source: design/world/characters/README.md, destination: design/content/docs/world/characters/index.yml, ownership: "the compact near-term campaign cast and dialogue boundaries"}
+scope_boundaries:
+  v1: "uses the Meridian Crossing battlefield and a deliberately narrow crisis premise; the player does not need the whole history to understand the objective."
+  near_term: "four authored campaign missions reveal the political situation through concrete operations and briefings, without a grand-strategy layer."
+  far_vision: "the Irregular Network, wider campaign consequences, and remote or agent play may expose more regions and history, but cannot require a larger simulation to make the core battle coherent."
+originality_rule: "All names, symbols, uniforms, dialogue, history, assets, and faction identities remain original."
+production_boundary: "World context must support readable battles and economical production rather than become an encyclopedia detached from play."

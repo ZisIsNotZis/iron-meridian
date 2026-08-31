@@ -1,0 +1,25 @@
+display_name: False Depot
+description: "Optional Advanced temporary decoy site. 2x2 footprint, four cardinal facings, no production exit; buildable ground within shared anchors outside objective exclusions, with intentionally visible setup. Construction 250 resource / 150 ticks, operational Safehouse and builder required. Body 220 HP light armor; no wreck or destruction refund. Real structure is targetable; false contact is information presentation, not a second untargetable entity. Direct investigation, attack, detection, or expiry identifies it. No production, repair, weapon, dependency, or base function. Broadcast false signature starts on completion and projects one plausible local contact within 3.0 cells for 150 ticks, gives 30-tick expiry warning, is suppressed by direct vision, cannot chain another depot in same radius, and has 270-tick cooldown after removal. Temporary expiry removes it without wreck/refund."
+status: designed
+scope: near_term
+faction: factions.irregular_network
+platform: temporary_decoy_site
+tier: advanced
+building_roles: [strategic_threat, defense]
+hpmax: 220
+armor: armors.light
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 5.0
+alertrange: 7.0
+footprint: {width_cells: 2, height_cells: 2, facings: cardinal}
+placement: {terrain: buildable_ground, anchor: construction_radius, objective_exclusion: true, facing: cardinal}
+construction: {cost: {resource: 250}, buildtime: 150, prerequisites: [{object: factions.irregular_network.buildings.safehouse}]}
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: broadcast_false_signature, activation: automatic, active_ticks: 150, cooldown_ticks: 270, target: self, targetradius: 3.0, interruption_conditions: [detection, attack]}]
+lifecycle: {states: [blueprint, constructing, operational, expiring, removed], destruction_behavior: remove, expiry_ticks: 150, expiry_warning_ticks: 30}
+presentation: {fallback_policy: inherit, silhouette: "Empty crates, powered radio, and heat lamp; imperfect decoy marker collapses into scrap with a dry radio click when exposed.", readability: "Real structure, false contact, investigation, expiry, and destruction are visually distinct."}
+audio: {identity: "Powered radio, heat lamp, dry exposed click, construction, damage, and destruction use faction fallback."}
+fx: {identity: "Imperfect local false ping collapses visibly when exposed; no real unit is created."}
+design: {construction_behavior: "250 resource, 150 ticks, Safehouse and builder required; setup intentionally visible.", production_behavior: "No units, resource, combat damage, production, construction, command, or base dependency.", defense_behavior: "No static weapon or area defense; 220 HP light armor; fragile real site.", capture_behavior: "No capture behavior is declared.", repair_behavior: "None; cannot be restored by repair interaction.", lifecycle_behavior: "Temporary setup to operational, expiring, removed; 30-tick warning, destruction without wreck/refund.", player_decision: "Spend resource and a build slot to consume attention or invest in a real site.", counterplay: "Confirm with scouts/direct vision, ignore while attacking elsewhere, or destroy the depot.", visual_identity: "Crates, powered radio, heat lamp, imperfect marker.", audio_identity: "Dry radio click on exposure.", fx_identity: "Local false ping and collapse.", design_rationale: "False signature never conceals real units from valid detection and cannot chain."}

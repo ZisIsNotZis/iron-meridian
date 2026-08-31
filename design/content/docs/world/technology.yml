@@ -1,0 +1,24 @@
+kind: world_technology
+source_document: design/world/technology.md
+era: "Iron Meridian uses a late-1980s to mid-1990s technological vocabulary: rugged analog systems augmented by early digital control, not speculative science fiction."
+technological_ceiling:
+  plausible_common_capabilities: [encrypted_and_burst_radio, early_night_vision, thermal_sights_on_high_value_vehicles, laser_rangefinding, guided_anti_armor_missiles, radar_directed_guns, helicopters, fixed_wing_strike_aircraft, diesel_electric_submarines, amphibious_vehicles, field_repair, small_reconnaissance_drones]
+  reliability: "Reliability is uneven; a system can be advanced and still require exposed technicians, batteries, calibration, or a clear line of sight."
+  exclusions: [orbital_weapons, autonomous_general_intelligence, practical_invisibility, teleportation, force_fields, limitless_precision_ammunition]
+  exceptional_devices: "Exceptional late-game devices can be prototypes or dangerous strategic experiments, but they must remain understandable machines with visible preparation and counterplay."
+industrial_inheritance:
+  directorate: "central heavy industry, standardized armor plants, state arsenals, and the largest stockpiles"
+  coalition: "regional vehicle plants, shipyards, avionics workshops, universities, and communications firms"
+  irregular_network: "repair knowledge, hidden caches, smuggling routes, and salvaged parts, but cannot reproduce either major faction’s industrial depth"
+  identity_rule: "This inheritance shapes faction identity without turning technology into a simple tier ladder."
+  ownership: "The faction doctrine documents own how each institution uses the same era; unit records own individual equipment."
+digital_systems_and_crisis:
+  transition: "The Union’s transition from paper dispatch and voice radio to early networked logistics created both capability and fragility."
+  systems: "Fuel schedules, factory queues, and military orders are partly computerized but not magically centralized."
+  failure_examples: "A destroyed relay, forged dispatch, or missing archive can create a real operational delay."
+  information_warfare: "This supports information warfare as a human-scale problem: warning, confidence, and coordination matter more than hacking spectacle."
+presentation_rules:
+  directorate: standardized_overbuilt_serial_numbered
+  coalition: interoperable_modified_regional_antenna_rich
+  irregular_network: repaired_disguised_modular_incompatible_sources
+  gameplay_boundary: "These are visual and narrative rules, not separate combat-stat systems."

@@ -1,0 +1,72 @@
+display_name: "Mobile Command Post"
+description: "Mobile Command Post Directorate unit card."
+status: "optional"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "advanced"
+battlefield_roles: ["forward_construction_and_command_extension", "temporary_resupply_point_it_does_not_replace_the_construction_yard_s_strategic_role"]
+hpmax: 500
+armor: "armors.reinforced_structure"
+locomotor: "locomotors.transforming"
+targetability: ["targetabilities.ground", "targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 1.8
+visionrange: 7
+alertrange: 9
+acquisitiondelay_ticks: 15
+footprint: {width_cells: 1, height_cells: 1}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "targetabilities.structure", "locomotors.transforming", "damages.machine_gun_autocannon", "targetabilities.low_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.heavy_works"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Folding command mast, cable trenches, modular steel walls, and a measured deployment klaxon."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Folding command mast, cable trenches, modular steel walls, and a measured deployment klaxon."
+fx:
+  identity: "Folding command mast, cable trenches, modular steel walls, and a measured deployment klaxon."
+design:
+  tactical_identity: "Forward construction and command extension; secondary temporary resupply point. It does not replace the Construction Yard's strategic role."
+  player_decision: "Extend pressure or infrastructure beyond the safe base, accepting a highly visible logistics liability. It fails when deployed without a defended route."
+  counterplay: "Raid before deployment, interrupt construction, attack the exposed perimeter, or force a retreat and cut the forward supply line."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Medium vehicle protection mobile, reinforced structure protection deployed; high strategic value in either state."
+  support_behavior: "Extends construction and local logistics only while deployed; ordinary units remain fully functional outside its radius."
+  locomotion_behavior: "Tracked while mobile; deploys into a structure state with no movement. Deployment and packing are vulnerable transitions."
+  targetability_behavior: "Ground vehicle while mobile; structure after deployment. Both states are visible and targetable by their ordinary counters."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The mobile/deployed protection change follows shared platform and structure targetability; the command radius is local and explicit. Defensive point gun | Machine gun/autocannon; ground personnel, low air | 4.0 / 10 / 30 ticks | Projectile 14 cells/s; point; no tracking Forward Command | 45-tick deploy; active until packed; 45-tick recovery; 240-tick cooldown; 10.0-cell construction/repair anchor; movement disabled deployed | Attack before/while deploying, isolate site, force pack, cut builder access"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "deployable_command"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.heavy_works"]
+  cost:
+    resource: 650
+  buildtime: 180
+  capacity:
+    max_active: 1
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Defensive point gun"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground", "targetabilities.low_air"]
+    attackrange: 4
+    attackdamage: 10
+    attackperiod: 30
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Defensive point gun | Machine gun/autocannon; ground personnel, low air | 4.0 / 10 / 30 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Raid before deployment, interrupt construction, attack the exposed perimeter, or force a retreat and cut the forward supply line."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Forward Command"
+    activation: "active"
+    setup_ticks: 45
+    recovery_ticks: 45
+    cooldown_ticks: 240
+    movement_allowed: false
+    design:
+      player_decision: "Extend pressure or infrastructure beyond the safe base, accepting a highly visible logistics liability. It fails when deployed without a defended route."
+      counterplay: "Raid before deployment, interrupt construction, attack the exposed perimeter, or force a retreat and cut the forward supply line."
+      interruption_readability: "Forward Command | 45-tick deploy; active until packed; 45-tick recovery; 240-tick cooldown; 10.0-cell construction/repair anchor; movement disabled deployed | Attack before/while deploying, isolate site, force pack, cut builder access"

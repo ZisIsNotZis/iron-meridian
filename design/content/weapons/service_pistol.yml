@@ -1,0 +1,28 @@
+display_name: "Service Pistol"
+description: Short-range direct-fire self-defense weapon.
+status: designed
+kind: "weapon"
+references: [damages.rifle_small_arms, targetabilities.ground, weapons.default_resolution]
+damage: damages.rifle_small_arms
+targetabilities: [targetabilities.ground]
+target_rules:
+  legal_domains: [ground]
+  forbidden_target_classes: [vehicles, structures, aircraft, naval]
+delivery:
+  range_cells: 3
+  projectile_type: direct_point
+  projectile_speed_cells_per_second: 12
+  point_hit_radius_distance: 80
+  homing: false
+  post_launch_tracking: false
+timing:
+  damage_per_event: 8
+  ready_period_ticks: 30
+  windup_ticks: 3
+  recovery_ticks: 3
+  cooldown_ticks: 24
+design:
+  target_rules: Legal target domain is ground personnel. It cannot engage vehicles, structures, aircraft, or naval units.
+  delivery_rules: Direct point projectile using the Rifle / Small Arms damage family.
+  timing_rules: Ready-to-ready period is 30 ticks, decomposed into 3 ticks windup, 3 ticks recovery, and 24 ticks cooldown.
+  counterplay: Keep distance or use armor and area damage. The carrier's positioning and support ability, rather than this weapon, define the unit's battlefield value.

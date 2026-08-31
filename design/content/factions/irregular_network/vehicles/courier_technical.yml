@@ -1,0 +1,27 @@
+display_name: Courier Technical
+description: "Core Field fast transport and extraction vehicle, with secondary fast objective running and no combat specialty. Wheeled: 6.5 cells/s on firm ground, 4.0 off-road; loading and unloading infantry has a brief exposure window. Ground vehicle with light armor and ordinary detection; no concealment while extracting. Ring gun is light machine gun/autocannon self-defense against ground personnel and light armor, range 4.0, 14 damage/event, 24 ticks, projectile speed 16, point hit, no tracking. Hot pickup loads a nearby Network infantry group within 1.0 cell, channel 15 ticks, cooldown 45, and reduces speed 50 percent. Scatter unloads at current position with visible predictable landing area, smoke radius 1.0, recovery 15 ticks, cooldown 30. Production 220 resource / 90 ticks from Field Workshop, vehicle FIFO, no hard roster cap, replaceable while Workshop operates. Body 260 HP, light armor, radius 0.42, footprint 2x1."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: field
+battlefield_roles: [transport, extraction, objective_runner]
+hpmax: 260
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 6.5
+visionrange: 7.0
+alertrange: 9.0
+footprint: {radius_cells: 0.42, width_cells: 2, height_cells: 1}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: ring_gun, damage: damages.machine_gun_autocannon, targetability: [targetabilities.ground], attackrange: 4.0, attackdamage: 14, attackperiod: 24, projectile_speed: 16, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}]
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: hot_pickup, activation: active, channel_ticks: 15, cooldown_ticks: 45, target: allied_network_infantry, targetrange: 1.0, movement_allowed: false, design: {player_decision: "Risk the fragile transport during a quick pickup.", counterplay: "Roadblocks, anti-vehicle fire, and attacking during pickup."}}
+  - {skill: skills.default_lifecycle, skill_name: scatter, activation: active, recovery_ticks: 15, cooldown_ticks: 30, target: self, targetradius: 1.0, movement_allowed: false, design: {player_decision: "Unload at speed into a visible predictable landing area.", counterplay: "Attack the transport or its predictable landing area."}}
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 220}, buildtime: 90, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: false}}
+presentation: {fallback_policy: inherit, silhouette: "Civilian utility chassis, mismatched doors, tied-down crates; engine sputter and tire dust sell speed and unreliability.", readability: "Readable vehicle silhouette with footprint, selection, contact, and shadow anchors; pickup and scatter transitions are visible; bespoke files are N/A until production."}
+audio: {identity: "Civilian engine sputter, loading/unloading cues, selection, attack, damage, and destruction use faction fallback."}
+fx: {identity: "Tire dust and a short smoke burst make pickup and scatter readable."}
+design: {tactical_identity: "Fast fragile infantry transport and extraction vehicle.", player_decision: "Turn fragile infantry into a mobile timing threat while risking the transport.", counterplay: "Roadblocks, anti-vehicle fire, and attacking during pickup.", offense_behavior: "Ring gun is incidental self-defense only.", defense_behavior: "Light armor and no concealment while extracting.", support_behavior: "Hot pickup and Scatter provide bounded infantry transport and smoke extraction; no repair or command.", locomotion_behavior: "Wheeled; fast on firm ground and poor off-road.", targetability_behavior: "Ground vehicle, ordinary detection, targetable during transport.", acquisition_behavior: "Ring gun range 4, 14 damage, 24 ticks, point projectile, no tracking.", lock_behavior: "Pickup 15 ticks/45 cooldown with 50 percent speed; Scatter smoke radius 1, recovery 15, cooldown 30, predictable landing.", lifecycle_behavior: "No special lifecycle beyond shared unit states.", production_behavior: "Field Workshop vehicle FIFO; 220 resource, 90 ticks, replaceable.", visual_identity: "Civilian utility chassis, mismatched doors, tied crates.", audio_identity: "Engine sputter and hand-operated transport cues.", fx_identity: "Tire dust and short smoke extraction burst.", design_rationale: "Movement and transport timing are faction mobility advantages; weapon uses shared conversion."}

@@ -1,0 +1,33 @@
+kind: objective_contract
+document_id: design.objectives
+title: Objectives
+ownership:
+  - Objective contract owns objective state transitions and system rules.
+  - Objective/map definitions own locations, radii, rewards, and hold requirements.
+  - Numerics governs representation only.
+principles:
+  - V1 objective is contestable income-and-victory point creating movement/timing pressure without unavoidable countdown; scouting, protecting, and reclaiming are gameplay.
+schema_fields:
+  - Circular 4-cell capture zone at map center.
+  - States neutral, controlled-by-west, controlled-by-east, contested.
+  - HUD shows state, owner, capture progress, cumulative hold progress.
+  - Only living combat units with objective_control contribute: V1 scout, infantry, tank, anti-tank; harvesters, construction vehicles, buildings, blueprints, and effects do not; future cards explicitly opt in/out.
+rules:
+  - Each fixed tick, unit center inside radius contributes one strength; max 3 per side, extras still matter for combat not capture speed.
+  - Both sides positive means contested, progress freezes, no income.
+  - One side moves progress at 1/6 point per tick per strength; one strength takes 20 seconds neutral-to-full and three takes 6.67 seconds.
+  - Progress is integer fixed-point -100 to +100 west/east; ownership only endpoints; neutral midpoint removes prior owner and opponent endpoint establishes control.
+  - No presence drifts progress toward 0 at 1/12 point per tick; abandonment is recoverable.
+  - Entry/exit takes effect next tick; within-tick command order uses stable entity ID.
+  - Objective does not damage, grant automatic vision, alter accuracy, or block movement; map no-build exclusion prevents permanent footprint replacement.
+  - Full control pays 6 resource/second, credited 1 resource every 5 ticks directly to owner bank without processor; stops immediately when contested, neutral, or other owner.
+  - Full control accumulates hold at 1 second/second; 75 controlled seconds wins across multiple holds; transition/contested/neutral time does not count and progress never decays.
+  - HQ destruction ends immediately; same-tick priority resolves HQ destruction first and objective victory only if both HQs remain.
+constraints:
+  - Single scout can begin capture but not safely hold against force.
+  - Defender freezes by entering, kills attackers, or forces them out; damage to capture bar is insufficient.
+  - Three-strength cap rewards escort/composition over blobs.
+  - Retreat gives finite reclaim window rather than instant flip.
+  - Income is modest relative to army timing; recovery through home harvesting, defense, or raid.
+  - Normal sensing applies; ownership does not reveal whole map; scout approaches and harvest routes.
+deferred: [multiple objectives, objective abilities, escort caravans, neutral guards, score multipliers, escalating income, sudden death, teams, shared capture bars, hidden objectives, scripted campaign variants, objective-specific resource types]

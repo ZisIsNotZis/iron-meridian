@@ -1,0 +1,137 @@
+kind: v1_scope
+document_id: design.v1
+title: V1 Scope
+authority:
+  - This is the single authoritative scope for the first playable vertical slice.
+  - It decides what the V1 product contains and promises to a player.
+  - It does not duplicate gameplay formulas, entity statistics, asset specifications, or reusable-system semantics; linked domain and entity documents own them.
+  - When another document uses V1 more broadly or contradicts this document, this document wins for inclusion, exclusion, and player-facing commitments.
+  - The owning domain document wins for the meaning and value of an included rule.
+  - A feature is not V1 merely because a card, recipe, or future contract exists.
+priorities:
+  - Make a good game.
+  - Minimize implementation and maintenance burden.
+  - Make the game easy to extend and mod.
+  - Pursue striking graphics and effects with moderate CPU/GPU usage.
+  - V1 is deliberately small enough to finish and test; it proves the decision loop before faction breadth, campaign breadth, online services, or production art.
+product_goal:
+  - V1 is a local browser game in which one player commands a small Coalition force against a deterministic scripted Coalition opponent.
+  - The player scouts three approaches, protects a finite resource loop, chooses infrastructure or army timing, contests the central objective, and wins by destroying the enemy HQ or holding the objective long enough.
+  - The intended first-match experience is an understandable 8–12 minute combined-arms contest with meaningful recovery after a setback.
+  - The target is approximately 50–80 active entities during a populated match, not a promise that the opening state contains that many.
+player_experience:
+  - Send the scout to learn which route and timing the opponent chose.
+  - Spend resource on another fighting unit, or expose the MCV to add infantry production.
+  - Protect the harvester and processor while taking an army to the objective.
+  - Use the anti-tank unit and terrain information to answer the opponent's composition.
+  - Hold, abandon, or reclaim the objective instead of treating it as a passive score meter.
+  - V1 does not try to prove the full three-faction game, a campaign arc, online play, or final visual identity.
+  - Start directly into the canonical scenario after a short loading/briefing state.
+  - See an owned HQ, processor, assembly, harvester, MCV, and one unit for each combat role.
+  - Learn selection, movement, attack, harvesting, production, construction, and objective capture through skippable contextual prompts.
+  - Scout at least one approach while the scripted opponent develops its base.
+  - Make an infrastructure-versus-army choice and fight over the center.
+  - Receive readable warnings, command results, objective progress, and a clear victory or defeat cause.
+  - Restart the exact scenario without carrying state into the next match.
+  - The player must never need hidden hotkeys, an undocumented rule, or knowledge of a future system to complete a match.
+included_systems:
+  - {system: match_mode, decision: "One local two-slot skirmish match: human west versus scripted east AI."}
+  - {system: factions, decision: "Coalition mirror match only; Directorate and Irregular Network are not selectable."}
+  - {system: battlefield, decision: "One fixed authored map: Meridian Crossing."}
+  - {system: economy, decision: "One finite resource currency; home and contested nodes; one harvester per node; one processor channel."}
+  - {system: construction, decision: "One MCV; snapped constrained free placement inside declared build radius; no walls or adjacency system."}
+  - {system: production, decision: "One vehicle queue at the starting Vehicle Assembly; one infantry queue at a constructed Infantry Center."}
+  - {system: combat, decision: "Scout, infantry, tank, and anti-tank roles; direct attack; shared armor, damage, hit, status, and destruction rules."}
+  - {system: objective, decision: "One central capture objective that supplies modest income and a hold-victory route."}
+  - {system: information, decision: "Basic fog of war, ordinary vision, terrain discovery, current contacts, and stale last-known contacts."}
+  - {system: movement, decision: "V1 ground locomotion, deterministic pathfinding, collision, and loose group movement."}
+  - {system: progression, decision: "Disabled; no veterancy, research, unlock tree, or campaign continuity."}
+  - {system: ai, decision: "One deterministic finite-state scripted opponent using the same visible content and fog-filtered observations."}
+  - {system: presentation, decision: "Readable placeholder 2.5D battlefield, compact HUD, minimap, pooled FX, and essential audio/visual feedback."}
+  - {system: persistence, decision: "In-memory match restart and deterministic reproduction fixture only; no user save or replay file."}
+  - {system: input, decision: "Desktop mouse and keyboard; no required touch, gamepad, or remote input."}
+canonical_match:
+  - {field: scenario, value: scenarios.v1_meridian_crossing}
+  - {field: scenario_document, value: design/content/scenarios/v1_meridian_crossing.yml}
+  - {field: map, value: "maps.meridian_crossing / design/content/maps/meridian_crossing.yml"}
+  - {field: seed, value: 0x56315f4d45524944}
+  - {field: slots, value: west human, east scripted AI}
+  - {field: faction_assignment, value: Coalition / Coalition}
+  - {field: difficulty, value: Standard scripted opponent}
+  - {field: fog, value: Basic fog enabled}
+  - {field: progression, value: Disabled}
+  - {field: pause, value: Local pause against AI}
+  - {field: victory, value: Enemy HQ destroyed or central objective declared hold threshold reached}
+  - {field: defeat, value: Own HQ destroyed or explicit surrender from pause shell}
+  - {field: continuity, value: None; restart returns to the same initial state}
+initial_content:
+  - factions.coalition.buildings.coalition_hq; completed structure, loss anchor
+  - factions.coalition.buildings.resource_exchange; completed structure, processor
+  - factions.coalition.buildings.vehicle_assembly; completed structure, initial vehicle queue
+  - factions.coalition.vehicles.mcv; one per side, construction
+  - factions.coalition.vehicles.harvester; one per side, economy
+  - factions.coalition.vehicles.lynx_scout_car; one per side, scout
+  - factions.coalition.infantry.line_rifle; one per side, infantry
+  - factions.coalition.vehicles.valiant_mbt; one per side, tank
+  - factions.coalition.infantry.javelin_team; one per side, anti-tank
+  - factions.coalition.buildings.infantry_center; exactly one additional V1 building type constructible by the MCV
+recipe_allowlist:
+  - recipes.v1_infantry_center
+  - recipes.v1_lynx_scout_car
+  - recipes.v1_line_rifle
+  - recipes.v1_valiant_mbt
+  - recipes.v1_javelin_team
+  - recipes.v1_harvester
+  - recipes.v1_mcv
+  - recipes.v1_resource_exchange remains a documented recovery boundary but is not exposed in the V1 panel.
+  - V1 does not rebuild the HQ or Vehicle Assembly.
+  - recipes.v1_vehicle_assembly is not a V1 player recipe and must not appear as an actionable button.
+  - The slice tests a meaningful new production branch and harvester/MCV recovery without arbitrary base reconstruction or a complete construction economy.
+unavailable_content:
+  - All Directorate and Irregular Network content.
+  - All Coalition aircraft, naval, transport, and air/naval buildings.
+  - Field Hospital, repair vehicle, Guardian Turret, Skyguard Node, and every other non-listed Coalition building.
+  - Skills, abilities, veterancy, research, tech nodes, upgrades, and superweapons.
+  - Walls, power, adjacency bonuses, multiple builders, multiple construction queues, selling, and unrestricted placement.
+  - Neutral guards, multiple objectives, map hazards, destructible terrain, elevation, weather, water, and procedural map variation.
+  - A human east slot is a development diagnostic only, not a shipped V1 mode or acceptance target.
+command_allowlist:
+  - {command: move, availability: Owned visible ground units and MCV/Harvester where cards permit movement.}
+  - {command: attack, availability: Owned combat units against a currently legal visible target or permitted point request.}
+  - {command: stop, availability: Any selected owned unit with cancellable movement or action.}
+  - {command: harvest, availability: One Harvester assigned to a valid resource node/processor loop.}
+  - {command: produce, availability: One operational producer and one V1 recipe.}
+  - {command: construct, availability: One MCV, recipes.v1_infantry_center, and one valid snapped point.}
+  - {command: capture, availability: Eligible combat units directed to the central objective; presence resolves under objective rules.}
+  - {command: skill, availability: Not exposed; reserved and rejected as unsupported-in-scenario.}
+  - {command: repair, availability: Not exposed; reserved and rejected as unsupported-in-scenario.}
+  - {command: application_actions, availability: Selection, camera movement, control groups 1–5, minimap recentering, pause, restart, and surrender are UI actions, not extra simulation orders.}
+  - {command: forbidden, availability: skill, repair, attack-move, patrol, guard, embark, unload, return, rearm, transform, deploy, sell, and transport commands are not exposed.}
+  - {command: validation, availability: Orders use the canonical command boundary and fog-filtered observation; accepted, rejected, or superseded orders receive stable reasons and client previews cannot mutate state.}
+ui_surfaces:
+  - Top bar: banked resource, reserved resource, income trend, objective owner/contest/hold state, and prioritized alerts.
+  - Battlefield: selectable entities, terrain, fog, order markers, construction ghost, objective ring, resource landmarks, health/status feedback, and readable combat FX.
+  - Selection panel: identity, health/status, current order, destination or target, and available commands with cost, cooldown, and disabled reason.
+  - Command bar: the seven V1 orders only, with keyboard accelerators and text/icon reasons when unavailable.
+  - Production panel: Vehicle Assembly and Infantry Center queues, recipe buttons from allow-list, reserved cost, progress, and blocked-exit state.
+  - Minimap: explored terrain, owned entities, objective, resources, and visible/stale contacts; never hidden enemies or unexplored terrain.
+  - System shell: loading, briefing/onboarding, active, paused, victory, defeat, restart, surrender, and recoverable error states.
+  - Required interaction is desktop mouse and keyboard with remappable hotkeys, keyboard focus, readable text, non-color ownership cues, reduced motion/flash, captions or visual equivalents for important audio cues, and UI scaling.
+acceptance:
+  - {area: content_and_boundary, criteria: [Loader resolves scenario, map, listed entities, and listed recipes without implicit defaults or duplicate IDs., Player selects only the listed Coalition mirror roster., No excluded system has a visible control, recipe, unit, building, map layer, or AI behavior., Initial entities, positions, facing, bank, and map state match canonical scenario and map.]}
+  - {area: simulation_and_determinism, criteria: [Headless match starts from V1 scenario at authoritative fixed rate., Harvesting, production, construction, movement, combat, fog, objective capture, victory, defeat, and restart obey owning contracts., Invalid, hidden-target, unavailable, stale, blocked, and insufficient-resource commands do not mutate state., Same seed and accepted command log produce same state digests, event sequence, and terminal result., V1 Testing fixture inventory passes including 100-entity smoke and fog-boundary checks.]}
+  - {area: player_experience, criteria: [New player identifies objective and can select, move, attack, harvest, produce, construct Infantry Center, and capture without external instructions., Every important state has readable visual or text cue., Losing player understands decisive cause and can attempt economy, defense, reinforcement, or raid recovery., Human playtesters report meaningful scout, infrastructure/army, objective, and composition decisions within target duration.]}
+  - {area: presentation_accessibility_performance, criteria: [Browser path meets V1 viewport, frame-time, memory, download, and 30-tick simulation targets in Presentation Performance., Keyboard-only interaction, focus order, scalable UI, contrast, non-color cues, captions/equivalents, reduced motion, and reduced flash pass., Placeholder replacement does not change gameplay data or visibility rules; effect pooling and fallback preserve readability.]}
+  - {area: stop_ship, criteria: [No hidden default., No hidden-information leak., No nondeterministic result., No excluded command or system exposed., Client cannot bypass resource or placement validation., Critical warning and victory condition are communicated.]}
+boundaries:
+  - {name: authority_and_ownership, rule: Scenario owns setup and spawn facts; map owns geometry, anchors, terrain, and reserves; Coalition entity records own values and presentation requirements; recipes own connector semantics; architecture owns command/observation; control owns input; presentation owns V1 visual values and event mappings; testing owns evidence and taxonomy.}
+  - {name: near_term_solo, rule: After V1 gates, may add distinct Directorate/Coalition factions, authored campaign missions, four skirmish maps, non-cheating AI difficulties, saves/checkpoints, replays, settings, localization, richer assets, and tested tech/production content. Named scenario/mode contracts are required for progression, repair, abilities, broader buildings, aircraft, naval, or transport.}
+  - {name: far_vision, rule: Irregular Network playable faction, remote multiplayer/services, MCP agents, external mod packages/scripts/trust/distribution, portable saves, shared replays, replay services, ranked operations, and full air/naval/transport/campaign-continuity/world systems are outside commitments. Future contracts must not constrain V1 architecture, content, performance, or UI.}
+reconciliation:
+  - V1 player experience is one human versus one scripted AI, not shipped human-versus-human.
+  - Infantry Center is the sole new constructible building; HQ, Resource Exchange, and Vehicle Assembly are scenario-owned completed assets.
+  - Harvester and MCV replacement are exposed through Vehicle Assembly; HQ and Vehicle Assembly reconstruction are not.
+  - Resource Exchange reconstruction is future-compatible, not a V1 player action.
+  - Exact V1 player recipe set is the seven-item allow-list regardless of broader indexes or older scenario lists.
+  - V1 presentation means compact UI and placeholder profile; final faction art, voice catalog, and bespoke asset production remain later work.
+  - These are scope decisions, not gameplay formulas; implementation uses this scope for selection and owning domain documents for selected rules.

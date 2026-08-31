@@ -1,0 +1,24 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: asset
+type: object
+additionalProperties: false
+required: [display_name, description, kind, file]
+properties:
+  display_name: {type: string, minLength: 1}
+  description: {type: string, minLength: 1}
+  status: {type: string, enum: [core, designed, optional, near-term, deferred, deprecated]}
+  kind: {type: string, enum: [icon, texture, model, animation, audio, fx, ui]}
+  file: {type: string, pattern: '^assets/[a-z][a-z0-9_/]*\.(svg|webp|png|glb|ogg|mp3|json)$'}
+  fallback: {type: string, enum: [none, inherit, placeholder, required]}
+  design:
+    type: object
+    additionalProperties: false
+    properties:
+      silhouette: {type: string}
+      readability: {type: string}
+      visual_identity: {type: string}
+      animation_requirements: {type: string}
+      audio_requirements: {type: string}
+      fx_requirements: {type: string}
+      performance_budget: {type: string}
+      provenance: {type: string}

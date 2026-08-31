@@ -1,0 +1,71 @@
+kind: architecture_contract
+document_id: design.architecture
+title: Architecture Design
+ownership:
+  - Architecture owns authoritative simulation clock, coordinate representation, deterministic ordering, and command/observation boundary.
+  - Domain documents own system rules and values; entity documents own entity values; Numerics defines numeric representation and rounding, not balance or system configuration.
+  - Simulation is authority for rules and state: fixed clock, seeded randomness, entity state, movement, targeting, combat, construction, resources, production, fog, objectives, victory, and defeat.
+  - Simulation has no dependency on Phaser, DOM, textures, audio, browser APIs, or UI state.
+  - Application shell owns clock driver, input translation, rendering, audio playback, persistence, and platform services; it submits commands and renders observations.
+boundary_flow:
+  - {stage: input_or_ai_intent, owner: application_or_scripted_ai, output: commands tagged with simulation tick}
+  - {stage: authoritative_simulation, owner: simulation, output: state and events at 30 Hz}
+  - {stage: presentation_and_tools, owner: UI_renderer_audio_debug_tools_scripted_AI, output: fog-filtered observation and events}
+implementation_constraints:
+  - V1 uses direct TypeScript integration with the chosen browser game engine.
+  - Keep simulation in engine-independent modules.
+  - Do not build a renderer adapter, ECS, service container, or plugin framework before a real second consumer requires it.
+simulation_loop:
+  - Advance at fixed 30 simulation ticks per second; render may repeat a tick or interpolate visual positions.
+  - Accept commands only at tick boundaries; earlier tick is stale and rejected, later tick is buffered; shell preserves captured input order and assigns increasing player-local sequence numbers.
+  - Sort accepted candidates by applyAtTick, playerId, sequence; playerId is canonical opaque scenario/session integer, sequence strictly increases per player; arrival order only assigns missing local sequence.
+  - Resolve in order: command validation, production and construction, movement, sensing and fog, target selection, weapons and projectiles, damage and status, objective and economy, destruction and victory, progression, event emission.
+  - Use stable integer entity IDs, integer gameplay values where practical, and match-seeded randomness; never wall-clock time, locale, map iteration order, or renderer randomness.
+  - Keep entities as plain records and systems as explicit functions; add state machines only for genuine unit or mission transitions; do not make one class per unit.
+  - Remove a destroyed entity only in the documented destruction phase; invalid, missing, dead, or hidden-ineligible targets reject deterministically with a rejection event, not an exception.
+  - Internal state may be exposed to tests and development tools; player UI and AI receive only filtered observations.
+command_boundary:
+  fields: [playerId integer, sequence non-negative integer, applyAtTick non-negative integer, kind move|attack|stop|harvest|produce|construct|capture|skill|repair, subjectIds entity IDs, targetId for target-based commands, point x/y for point-based commands, recipeId for produce/construct, skillId for skill, mode command-specific named mode never free text]
+  limits: [subjectIds sorted and deduplicated during validation, at most 16 subjects, one target or point, unknown/duplicate/out-of-range/incompatible fields rejected, omitted required fields rejected]
+  payloads:
+    - {kind: move, required_payload: subjects and point, validation: Every subject is owned and move-capable; create path request.}
+    - {kind: attack, required_payload: subjects and targetId or point, validation: Target is currently legal and observed or point is a permitted attack-area request.}
+    - {kind: stop, required_payload: subjects, validation: Cancel current movement or pursuit.}
+    - {kind: harvest, required_payload: one harvester and targetId, validation: Target is valid node or processor for that harvester.}
+    - {kind: produce, required_payload: one producer and recipeId, validation: Recipe is scenario-available, producer-compatible, affordable, and queueable.}
+    - {kind: construct, required_payload: one construction vehicle, recipeId, and point, validation: Recipe is a building and complete snapped footprint passes placement validation.}
+    - {kind: capture, required_payload: eligible subjects and targetId, validation: Target is capturable objective and subjects have declared capability.}
+    - {kind: skill, required_payload: subjects, skillId, optional targetId or point, validation: Skill is declared by every subject and target shape is valid.}
+    - {kind: repair, required_payload: one repair source and targetId, validation: Source, target, range, and repair relationship are card-legal.}
+  exposure: [V1 exposes move, attack, stop, harvest, produce, construct, and capture., skill and repair are reserved and rejected as unsupported-in-scenario in V1., Embark, unload, return, rearm, transform, deploy, sell, and surrender are future named kinds or application actions., No arbitrary scripting, direct damage, teleporting, hidden-information query, or generic do-anything command.]
+  rejection_taxonomy: [malformed, stale, not-owner, not-visible, invalid-subject, invalid-target, out-of-range, blocked, unavailable, insufficient-resource, queue-full, state-conflict, unsupported-in-scenario, capacity-limit]
+  application_actions: [pause, restart, and menu actions are application commands; rejection does not mutate state, reserve resource, or consume action; sequence remains consumed; accepted commands may later produce blocked or target-lost events.]
+observation_boundary:
+  fields: [schemaVersion, matchId, playerId, tick, phase loading|running|paused|victory|defeat, result winnerId/reason nullable, resources banked/reserved/incomeBySource, entities, contacts, terrain discoveredCells/visibleCells/blockers, objectives, production, construction, events cursor/items, commandResults]
+  entity_view: [id, ownerId when known, kind, position, facing, state, visible health/maxHealth/status, viewer-owned orders, visible cooldowns, visible cargo/garrison relationships, owned production/construction state]
+  contact_view: [stable contact key, last-known position/tick, confidence, stale marker; remembered position is never presented as current]
+  derived_views: [ObjectiveView exposes visible state, owner, legal progress; QueueView exposes viewer producer, recipe IDs, progress, reservation, blocked reason and omits enemy queues; PlacementView previews snapped footprint and stable legal/illegal reason without mutation; EventView includes event ID, tick, kind, visible IDs, and stable presentation fields; cursor monotonically advances and expired requests return cursor-expired]
+  privacy_rules: [Unknown enemy entities are absent, terrain discovered earlier remains discovered, entity visibility is fresh, opponent resources/queues/hidden units/exact unseen positions/internal AI state are excluded, can-attack derives from targetability and detection.]
+determinism:
+  - Use 64-bit unsigned match seed in canonical hexadecimal, never wall-clock-derived.
+  - Use SplitMix64; initial state is seed and each subsystem stream derives by hashing seed with stable subsystem name; new consumers get new named streams.
+  - Random draws occur only in simulation phases and call sites are part of deterministic design review.
+  - Canonical state tree sorts object keys by UTF-8 byte order, preserves semantic array order, sorts entity/event collections by stable ID, serializes integers without leading zeroes, booleans lowercase, null as null, no whitespace/locale formatting, and fixed-point positions as declared-unit integers.
+  - State digest is SHA-256 of UTF-8 canonical serialization and includes simulation state, map/scenario IDs and versions, resolved content IDs/versions, RNG states, pending commands, and event sequence; excludes renderer, audio, camera, selection, and wall clock.
+  - Entity IDs use match-local monotonic counter after spawn keys; IDs never reuse. Event IDs use match-local monotonic counter and phase order; phase outputs sort by source ID, target ID, and local emission index.
+  - A command applies at most once; duplicate sequences reject as malformed or stale; local command log is after metadata assignment and before validation results; reproduction uses same versions, map, seed, and log.
+  - Mismatch reports first differing tick and digest, with debug phase/entity/field where available; browser/platform/renderer cannot alter authoritative results.
+future_seams:
+  - V1 keeps in-memory command log and per-tick digest; no snapshots, replay files, saves, or versioned network protocol.
+  - Near-term adds manual saves/checkpoints and replay artifacts; save stores validated snapshot plus content/version identifiers, replay stores seed, initial setup, and accepted commands, not rendered frames.
+  - Future remote multiplayer may use deterministic lockstep over command stream; future agent play may use adapter over Command and GameView.
+  - Future consumers do not change V1 modules or require MCP, ECS, schemas, or generalized mod APIs today.
+verification:
+  - V1 content uses direct typed records or small JSON files with stable IDs; loader resolves scenario recipes and rejects duplicate IDs, missing references, illegal recipes, unsupported fields, and map mismatches, recording resolved content IDs in digest.
+  - Keep balance values with owning content and shared rules in canonical design documents, not unit cards.
+  - Same seed and accepted command log produces same final result.
+  - No player or AI observation contains hidden opponent state.
+  - Invalid commands cannot mutate simulation state.
+  - Pausing application stops ticks without changing state.
+  - Simulation runs in a test process without browser or renderer.
+  - A 100-entity smoke match remains responsive at fixed tick rate before visual effects.

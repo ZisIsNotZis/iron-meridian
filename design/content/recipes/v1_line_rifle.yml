@@ -1,0 +1,14 @@
+display_name: "V1 Line Rifle Recipe"
+description: "Reusable recipe definition."
+status: core
+kind: "recipe"
+product: factions.coalition.infantry.line_rifle
+producer: factions.coalition.buildings.infantry_center
+category: "infantry"
+availability: scenarios.v1_meridian_crossing
+prerequisites: [{object: factions.coalition.buildings.infantry_center, state: operational}]
+references: [factions.coalition.infantry.line_rifle, factions.coalition.buildings.infantry_center]
+player_exposed: true
+product_quantity: 1
+design:
+  meaning: Queues one Line Rifle squad in an operational Infantry Center. Cost, buildtime, capacity, and replacement rules come from the Line Rifle card.

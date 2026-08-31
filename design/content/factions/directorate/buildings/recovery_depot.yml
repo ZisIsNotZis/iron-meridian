@@ -1,0 +1,46 @@
+display_name: "Recovery Depot"
+description: "Recovery Depot Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "repair_and_logistics"
+tier: "advanced"
+hpmax: 850
+building_roles: ["fixed_service_point_for_living_vehicle_repair_and_recovery_carrier_support", "it_rewards_a_defended_forward_position"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 3, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Crane arm, towing rails, amber work lamps, welding sparks, hydraulic audio, and a clear active-service beam."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Crane arm, towing rails, amber work lamps, welding sparks, hydraulic audio, and a clear active-service beam."
+fx:
+  identity: "Crane arm, towing rails, amber work lamps, welding sparks, hydraulic audio, and a clear active-service beam."
+design:
+  counterplay: "Attack depot or repair target, interrupt channels, and force the Directorate to retreat damaged assets."
+  defense_behavior: "Structure; ordinary sight and structure-capable attacks; serviced vehicles remain targetable."
+construction:
+  cost:
+    resource: 600
+  buildtime: 360
+  builder: "factions.directorate.buildings.construction_yard"
+  prerequisites:
+    - object: "factions.directorate.buildings.vehicle_plant"
+      state: "operational"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+  exit_clearance_cells: 1
+production:
+  max_operational: 2
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false

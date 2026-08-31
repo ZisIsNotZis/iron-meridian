@@ -1,0 +1,24 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_agents
+type: object
+additionalProperties: false
+required: [kind, source_document]
+properties:
+  kind: {const: agent_control_contract}
+  source_document: {type: string, minLength: 1}
+  purpose: {type: string, minLength: 1}
+  agent_promise: {type: string, minLength: 1}
+  availability: {type: object}
+  session_pinning: {type: array, items: {}}
+  slow_agent_rule: {type: string, minLength: 1}
+  session_schema: {type: object}
+  identity_rule: {type: string, minLength: 1}
+  permissions: {type: object}
+  tools: {type: array, items: {}}
+  action_contract: {type: object}
+  observation_invariants: {type: object}
+  error_contract: {type: object}
+  limits: {type: object}
+  fairness: {type: string, minLength: 1}
+  audit: {type: string, minLength: 1}
+  acceptance: {type: array, items: {}}

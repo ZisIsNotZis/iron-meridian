@@ -1,0 +1,13 @@
+display_name: "Default Production Queue"
+description: "Reusable production definition."
+status: designed
+kind: "production"
+queue:
+  max_items: 8
+  progress_per_builder_per_tick: 1
+  speed_rule: One item per product card buildtime.
+  fifo: true
+  active_builder_limit: 1
+design:
+  meaning: One FIFO queue with one active builder contribution and an eight-item cap.
+  availability: Construction cancellation belongs to the construction system; air/naval service limits and transport capacity belong to their owning contracts.

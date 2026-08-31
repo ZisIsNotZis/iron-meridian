@@ -1,0 +1,18 @@
+display_name: "V1 MCV Recipe"
+description: "Reusable recipe definition."
+status: core
+kind: "recipe"
+product: factions.coalition.vehicles.mcv
+producer: factions.coalition.buildings.vehicle_assembly
+category: "construction"
+availability: scenarios.v1_meridian_crossing
+prerequisites: [{object: factions.coalition.buildings.vehicle_assembly, state: operational}, {object: factions.coalition.buildings.coalition_hq, state: operational}]
+references: [factions.coalition.vehicles.mcv, factions.coalition.buildings.vehicle_assembly, factions.coalition.buildings.coalition_hq]
+player_exposed: true
+product_quantity: 1
+availability_semantics:
+  hq_survival_required: true
+  recovery: {recovery_only: true, free_respawn: false, existing_product_slot_required: true}
+  costly_recovery: true
+design:
+  meaning: Queues one replacement MCV in an operational Vehicle Assembly. The MCV card owns its cost, buildtime, one-active-MCV capacity, and deployment behavior.

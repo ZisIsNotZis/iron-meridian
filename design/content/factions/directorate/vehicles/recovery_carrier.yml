@@ -1,0 +1,73 @@
+display_name: "Recovery Carrier"
+description: "Recovery Carrier Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "advanced"
+battlefield_roles: ["front_line_repair_and_disabled_vehicle_recovery", "emergency_extraction"]
+hpmax: 460
+armor: "armors.light"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2
+visionrange: 6.5
+alertrange: 8
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.58
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.machine_gun_autocannon", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.recovery_depot"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Crane arm, articulated tow cable, amber work lamps, welding sparks, and heavy hydraulic audio."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Crane arm, articulated tow cable, amber work lamps, welding sparks, and heavy hydraulic audio."
+fx:
+  identity: "Crane arm, articulated tow cable, amber work lamps, welding sparks, and heavy hydraulic audio."
+design:
+  tactical_identity: "Front-line repair and disabled-vehicle recovery; secondary emergency extraction."
+  player_decision: "Save an expensive asset under fire or retreat the carrier before it becomes a second casualty. It fails when exposed, overextended, or forced to repair cheap units."
+  counterplay: "Focus the carrier, interrupt its channel, burst damaged targets before recovery, or force it to choose between two casualties."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Medium armor; protected enough to reach the line but valuable enough to demand escort."
+  support_behavior: "Owns Directorate vehicle repair and recovery; one active channel at a time prevents effortless sustainment."
+  locomotion_behavior: "Tracked; slow support vehicle with a deployable winch. It cannot recover while moving."
+  targetability_behavior: "Ground vehicle; ordinary sight and anti-vehicle targeting. The active repair beam makes its position obvious."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The carrier follows the shared one-repair-source rule; its winch is a channelled skill, not a second health system. Service gun | Machine gun/autocannon; ground personnel, light | 4.5 / 12 / 30 ticks | Projectile 14 cells/s; point; no tracking Recovery Winch | 15-tick setup; 150-tick repair/recovery channel; 30-tick recovery; 180-tick cooldown; 3.0-cell range; restores 4 condition/tick or pulls target 1.0 cell over channel; one target | Interrupt channel, focus carrier, burst target, or force choice"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "repair_support"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.recovery_depot"]
+  cost:
+    resource: 600
+  buildtime: 165
+  capacity:
+    max_active: 2
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Service gun"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground"]
+    attackrange: 4.5
+    attackdamage: 12
+    attackperiod: 30
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Service gun | Machine gun/autocannon; ground personnel, light | 4.5 / 12 / 30 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Focus the carrier, interrupt its channel, burst damaged targets before recovery, or force it to choose between two casualties."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Recovery Winch"
+    activation: "active"
+    setup_ticks: 15
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: true
+    design:
+      player_decision: "Save an expensive asset under fire or retreat the carrier before it becomes a second casualty. It fails when exposed, overextended, or forced to repair cheap units."
+      counterplay: "Focus the carrier, interrupt its channel, burst damaged targets before recovery, or force it to choose between two casualties."
+      interruption_readability: "Recovery Winch | 15-tick setup; 150-tick repair/recovery channel; 30-tick recovery; 180-tick cooldown; 3.0-cell range; restores 4 condition/tick or pulls target 1.0 cell over channel; one target | Interrupt channel, focus carrier, burst target, or force choice"

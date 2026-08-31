@@ -1,0 +1,23 @@
+display_name: "Default Attack Movement"
+description: Default attack movement policies.
+status: designed
+kind: "locomotor"
+states: [direct, orbit, standoff, strafe, charge, ram, deploy_and_fire, stationary, attack_run]
+movement:
+  orbit_radius_cells: 3.5
+  orbit_speed_percent: 70
+  breakoff_distance_cells: 1.5
+  charge_distance_cells: 4
+  ram_speed_percent: 80
+  attack_run_commitment_ticks: 30
+attack_movement:
+  policy: direct
+  policy_selection_owners: [weapon, carrier_attachment]
+  orbit_radius_cells: 3.5
+  orbit_speed_percent: 70
+  breakoff_distance_cells: 1.5
+  charge_distance_cells: 4
+  ram_speed_percent: 80
+  attack_run_commitment_ticks: 30
+design:
+  interaction_rules: An owning weapon or carrier may override individual parameters and must state the changed value and player-facing consequence.

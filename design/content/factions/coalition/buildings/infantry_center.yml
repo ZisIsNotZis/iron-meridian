@@ -1,0 +1,36 @@
+display_name: "Infantry Center"
+description: "Infantry Center migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: field
+building_roles: ["infantry_production"]
+hpmax: 500
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 2, height_cells: 2, facings: "cardinal"}
+construction:
+  cost: {resource: 400}
+  buildtime: 240
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}]
+production: {max_operational: 2, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "infantry production"
+  construction_behavior: "Buildable terrain inside a construction anchor; front exits must have valid cells and cannot occupy a route or objective exclusion."
+  production_behavior: "Role: infantry production; cost: `400 resource`; build time: `240 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / infantry production`; replacement/capacity: `maximum 2 operational centers; one FIFO infantry queue per center; one builder assignment`."
+  defense_behavior: "Structure; ordinary discovered target; exits are blocked by the shared footprint validator."
+  capture_behavior: "**Drill cycle** — passive queue production; no global training aura."
+  repair_behavior: "Put it safely behind the HQ or forward for shorter reinforcement paths and greater raid risk."
+  lifecycle_behavior: "Destroying it stops new infantry orders and loses queued work; attack its exposed exits or use area fire against reinforcements."
+  player_decision: "Put it safely behind the HQ or forward for shorter reinforcement paths and greater raid risk."
+  counterplay: "Destroying it stops new infantry orders and loses queued work; attack its exposed exits or use area fire against reinforcements."
+  visual_identity: "Compact barracks with modular sleeping pods, blue entry lights, door-open spawn cue, and a clear queue-complete chime."
+  design_rationale: "# Infantry Center\n\n## Gameplay identity\n\n- **Footprint:** `2 × 2` cells; four facings; two infantry exits on the front edge.\n- **Health / protection:** 500 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; ordinary discovered target; exits are blocked by the shared footprint validator.\n- **Production:** Role: infantry production; cost: `400 resource`; build time: `240 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / infantry production`; replacement/capacity: `maximum 2 operational centers; one FIFO infantry queue per center; one builder assignment`.\n- **Skill / passive:** **Drill cycle** — passive queue production; no global training aura.\n- **Placement:** Buildable terrain inside a construction anchor; front exits must have valid cells and cannot occupy a route or objective exclusion.\n- **Player decision:** Put it safely behind the HQ or forward for shorter reinforcement paths and greater raid risk.\n- **Counterplay:** Destroying it stops new infantry orders and loses queued work; attack its exposed exits or use area fire against reinforcements.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Compact barracks with modular sleeping pods, blue entry lights, door-open spawn cue, and a clear queue-complete chime.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

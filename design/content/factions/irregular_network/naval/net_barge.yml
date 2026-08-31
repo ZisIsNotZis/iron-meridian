@@ -1,0 +1,25 @@
+display_name: Net Barge
+description: "Optional Advanced temporary coastal-denial barge. Surface naval, slow at 2.0 cells/s, anchors into a temporary site and cannot fight while moving at full speed. Naval surface mobile/anchored, structure-like support profile deployed, visible and attackable. Weak deck gun uses machine gun/autocannon against naval surface and ground low-air at shoreline, range 3.5, 12 damage/event, 45 ticks, projectile speed 12, point hit, no tracking. Cast net anchor setup 30, active 150, cooldown 270, radius 4.0; exposes submerged units and applies 30-tick snare without alone damaging them; buoy line visible, barge stationary, aircraft/naval fire can destroy it. Body 380/450 HP mobile/anchored, light/naval protection mobile and reinforcedStructure anchored, radius .55/.60, footprint 2x2, vision 7, alert 9. Production 480 resource / 210 ticks from Boat Shed plus Hideout; coastal FIFO, maximum one active per Boat Shed, navigable water required."
+status: designed
+scope: near_term
+faction: factions.irregular_network
+platform: naval
+tier: advanced
+battlefield_roles: [coastal_denial, detection, anti_submerged]
+hpmax: 380
+armor: armors.light
+locomotor: locomotors.surface_naval
+targetability: [targetabilities.naval_surface, targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.0
+visionrange: 7.0
+alertrange: 9.0
+footprint: {radius_cells: 0.55, width_cells: 2, height_cells: 2}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: deck_gun, damage: damages.machine_gun_autocannon, targetability: [targetabilities.naval_surface, targetabilities.low_air], attackrange: 3.5, attackdamage: 12, attackperiod: 45, projectile_speed: 12, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}]
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: cast_net, activation: active, setup_ticks: 30, active_ticks: 150, cooldown_ticks: 270, target: self, targetradius: 4.0, movement_allowed: false, interruption_conditions: [damage], design: {player_decision: "Close a coastal approach long enough for sabotage while accepting a stationary target.", counterplay: "Aircraft, naval fire, or waiting out the field."}}]
+production: {producer: factions.irregular_network.buildings.boat_shed, queue: coastal, category: naval, cost: {resource: 480}, buildtime: 210, capacity: {max_active: 1, replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Salvaged trawler with buoy reels; glowing buoy arcs and low sonar thrum mark field boundary.", readability: "Anchor setup, buoy boundary, stationary state, snare, expiry, and destruction are visible."}
+audio: {identity: "Buoy reels, low sonar, deck gun, warning, damage, and destruction use faction fallback."}
+fx: {identity: "Glowing buoy arcs mark exact field boundary; submerged exposure and snare are readable."}
+design: {tactical_identity: "Temporary shallow-water denial and anti-submerged support.", player_decision: "Close a coastal approach for a short operation while exposing a stationary target.", counterplay: "Aircraft, naval fire, or waiting out the field.", offense_behavior: "Weak deck gun; net pulses expose/snare submerged units but do not destroy them alone.", defense_behavior: "Light naval protection afloat and reinforcedStructure anchored; poor in open water.", support_behavior: "Cast net is finite sonar/denial only; no repair or transport.", locomotion_behavior: "Surface naval, slow, anchors to temporary site.", targetability_behavior: "Naval surface mobile/anchored; structure-like deployed, visible and attackable.", acquisition_behavior: "Deck gun range 3.5, 12 damage, 45 ticks, point projectile.", lock_behavior: "Cast net setup 30/active 150/cooldown 270/radius 4; 30-tick snare; buoy line visible.", lifecycle_behavior: "Maximum one active per Boat Shed; navigable water required.", production_behavior: "Boat Shed plus Hideout; 480 resource, 210 ticks, coastal FIFO.", visual_identity: "Salvaged trawler, buoy reels, glowing arcs.", audio_identity: "Low sonar thrum and buoy cues.", fx_identity: "Buoy arcs and sonar boundary.", design_rationale: "Anchored structure-like protection is temporary with no permanent blockade; control uses shared status/targetability semantics."}

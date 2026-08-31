@@ -1,0 +1,15 @@
+kind: todo_index
+document_id: design.todo
+title: Deferred Design TODOs
+purpose: Navigation index for work outside the current V1 and near-term implementation boundary; a listed item is not a V1 requirement.
+tracks:
+  - {key: air_operations, contract: air_operations, status: deferred}
+  - {key: naval_operations, contract: naval_operations, status: deferred}
+  - {key: transport, contract: transport, status: deferred}
+  - {key: irregular_network_promotion, contract: factions.irregular_network, status: deferred}
+  - {key: multiplayer, contract: multiplayer, status: deferred}
+  - {key: mcp_agents, contract: agents, status: deferred}
+  - {key: mod_packages_and_scripts, contract: modding, status: deferred}
+  - {key: saves_and_replays, contract: persistence, status: deferred}
+  - {key: release_operations_verification, contract: testing, status: deferred}
+promotion_rule: Contracts may be refined independently, but promoting any track into a playable product requires an explicit scope decision and acceptance evidence.

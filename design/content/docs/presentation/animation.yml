@@ -1,0 +1,14 @@
+kind: animation_contract
+source_document: design/presentation/animation.md
+authority: "Animation follows simulation state; it never delays command acceptance or creates a state the simulation has not granted."
+determinism: "Simulation-significant transitions expose their tick event so animation can catch up deterministically."
+shared_vocabulary: [idle, move, turn, windup, fire, recovery, hit, damaged, selected, disabled, frozen, burning, suppressed, harvest, build, capture, deploy_or_transform, destroyed_or_wreck]
+entity_rule: "Entity manifests add only states their gameplay cards can enter."
+implementation_options: [sprite_flipbooks, sampled_low_cost_meshes, equivalent_interchangeable_presentation]
+anchors:
+  footprint: independent_from_decorative_height
+  contact_origin: independent_from_decorative_height
+  shadow_anchor: independent_from_decorative_height
+  direction: independent_from_decorative_height
+layers: [turret_or_chassis, weapon_mount, wake, shadow, status_overlay]
+owned_values: [frame_counts, rates, interpolation, attack_event_sync, cleanup_durations]

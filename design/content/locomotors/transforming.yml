@@ -1,0 +1,10 @@
+display_name: "Transforming"
+description: A carrier with multiple locomotor states and visible transitions.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [stable_state_a, stable_state_b, transforming_to, transforming_from]
+design:
+  movement_rules: Only the active state's locomotor rules apply. During transformation, movement, targetability, collision, weapon access, and sensing use the explicitly declared transition contract.
+  transition_rules: At least two named stable states are required. Each transition has setup, active, recovery, interruption, and cancellation rules owned by the carrier or transform skill.
+  interaction_rules: Damage, EMP, displacement, and player cancellation resolve at the declared interruption boundary. A transforming unit remains one entity and does not duplicate health, selection, ownership, or experience.

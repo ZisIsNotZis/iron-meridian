@@ -1,0 +1,49 @@
+kind: design_index
+document_id: design.index
+title: Iron Meridian Design
+purpose: Canonical product, world, gameplay, technical, and presentation design.
+naming_rules:
+  - A domain directory contains README.md when it has expandable subdesigns.
+  - A self-contained domain principle lives in a root-level domain Markdown file.
+  - Plural directories contain collections; specific designs live below them.
+  - Global presentation rules live in presentation/; faction and entity flavor lives under its owning scope.
+  - V1 Scope is the sole owner of the compact browser-playable mirror-match boundary; future designs must not silently become V1 requirements.
+domains:
+  - {name: game, target: game, purpose: player promise, loop, victory, and solo product principles; V1 Scope owns the V1 boundary}
+  - {name: v1_scope, target: v1_scope, purpose: authoritative V1 contents, exclusions, player experience, and acceptance gates}
+  - {name: architecture, target: architecture, purpose: simulation, data, engine, observation, and future seams}
+  - {name: multiplayer, target: multiplayer, purpose: future platform contract and validation boundary; not a V1 requirement}
+  - {name: agents, target: agents, purpose: future platform contract and validation boundary; not a V1 requirement}
+  - {name: modding, target: modding, purpose: future platform contract and validation boundary; not a V1 requirement}
+  - {name: persistence, target: persistence, purpose: future platform contract and validation boundary; not a V1 requirement}
+  - {name: testing, target: testing, purpose: future platform contract and validation boundary; not a V1 requirement}
+  - {name: implementation, target: implementation, purpose: vertical-slice sequence, acceptance gates, and deferred work}
+  - {name: world, target: world, purpose: setting, history, geography, technology, organizations, and characters}
+  - {name: maps, target: maps, purpose: generic map principles and specific battlefields}
+  - {name: factions, target: factions, purpose: shared faction principles and faction-specific expression}
+  - {name: units, target: units, purpose: shared unit principles and platform families}
+  - {name: buildings, target: buildings, purpose: shared building and defense principles}
+  - {name: combat, target: combat, purpose: game system}
+  - {name: economy, target: economy, purpose: game system}
+  - {name: construction, target: construction, purpose: game system}
+  - {name: objectives, target: objectives, purpose: game system}
+  - {name: ai, target: ai, purpose: game system}
+  - {name: campaign, target: campaign, purpose: game system}
+  - {name: movement, target: movement, purpose: cross-unit movement}
+  - {name: interactions, target: interactions, purpose: world interactions}
+  - {name: progression, target: progression, purpose: veterancy}
+  - {name: tech, target: tech, purpose: prerequisite systems}
+  - {name: numerics, target: numerics, purpose: numeric representation, rounding, precision, determinism, and ownership rules; not a balance table}
+  - {name: control, target: control, purpose: player input, command feedback, camera, and information presentation}
+  - {name: transport, target: transport, purpose: near-term movement-domain contract; not a V1 requirement}
+  - {name: air_operations, target: air_operations, purpose: near-term movement-domain contract; not a V1 requirement}
+  - {name: naval_operations, target: naval_operations, purpose: near-term movement-domain contract; not a V1 requirement}
+  - {name: reusable_collections, target: reusable_collections, purpose: armors, damages, locomotors, targetabilities, collisions, sensing, skills, statuses, weapons, and production objects}
+  - {name: presentation, target: presentation, purpose: visual, UI, audio, effects, camera, terrain, brand, and asset direction}
+collection_rules:
+  - Concrete values live in individual objects; collection README contracts define schemas.
+  - The asset production contract owns icon, 2D model/sprite, animation, audio, and FX specifications.
+ownership_rules:
+  - Domain contracts own shared principles and rules.
+  - Faction and entity records own faction and entity values.
+deferred_navigation: Deferred design TODOs navigate deferred far-vision implementation work; linked domain contracts own their rules.

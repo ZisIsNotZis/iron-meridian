@@ -1,0 +1,14 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_game
+type: object
+additionalProperties: false
+required: [kind, document_id, title, priorities, core_promise, match_loop, scope, design_gates]
+properties:
+  kind: {const: game_contract}
+  document_id: {type: string}
+  title: {type: string}
+  priorities: {type: array, items: {type: string}}
+  core_promise: {type: string}
+  match_loop: {type: array, items: {type: string}}
+  scope: {type: array, items: {type: string}}
+  design_gates: {type: array, items: {type: string}}

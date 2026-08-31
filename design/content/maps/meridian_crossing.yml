@@ -1,0 +1,89 @@
+display_name: Meridian Crossing
+description: Compact horizontally mirrored land battlefield for the V1 objective contest.
+status: core
+design:
+  tactical_identity: Three approaches create scouting, infrastructure, and objective timing choices.
+  player_decision: Choose between the exposed center, the scouting flank, and the contested-resource route.
+  visual_identity: Readable land battlefield with route cover, base pockets, and a central objective beacon.
+  rationale: Geometry is authoritative gameplay data; decoration cannot change passability or sight.
+  scope: v1
+dimensions:
+  width: 64
+  height: 40
+  cell_units: cell
+  distance_units_per_cell: 1000
+coordinate_contract:
+  cell_index_bounds: x=0..63,y=0..39
+  bounds_order: [min_x, max_x, min_y, max_y]
+  world_point_center: [32, 20]
+  cell_center: '[x+0.5,y+0.5]'
+  reflection: {world_point: 'R(x,y)=(64-x,y)', cell_index: 'R(x,y)=(63-x,y)'}
+layers:
+  authoritative: Cell flags, not a rendered image; a cell may carry multiple flags.
+  border: {x_cells: [0, 63], y_cells: [0, 39], terrain: edge, walkable: true, buildable: false}
+  layer_precedence: [playable, border, cover, no_build, primary_route, base_pocket, decorative]
+  cover_contract: {traversable: true, line_of_sight_blocking: true, damage_modifier: none, route_overlap: traversable_route_cover}
+  base_rules: ['Mark every cell playable.', 'Border x=0,63 or y=0,39 is no-build and edge terrain but remains walkable for ground units.', 'Remaining clear playable cells are buildable.', 'A cell may carry multiple flags; outside, no-build, cover, and primary-route are never cleared by a later decorative or base label.', 'Cover is traversable by ordinary ground units and blocks direct line of sight through its cells; V1 has no separate cover damage modifier.', 'Route cells remain no-build and primary-route even where they overlap cover; cover is traversable route cover, not a sealed obstacle.', 'Route entry cells x=10..11 and exit cells x=52..53 remain clear of new construction so lanes connect to both base pockets.', 'The renderer may add road, grass, rubble, or landmark texture, but passability, buildability, cover, and route overlays derive from the same flags.', 'Every remaining playable cell is clear ground and buildable; there is no water, elevation, bridge, destructible terrain, weather, or hidden hazard in V1.']
+  cover_rectangles: [{id: n_w, bounds: [17,19,8,9], function: North-route west sight break, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true}, {id: n_e, bounds: [44,46,8,9], function: Reflection of n_w, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true, reflection_of: n_w}, {id: n_w2, bounds: [24,26,9,10], function: North-route lower pocket, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true}, {id: n_e2, bounds: [37,39,9,10], function: Reflection of n_w2, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true, reflection_of: n_w2}, {id: c_w, bounds: [21,23,18,19], function: Center-route west sight break, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true}, {id: c_e, bounds: [40,42,18,19], function: Reflection of c_w, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true, reflection_of: c_w}, {id: c_w2, bounds: [21,23,20,21], function: Center-route lower pocket, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true}, {id: c_e2, bounds: [40,42,20,21], function: Reflection of c_w2, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true, reflection_of: c_w2}, {id: s_w, bounds: [16,18,29,30], function: South-route upper pocket, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true}, {id: s_e, bounds: [45,47,29,30], function: Reflection of s_w, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true, reflection_of: s_w}, {id: s_w2, bounds: [25,27,30,31], function: South-route lower pocket, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true}, {id: s_e2, bounds: [36,38,30,31], function: Reflection of s_w2, cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, no_build: true, reflection_of: s_w2}]
+  construction_exclusion_rectangles: [{id: north_entry_exit, bounds: [10,11,8,10], function: North route entry and west exit construction exclusion}, {id: north_entry_exit_reflection, bounds: [52,53,8,10], function: North route east entry and exit construction exclusion, reflection_of: north_entry_exit}, {id: center_entry_exit, bounds: [10,11,18,21], function: Center route entry and west exit construction exclusion}, {id: center_entry_exit_reflection, bounds: [52,53,18,21], function: Center route east entry and exit construction exclusion, reflection_of: center_entry_exit}, {id: south_entry_exit, bounds: [10,11,29,31], function: South route entry and west exit construction exclusion}, {id: south_entry_exit_reflection, bounds: [52,53,29,31], function: South route east entry and exit construction exclusion, reflection_of: south_entry_exit}]
+  route_bands: [{id: north, bounds: [12,51,8,10], intended_use: Long flank and scouting lane, flags: [no_build, primary_route]}, {id: center, bounds: [12,51,18,21], intended_use: Shortest exposed objective lane, flags: [no_build, primary_route]}, {id: south, bounds: [12,51,29,31], intended_use: Longer expansion and contested-resource lane, flags: [no_build, primary_route]}]
+  base_pockets: [{side: west, bounds: [4,11,17,23], buildable: true}, {side: east, bounds: [52,59,17,23], buildable: true}]
+  exclusions: {rule: 'Objective and resource exclusion cells are no-build but remain walkable unless another layer says otherwise; exclusion uses the cell-center circle test.', objective: 'Objective capture radius is 4 cells and no-build radius is 8 cells; these are gameplay radii, not visual circle diameters.', resource_nodes: 'Node exclusion radius is 2 cells; nodes never respawn and have no second V1 harvester slot.'}
+  deferred: [naval topology, aircraft topology, procedural obstacles, random resources]
+anchors:
+  player:
+    - id: base_pocket
+      west: {bounds: [4, 11, 17, 23]}
+      east: {bounds: [52, 59, 17, 23]}
+      anchor_role: Initial safe build area
+    - id: hq_footprint
+      west: {bounds: [4, 7, 18, 21]}
+      east: {bounds: [56, 59, 18, 21]}
+      anchor_role: 4x4 completed at match start
+    - id: processor_footprint
+      west: {bounds: [8, 10, 18, 20]}
+      east: {bounds: [53, 55, 18, 20]}
+      anchor_role: 3x3 completed at match start
+    - id: assembly_footprint
+      west: {bounds: [8, 10, 21, 23]}
+      east: {bounds: [53, 55, 21, 23]}
+      anchor_role: 3x3 completed at match start
+    - id: combat_exit
+      west: {point: [12.5, 20.5]}
+      east: {point: [51.5, 20.5]}
+      anchor_role: Assembly exit and reachable route anchor
+    - id: harvester_start
+      west: {point: [10.5, 17.5]}
+      east: {point: [53.5, 17.5]}
+      anchor_role: Idle beside processor
+    - id: construction_start
+      west: {point: [11.5, 22.5]}
+      east: {point: [52.5, 22.5]}
+      anchor_role: Available beside assembly
+    - id: home_resource_node
+      west: {point: [10, 12]}
+      east: {point: [54, 12]}
+      reserve: 24000
+      interaction_point_rule: nearest_clear_cell
+      anchor_role: 24000 reserve each
+  central:
+    - id: objective
+      point: [32, 20]
+      capture_radius_cells: 4
+      no_build_radius_cells: 8
+      rule: Uses objective state machine and hold victory rules
+    - id: contested_resource_node
+      point: [32, 30]
+      exclusion_radius_cells: 2
+      reserve: 12000
+      rule: Reachable through south route; no respawn
+  resource_interaction_point_rule: Nearest clear cell to the center; ties use (0,0), (1,0), (-1,0), (0,1), (0,-1), (1,1), (-1,1), (1,-1), (-1,-1).
+routes:
+  tactical_intent: Center is direct and exposed; north enables scouting and sight breaks; south trades economy exposure for expansion.
+  waypoints: [{id: north, points: [[12.5,9.5],[32,9.5],[51.5,9.5]]}, {id: center, points: [[12.5,19.5],[32,19.5],[51.5,19.5]]}, {id: south, points: [[12.5,30.5],[32,30.5],[51.5,30.5]]}]
+  connectivity: [Waypoints are authoring waypoints, not teleport points or a replacement for pathfinding., Each waypoint is reachable from both combat exits by V1 ground locomotion., At least one retreat path exists from objective toward each base., No obstacle creates a one-cell permanent trap, seals a base, or removes all retreats from the objective., No route is a dead end or sealed by cover., Aircraft and naval topology are deferred and have no V1 spawn or route layer.]
+vision:
+  rules: [Vision, alert radius, acquisition grace, and fog use shared sensing and numeric definitions; the map grants no objective vision or special radar., Clear ground has no line-of-sight obstruction., Cover blocks the ray through its occupied cell; a unit behind cover is revealed by a clear ray to its footprint or ordinary visual range., A ray crossing cover may reveal the cover while failing to reveal a unit completely behind it., Simulation and renderer use the same cell flags; alpha texture cannot create invisible cover., Cover affects line of sight only; damage and armor use the shared combat matrix., Unit height, low flight, stealth, and special detection are unit or system rules, not map exceptions; V1 uses four ground roles and basic fog., Decorative textures never affect sensing or pathfinding., Objective beacons and resource nodes are landmarks and do not grant enemy vision; their presentation may be visible through fog, but ownership, capture progress, and harvesting state follow observation rules.]
+validation:
+  invariants: [Dimensions are exactly 64x40 and all referenced cells are in bounds., Horizontal reflection maps every west gameplay anchor and cover rectangle to its east counterpart with equal footprint, route distance, and layer flags., HQ, Processor, Assembly, initial units, objective, and resource nodes have no overlapping occupied footprints or illegal initial placement., Home reserves are 24000 each and contested reserve is 12000; nodes never respawn and have no second V1 harvester slot., Objective center, capture radius, no-build radius, and hold rules match the objective contract; no structure can occupy its exclusion zone., New buildings cannot occupy no-build, cover, route, border, node-exclusion, objective-exclusion, occupied, or out-of-bounds cells, and are accepted inside valid builder/HQ radius when otherwise clear., Each route waypoint is reachable from both combat exits and at least one retreat path exists from the objective toward each base., No route passage is narrower than the V1 collision requirement; cover never closes a route band., Fog and line-of-sight results are reproducible from map flags and entity state; decorative textures do not affect sensing or pathfinding., No random resource placement, procedural obstacle, unlisted hazard, naval waterway, or aircraft-only dependency exists.]
+  acceptance_target: First match target is 8-12 minutes and roughly 50-80 active entities; geometry supports the 100-entity smoke scene and should be performance-tested with presentation budgets and the 100-entity smoke scene.

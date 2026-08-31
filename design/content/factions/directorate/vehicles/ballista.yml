@@ -1,0 +1,72 @@
+display_name: "Ballista"
+description: "Ballista Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "established"
+battlefield_roles: ["mobile_indirect_fire_against_formations_and_structures", "area_denial"]
+hpmax: 360
+armor: "armors.light"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2
+visionrange: 7
+alertrange: 8
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.52
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.siege_structural", "targetabilities.structure", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Fold-out outriggers, shell-lift cranes, arcing white contrails, and delayed ground-bloom impacts."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Fold-out outriggers, shell-lift cranes, arcing white contrails, and delayed ground-bloom impacts."
+fx:
+  identity: "Fold-out outriggers, shell-lift cranes, arcing white contrails, and delayed ground-bloom impacts."
+design:
+  tactical_identity: "Mobile indirect fire against formations and structures; secondary area denial."
+  player_decision: "Prepare a firing position and protect it, or move before counter-battery arrives. It fails when rushed, revealed, or forced into direct combat."
+  counterplay: "Scout and raid it, counter-battery, use aircraft, spread formations, and exploit its packing delay."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Light armor; requires a screen and recovery path."
+  support_behavior: "Punishes concentrations and fortifications so the line can advance; it offers no direct repair or command utility."
+  locomotion_behavior: "Tracked; moves slowly and must deploy to fire. Deployment is a visible transition."
+  targetability_behavior: "Ground vehicle; ordinary sight and anti-vehicle targeting. It is especially vulnerable while firing or packing."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Ballista uses shared area falloff and indirect-fire validation. Its deployment is the unit's deliberate exception to the armored-line baseline. Siege shell | Siege/structural; ground personnel, light, heavy, structure | 10.0 / 100 / 105 ticks | Projectile 6 cells/s; area 1.0 cells; no tracking; 30-tick warning Deploy Battery | 45-tick setup; active until packed; 45-tick recovery; 180-tick cooldown; +3.0 range and +15% accuracy, movement disabled | Scout, rush, counter-battery, disperse, or force pack"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "indirect_fire"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 500
+  buildtime: 135
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Siege shell"
+    damage: "damages.siege_structural"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 10
+    attackdamage: 100
+    attackperiod: 105
+    delivery: "projectile_6_cells_s_area_1_0_cells_no_tracking_30_tick_warning"
+    design:
+      tactical_use: "Siege shell | Siege/structural; ground personnel, light, heavy, structure | 10.0 / 100 / 105 ticks | Projectile 6 cells/s; area 1.0 cells; no tracking; 30-tick warning"
+      counterplay: "Scout and raid it, counter-battery, use aircraft, spread formations, and exploit its packing delay."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Deploy Battery"
+    activation: "active"
+    setup_ticks: 45
+    recovery_ticks: 45
+    cooldown_ticks: 180
+    movement_allowed: false
+    design:
+      player_decision: "Prepare a firing position and protect it, or move before counter-battery arrives. It fails when rushed, revealed, or forced into direct combat."
+      counterplay: "Scout and raid it, counter-battery, use aircraft, spread formations, and exploit its packing delay."
+      interruption_readability: "Deploy Battery | 45-tick setup; active until packed; 45-tick recovery; 180-tick cooldown; +3.0 range and +15% accuracy, movement disabled | Scout, rush, counter-battery, disperse, or force pack"

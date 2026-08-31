@@ -1,0 +1,67 @@
+kind: schema_registry
+document_id: design.schema
+title: Content schema registry
+vocabulary:
+  - Schemas are authored as YAML using JSON Schema 2020-12 vocabulary.
+  - Content IDs are derived from paths; content files do not declare id.
+  - The Phase 1 checker supports the registry subset without a third-party YAML or JSON Schema dependency.
+  - Unknown fields are errors and each concrete object is one leaf .yml file.
+  - Initial families are faction, infantry, vehicle, aircraft, naval, building, world_character, armor, damage, locomotor, targetability, collision, sensing, skill, status, weapon, map, scenario, campaign, recipe, and asset.
+family_rules:
+  - {family: profile, purpose: Strict shared-object schema for armor, damage, locomotor, targetability, collision, sensing, skill, status, weapon, recipe, production, and production-tier records; fields cover numeric values, units, references, states, transitions, timing, behavior, counterplay, and named design prose}
+  - {family: unit, purpose: Strict faction or neutral mobile-unit schema; no generic bag of fields}
+  - {family: building, purpose: Strict faction or neutral building schema; no generic bag of fields}
+  - {family: world_character, purpose: Strict character schema for identity, affiliation, relationships, visual presentation, voice, and narrative use}
+  - {family: map, purpose: Strict authored combat-space schema}
+  - {family: scenario, purpose: Strict playable-match setup schema}
+  - {family: campaign, purpose: Strict authored campaign-mission schema}
+  - {family: faction, purpose: Strict faction identity and roster schema}
+  - {family: asset, purpose: Strict asset-manifest schema}
+ownership_rules:
+  - armor owns protection and damage_interactions.
+  - damage owns damage_channel, damage_interactions, resolution, damage_over_time, and status_effects.
+  - locomotor owns states, state_definitions, transitions, movement, and attack_movement.
+  - targetability owns domains, detection_requirements, legal_attack_domains, and forbidden_target_classes.
+  - sensing owns detection, information_flow, and sensing_rules.
+  - skill owns family, effect, lifecycle, target_rules, costs, effects, and interruptions.
+  - status owns application, thresholds, resistance, decay, stacking, and resolution_rules.
+  - collision owns occupancy, crush, and boarding.
+  - weapon owns damage, targetabilities, delivery, timing, attack_movement_policy, and failure_conditions.
+  - recipe and production own product, producer, category, availability, prerequisites, queue, and production_tier.
+  - Named design fields own player-facing meaning, counterplay, rationale, tactical identity, player decision, visual, audio, FX, and narrative direction.
+stop_conditions:
+  - Pause when an armor list may be state overrides or multiple simultaneous protections.
+  - Pause when a weapon row has no existing global weapons owner.
+  - Pause when a skill row has no existing global skills owner.
+  - Pause when prose combines multiple values needing separate typed fields.
+  - Pause when a building platform is a functional category rather than a unit class.
+  - Pause when an asset sentence describes a binary file, indexed asset object, or presentation requirement.
+  - Pause when N/A, inherit, pending production, and explicit absence have different meanings.
+id_rules:
+  - Logical ID a.b.c resolves to exactly one YAML path a/b/c.yml.
+  - Static asset IDs use the same rule and their file field points to assets/a/b/c with an extension allowed by asset kind.
+  - The extension is not part of the logical ID; ambiguous or missing files are checker errors.
+  - Numeric fields encode units in field names where practical, including ticks, cells, degrees, percent, distance, and per_tick.
+  - Bare points, damage amounts, and ratios are domain quantities and are not interchangeable.
+unit_building_ownership:
+  - {information: "faction, platform, tier, role", unit: "faction, platform, tier, battlefield_roles", building: "faction, platform, tier, building_roles"}
+  - {information: "body and perception", unit: "hpmax, armor, movespeed, visionrange, alertrange, footprint", building: "hpmax, armor, visionrange, alertrange, footprint"}
+  - {information: "movement and unusual attack movement", unit: "locomotor and movement", building: "locomotor none or not_applicable"}
+  - {information: "sensing, collision, and target domains", unit: "exact-ID fields", building: "exact-ID fields"}
+  - {information: "weapon rows and mount overrides", unit: "weapon_mounts[]", building: "weapon_mounts[]"}
+  - {information: "skills and card parameters", unit: "skill_bindings[]", building: "skill_bindings[]"}
+  - {information: "state variants", unit: "states[] and states[].transitions[]", building: "lifecycle and explicit presentation state variants"}
+  - {information: "cargo, extraction, unloading, and salvage", unit: economy, building: "not applicable unless directly processing resources"}
+  - {information: "production and replacement", unit: production, building: "production and production.queues[]"}
+  - {information: "placement, construction, and exits", unit: "not applicable", building: "placement, construction, exits[]"}
+  - {information: "capture, repair, wreck, and expiry", unit: "lifecycle where needed", building: "capture, repair, lifecycle"}
+special_rules:
+  - Canonical names remain hpmax, movespeed, visionrange, attackrange, attackdamage, attackperiod, and buildtime; runtime current health is hp.
+  - weapon_mounts and skill_bindings are binding records; weapon and skill are exact global IDs while mount_name and skill_name are labels.
+  - states owns definition variants for state-specific health, armor, locomotion, targetability, sensing, collision, perception, footprint, weapons, and transition timing.
+  - Schemas reject comment, notes, metadata, extra, untyped parameter maps, and arbitrary design fields.
+  - producer: construction is a typed system-operation sentinel; every other content reference is an exact dotted ID.
+  - Carrier-owned transition prose and free-form availability conditions require an owning entity schema or structured predicate.
+world_character_ownership:
+  - World character records use world/characters/<slug>.yml and derive IDs such as world.characters.mara_venn.
+  - Source Markdown card paths and front-matter reference paths are retained in source_document and source_references.

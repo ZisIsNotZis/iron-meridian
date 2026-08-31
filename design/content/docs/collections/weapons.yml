@@ -1,0 +1,35 @@
+display_name: Weapons
+description: Reusable attack definitions and their target, damage, delivery, and counterplay contracts.
+status: designed
+kind: collection_contract
+collection_name: weapons
+source_documents: [design/weapons.md, design/weapons/README.md]
+source_documents_status: deleted_after_migration
+schema_id: profile
+object_schema:
+  required_fields: [id, kind, status, references, display_name, targetabilities, sensing_requirements, damage, delivery, geometry, timing, attack_movement_policy, interruption, ammunition_or_cost, presentation_events, failure_conditions, counters, feedback]
+  field_types:
+    object_id: dotted_id
+    kind: {type: enum, values: [weapon]}
+    status: status
+    references: list_of_dotted_ids
+    display_name: string
+    targetabilities: list_of_targetability_ids
+    sensing_requirements: sensing_requirement_list
+    damage: damage_reference_list
+    delivery: delivery_record
+    geometry: geometry_record
+    timing: timing_record
+    attack_movement_policy: attack_movement_policy_record
+    interruption: interruption_record
+    ammunition_or_cost: cost_record
+    presentation_events: presentation_event_list
+    failure_conditions: failure_condition_list
+    counters: counterplay_record
+    feedback: string
+roles: [anti_personnel, anti_armor, explosive, incendiary, emp_control_freeze, anti_air, anti_naval, anti_submerged]
+reuse_gate:
+  minimum_carriers: 2
+  matching_fields: [damage_status_channels, legal_domains, delivery_geometry, timing, tracking, ammunition, feedback]
+  concrete_shared_ids: [weapons.service_pistol]
+  shared_resolution_contract: weapons.default_resolution

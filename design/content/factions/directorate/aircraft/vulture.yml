@@ -1,0 +1,72 @@
+display_name: "Vulture"
+description: "Vulture Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "aircraft"
+tier: "field"
+battlefield_roles: ["reconnaissance_and_target_confirmation", "harassment_of_exposed_light_targets"]
+hpmax: 120
+armor: "armors.light"
+locomotor: "locomotors.fixed_wing"
+targetability: ["targetabilities.high_air"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 7
+visionrange: 10
+alertrange: 12
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.3
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.high_air", "locomotors.fixed_wing", "damages.machine_gun_autocannon", "targetabilities.ground", "targetabilities.low_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.air_command"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Angular observation canopy, white identification panels, camera flash, and clean sweep-line UI."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Angular observation canopy, white identification panels, camera flash, and clean sweep-line UI."
+fx:
+  identity: "Angular observation canopy, white identification panels, camera flash, and clean sweep-line UI."
+design:
+  tactical_identity: "Reconnaissance and target confirmation; secondary harassment of exposed light targets."
+  player_decision: "Trade an aircraft's safety for knowledge before a ground push. It fails when sent blind into defended space or left loitering."
+  counterplay: "Fighters, anti-air, concealment, decoys, and attacking its airfield during the return window."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Air protection with low endurance; survives only through speed, route choice, and base coverage."
+  support_behavior: "Supplies brief reconnaissance for a planned ground operation; it does not act as an always-on radar plane."
+  locomotion_behavior: "Fixed-wing; high-air flight with committed attack/recon passes and explicit takeoff/landing transitions."
+  targetability_behavior: "High air in flight; anti-air and fighters can engage it. It has no stealth state."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Vulture uses the explicit recon values with fixed-wing attack-run movement. Forward gun | Machine gun/autocannon; low air, high air, ground personnel/light | 4.5 / 16 / 24 ticks | Attack run projectile 12 cells/s; point; no tracking Recon Pass | 15-tick setup; 90-tick reveal; 30-tick recovery; 150-tick cooldown; 12.0-cell line, fixed return route | Anti-air/fighters, concealment, decoys, attack airfield"
+production:
+  producer: "factions.directorate.buildings.air_command"
+  queue: "default_queue"
+  category: "reconnaissance"
+  prerequisites: ["factions.directorate.buildings.air_command", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 300
+  buildtime: 75
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Forward gun"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground", "targetabilities.low_air", "targetabilities.high_air"]
+    attackrange: 4.5
+    attackdamage: 16
+    attackperiod: 24
+    delivery: "attack_run_projectile_12_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Forward gun | Machine gun/autocannon; low air, high air, ground personnel/light | 4.5 / 16 / 24 ticks | Attack run projectile 12 cells/s; point; no tracking"
+      counterplay: "Fighters, anti-air, concealment, decoys, and attacking its airfield during the return window."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Recon Pass"
+    activation: "active"
+    setup_ticks: 15
+    recovery_ticks: 30
+    cooldown_ticks: 150
+    movement_allowed: true
+    design:
+      player_decision: "Trade an aircraft's safety for knowledge before a ground push. It fails when sent blind into defended space or left loitering."
+      counterplay: "Fighters, anti-air, concealment, decoys, and attacking its airfield during the return window."
+      interruption_readability: "Recon Pass | 15-tick setup; 90-tick reveal; 30-tick recovery; 150-tick cooldown; 12.0-cell line, fixed return route | Anti-air/fighters, concealment, decoys, attack airfield"

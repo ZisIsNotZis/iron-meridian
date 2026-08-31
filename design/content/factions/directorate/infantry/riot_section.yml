@@ -1,0 +1,72 @@
+display_name: "Riot Section"
+description: "Riot Section Directorate unit card."
+status: "optional"
+faction: "factions.directorate"
+platform: "infantry"
+tier: "established"
+battlefield_roles: ["anti_personnel_control_and_choke_point_denial", "escort_for_engineers_and_artillery"]
+hpmax: 240
+armor: "armors.personnel"
+locomotor: "locomotors.default_ground"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.2
+visionrange: 6
+alertrange: 7.5
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.26
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.default_ground", "targetabilities.low_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.barracks"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Black composite shields, flashing hazard bars, synchronized impact sparks, and blunt crowd-control audio."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Black composite shields, flashing hazard bars, synchronized impact sparks, and blunt crowd-control audio."
+fx:
+  identity: "Black composite shields, flashing hazard bars, synchronized impact sparks, and blunt crowd-control audio."
+design:
+  tactical_identity: "Anti-personnel control and choke-point denial; secondary escort for engineers and artillery."
+  player_decision: "Trade reach and damage for a temporary hold on a narrow route. It fails in open terrain or when the enemy attacks around it."
+  counterplay: "Flank, use explosives/vehicles, attack from range, or ignore the wall and strike its support."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Directional shield protection while facing the threat; exposed from the sides and rear."
+  support_behavior: "Buys time for engineers and artillery at a choke point; it does not improve allies everywhere."
+  locomotion_behavior: "Foot; shield formation slows movement and remains crushable. Transportable when not deployed."
+  targetability_behavior: "Ground personnel; ordinary sight and anti-personnel targeting."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "This optional unit keeps personnel armor and shared status rules. Directional shield behavior is its only intentional protection override. Riot launcher | Suppression/control; ground personnel, low air | 3.5 / 18 + 20 suppression / 45 ticks | Projectile 10 cells/s; area 0.6 cells; no tracking Shield Wall | 30-tick setup; 120-tick active; 30-tick recovery; 210-tick cooldown; 120° frontal arc; -50% rifle/small-arms health damage, movement and main attack disabled | Flank, explosive/area fire, displacement, or bypass"
+production:
+  producer: "factions.directorate.buildings.barracks"
+  queue: "default_queue"
+  category: "infantry_control"
+  prerequisites: ["factions.directorate.buildings.barracks", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 240
+  buildtime: 90
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Riot launcher"
+    targetability: ["targetabilities.ground", "targetabilities.low_air"]
+    attackrange: 3.5
+    attackdamage: 18
+    attackperiod: 45
+    delivery: "projectile_10_cells_s_area_0_6_cells_no_tracking"
+    design:
+      tactical_use: "Riot launcher | Suppression/control; ground personnel, low air | 3.5 / 18 + 20 suppression / 45 ticks | Projectile 10 cells/s; area 0.6 cells; no tracking"
+      counterplay: "Flank, use explosives/vehicles, attack from range, or ignore the wall and strike its support."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Shield Wall"
+    activation: "active"
+    setup_ticks: 30
+    active_ticks: 120
+    recovery_ticks: 30
+    cooldown_ticks: 210
+    movement_allowed: true
+    design:
+      player_decision: "Trade reach and damage for a temporary hold on a narrow route. It fails in open terrain or when the enemy attacks around it."
+      counterplay: "Flank, use explosives/vehicles, attack from range, or ignore the wall and strike its support."
+      interruption_readability: "Shield Wall | 30-tick setup; 120-tick active; 30-tick recovery; 210-tick cooldown; 120° frontal arc; -50% rifle/small-arms health damage, movement and main attack disabled | Flank, explosive/area fire, displacement, or bypass"

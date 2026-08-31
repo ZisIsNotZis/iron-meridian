@@ -1,0 +1,73 @@
+display_name: "Firestorm Bomber"
+description: "Firestorm Bomber Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "aircraft"
+tier: "advanced"
+battlefield_roles: ["area_denial_and_formation_disruption", "damage_over_time_pressure_against_structures_and_clustered_armor"]
+hpmax: 340
+armor: "armors.light"
+locomotor: "locomotors.fixed_wing"
+targetability: ["targetabilities.high_air"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 6
+visionrange: 7
+alertrange: 10
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.38
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.high_air", "locomotors.fixed_wing", "damages.incendiary", "targetabilities.ground", "targetabilities.structure", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.air_command", "factions.directorate.buildings.heavy_works", "factions.directorate.buildings.munitions_foundry"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Red-hot bomb bays, smoke ribbon, expanding fire patches, and an industrial warning siren."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Red-hot bomb bays, smoke ribbon, expanding fire patches, and an industrial warning siren."
+fx:
+  identity: "Red-hot bomb bays, smoke ribbon, expanding fire patches, and an industrial warning siren."
+design:
+  tactical_identity: "Area denial and formation disruption; secondary damage-over-time pressure against structures and clustered armor."
+  player_decision: "Shape enemy movement with a dangerous lane or spend the bomber for direct damage. It fails when the enemy disperses, intercepts, or exploits the return route."
+  counterplay: "Anti-air, fighters, dispersal, route prediction, and clearing/avoiding the fire zone."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Air protection; vulnerable during approach, release, and return."
+  support_behavior: "Shapes enemy movement with a temporary hazard zone; the zone is a tactical effect, not a persistent map system."
+  locomotion_behavior: "Fixed-wing; committed bombing run with a long turn and return path."
+  targetability_behavior: "High air in flight; anti-air and fighters can engage. The attack lane is telegraphed."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Firestorm uses a fixed attack-run path and the shared incendiary hazard rules; the line pattern is a declared area delivery, not retargeting. Incendiary bombs | Incendiary + explosive; ground personnel, light, heavy, structure | 7.0 / 70 + 10/tick / 90 ticks | Attack-run projectile 8 cells/s; area 1.0 cells; no tracking Carpet Run | 30-tick setup; 120-tick run; 60-tick recovery; 240-tick cooldown; 8.0-cell line, five impacts at 0.75-cell spacing; 30-tick warning | Anti-air/fighters, disperse, leave line, avoid hazard"
+production:
+  producer: "factions.directorate.buildings.air_command"
+  queue: "default_queue"
+  category: "area_strike"
+  prerequisites: ["factions.directorate.buildings.air_command", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.munitions_foundry", "factions.directorate.buildings.heavy_works"]
+  cost:
+    resource: 800
+  buildtime: 210
+  capacity:
+    max_active: 2
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Incendiary bombs"
+    damage: "damages.incendiary"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 7
+    attackdamage: 70
+    attackperiod: 90
+    delivery: "attack_run_projectile_8_cells_s_area_1_0_cells_no_tracking"
+    design:
+      tactical_use: "Incendiary bombs | Incendiary + explosive; ground personnel, light, heavy, structure | 7.0 / 70 + 10/tick / 90 ticks | Attack-run projectile 8 cells/s; area 1.0 cells; no tracking"
+      counterplay: "Anti-air, fighters, dispersal, route prediction, and clearing/avoiding the fire zone."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Carpet Run"
+    activation: "active"
+    setup_ticks: 30
+    recovery_ticks: 60
+    cooldown_ticks: 240
+    movement_allowed: true
+    design:
+      player_decision: "Shape enemy movement with a dangerous lane or spend the bomber for direct damage. It fails when the enemy disperses, intercepts, or exploits the return route."
+      counterplay: "Anti-air, fighters, dispersal, route prediction, and clearing/avoiding the fire zone."
+      interruption_readability: "Carpet Run | 30-tick setup; 120-tick run; 60-tick recovery; 240-tick cooldown; 8.0-cell line, five impacts at 0.75-cell spacing; 30-tick warning | Anti-air/fighters, disperse, leave line, avoid hazard"

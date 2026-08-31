@@ -1,0 +1,85 @@
+display_name: "Atlas Gunship"
+description: "Atlas Gunship Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "aircraft"
+tier: "established"
+battlefield_roles: ["persistent_close_air_support_against_vehicles_and_infantry", "suppression_of_a_prepared_front"]
+hpmax: 420
+armor: "armors.light"
+locomotor: "locomotors.helicopter"
+targetability: ["targetabilities.low_air", "targetabilities.high_air"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 4.5
+visionrange: 7
+alertrange: 9
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.45
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.low_air", "targetabilities.high_air", "locomotors.helicopter", "damages.machine_gun_autocannon", "targetabilities.ground", "damages.explosive_area", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.air_command"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Heavy coaxial pods, rotor wash, broad searchlights, tracer curtains, and a low mechanical thrum."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Heavy coaxial pods, rotor wash, broad searchlights, tracer curtains, and a low mechanical thrum."
+fx:
+  identity: "Heavy coaxial pods, rotor wash, broad searchlights, tracer curtains, and a low mechanical thrum."
+design:
+  tactical_identity: "Persistent close air support against vehicles and infantry; secondary suppression of a prepared front."
+  player_decision: "Keep the gunship on station for pressure or pull it before the orbit becomes a trap. It fails when committed over anti-air or caught without fighter cover."
+  counterplay: "Anti-air, fighters, spreading units, moving out of the orbit, and attacking the airfield between sorties."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Air protection with moderate endurance; loses value under concentrated anti-air and cannot ignore fighters."
+  support_behavior: "Applies local suppression over the push; it requires anti-air escort rather than providing one."
+  locomotion_behavior: "Helicopter; high/low hover state with orbit attack movement, explicit landing and takeoff transitions."
+  targetability_behavior: "High air while airborne; selected low-air weapons may engage during low hover. Vulnerable to anti-air throughout."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Atlas deliberately trades helicopter orbit persistence for anti-air vulnerability; low-hover targetability is state-dependent. Rotary cannon | Machine gun/autocannon; ground personnel, light, low air | 5.0 / 20 / 12 ticks | Beam/ray burst; point; tracking 120°/s within 90° cone Rocket pod | Explosive; ground personnel, light, heavy | 6.0 / 70 / 60 ticks | Projectile 10 cells/s; area 0.5 cells; tracking within 45° cone, 60°/s Suppressive Orbit | 30-tick setup; 120-tick active; 30-tick recovery; 210-tick cooldown; 4.0-cell orbit, cannon fire rate +25%, movement constrained to orbit; low hover exposes it to selected ground weapons | Anti-air/fighters, spread, leave orbit, cancel attack point"
+production:
+  producer: "factions.directorate.buildings.air_command"
+  queue: "default_queue"
+  category: "close_air_support"
+  prerequisites: ["factions.directorate.buildings.air_command", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 650
+  buildtime: 165
+  capacity:
+    max_active: 2
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Rotary cannon"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground", "targetabilities.low_air"]
+    attackrange: 5
+    attackdamage: 20
+    attackperiod: 12
+    delivery: "beam_ray_burst_point_tracking_120_s_within_90_cone"
+    design:
+      tactical_use: "Rotary cannon | Machine gun/autocannon; ground personnel, light, low air | 5.0 / 20 / 12 ticks | Beam/ray burst; point; tracking 120°/s within 90° cone"
+      counterplay: "Anti-air, fighters, spreading units, moving out of the orbit, and attacking the airfield between sorties."
+  - weapon: "weapons.default_resolution"
+    mount_name: "Rocket pod"
+    damage: "damages.explosive_area"
+    targetability: ["targetabilities.ground"]
+    attackrange: 6
+    attackdamage: 70
+    attackperiod: 60
+    delivery: "projectile_10_cells_s_area_0_5_cells_tracking_within_45_cone_60_s"
+    design:
+      tactical_use: "Rocket pod | Explosive; ground personnel, light, heavy | 6.0 / 70 / 60 ticks | Projectile 10 cells/s; area 0.5 cells; tracking within 45° cone, 60°/s"
+      counterplay: "Anti-air, fighters, spreading units, moving out of the orbit, and attacking the airfield between sorties."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Suppressive Orbit"
+    activation: "active"
+    setup_ticks: 30
+    active_ticks: 120
+    recovery_ticks: 30
+    cooldown_ticks: 210
+    movement_allowed: true
+    design:
+      player_decision: "Keep the gunship on station for pressure or pull it before the orbit becomes a trap. It fails when committed over anti-air or caught without fighter cover."
+      counterplay: "Anti-air, fighters, spreading units, moving out of the orbit, and attacking the airfield between sorties."
+      interruption_readability: "Suppressive Orbit | 30-tick setup; 120-tick active; 30-tick recovery; 210-tick cooldown; 4.0-cell orbit, cannon fire rate +25%, movement constrained to orbit; low hover exposes it to selected ground weapons | Anti-air/fighters, spread, leave orbit, cancel attack point"

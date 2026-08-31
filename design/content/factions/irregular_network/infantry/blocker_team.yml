@@ -1,0 +1,23 @@
+display_name: Blocker Team
+description: "Irregular Network infantry, Core, Field. Primary anti-infantry screen and secondary route denial; targets personnel and light exposed units. Foot movement and cover interaction; crushable by heavy vehicles while moving or exposed. Scatter charges and short-range automatic weapons provide suppression and small-area control, weak against armor and structures. Personnel armor survives by spacing and cover, not durability. Trip line places one visible-but-low-profile temporary snare across a short segment, slows the first enemy group crossing, expires, cannot chain, and cannot permanently block a route; setup is visible and interruptible. No repair, transport, or detection support. Production 140 resource / 90 ticks in Cell House infantry FIFO, Field tier, no hard roster cap, replaceable while Cell House operates. Body 150 HP, personnel armor, foot speed 2.8 cells/s, radius 0.24, footprint 1x1. Vision 6.0, alert/acquisition 7.5 cells, ground domain, ordinary vision, crushable by heavy vehicles. Scatter charges use explosive/area, ground personnel and light armor, range 3.2, 18 damage/event, period 36 ticks, thrown projectile at 8 cells/s, area hit radius 0.7, no tracking, direct acquisition. Trip line range 1.5, setup 30 ticks, duration 180 ticks, cooldown 240 ticks, one trigger, 45 percent move-speed reduction for 90 ticks."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: infantry
+tier: field
+battlefield_roles: [screen, route_denial]
+hpmax: 150
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.8
+visionrange: 6.0
+alertrange: 7.5
+footprint: {radius_cells: 0.24, width_cells: 1, height_cells: 1}
+production: {producer: factions.irregular_network.buildings.cell_house, queue: infantry, category: infantry, cost: {resource: 140}, buildtime: 90, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: false}}
+presentation: {fallback_policy: inherit, silhouette: "Rolled cable and hand-painted warning tabs; readable infantry silhouette with footprint, selection, contact, and shadow anchors.", readability: "Icon covers command, selection, queued, disabled, damaged, and unavailable states and is N/A until asset production; model inherits the global platform contract; animation covers idle, move, attack, damage, disabled, and destruction, with deploy/transform N/A unless declared."}
+audio: {identity: "Selection, acknowledgement, attack/skill, damage, and destruction cues are N/A until audio production with faction fallback."}
+fx: {identity: "A brief dust snap marks the line trigger; declared weapon, skill, status, construction, and destruction events use faction-flavored presets, undeclared effects are N/A."}
+design: {tactical_identity: "Cheap screen that makes one approach awkward while remaining mobile.", player_decision: "Spend setup time to deny an approach or keep the team mobile as a screen.", counterplay: "Scouting, ranged fire, vehicles, and clearing the line.", offense_behavior: "Scatter charges give suppression and small-area control but are weak against armor and structures.", defense_behavior: "Personnel armor; spacing and cover matter more than durability; heavy vehicles crush it while exposed.", support_behavior: "Trip line only; no repair, transport, or detection support.", locomotion_behavior: "Foot and ordinary ground movement with cover interaction.", targetability_behavior: "Ground infantry; crushable while moving or exposed.", acquisition_behavior: "Scatter charges range 3.2, 18 damage, 36 ticks, projectile speed 8, radius 0.7, direct point acquisition.", lock_behavior: "Trip line range 1.5, setup 30, duration 180, cooldown 240; one visible trigger and 45 percent slow for 90 ticks; setup interruptible.", lifecycle_behavior: "No special lifecycle beyond shared unit states.", production_behavior: "Cell House infantry FIFO; 140 resource, 90 ticks, no hard roster cap, replaceable.", visual_identity: "Rolled cable and hand-painted warning tabs.", audio_identity: "Faction fallback for standard infantry cues.", fx_identity: "Dust snap at trip-line trigger.", design_rationale: "Area radius and suppression application are card-owned; damage conversion and status resolution use shared rules."}

@@ -1,0 +1,45 @@
+display_name: "Heavy Works"
+description: "Heavy Works Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "advanced_doctrine_production"
+tier: "advanced"
+hpmax: 1100
+building_roles: ["opens_a_bounded_set_of_preparation_heavy_advanced_choices_without_becoming_a_generic_army_wide_buff"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 4, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Tall armored fabrication bay, lifting gantries, white heat, red authorization lamps, and a deliberate stamping impact."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Tall armored fabrication bay, lifting gantries, white heat, red authorization lamps, and a deliberate stamping impact."
+fx:
+  identity: "Tall armored fabrication bay, lifting gantries, white heat, red authorization lamps, and a deliberate stamping impact."
+design:
+  counterplay: "Raid the structure before the advanced timing arrives; attack the expensive advanced unit after it is fielded."
+  defense_behavior: "Structure; visible, targetable, and repairable under shared rules."
+construction:
+  cost:
+    resource: 1000
+  buildtime: 480
+  builder: "factions.directorate.buildings.construction_yard"
+  prerequisites:
+    - object: "factions.directorate.buildings.vehicle_plant"
+      state: "operational"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+production:
+  max_operational: 1
+  replacement_allowed: true
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false

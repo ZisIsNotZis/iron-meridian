@@ -1,0 +1,108 @@
+kind: control_contract
+document_id: gameplay.control
+title: Control and UI Contract
+source_document: design/control.md
+ownership:
+  - UI projects the fog-filtered GameView.
+  - Input translates into simulation-accepted command kinds.
+  - Unit, weapon, status, and construction rules remain owned by their canonical documents.
+v1_input:
+  device: Desktop mouse and keyboard are the only required V1 input.
+  bindings:
+    - Primary mouse selects and confirms.
+    - Secondary mouse issues context-sensitive move, attack, harvest, capture, or construction confirmation.
+    - Drag selects a rectangle.
+    - Shift adds or removes from selection and queues a compatible order.
+    - Escape cancels placement or targeting mode and clears transient previews.
+    - Space pauses or resumes when the scenario permits it.
+    - Number keys recall control groups; the group count is small and fixed for the slice.
+  control_groups:
+    count: 5
+    membership: Stable owned entity IDs; destroyed or transferred entities disappear.
+    id_reuse: IDs are never reused during a match.
+    selection_order: Click or drag order after duplicate IDs and ineligible entities are removed.
+  context_actions:
+    - {input: right_click_empty_legal_ground, command: move}
+    - {input: right_click_visible_enemy, command: attack}
+    - {input: right_click_resource_node_or_processor, command: harvest_or_return}
+    - {input: right_click_legal_blueprint_point, command: construct}
+  ambiguous_targets: Use an explicit context chooser rather than guessing.
+  palette: Visible buttons and tooltips always expose commands; hotkeys accelerate known actions but are never the only path.
+  order_feedback: A submitted command is pending immediately, then confirmed or rejected by the next observation.
+  rejection_explanation: Explain out of range, blocked, invalid target, unavailable recipe, insufficient resource, or unit-state failure.
+  orders: [move, attack, stop, harvest, produce, construct, capture]
+  context_visibility: Expose only commands valid for the current selection.
+  excluded_controls: [attack_move, patrol, formations, abilities, repair, transport]
+  excluded_control_condition: Add an excluded control only when its simulation rule exists and has a clear UI need.
+  order_results: [accepted, rejected, superseded]
+  rejection_reasons: [not-owned, missing-subject, hidden-target, invalid-target, invalid-point, blocked, out-of-range, insufficient-resource, unavailable-recipe, facility-disabled, builder-unavailable, state-disallows-command, paused]
+  rejected_order_effect: A rejected order changes no simulation state and appears in the local event feed.
+  accepted_order_effect: An accepted order may later emit blocked or interrupted as a normal simulation result.
+  shift_queue: Only compatible move, attack, harvest, or production orders can be queued.
+  replacement: A new non-queued order replaces the subject pending order and dissolves its transient formation.
+  batch_validation: All-or-nothing; the UI names the first failure in selection order.
+selection_targeting:
+  selection_source: Client-side projection of selectable owned entities; selection never grants information.
+  click: Select the topmost eligible entity, with a small cycle affordance for overlap.
+  drag: Select owned entities whose visible footprint intersects the rectangle.
+  double_click: May select nearby same-type owned units only when readable and unable to select hidden information.
+  panel_order: [identity_faction_team_state, health_visible_condition_status, current_order_destination_target, available_commands_cost_cooldown_disabled_reason, production_construction_harvest_capture_progress]
+  enemy_cards: Show only revealed fields; stale contacts are clearly labeled.
+  targeted_feedback: Highlight legal targets and show attack cursor, capture cursor, harvest route, or construction footprint.
+  authority: A legal cursor does not promise a hit, path, or capture; the simulation can reject a changed state.
+camera:
+  default_view: Top-down 2.5D.
+  navigation: [edge_scroll, middle_button_drag, cursor_centered_zoom, jump_to_hq_objective_alert_or_selected_group]
+  limits: Bounded by map limits with a small number of sensible zoom levels.
+  simulation_effect: The camera never follows by default, changes simulation state, or turns screen coordinates into commands without map-coordinate conversion.
+  settings: [invert_zoom, edge_scroll_toggle, drag_sensitivity, ui_scale, color_safe_team_markers, reduced_motion, reduced_flashes, camera_shake_toggle]
+  pause: Pause freezes simulation and shows a clear paused state; menus cannot make an active match appear active.
+information_hierarchy:
+  questions: [what_is_happening_now, what_can_i_do, what_do_i_know, what_should_i_decide_next]
+  question_meanings:
+    - {question: what_is_happening_now, answer: Objective state, victory threat, incoming attack, and selected unit state.}
+    - {question: what_can_i_do, answer: Valid commands, production/build availability, costs, cooldowns, and disabled reasons.}
+    - {question: what_do_i_know, answer: Fog boundary, visible contacts, last-known markers, and warnings.}
+    - {question: what_should_i_decide_next, answer: Resource income, queue pressure, force composition, construction space, and objective timing.}
+  battlefield_priority: The battlefield is primary.
+  top_bar: Resource, income trend, objective hold/contest state, and match alerts.
+  panels: Selected-entity panel and command bar below or beside the top bar.
+  minimap:
+    logical_size: [160, 100]
+    map_aspect: [64, 40]
+    shows: [explored_terrain, owned_entities, objective, resource_nodes, visible_contacts, remembered_contacts]
+    markers: Distinct shape and freshness markers.
+    hides: [unexplored_terrain_cells, hidden_enemies]
+    click: Clicking an explored location recenters the camera and never issues an order.
+  placement: Persistent information belongs in HUD; immediate cause/effect belongs near the world event; detailed explanation belongs in tooltip or panel.
+  modal_policy: Avoid modal dialogs during active combat except pause, surrender, or an explicit tutorial step.
+feedback_timing:
+  accepted_affordances: [destination_marker, target_bracket, queued_icon, ghost_building, capture_ring]
+  observation: The next simulation observation confirms the order or gives a rejection reason.
+  persistence: Important world events persist long enough to locate and then expire to avoid clutter.
+  levels:
+    - {name: preview, presentation: translucent, reversible: true, sound: false}
+    - {name: accepted, presentation: solid_marker, confirmation: short_confirmation_accent}
+    - {name: active, presentation: progress_cooldown_or_order_line_from_simulation_state}
+    - {name: interrupted_or_rejected, presentation: clear_reason_and_preview_removal_or_alteration}
+    - {name: completed_or_failed, presentation: concise_event_toast_and_world_feedback}
+  warnings: Identify the threatened thing and offer a camera jump; do not use only a red flash.
+  sound: Supplements and never replaces visual cues.
+accessibility_onboarding:
+  onboarding_order: [selection, move, attack, harvest, produce, construct, capture]
+  onboarding: Skippable prompts point to the actual control and disappear after demonstration.
+  command_bar: Exposes only the seven V1 orders; disabled buttons remain visible with text reason and do not consume a click.
+  construction_preview: Shows footprint, anchor range, exit or interaction cell, and first invalid-cell reason.
+  production_queue: Shows reserved cost, progress, blocked-exit state, and cancellation only where canonical queue rules permit it.
+  alerts: Include event kind, location, age, and camera-jump button; dismissal does not change simulation state.
+  support: [remappable_hotkeys, ui_scaling,_pause_outside_authored_restrictions, text_audio_warning_equivalents, color_safe_shapes_patterns, reduced_flash_shake, readable_contrast, no_color_only_information]
+  tooltips: Plain-language terms plus the counter or limitation when it matters.
+match_lifecycle:
+  hud_states: [loading, briefing, active, paused, victory, defeat, aborted]
+  terminal_authority: Victory and defeat are terminal simulation observations; clients do not infer them from animation or missing entities.
+  end_screen: Resolved cause, duration, objective result, and decisive-event summary.
+  restart: Declared scenario setup and cleared active match log.
+  surrender: Explicit and mode-controlled.
+  distinct_end_labels: [disconnect, timeout, authored_mission_failure, surrender]
+  paused_match: State whether pause is local, scenario-controlled, or session-controlled; disable orders until active simulation resumes.
+  projection_rule: Minimap, alerts, selection groups, queues, and world markers are permitted-GameView projections; filtering cannot reveal hidden state or alter simulation state.

@@ -1,0 +1,55 @@
+display_name: "Air Command"
+description: "Air Command Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "aircraft_production"
+tier: "established"
+hpmax: 850
+building_roles: ["produces_visible_deliberate_air_sorties_and_creates_the_choice_between_reconnaissance_air_control_and_strike_commitment"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 3, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Armored hangar teeth, red runway lights, white sortie arrows, turbine spool audio, and restrained launch vapor."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Armored hangar teeth, red runway lights, white sortie arrows, turbine spool audio, and restrained launch vapor."
+fx:
+  identity: "Armored hangar teeth, red runway lights, white sortie arrows, turbine spool audio, and restrained launch vapor."
+design:
+  counterplay: "Attack the building/apron, use fighters and local anti-air, or punish predictable attack-run returns."
+  defense_behavior: "Structure; ordinary sight, structure-capable attacks, and aircraft sortie interaction; no hidden airfield state."
+construction:
+  cost:
+    resource: 800
+  buildtime: 360
+  builder: "factions.directorate.buildings.construction_yard"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+  exit_clearance_cells: 1
+exits:
+  - exit_name: "air_apron"
+    direction: "any"
+    exit_type: "aircraft_launch_return"
+    capacity: 1
+    blocked_behavior: "pause"
+production:
+  max_operational: 2
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false
+  queues:
+    - queue_name: "aircraft"
+      category: "aircraft"
+      capacity: 1
+      exit_name: "air_apron"
+      blocked_behavior: "pause"

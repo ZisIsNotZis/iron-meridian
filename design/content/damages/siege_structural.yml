@@ -1,0 +1,14 @@
+display_name: "Siege / Structural"
+description: Health damage specialized for structures and hardened targets.
+status: designed
+kind: "damage"
+damage_channel: structural
+references: [armors.personnel, armors.light, armors.heavy, armors.reinforced_structure]
+damage_interactions:
+  - {armor: armors.personnel, multiplier_percent: 70}
+  - {armor: armors.light, multiplier_percent: 75}
+  - {armor: armors.heavy, multiplier_percent: 85}
+  - {armor: armors.reinforced_structure, multiplier_percent: 120}
+design:
+  channel: Health damage specialized for structures and hardened targets.
+  feedback: It is a poor general anti-personnel choice and a deliberate base-breaking tool.

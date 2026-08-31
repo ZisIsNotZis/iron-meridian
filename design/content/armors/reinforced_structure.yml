@@ -1,0 +1,7 @@
+display_name: "Reinforced Structure"
+description: Buildings and hardened emplacements.
+status: designed
+kind: "armor"
+protection: Buildings and hardened emplacements. Structural damage, siege weapons, sabotage, or prolonged attack are the intended counters.
+design:
+  damage_interaction_role: This profile is the reinforced_structure column in reusable damage objects.

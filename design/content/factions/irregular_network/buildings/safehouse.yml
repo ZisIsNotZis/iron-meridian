@@ -1,0 +1,26 @@
+display_name: Safehouse
+description: "Core Established persistent Network construction origin and standard match-loss anchor. Base anchor with 3x3 footprint, four cardinal facings, one interaction cell on each side, and one builder exit. Place near scenario start or active Network builder on buildable ground away from routes and objectives. Scenario-started in standard match and not a normal replacement order; construction is 700 resource / 360 ticks when constructed. Body 900 HP, reinforcedStructure armor, ordinary structure collision. Structure targetability; close vision, sensors, and attacks reveal it; local concealment never changes armor or prevents area damage. Owns Network construction origin and one limited construction permission, produces no combat units or replacements, no queue/prerequisite/replacement. Destruction removes standard base anchor and ends a normal match. Keep low passively conceals locally after 90 ticks without hostile detection/activity, breaks on construction, production, attack, or direct detection, and has 60-tick re-entry delay. No repair or defense weapon. Lifecycle is persistent shared blueprint, constructing, operational, damaged, destroyed."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: base_anchor
+tier: established
+building_roles: [command, construction]
+hpmax: 900
+armor: armors.reinforced_structure
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 6.0
+alertrange: 8.0
+footprint: {width_cells: 3, height_cells: 3, facings: cardinal, interaction_cells: 1}
+placement: {terrain: buildable_ground, anchor: scenario_start_or_network_builder, route_exclusion: true, objective_exclusion: true, facing: cardinal}
+construction: {cost: {resource: 700}, buildtime: 360, prerequisites: [{object: factions.irregular_network.buildings.safehouse}]}
+exits: [{exit_name: builder_exit, direction: any, exit_type: builder, capacity: 1, blocked_behavior: pause}]
+capture: {capturable: false, captured_behavior: reject}
+lifecycle: {states: [blueprint, constructing, operational, damaged, destroyed], destruction_behavior: remove}
+presentation: {fallback_policy: inherit, silhouette: "Ordinary houses joined by tarps and cellar vents; broken silhouette and dim lantern are the concealment cue; chalk and scaffold pulses show construction.", material_language: "Temporary domestic structures, tarps, cellar vents, chalk, and low-power lanterns.", readability: "Command, construction, concealment break, damage, disabled, and destruction remain explicit."}
+audio: {identity: "Hand signals, cellar activity, chalk/scaffold construction, damage, and destruction use faction fallback."}
+fx: {identity: "Broken silhouette, dim lantern, chalk construction pulses, and readable concealment failure."}
+design: {construction_behavior: "Persistent construction origin; 700 resource, 360 ticks; scenario-started in standard match and no normal replacement.", production_behavior: "One limited construction permission; no unit or replacement queue and no prerequisites beyond scenario/anchor rules.", defense_behavior: "No static weapon or area defense; reinforcedStructure, 900 HP, structure targetability.", capture_behavior: "Not capturable; destruction is standard Network match loss.", repair_behavior: "Cannot repair units.", lifecycle_behavior: "Persistent blueprint to constructing, operational, damaged, destroyed; no temporary expiry.", player_decision: "Hide a fragile base and accept long travel, or forward it and expose the loss condition.", counterplay: "Scout likely hideouts, use area/structural fire, and attack during construction or after concealment breaks.", visual_identity: "Ordinary houses, tarps, cellar vents, broken silhouette, dim lantern.", audio_identity: "Hand signals and low domestic activity.", fx_identity: "Chalk/scaffold pulses and concealment break.", design_rationale: "Keep low concealment changes information only and does not create invisibility or damage immunity."}

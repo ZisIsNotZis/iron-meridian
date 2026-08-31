@@ -1,0 +1,27 @@
+display_name: Ambush Gun
+description: "Core Advanced concealed anti-vehicle strike deployable and retreat area denial. Tracked speed 1.8 cells/s; deploy-and-fire and hidden only after deploying in a valid hide, immobile while hidden; firing, close detection, and area damage reveal it. Medium/heavy anti-armor cannon is weak against infantry and air. Body 360 HP, heavy armor, radius 0.50, footprint 2x2; vision 7.0, alert/acquisition 9.0. Ambush cannon uses anti-armor penetrator against ground light and heavy vehicles, range 8.0, 150 damage/event, 105 ticks, projectile speed 8, point hit, no tracking, lock acquisition 15. Set ambush setup 45, +25 percent first-shot damage, cooldown 180; movement and damage interrupt setup. Displace recovery 30 then moves 1.4 cells/s; firing ends concealment. Production 600 resource / 270 ticks from Field Workshop plus operational Hideout; high-commitment replacements."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: advanced
+battlefield_roles: [anti_armor, ambush, area_denial]
+hpmax: 360
+armor: armors.heavy
+locomotor: locomotors.tracked
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 1.8
+visionrange: 7.0
+alertrange: 9.0
+footprint: {radius_cells: 0.50, width_cells: 2, height_cells: 2}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: ambush_cannon, damage: damages.anti_armor_penetrator, targetability: [targetabilities.ground], attackrange: 8.0, attackdamage: 150, attackperiod: 105, projectile_speed: 8, delivery: projectile, hit_model: point, tracking: none, acquisition: lock}]
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: set_ambush, activation: active, setup_ticks: 45, cooldown_ticks: 180, target: self, movement_allowed: false, interruption_conditions: [movement, damage], design: {player_decision: "Pre-position for one decisive shot, then survive reveal and displacement.", counterplay: "Scouts, artillery, infantry screens, and forcing it to fire early."}}
+  - {skill: skills.default_lifecycle, skill_name: displace, activation: active, recovery_ticks: 30, target: self, movement_allowed: false, interruption_conditions: [damage], design: {player_decision: "Break concealment and retreat slowly after firing.", counterplay: "Flank the deployed chassis and punish the reveal."}}
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 600}, buildtime: 270, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Buried gun shield and camouflage net; muzzle flash tears the net open, creating a readable reveal.", readability: "Deploy, hidden, firing, and displacement states are explicit and visible through silhouette and reveal cues."}
+audio: {identity: "Low tracked movement, setup, heavy cannon, net tear, damage, and destruction use faction fallback."}
+fx: {identity: "Muzzle flash tears open the net; reveal and displacement are readable."}
+design: {tactical_identity: "One decisive concealed anti-vehicle shot followed by a vulnerable reveal.", player_decision: "Pre-position for a shot, then survive reveal and displacement.", counterplay: "Scouts, artillery, infantry screens, flanking, and forcing an early shot.", offense_behavior: "High single-shot anti-armor damage; weak against infantry and air.", defense_behavior: "Heavy armor while mobile; concealment changes information only and deployed chassis is flankable.", support_behavior: "Set ambush and Displace support concealment/displacement only; no repair, transport, or command.", locomotion_behavior: "Tracked, slow, deploy-and-fire; hidden state cannot move.", targetability_behavior: "Ground vehicle; valid hide concealment broken by firing, close detection, or area damage.", acquisition_behavior: "Cannon range 8, 150 damage, 105 ticks, projectile speed 8, point hit, 15-tick lock.", lock_behavior: "Set ambush setup 45, first shot +25 percent, cooldown 180; Displace recovery 30 then 1.4 cells/s; setup movement/damage interrupt.", lifecycle_behavior: "No hard roster cap; high-commitment replacement.", production_behavior: "Field Workshop plus Hideout; 600 resource, 270 ticks.", visual_identity: "Buried gun shield and camouflage net.", audio_identity: "Heavy cannon and net-tear reveal.", fx_identity: "Sharp muzzle reveal and dust displacement.", design_rationale: "Reduced mobility and high single-shot damage define the ambush trade; hidden state changes information only."}

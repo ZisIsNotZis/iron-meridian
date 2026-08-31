@@ -1,0 +1,16 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_numerics
+type: object
+additionalProperties: false
+required: [kind, document_id, title, source_document, ownership, representation, time_determinism, ownership_inheritance, ownership_map, validation]
+properties:
+  kind: {const: numerics_contract}
+  document_id: {type: string}
+  title: {type: string}
+  source_document: {type: string}
+  ownership: {type: array, items: {type: string}}
+  representation: {type: array, items: {type: string}}
+  time_determinism: {type: array, items: {type: string}}
+  ownership_inheritance: {type: array, items: {type: string}}
+  ownership_map: {type: array, items: {type: object, additionalProperties: false, required: [value, canonical_owner], properties: {value: {type: string}, canonical_owner: {type: string}}}}
+  validation: {type: array, items: {type: string}}

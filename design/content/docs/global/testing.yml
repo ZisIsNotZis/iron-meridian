@@ -1,0 +1,75 @@
+kind: testing_operations_contract
+document_id: design.testing
+title: Testing, Build, Release, and Operations
+ownership:
+  - Testing owns test evidence, observability, build/release gates, browser support, security, privacy, telemetry, moderation, deployment, and operational recovery.
+  - Gameplay values and service protocols remain with owning domains.
+scope:
+  - {horizon: v1, coverage: [content/structure audit, deterministic headless reproduction, invariants, browser E2E smoke, accessibility smoke, 100-entity benchmark]}
+  - {horizon: near_term, coverage: [AI, campaign, skirmish, save/replay, visual regression, localization, package validation, sustained browser testing]}
+  - {horizon: far_vision, coverage: [network fault/soak, signed package compatibility, sharing, ranked integrity, long-run cross-browser determinism]}
+taxonomy:
+  - {prefix: DOC, meaning: Markdown, links, schema, ownership}
+  - {prefix: CONT, meaning: content resolution and assets}
+  - {prefix: SIM, meaning: state behavior}
+  - {prefix: DET, meaning: seed, commands, and digests}
+  - {prefix: AI, meaning: behavior}
+  - {prefix: UI, meaning: input and flows}
+  - {prefix: VIS, meaning: visual baselines}
+  - {prefix: A11Y, meaning: accessibility}
+  - {prefix: PERF, meaning: performance}
+  - {prefix: SEC, meaning: security}
+  - {prefix: OPS, meaning: build, deployment, recovery, and moderation}
+v1_fixtures: [SIM-v1-load-and-setup, SIM-v1-production-and-reservation, SIM-v1-construction-placement-and-refund, SIM-v1-economy-harvest-unload, SIM-v1-combat-role-interaction, SIM-v1-objective-capture-and-victory, SIM-v1-hq-destruction-and-defeat, DET-v1-seed-command-reproduction, DET-v1-order-and-conflict-tiebreaks, FOG-v1-visible-redacted-stale-contact, AI-v1-scripted-opponent, UI-v1-input-feedback-and-pause, A11Y-v1-keyboard-contrast-reduced-motion, PERF-v1-100-entity-smoke]
+evidence:
+  - Every acceptance claim names fixture, build, content digest, and evidence; structural green never proves gameplay correctness; human playtesting is required for feel, readability, pacing, and balance.
+  - Every simulation fixture declares ID, scenario/version, map/version, resolved content digest, ruleset/version, 64-bit seed, initial setup, accepted commands, and assertions.
+  - Assertions may require result, event, state digest, resource total, entity count, or invariant; harness records checkpoint state/event digests, terminal result, counts, and failures.
+  - Repeated runs match; mismatch reports first tick, expected/actual digest, subsystem/entity/field where available, fixture, build, map, scenario, and content identity; smallest failing fixture becomes regression case; browser timing never authority.
+invariants:
+  - After every test tick, no negative health/resources, duplicate IDs, orphan references, illegal ownership, impossible positions, invalid status combinations, dead actors issuing orders, hidden data crossing view boundary, or undeclared transitions.
+test_domains:
+  - Content tests validate IDs, references, schemas, ownership paths, manifests, recipes, scenario availability, assets, protected override rules, and one owner for each concrete value; derived display values name source.
+  - Balance tests check role/armor, cost/reservation, objective income, construction, and loss recovery; expected bounds belong in scenario/balance fixtures; human playtesting decides fun.
+  - Property tests cover command idempotence, terrain visibility monotonicity, bounded resources, collision, queue conservation, status expiry, save/restore, replay equivalence, and package resolution order.
+  - Generated failures become replayable fixtures; test malformed, duplicate, reordered, stale, hidden-target, unsupported, rate-limited, and post-acceptance-blocked commands.
+  - E2E covers first launch, start, selection, move/attack/stop/harvest, produce/construct/capture, fog, pause, victory, defeat, restart, and recoverable load errors; wait on simulation ticks or stable UI.
+  - Visual baselines cover HUD, placement, selection, health/status, fog, objective, combat, victory/defeat, and fallback assets; failures require human review.
+  - Accessibility covers keyboard-only V1 completion, visible focus, semantic names, contrast/non-color cues, reduced motion, bounded flashing, captions, zoom/layout, remapping conflict; pseudo-localization covers expansion, truncation, fallback, and RTL if added.
+browser: [Evergreen desktop browser with WebGL2 and Web Audio plus documented low-end fallback; unsupported browsers show compatibility screen; evidence records browser, OS, GPU, engine, viewport, build, map, seed, and content digest.]
+performance:
+  - V1 gate is 100-entity smoke at fixed simulation rate with no sustained deadline misses, input lockout, or unbounded memory growth.
+  - Near-term adds 50–80 active entities, startup, fog, effect bursts, serialization, and low-end runs.
+  - Results include average/worst tick/render time, memory high-water, asset bytes, load duration, hardware, browser, map, seed, and entity count.
+  - Soaks run fixed-seed matches to victory or bounded duration and check memory, event queues, save/restore, and digest stability; slow observers/logs/telemetry never block simulation and dropped diagnostics are counted.
+  - Structured events include release/build, match, tick, subsystem, event ID, scope, stable result, and correlation ID where applicable.
+pipeline:
+  - Validate Markdown, links, schemas, and ownership.
+  - Resolve built-in content and canonical manifest.
+  - Compile data without changing ownership.
+  - Validate/import asset hashes, dimensions, formats, fallbacks, licenses, and provenance.
+  - Run unit, property, deterministic, content, and fixture tests.
+  - Build headless simulation and browser client from same digest.
+  - Run E2E, visual, accessibility, and performance gates.
+  - Emit release manifest with source revision, tool versions, game/schema, content/asset digests, browser profile, and test evidence.
+  - Generated records, atlases, audio, and bundles are disposable outputs carrying source ID and digest; missing provenance, unsafe dimensions, unsupported formats, wrong color space, duplicate IDs, and stale generated output block packaging.
+release:
+  - Game, content schema, artifact schema, and asset-pipeline versions are separate; public releases immutable.
+  - Release manifest points to hashed assets and complete versioned bootstrap; CDN/static hosting permitted but incomplete deployments not promoted.
+  - Rollback switches manifest atomically; service-worker caches keyed by release retain last known-good release without stranding bootstrap.
+  - Stages are build, local verification, internal canary, public rollout, health observation, promotion or rollback.
+  - Health checks cover startup, assets, simulation smoke, storage, and future dependencies; external failures produce bounded degraded/offline behavior and never authoritative gameplay state.
+  - Incident response preserves build, manifest, safe logs, timeline, voluntary fixture/replay; recovery disables faulty optional services or rolls back before rewriting results or deleting artifacts.
+security:
+  - Packages, saves, replays, maps, player text, URLs, service responses, and telemetry are untrusted; enforce schema/size limits, safe archive extraction, URI allowlists, output escaping, CSP, origin isolation, dependency audits, and no executable mods in V1 or near-term.
+  - Secrets never enter client artifacts/logs; vulnerabilities, secret leakage, unsafe permissions, signature failures, and malformed release artifacts block promotion.
+  - Security reports use private intake, severity, remediation, regression fixture, and support/backport policy.
+privacy:
+  - Opt-in telemetry where required collects minimum pseudonymous release, browser, startup/load, coarse performance/error, and consented crash data.
+  - It does not collect commands, hidden state, chat, precise location, or identity by default; purpose, retention, access, deletion, aggregation, redaction, and sampling are documented.
+  - Telemetry failure never blocks play; error reports contain stable code, release, coarse environment, correlation ID, bounded safe context, and exclude secrets, saves, private views, arbitrary text.
+future_operations:
+  - Future shared replays, annotations, package metadata, names, and chat require size/type limits, malware scanning, signature/content checks, report/block/mute, rate limits, human review, appeals, audit, retention, deletion, and takedown; local offline play does not depend on services.
+  - Ranked unavailable until multiplayer authority contract complete; later accepts approved ruleset/content/trust profiles and server-verified results; client telemetry is evidence, not authority.
+  - Disconnect, dispute, rematch, season, and leaderboard rules publish before activation.
+  - Architecture owns simulation determinism/state; domains own behavior/values; modding owns package trust/resolution; persistence owns artifacts/migrations; this contract owns evidence, pipelines, browser, security, privacy, telemetry, moderation, sharing, operations.

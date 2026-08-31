@@ -1,0 +1,23 @@
+display_name: Production Tiers
+description: Reusable vocabulary for strategic production commitment.
+status: designed
+kind: collection_contract
+collection_name: production_tiers
+source_documents: [design/production-tiers.md]
+source_documents_status: deleted_after_migration
+concrete_objects_path: design/production/
+object_schema:
+  required_fields: [id, kind, display_name, commitment_meaning, availability_expectation, counterplay_expectation]
+  field_types:
+    object_id: dotted_id
+    kind: {type: enum, values: [production-tier]}
+    display_name: string
+    commitment_meaning: string
+    availability_expectation: string
+    counterplay_expectation: string
+ownership:
+  tier_owns: [strategic_commitment]
+  other_systems_own: [availability, cost, build_time, infrastructure, replacement_difficulty, opportunity_cost]
+rules:
+  combat_power_is_not_automatic: true
+  entity_references_one_tier: true

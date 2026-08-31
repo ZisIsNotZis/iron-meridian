@@ -1,0 +1,91 @@
+display_name: V1 Meridian Crossing
+description: "Canonical first working local skirmish: Coalition human west versus scripted Coalition east."
+status: core
+mode: skirmish
+version: 1
+seed: '0x56315f4d45524944'
+map: maps.meridian_crossing
+design:
+  tactical_identity: "Scout routes, protect the finite resource loop, choose infrastructure or army timing, and contest the objective."
+  player_decision: "Spend resource on fighting units or expose the MCV to add infantry production."
+  rationale: "The slice proves the decision loop without campaign, progression, air, naval, or online systems."
+  scope: v1
+references: [maps.meridian_crossing, factions.coalition, factions.coalition.buildings.coalition_hq, factions.coalition.buildings.resource_exchange, factions.coalition.buildings.vehicle_assembly, factions.coalition.buildings.infantry_center, factions.coalition.vehicles.mcv, factions.coalition.vehicles.harvester, factions.coalition.vehicles.lynx_scout_car, factions.coalition.infantry.line_rifle, factions.coalition.vehicles.valiant_mbt, factions.coalition.infantry.javelin_team, recipes.v1_resource_exchange, recipes.v1_vehicle_assembly, recipes.v1_infantry_center, recipes.v1_lynx_scout_car, recipes.v1_line_rifle, recipes.v1_valiant_mbt, recipes.v1_javelin_team, recipes.v1_harvester, recipes.v1_mcv]
+faction_slots: [{slot: west, faction: factions.coalition, side: west, facing: east, controller: human}, {slot: east, faction: factions.coalition, side: east, facing: west, controller: scripted_finite_state}]
+ai_slot: east
+ai_controller: scripted_finite_state
+ai_difficulty: regular
+setup:
+  banked_resource_per_slot: 1500
+  reserved_resource_per_slot: 0
+  coordinate_system: World coordinates in cell units; east positions are the horizontal reflection of west positions.
+  spawns:
+    - spawn_key: hq
+      content: factions.coalition.buildings.coalition_hq
+      west_position: [4, 18]
+      east_position: [56, 18]
+      west_facing: east
+      east_facing: west
+      completed: true
+      creation_order: 0
+      initial_order: none
+      cargo: none
+      anchor: hq_footprint
+    - spawn_key: processor
+      content: factions.coalition.buildings.resource_exchange
+      west_position: [8, 18]
+      east_position: [53, 18]
+      west_facing: east
+      east_facing: west
+      completed: true
+      creation_order: 1
+      initial_order: none
+      cargo: none
+      anchor: processor_footprint
+    - spawn_key: assembly
+      content: factions.coalition.buildings.vehicle_assembly
+      west_position: [8, 21]
+      east_position: [53, 21]
+      west_facing: east
+      east_facing: west
+      completed: true
+      creation_order: 2
+      initial_order: none
+      cargo: none
+      anchor: assembly_footprint
+    - {spawn_key: mcv, content: factions.coalition.vehicles.mcv, west_position: [11.5, 22.5], east_position: [52.5, 22.5], west_facing: east, east_facing: west, completed: true, creation_order: 3, initial_order: none, cargo: none, anchor: construction_start}
+    - {spawn_key: harvester, content: factions.coalition.vehicles.harvester, west_position: [10.5, 17.5], east_position: [53.5, 17.5], west_facing: east, east_facing: west, completed: true, creation_order: 4, initial_order: none, cargo: none, anchor: harvester_start}
+    - {spawn_key: scout, content: factions.coalition.vehicles.lynx_scout_car, west_position: [13.5, 18.5], east_position: [50.5, 18.5], west_facing: east, east_facing: west, completed: true, creation_order: 5, initial_order: none, cargo: none, anchor: combat_exit}
+    - {spawn_key: infantry, content: factions.coalition.infantry.line_rifle, west_position: [13.5, 19.5], east_position: [50.5, 19.5], west_facing: east, east_facing: west, completed: true, creation_order: 6, initial_order: none, cargo: none, anchor: combat_exit}
+    - {spawn_key: tank, content: factions.coalition.vehicles.valiant_mbt, west_position: [13.5, 20.5], east_position: [50.5, 20.5], west_facing: east, east_facing: west, completed: true, creation_order: 7, initial_order: none, cargo: none, anchor: combat_exit}
+    - {spawn_key: anti_tank, content: factions.coalition.infantry.javelin_team, west_position: [14.5, 19.5], east_position: [49.5, 19.5], west_facing: east, east_facing: west, completed: true, creation_order: 8, initial_order: none, cargo: none, anchor: combat_exit}
+  spawn_order: [west_before_east, stable_table_order, map_stable_entity_order]
+availability:
+  entities: [factions.coalition.buildings.coalition_hq, factions.coalition.buildings.resource_exchange, factions.coalition.buildings.vehicle_assembly, factions.coalition.buildings.infantry_center, factions.coalition.vehicles.mcv, factions.coalition.vehicles.harvester, factions.coalition.vehicles.lynx_scout_car, factions.coalition.infantry.line_rifle, factions.coalition.vehicles.valiant_mbt, factions.coalition.infantry.javelin_team]
+  recipes: [recipes.v1_resource_exchange, recipes.v1_vehicle_assembly, recipes.v1_infantry_center, recipes.v1_lynx_scout_car, recipes.v1_line_rifle, recipes.v1_valiant_mbt, recipes.v1_javelin_team, recipes.v1_harvester, recipes.v1_mcv]
+  player_exposed_recipes: [recipes.v1_infantry_center, recipes.v1_lynx_scout_car, recipes.v1_line_rifle, recipes.v1_valiant_mbt, recipes.v1_javelin_team, recipes.v1_harvester, recipes.v1_mcv]
+  disabled_features: [research, progression, repair_building, point_defense, aircraft, naval, transport]
+  unavailable_entities: [factions.coalition.buildings.field_hospital, factions.coalition.vehicles.mender_repair_vehicle, factions.coalition.buildings.guardian_turret]
+  closed_world: true
+  recovery_policy: The processor provides the declared Harvester service; recovery construction for the two starting support buildings and Infantry Center is available when prerequisites remain operational; HQ replacement is never legal.
+  recovery_recipes: [recipes.v1_resource_exchange, recipes.v1_vehicle_assembly, recipes.v1_infantry_center]
+rules:
+  fog: Basic fog; ownership does not grant objective-wide vision.
+  progression: Disabled; no experience or promotion.
+  pause: Local-only pause against AI; no simulation tick advances while paused.
+  victory: Enemy HQ destruction or canonical cumulative objective hold threshold; same-tick HQ destruction has priority.
+  defeat: Own HQ destruction or voluntary surrender.
+  ai: East uses regular scripted finite-state opponent; human east is development-only.
+  surrender: Available from pause menu and counts as voluntary defeat.
+  draw: No draw state; future tie-producing rules require explicit priority.
+  objective_hold_seconds: 75
+  same_tick_priority: HQ destruction before objective completion.
+  human_harness: Human-controlled east is an out-of-scenario development harness, not a V1 mode.
+acceptance:
+  duration: 8-12 minutes
+  duration_min_seconds: 480
+  duration_max_seconds: 720
+  active_entities: approximately 50-80
+  active_entities_min: 50
+  active_entities_max: 80
+  deterministic_fixture: The minimum fixture starts from this scenario with seed 0x56315f4d45524944, records accepted commands through the terminal result, and proves that the same scenario, seed, and command log reproduce the same state and outcome.

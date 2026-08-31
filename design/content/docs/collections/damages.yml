@@ -1,0 +1,31 @@
+display_name: Damages
+description: Reusable damage channels and interaction profiles.
+status: designed
+kind: collection_contract
+collection_name: damages
+source_documents: [design/damages.md, design/damages/README.md]
+source_documents_status: deleted_after_migration
+schema_id: profile
+object_schema:
+  required_fields: [id, kind, status, references, display_name, damage_channel, target_meaning, resolution, secondary_effects, stacking, feedback]
+  field_types:
+    object_id: dotted_id
+    kind: {type: enum, values: [damage]}
+    status: status
+    references: list_of_dotted_ids
+    display_name: string
+    damage_channel: {type: enum, values: [health, health_over_time, structural, electronic, suppression, freeze, control, position, protection]}
+    target_meaning: string
+    damage_interactions: list_of_damage_interaction_records
+    resolution: resolution_record
+    secondary_effects: secondary_effect_record
+    stacking: stacking_record
+    feedback: string
+pipeline: [attack, target_validation, damage_interaction, resistance, health_or_status_change, threshold_transition, feedback]
+channels: [health, protection_condition, structural, incendiary, emp_electronic, suppression_control, freeze_disable]
+rules:
+  channels_are_distinct: true
+  channels_are_few_and_legible: true
+  secondary_channels_require: [visible_source, meaningful_counterplay, better_decision_than_more_health_damage]
+  hidden_armor_rolls_forbidden: true
+  immunity_like_interactions_require_evidence: true

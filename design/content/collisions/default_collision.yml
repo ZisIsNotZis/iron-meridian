@@ -1,0 +1,21 @@
+display_name: "Default Collision"
+description: Default occupancy, separation, crush, and boarding interaction profile.
+status: designed
+kind: "collision"
+occupancy:
+  minimum_separation_distance: 40
+  default_footprint_width_cells: 1
+  default_footprint_height_cells: 1
+  building_clearance_cells: 0
+  projectile_impact_radius_distance: 80
+crush:
+  speed_cells_per_second: 1
+  mass_ratio: {numerator: 2, denominator: 1}
+  recovery_ticks: 15
+  requires_crushable_target: true
+  requires_overlapping_locomotor_domains: true
+boarding:
+  interaction_range_cells: 0.75
+design:
+  occupancy_rules: Logical footprint and visual bounds remain separate.
+  crush_rules: Freeze only enables crush when the target or status explicitly declares that transition.

@@ -1,0 +1,27 @@
+display_name: Ilya Orsik
+description: "Coalition operations commander from a port-defense region. Orsik values local initiative but knows that every improvised promise eventually needs fuel, repair, and a person willing to answer for it."
+kind: character
+status: near-term
+source_document: design/world/characters/ilya-orsik.md
+source_references:
+  - ../../factions/coalition/README.md
+identity:
+  role: operations commander
+  background: from a port-defense region
+  beliefs: Values local initiative.
+  limitations: Every improvised promise eventually needs fuel, repair, and a person willing to answer for it.
+affiliation:
+  faction: factions.coalition
+  organization: Coalition
+  position: operations commander
+  region: port-defense region
+relationships:
+  - subject: local initiative
+    nature: Values local initiative while requiring improvised promises to be backed by fuel, repair, and accountable people.
+presentation:
+  visual: slate field jacket, signal-yellow route pencil, modular headset.
+audio:
+  voice: calm, specific, willing to revise an order when evidence changes.
+narrative:
+  use: player briefings for Isolation and Decision
+  constraints: Avoids presenting the Coalition as politically frictionless.

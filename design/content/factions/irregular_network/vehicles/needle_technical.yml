@@ -1,0 +1,26 @@
+display_name: Needle Technical
+description: "Core Field hit-and-run anti-infantry vehicle. Wheeled, 6.0 cells/s on roads and 3.8 off-road, with direct attack movement and short breakoff preference. Ground vehicle, light armor, ordinary vision, no special concealment. Twin machine guns use machine gun/autocannon against personnel and light armor, range 4.5, 26 damage/event, 24 ticks, projectile speed 16, point hit, no tracking. Dust dash gives +40 percent speed for 60 ticks, cooldown 150, accuracy -25 percent; firing ends the dash and reveals the route through dust. Production 280 resource / 105 ticks from Field Workshop, vehicle FIFO, no hard roster cap, replaceable. Body 230 HP, radius 0.40, footprint 2x1."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: field
+battlefield_roles: [harassment, anti_infantry]
+hpmax: 230
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 6.0
+visionrange: 7.0
+alertrange: 9.0
+footprint: {radius_cells: 0.40, width_cells: 2, height_cells: 1}
+movement: {terrain_access: [road, rough], attack_movement: direct, route_shape: breakoff}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: twin_machine_guns, count: 2, damage: damages.machine_gun_autocannon, targetability: [targetabilities.ground], attackrange: 4.5, attackdamage: 26, attackperiod: 24, projectile_speed: 16, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}]
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: dust_dash, activation: active, active_ticks: 60, cooldown_ticks: 150, target: self, movement_allowed: true, movement_effect: {movespeed_multiplier: 1.4, attack_cancels: true}, combat_effect: {accuracy_multiplier: 0.75}, design: {player_decision: "Harass, disengage, and punish isolated infantry rather than stand in a line.", counterplay: "Armor, area fire, and denying roads."}}]
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 280}, buildtime: 105, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: false}}
+presentation: {fallback_policy: inherit, silhouette: "Welded gun ring and mismatched ammunition belts; dust plume is the readable tell for the dash.", readability: "Readable vehicle silhouette with footprint, selection, contact, and shadow anchors; bespoke assets are N/A until production."}
+audio: {identity: "Engine, weapon, dash, damage, and destruction cues use faction fallback."}
+fx: {identity: "Dust plume exposes the dash route; weapon and movement effects follow shared families."}
+design: {tactical_identity: "Fragile fast harassment platform against infantry and exposed support.", player_decision: "Harass, disengage, and punish isolated infantry rather than stand in a line.", counterplay: "Armor, area fire, and denying roads.", offense_behavior: "Twin machine guns sustain anti-personnel damage but are ineffective against heavy armor and structures.", defense_behavior: "Light armor; no concealment after firing; loses direct fights with dedicated vehicles.", support_behavior: "Dust dash supports disengagement only; no repair, transport, or command.", locomotion_behavior: "Wheeled with fast roads, poor off-road, direct attack movement and breakoff preference.", targetability_behavior: "Ground vehicle, ordinary detection.", acquisition_behavior: "Range 4.5, 26 damage, 24 ticks, point projectile, no tracking.", lock_behavior: "Dust dash +40 percent speed for 60 ticks, cooldown 150, accuracy 75 percent; firing ends it and reveals route.", lifecycle_behavior: "No special lifecycle beyond shared unit states.", production_behavior: "Field Workshop vehicle FIFO; 280 resource, 105 ticks, replaceable.", visual_identity: "Welded gun ring and mismatched belts.", audio_identity: "Engine sputter, rapid gun, and dust-dash cues.", fx_identity: "Readable dust plume and warm tracers.", design_rationale: "High speed and short period are paid for by light armor and shared poor heavy/structure ratios."}

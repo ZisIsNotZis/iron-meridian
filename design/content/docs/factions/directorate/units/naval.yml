@@ -1,0 +1,17 @@
+display_name: "Directorate Naval Units"
+description: "A compact surface/submerged set for water-relevant maps, not required for the first vertical slice."
+source_document: "design/factions/directorate/units/naval/README.md"
+platform_constraints: ["All listed ships are produced by the Naval Yard.", "Surface ships use naval-surface targetability; the submarine uses submerged targetability except while surfacing or firing.", "Landing Barge uses shared transport operations."]
+entries:
+  - object: "factions.directorate.naval.monitor"
+    status: "core"
+    decision: "Trade speed for shore bombardment and armor."
+  - object: "factions.directorate.naval.missile_corvette"
+    status: "core"
+    decision: "Keep distance for flexible pressure or enter danger."
+  - object: "factions.directorate.naval.hunter_submarine"
+    status: "core"
+    decision: "Remain hidden and accept sonar/counter-detection risk."
+  - object: "factions.directorate.naval.landing_barge"
+    status: "core"
+    decision: "Move a ground force safely but create a valuable escort target."

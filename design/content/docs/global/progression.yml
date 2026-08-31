@@ -1,0 +1,22 @@
+kind: progression_contract
+document_id: design.progression
+title: Experience and Veterancy
+ownership:
+  - Progression owns experience attribution, promotion state, and persistence.
+  - Concrete thresholds, bonuses, and elite abilities belong to faction or unit objects; shared profile grants no undeclared bonus.
+rules:
+  - Experience only comes from authoritative qualifying damage, enemy destruction, assist, declared objective interaction, or declared mission survival; source is stored with event.
+  - Damage-over-time, area damage, transported occupants, and shared effects use owning damage/skill attribution and cannot multiply through presentation events.
+  - Overkill, friendly fire, self-damage, training dummies, and scripted events are zero unless owner opts in; experience is integer and applied once during damage/destruction phase.
+  - State machine is unpromoted → veteran → elite.
+  - Promotion occurs end of threshold tick, before next command boundary, with one stable event; no skip unless profile declares; no heal, reload, status clear, or cooldown reset unless unit owns reward.
+  - Veterancy is unit state, not second unit; preserves health, orders, cargo, passengers, ownership, position; gains only declared modifiers, skill, or information, never invisible global advantage.
+  - Multiple contributors record primary and assists; only declared recipient profile receives credit; no global last-hit assumption.
+  - Transported unit receives credit only when its own weapon/skill caused event; captured units keep/reset experience per capture scenario/object, not faction change.
+  - Repair, garrison, merge, split, and transport do not transfer experience unless conversion is defined; rebuilt/new units start at declared state; campaign persistence belongs to campaign save/object; skirmish/multiplayer ends with match unless mode says otherwise.
+  - Veteran status is visible beyond color and communicates real advantage; it rewards preservation without making one survivor unbeatable; anti-veteran effects, experience loss, promotion denial, and global auras rejected by default.
+  - Profile declares engagement scale and practical value per threshold and must not improve every combat axis by default.
+  - Promotion is visible, does not heal by default, leaves current health unchanged if max changes, and promoted skill is available next legal command boundary without retroactive charge.
+  - Threshold during channel/transport does not cancel operation; wreck cannot promote; capture preserves experience by default; area/delayed damage credits source once.
+  - V1 may leave progression disabled and must say so in scenario; near-term skirmish ends at match; campaign persistence belongs to continuity; far-vision multiplayer never carries progression without explicit ruleset.
+schema_fields: [event eligibility, attribution, thresholds, promotion effects, persistence scope, transfer rules, UI feedback, gain while garrisoned, transported, disabled, or attacking neutral objects]

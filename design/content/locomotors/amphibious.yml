@@ -1,0 +1,10 @@
+display_name: "Amphibious"
+description: Land/water locomotion with explicit shoreline transitions.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [land, water, entering_water, leaving_water, boarding]
+design:
+  movement_rules: Amphibious units use both land and permitted water cells. The carrier declares whether its land state is foot, wheeled, or tracked and owns state-specific speed, armor, weapon, and targetability changes.
+  transition_rules: Entry and exit are explicit transitions with a vulnerable window; they are not free teleports across a shoreline.
+  interaction_rules: Shoreline legality, beaching, transport, and depth limits come from the map and carrier contracts. Amphibious access alone does not grant submerged movement or deep-water access.

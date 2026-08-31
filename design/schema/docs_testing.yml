@@ -1,0 +1,23 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_testing
+type: object
+additionalProperties: false
+required: [kind, document_id, title, ownership, scope, taxonomy, v1_fixtures, evidence, invariants, test_domains, browser, performance, pipeline, release, security, privacy, future_operations]
+properties:
+  kind: {const: testing_operations_contract}
+  document_id: {type: string}
+  title: {type: string}
+  ownership: {type: array, items: {type: string}}
+  scope: {type: array, items: {type: object, additionalProperties: false, required: [horizon, coverage], properties: {horizon: {type: string}, coverage: {type: array, items: {type: string}}}}}
+  taxonomy: {type: array, items: {type: object, additionalProperties: false, required: [prefix, meaning], properties: {prefix: {type: string}, meaning: {type: string}}}}
+  v1_fixtures: {type: array, items: {type: string}}
+  evidence: {type: array, items: {type: string}}
+  invariants: {type: array, items: {type: string}}
+  test_domains: {type: array, items: {type: string}}
+  browser: {type: array, items: {type: string}}
+  performance: {type: array, items: {type: string}}
+  pipeline: {type: array, items: {type: string}}
+  release: {type: array, items: {type: string}}
+  security: {type: array, items: {type: string}}
+  privacy: {type: array, items: {type: string}}
+  future_operations: {type: array, items: {type: string}}

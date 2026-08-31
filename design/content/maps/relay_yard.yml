@@ -1,0 +1,63 @@
+display_name: Relay Yard
+description: Compact near-term teaching map with mirrored bases, three approach choices, and a contested southern resource.
+status: near-term
+design:
+  tactical_identity: The first scout can reveal either a direct center push or a flank rotation through three connected relay corridors.
+  player_decision: Scout the center or commit units to a longer outer route and the contested resource.
+  visual_identity: Relay towers are decorative cover markers only and never create hidden passages.
+  rationale: Uses the shared land, resource, objective, fog, and construction rules; the objective is reachable from both bases without a dead end, the contested resource is visible from the south corridor but unsafe to harvest without committing units, and home pockets have enough clear cells for shared starting buildings and one replacement footprint.
+  scope: near_term
+dimensions:
+  width: 64
+  height: 40
+  cell_units: cell
+  distance_units_per_cell: 1000
+coordinate_contract:
+  cell_index_bounds: x=0..63,y=0..39
+  bounds_order: [min_x, max_x, min_y, max_y]
+  world_point_center: [32, 20]
+  cell_center: '[x+0.5,y+0.5]'
+  reflection: {world_point: 'R(x,y)=(64-x,y)', cell_index: 'R(x,y)=(63-x,y)'}
+layers:
+  authoritative: Cell flags and shared map convention; decorative relay towers do not alter gameplay.
+  border: {x_cells: [0, 63], y_cells: [0, 39], terrain: edge, walkable: true, buildable: false}
+  layer_precedence: [playable, border, no_build, primary_route, base_pocket, decorative]
+  base_rules: [Shared land, resource, objective, fog, and construction rules apply., All route corridors are clear and traversable., No air, naval, elevation, hazard, or random resource layer is authored.]
+  cover_rectangles:
+    - {id: relay_tower_markers, function: Decorative cover markers only; exact tower geometry is not authored., no_build: false, decorative_only: true}
+  corridors:
+    - {id: relay_west, centerline_x: 20, function: Clear vertical relay corridor connecting the two horizontal routes.}
+    - {id: relay_center, centerline_x: 32, function: Clear vertical relay corridor connecting the two horizontal routes and the objective approach.}
+    - {id: relay_east, centerline_x: 44, function: Clear vertical relay corridor connecting the two horizontal routes.}
+  route_bands:
+    - {id: north, bounds: [0, 63, 10, 10], intended_use: Long horizontal approach at y=10; outer route and flank rotation., flags: [no_build, primary_route]}
+    - {id: south, bounds: [0, 63, 30, 30], intended_use: Long horizontal approach at y=30; outer route and contested-resource approach., flags: [no_build, primary_route]}
+  base_pockets:
+    - {side: west, bounds: [4, 11, 17, 23], buildable: true}
+    - {side: east, bounds: [52, 59, 17, 23], buildable: true}
+  exclusions: {rule: 'Shared exclusion rules apply; objective and resource exclusion remain walkable unless another layer says otherwise.', objective: 'Primary objective at (32,20) has capture radius 4 and no-build radius 8.', resource_nodes: 'Home nodes at (10,12) and (54,12) have 24000 reserve; contested node at (32,30) has 12000 reserve and 2-cell exclusion.'}
+  deferred: [air topology, naval topology, elevation, hazards, random resources]
+anchors:
+  player:
+    - {id: base_pocket, west: {bounds: [4, 11, 17, 23]}, east: {bounds: [52, 59, 17, 23]}, anchor_role: Buildable west and east player pockets; east is the horizontal reflection.}
+    - {id: hq_footprint, west: {bounds: [4, 7, 18, 21]}, east: {bounds: [56, 59, 18, 21]}, anchor_role: HQ footprint.}
+    - {id: home_resource_node, west: {point: [10, 12]}, east: {point: [54, 12]}, reserve: 24000, interaction_point_rule: nearest_clear_cell, anchor_role: Mirrored home resource nodes.}
+  central:
+    - {id: objective, point: [32, 20], capture_radius_cells: 4, no_build_radius_cells: 8, rule: Reachable from both bases without crossing a dead end.}
+    - {id: contested_resource_node, point: [32, 30], exclusion_radius_cells: 2, reserve: 12000, rule: Visible from the south corridor but unsafe to harvest without committing units; no respawn.}
+  resource_interaction_point_rule: Nearest clear cell to the center under the shared deterministic neighbor rule.
+routes:
+  tactical_intent: Center corridor is shortest to the objective; outer corridors are longer and offer approach choices.
+  waypoints:
+    - {id: north, points: [[0, 10], [32, 10], [63, 10]]}
+    - {id: south, points: [[0, 30], [32, 30], [63, 30]]}
+  connectors:
+    - {id: west_relay, from_route: north, to_route: south, at_x: 20, function: Clear vertical relay corridor.}
+    - {id: center_relay, from_route: north, to_route: south, at_x: 32, function: Clear vertical relay corridor and shortest objective approach.}
+    - {id: east_relay, from_route: north, to_route: south, at_x: 44, function: Clear vertical relay corridor.}
+  connectivity: [Objective is reachable from both bases without a dead end., Every route remains reachable by V1 ground locomotors., Home pockets have enough clear cells for shared starting buildings and one replacement footprint.]
+vision:
+  rules: [Shared basic fog and sensing rules apply., Relay towers are decorative cover markers only and use shared cover flags if authored., Decorative landmarks never create hidden passages or alter collision, sensing, damage, or buildability.]
+validation:
+  invariants: [Reflection preserves base footprint, resource distance, route width, and objective distance., Every route is reachable by V1 ground locomotors., No relay decoration changes collision, sensing, damage, or buildability., No air, naval, elevation, hazard, or random resource layer is authored.]
+  acceptance_target: Second teaching map with shared starting economies, production, objective behavior, fog, and construction legality.

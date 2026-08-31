@@ -1,0 +1,15 @@
+display_name: "Foot"
+description: Walking infantry and personnel-sized ground movement.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [grounded, moving, boarding, garrisoned, interacting]
+transition_rules:
+  - {transition: boarding, owner: transport_or_interaction_contract, movement_paused: true}
+  - {transition: garrisoning, owner: transport_or_interaction_contract, movement_paused: true}
+  - {transition: interacting, owner: transport_or_interaction_contract, movement_paused: true}
+movement:
+  applicability: {cover: true, formation: true, separation: true, changes_locomotor_domain: false}
+design:
+  movement_rules: Foot units use walkable ground and shallow-water cells only when their carrier explicitly declares amphibious access. They do not crush other units.
+  interaction_rules: Foot units may board legal transports and enter legal garrisons. They remain ground targets in every ordinary foot state; a carrier must explicitly replace that targetability during a special transition.

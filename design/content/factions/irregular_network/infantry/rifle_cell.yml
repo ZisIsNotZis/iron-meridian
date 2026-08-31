@@ -1,0 +1,23 @@
+display_name: Rifle Cell
+description: "Irregular Network infantry, Core, Field. Primary line infantry and secondary cheap ambush body; targets personnel and unarmored support. Foot movement, cover, and capture interaction; crushable in the open. Rifles deliver modest anti-personnel health damage and gain a short first-volley advantage from concealment, then fight normally. Personnel armor is replaceable and vulnerable to explosives, vehicles, and suppression. Break contact throws smoke and retreats a short distance; smoke blocks clear targeting but does not erase detection or damage. Production 100 resource / 60 ticks in Cell House infantry FIFO, Field tier, no hard roster cap, fully replaceable while Cell House operates. Body 180 HP, personnel armor, foot speed 3.0 cells/s, radius 0.22, footprint 1x1. Vision 6.5, alert/acquisition 8.0 cells, ground domain, ordinary vision. Cell rifles use rifle/small arms, ground personnel and light armor, range 4.5, 22 damage/event, period 30 ticks, projectile speed 14 cells/s, point hit, no tracking, direct acquisition. Break contact is self-centered smoke radius 1.2, setup 6 ticks, duration 90 ticks, cooldown 180 ticks, grants a retreat move order and blocks clear targeting through smoke. First concealed volley gains 25 percent damage for one event."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: infantry
+tier: field
+battlefield_roles: [line, ambush]
+hpmax: 180
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 3.0
+visionrange: 6.5
+alertrange: 8.0
+footprint: {radius_cells: 0.22, width_cells: 1, height_cells: 1}
+production: {producer: factions.irregular_network.buildings.cell_house, queue: infantry, category: infantry, cost: {resource: 100}, buildtime: 60, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: false}}
+presentation: {fallback_policy: inherit, silhouette: "Mixed civilian jackets over standardized harnesses; readable infantry silhouette with footprint, selection, contact, and shadow anchors.", readability: "Icon covers command, selection, queued, disabled, damaged, and unavailable states and is N/A until asset production; model inherits the global platform contract; animation covers idle, move, attack, damage, disabled, and destruction, with deploy/transform N/A unless declared."}
+audio: {identity: "Selection, acknowledgement, attack/skill, damage, and destruction cues are N/A until audio production with faction fallback."}
+fx: {identity: "Dense gray smoke with scraps of reflective foil; declared weapon, skill, status, construction, and destruction events use faction-flavored presets, undeclared effects are N/A."}
+design: {tactical_identity: "Replaceable line infantry that turns concealment into one first-volley advantage.", player_decision: "Use ordinary numbers to hold space, then preserve the squad with timed withdrawal.", counterplay: "Area fire, pursuit, and detection.", offense_behavior: "Cell rifles range 4.5, 22 damage, 30 ticks, projectile speed 14, point hit; concealed first volley gains 25 percent for one event.", defense_behavior: "Personnel armor; vulnerable to explosives, vehicles, and suppression; crushable in the open.", support_behavior: "Break contact smoke supports withdrawal only; no repair, transport, detection, or command support.", locomotion_behavior: "Foot; ordinary movement, cover, and capture interaction.", targetability_behavior: "Ground infantry with ordinary vision; smoke blocks clear targeting but not detection or damage.", acquisition_behavior: "Direct acquisition against personnel and light armor; no tracking.", lock_behavior: "Break contact setup 6, smoke radius 1.2, duration 90, cooldown 180; retreat order granted on activation.", lifecycle_behavior: "No special lifecycle beyond shared unit states.", production_behavior: "Cell House infantry FIFO; 100 resource, 60 ticks, no hard roster cap, fully replaceable.", visual_identity: "Mixed civilian jackets and standardized harnesses.", audio_identity: "Faction fallback for standard infantry cues.", fx_identity: "Dense gray smoke with reflective foil.", design_rationale: "First-volley concealment bonus is card-owned; subsequent fire uses the entity-owned infantry role values."}

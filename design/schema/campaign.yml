@@ -1,0 +1,172 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: campaign
+type: object
+additionalProperties: false
+required: [display_name, description, status, kind, mode, version, map, faction_slots, setup, availability, objectives, triggers, dialogue, checkpoints, fairness]
+properties:
+  display_name: {type: string, minLength: 1}
+  description: {type: string, minLength: 1}
+  status: {type: string, enum: [core, designed, optional, near-term, deferred, deprecated]}
+  kind: {type: string, const: campaign_mission}
+  mode: {type: string, const: campaign}
+  version: {type: integer, minimum: 1}
+  map: {type: string, pattern: '^maps\.[a-z][a-z0-9_]*$'}
+  references:
+    type: array
+    items: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  faction_slots:
+    type: array
+    minItems: 2
+    items:
+      type: object
+      additionalProperties: false
+      required: [role, faction, side, behavior]
+      properties:
+        role: {type: string, enum: [player, opponent]}
+        faction: {type: string, pattern: '^factions\.[a-z][a-z0-9_]*$'}
+        side: {type: string, enum: [west, east]}
+        behavior: {type: string, enum: [recruit, regular, veteran]}
+  setup:
+    type: object
+    additionalProperties: false
+    required: [starting_bank_resource, player, opponent, fog, progression]
+    properties:
+      starting_bank_resource: {type: integer, minimum: 0}
+      player:
+        type: object
+        additionalProperties: false
+        required: [structures, units]
+        properties:
+          structures:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              additionalProperties: false
+              required: [content, quantity]
+              properties:
+                content: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+                quantity: {type: integer, minimum: 1}
+          units:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              additionalProperties: false
+              required: [content, quantity]
+              properties:
+                content: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+                quantity: {type: integer, minimum: 1}
+                health_percent: {type: integer, minimum: 1, maximum: 100}
+                position: {type: string, minLength: 1}
+      opponent:
+        type: object
+        additionalProperties: false
+        required: [structures, units]
+        properties:
+          structures:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              additionalProperties: false
+              required: [content, quantity]
+              properties:
+                content: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+                quantity: {type: integer, minimum: 1}
+          units:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              additionalProperties: false
+              required: [content, quantity]
+              properties:
+                content: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+                quantity: {type: integer, minimum: 1}
+                health_percent: {type: integer, minimum: 1, maximum: 100}
+                position: {type: string, minLength: 1}
+      fog: {type: string, minLength: 1}
+      progression: {type: string, minLength: 1}
+      pause: {type: string, minLength: 1}
+  availability:
+    type: object
+    additionalProperties: false
+    required: [player_recipes, opponent_recipes, closed_world]
+    properties:
+      player_recipes: {type: array, minItems: 1, items: {type: string, minLength: 1}}
+      opponent_recipes: {type: array, minItems: 1, items: {type: string, minLength: 1}}
+      closed_world: {type: boolean}
+      unavailable_features: {type: array, items: {type: string, minLength: 1}}
+  objectives:
+    type: object
+    additionalProperties: false
+    required: [primary, optional, failure]
+    properties:
+      primary: {type: string, minLength: 1}
+      primary_hold_seconds: {type: integer, minimum: 0}
+      optional: {type: string, minLength: 1}
+      optional_hold_seconds: {type: integer, minimum: 0}
+      failure: {type: string, minLength: 1}
+      end_state_priority: {type: string, minLength: 1}
+  triggers:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required: [event, action]
+      properties:
+        event: {type: string, minLength: 1}
+        after_seconds: {type: integer, minimum: 0}
+        after_event: {type: string, minLength: 1}
+        hold_seconds: {type: integer, minimum: 0}
+        condition: {type: string, minLength: 1}
+        action: {type: string, minLength: 1}
+        warning: {type: string, minLength: 1}
+        visible: {type: boolean}
+        retreat_at_visible_force_fraction: {type: number, minimum: 0, maximum: 1}
+        reinforcements:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required: [content, quantity]
+            properties:
+              content: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+              quantity: {type: integer, minimum: 1}
+        spawn_anchor: {type: string, minLength: 1}
+  dialogue:
+    type: object
+    additionalProperties: false
+    required: [purpose, briefing, success, failure]
+    properties:
+      purpose: {type: string, minLength: 1}
+      briefing: {type: string, minLength: 1}
+      success: {type: string, minLength: 1}
+      failure: {type: string, minLength: 1}
+      plain_text_equivalent: {type: boolean}
+      voice_policy: {type: string, minLength: 1}
+  checkpoints:
+    type: object
+    additionalProperties: false
+    required: [boundaries, restart_behavior]
+    properties:
+      boundaries: {type: array, minItems: 1, items: {type: string, minLength: 1}}
+      restart_behavior: {type: string, minLength: 1}
+      optional_outcome: {type: string, minLength: 1}
+  fairness:
+    type: object
+    additionalProperties: false
+    required: [rules]
+    properties:
+      rules: {type: array, minItems: 1, items: {type: string, minLength: 1}}
+  design:
+    type: object
+    additionalProperties: false
+    properties:
+      tactical_identity: {type: string, minLength: 1}
+      player_decision: {type: string, minLength: 1}
+      narrative_identity: {type: string, minLength: 1}
+      rationale: {type: string, minLength: 1}
+      scope: {type: string, enum: [v1, near_term, far_vision, deferred]}

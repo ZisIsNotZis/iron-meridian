@@ -1,0 +1,16 @@
+display_name: "Default Ground Locomotor"
+description: Default ground locomotion.
+status: designed
+kind: "locomotor"
+states: [grounded, moving]
+movement:
+  acceleration_cells_per_second_per_tick: 0.12
+  deceleration_cells_per_second_per_tick: 0.18
+  turn_rate_degrees_per_second: 180
+  reverse_speed_percent: 50
+  road_speed_percent: 125
+  rough_speed_percent: 75
+  shallow_water_speed_percent: 70
+design:
+  movement_rules: Stop distance is speed² / (2 × deceleration). Deployment and other transitions are owned by the referencing unit or skill.
+  interaction_rules: These are defaults and may be overridden by an explicit locomotor object.

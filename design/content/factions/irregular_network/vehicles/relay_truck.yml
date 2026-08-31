@@ -1,0 +1,26 @@
+display_name: Relay Truck
+description: "Optional Advanced vehicle/deployable temporary command site. Wheeled speed 3.0 cells/s, slow while carrying mast; deploys with setup. Mobile ground vehicle, structure-like obvious deployed site; light armor mobile and reinforcedStructure deployed, finite health and duration. No direct weapon beyond token defensive none; support is local. Raise mast setup 45, active 180, cooldown 300, local radius 5.0; shares nearby designated vision and improves selected support timing. Fold mast recovery 30, ends site and restores mobility. Both interrupted by EMP or destruction. Production 550 resource / 240 ticks from Field Workshop plus Hideout; one active field per truck. Body 260/420 HP mobile/deployed, radius 0.44/0.50, footprint 2x1/2x2; vision 7.0, alert/acquisition 8.5."
+status: designed
+scope: near_term
+faction: factions.irregular_network
+platform: vehicle
+tier: advanced
+battlefield_roles: [command, temporary_site, resupply]
+hpmax: 260
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: [targetabilities.ground, targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 3.0
+visionrange: 7.0
+alertrange: 8.5
+footprint: {radius_cells: 0.44, width_cells: 2, height_cells: 1}
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: raise_mast, activation: active, setup_ticks: 45, active_ticks: 180, cooldown_ticks: 300, target: self, targetradius: 5.0, movement_allowed: false, interruption_conditions: [emp, destruction], design: {player_decision: "Establish a temporary operating pocket, then decide when to abandon it.", counterplay: "Scout, jam, and attack the visible site."}}
+  - {skill: skills.default_lifecycle, skill_name: fold_mast, activation: active, recovery_ticks: 30, target: self, movement_allowed: false, interruption_conditions: [emp, destruction], design: {player_decision: "End the site and restore mobility after recovery delay.", counterplay: "Attack during the exposed recovery."}}
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 550}, buildtime: 240, capacity: {max_active: 1, replacement_allowed: true, replacement_scope: per_player, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Salvaged broadcast mast and generator coils; concentric intermittent radio rings mark exact support radius.", readability: "Mobile and deployed footprints, setup, active mast, recovery, and destruction are visibly distinct."}
+audio: {identity: "Broadcast mast, generator coils, radio rings, selection, damage, and destruction use faction fallback."}
+fx: {identity: "Concentric intermittent radio rings mark the exact local support radius."}
+design: {tactical_identity: "Temporary local command pocket for one operation.", player_decision: "Establish a fragile operating pocket for an ambush, then abandon it at the right time.", counterplay: "Scouting, jamming, and attacking the visible site.", offense_behavior: "No direct attack beyond token defensive capability.", defense_behavior: "Light mobile and reinforcedStructure deployed; finite health, obvious, no global protection.", support_behavior: "Local designated-vision sharing and selected support timing; no global aura and units remain functional outside.", locomotion_behavior: "Wheeled 3.0 cells/s; slow while carrying mast; deploys to temporary site.", targetability_behavior: "Ground mobile, structure-like and obvious deployed.", acquisition_behavior: "No meaningful direct weapon.", lock_behavior: "Raise mast setup 45/active 180/cooldown 300/radius 5; Fold recovery 30; EMP/destruction interrupts.", lifecycle_behavior: "One active field per truck; deployed state temporary.", production_behavior: "Field Workshop plus Hideout; 550 resource, 240 ticks, optional FIFO.", visual_identity: "Broadcast mast and generator coils.", audio_identity: "Radio rings and generator cues.", fx_identity: "Concentric local support rings.", design_rationale: "Deployed protection and footprint are temporary state, not a new building or armor system; support remains local and optional."}

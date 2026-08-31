@@ -1,0 +1,14 @@
+display_name: "Directorate"
+description: "The emergency government of security ministries, central industrial boards, and loyal garrisons."
+source_document: "design/factions/directorate/README.md"
+doctrine_summary: "Mass, armor, and planned pressure."
+strengths: ["durability", "heavy production", "defenses", "repair", "concentrated attacks"]
+weaknesses: ["redeployment", "exposed centralized logistics", "visibility", "raids"]
+future_direction: ["Buildings should be compact and durable.", "Infantry should be disciplined.", "Vehicles should be tracked and deliberate.", "Aircraft should be tough and attack-run oriented.", "Naval forces should be heavy with shore support.", "High technology should be industrial solutions: powerful, visible, slow, and preparation-dependent."]
+canonical_context: ["The institutional origin, internal factions, and political objective are faction-owned background.", "Insignia, palette, uniforms, material language, voice, and audio are faction-owned identity.", "Strategic habits, production philosophy, and readable strengths/costs are faction-owned doctrine.", "The compact industrial-fortress infrastructure roster is faction-owned building context."]
+roster_policy: ["Core units are expected to form the playable army.", "Optional units are valid roster pieces for later maps, modes, or balance needs.", "Deferred/rejected candidates remain excluded because another unit owns the decision or maintenance burden is too high."]
+balance_position: ["Directorate is not merely higher-stat Coalition.", "Its shared roles are expressed through concentration, armor, central command, repair, and planned attack sequences.", "Its costs are visible logistics, slow redeployment, and vulnerable support concentration."]
+campaign_role: ["V1 uses the Directorate as an abstract mirror-match military grammar.", "Near-term campaign missions can reveal it through orders, supply decisions, and aftermaths before asking the player to judge its legitimacy."]
+matchup_rules: ["Against the Coalition, deny scouting angles, punish overextension, and force a direct contest where armor and preparation matter.", "Against the Irregular Network in far vision, protect routes and verify apparent victories; a cleared position is not necessarily a safe position.", "The Network should challenge attention and logistics, not invalidate a prepared army with universal stealth."]
+canonical_content: ["factions.directorate", "design/content/factions/directorate/<platform>/"]
+scope: ["Identity owns faction identity principles; individual gameplay belongs in unit records and global presentation rules remain global.", "The Directorate does not receive a separate internal-politics simulation.", "Rival ministries, defections, and reforms are authored story pressures or campaign choices, not another resource layer."]

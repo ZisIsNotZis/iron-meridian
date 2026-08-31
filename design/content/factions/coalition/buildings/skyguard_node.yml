@@ -1,0 +1,36 @@
+display_name: "Skyguard Node"
+description: "Skyguard Node migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: established
+building_roles: ["local_anti_air_defense"]
+hpmax: 500
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 2, height_cells: 2, facings: "cardinal"}
+construction:
+  cost: {resource: 600}
+  buildtime: 330
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}]
+production: {max_operational: 4, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "local anti-air defense"
+  construction_behavior: "Buildable terrain inside shared anchors; arc and local zone must remain readable and cannot create a global umbrella."
+  production_behavior: "Role: local anti-air defense; cost: `600 resource`; build time: `330 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / defense`; replacement/capacity: `maximum 4 operational nodes; one weapon per node; one builder assignment`."
+  defense_behavior: "Structure; visible; electronic anti-air is disabled by EMP."
+  capture_behavior: "**Air intercept** — anti-air missile against high-air/low-air within `8.0` cells; 60 damage/event, 36-tick period, 6-tick lock, 90° arc, 30°/s homing, projectile 15 cells/s, point hit."
+  repair_behavior: "Protect the base, production apron, or forward route; relocating emphasis requires a new placement or deliberate facing."
+  lifecycle_behavior: "Attack from outside its zone, use ground assault/indirect fire, overwhelm with multiple attack runs, or EMP the node."
+  player_decision: "Protect the base, production apron, or forward route; relocating emphasis requires a new placement or deliberate facing."
+  counterplay: "Attack from outside its zone, use ground assault/indirect fire, overwhelm with multiple attack runs, or EMP the node."
+  visual_identity: "Faceted radar dish and vertical launcher, blue scan ticks, aircraft warning chevron, and compact interception burst."
+  design_rationale: "# Skyguard Node\n\n## Gameplay identity\n\n- **Footprint:** `2 × 2` cells; four facings; local air-sector arc shown during placement and selection.\n- **Health / protection:** 500 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; visible; electronic anti-air is disabled by EMP.\n- **Production:** Role: local anti-air defense; cost: `600 resource`; build time: `330 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / defense`; replacement/capacity: `maximum 4 operational nodes; one weapon per node; one builder assignment`.\n- **Skill / passive:** **Air intercept** — anti-air missile against high-air/low-air within `8.0` cells; 60 damage/event, 36-tick period, 6-tick lock, 90° arc, 30°/s homing, projectile 15 cells/s, point hit.\n- **Placement:** Buildable terrain inside shared anchors; arc and local zone must remain readable and cannot create a global umbrella.\n- **Player decision:** Protect the base, production apron, or forward route; relocating emphasis requires a new placement or deliberate facing.\n- **Counterplay:** Attack from outside its zone, use ground assault/indirect fire, overwhelm with multiple attack runs, or EMP the node.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Faceted radar dish and vertical launcher, blue scan ticks, aircraft warning chevron, and compact interception burst.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

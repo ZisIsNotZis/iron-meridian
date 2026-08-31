@@ -1,0 +1,80 @@
+display_name: Decision
+description: Integrate information, composition, construction, timing, and objective control in one readable final exam.
+status: designed
+kind: campaign_mission
+mode: campaign
+version: 1
+map: maps.salt_line
+references: [maps.salt_line, factions.coalition, factions.directorate, factions.coalition.vehicles.harvester, factions.coalition.vehicles.mcv, factions.coalition.infantry.pathfinder, factions.coalition.infantry.line_rifle, factions.coalition.infantry.signal_officer, factions.coalition.vehicles.valiant_mbt, factions.coalition.vehicles.halberd_tank_destroyer, factions.directorate.vehicles.harvester, factions.directorate.vehicles.mcv, factions.directorate.vehicles.sentinel, factions.directorate.infantry.rifle_squad, factions.directorate.vehicles.bastion, factions.directorate.vehicles.lancer, factions.directorate.vehicles.ballista]
+design:
+  tactical_identity: Combine scouting, composition, construction, timing, and objective control under changing visible pressure.
+  player_decision: Contest the objective quickly or secure the south resource before committing; preserve another answer afterward.
+  narrative_identity: The final exam makes every route useful and none free.
+  rationale: Veteran behavior reacts faster and chooses better routes but never receives hidden contacts, free resources, or bonus damage.
+  scope: near_term
+faction_slots:
+  - {role: player, faction: factions.coalition, side: west, behavior: veteran}
+  - {role: opponent, faction: factions.directorate, side: east, behavior: veteran}
+setup:
+  starting_bank_resource: 1500
+  player:
+    structures: [{content: factions.coalition.buildings.coalition_hq, quantity: 1}, {content: factions.coalition.buildings.resource_exchange, quantity: 1}, {content: factions.coalition.buildings.infantry_center, quantity: 1}]
+    units:
+      - {content: factions.coalition.vehicles.harvester, quantity: 1}
+      - {content: factions.coalition.vehicles.mcv, quantity: 1}
+      - {content: factions.coalition.infantry.pathfinder, quantity: 1}
+      - {content: factions.coalition.infantry.line_rifle, quantity: 1}
+      - {content: factions.coalition.infantry.signal_officer, quantity: 1}
+      - {content: factions.coalition.vehicles.valiant_mbt, quantity: 1}
+      - {content: factions.coalition.vehicles.halberd_tank_destroyer, quantity: 1}
+  opponent:
+    structures: [{content: factions.directorate.buildings.construction_yard, quantity: 1}, {content: factions.directorate.buildings.ore_refinery, quantity: 1}, {content: factions.directorate.buildings.vehicle_plant, quantity: 1}]
+    units:
+      - {content: factions.directorate.vehicles.harvester, quantity: 1}
+      - {content: factions.directorate.vehicles.mcv, quantity: 1}
+      - {content: factions.directorate.vehicles.sentinel, quantity: 1}
+      - {content: factions.directorate.infantry.rifle_squad, quantity: 1}
+      - {content: factions.directorate.vehicles.bastion, quantity: 1}
+      - {content: factions.directorate.vehicles.lancer, quantity: 1}
+      - {content: factions.directorate.vehicles.ballista, quantity: 1}
+  fog: Basic fog.
+  progression: Veterancy disabled.
+availability:
+  player_recipes: [Line Rifle, Pathfinder, Signal Officer, Valiant MBT, Halberd Tank Destroyer, Peregrine Missile Carrier, Harvester replacement]
+  opponent_recipes: [Rifle Squad, Sentinel, Bastion, Lancer, Ballista, Warden, Harvester replacement]
+  closed_world: true
+  unavailable_features: [research]
+objectives:
+  primary: Destroy the Directorate HQ or reach 75 cumulative controlled objective seconds.
+  primary_hold_seconds: 75
+  optional: Keep the Signal Officer alive and reveal both Directorate production buildings before the first major attack.
+  failure: Coalition HQ destroyed or player surrender.
+  end_state_priority: HQ destruction has priority over objective completion on a same-tick tie.
+triggers:
+  - event: timer
+    after_seconds: 120
+    action: Directorate sends a visible scout toward the route with the greatest recent Coalition activity.
+    visible: true
+  - event: south_resource_controlled
+    action: Directorate adds a Ballista defense group to the threatened approach after a visible warning.
+    warning: Visible warning before the defense group arrives.
+    visible: true
+  - event: objective_controlled
+    action: Directorate attacks the nearest revealed Coalition production route instead of suiciding into the capture zone.
+    visible: true
+  - event: objective_lost
+    action: Mark the north route as a reclaim option; grant no free Coalition recovery.
+    visible: true
+dialogue:
+  purpose: Integrate information, composition, construction, timing, and objective control.
+  briefing: Every route is useful and none is free. The Directorate has the armor to make a decision costly. See the plan, then decide which cost you can pay.
+  success: The decision was not north, south, or center. It was when to commit—and what had to remain possible afterward.
+  failure: A plan became a habit. The enemy changed pressure because you showed it what mattered; the next command must preserve another answer.
+  plain_text_equivalent: true
+  voice_policy: Voice only if a voice asset is available.
+checkpoints:
+  boundaries: [After the first production route is revealed, after the first objective ownership change]
+  restart_behavior: Restore the authored simulation state at the checkpoint.
+  optional_outcome: Optional objective changes the closing briefing only.
+fairness:
+  rules: [Veteran behavior may react faster and choose better routes., Veteran behavior never receives hidden contacts, free resources, or bonus damage., Neither viable plan is a mission-script shortcut; ordinary simulation counters decide the result.]

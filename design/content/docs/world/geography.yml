@@ -1,0 +1,35 @@
+kind: world_geography
+source_document: design/world/geography.md
+overview: "The Union’s geography explains its strategic infrastructure and supports distinct map identities without requiring a globe-scale simulation."
+regions:
+  - {name: Central_Belt, character: "Rail yards, machine-tool cities, reservoirs, and dense worker settlements", battlefield_consequence: "Short approaches, valuable infrastructure, and strong defensive positions."}
+  - {name: North_Steppe, character: "Open grain country, dry grassland, and long rail spurs", battlefield_consequence: "Long sightlines, exposed harvest routes, and room for armored maneuver."}
+  - {name: Green_Arc, character: "Conifer forest, marsh, and logging roads", battlefield_consequence: "Broken visibility, narrow routes, and infantry ambush opportunities."}
+  - {name: Karsk_Range, character: "Mountain passes, tunnels, quarries, and snowmelt valleys", battlefield_consequence: "Chokepoints, elevation changes, and infrastructure that controls movement."}
+  - {name: Meridian_Coast, character: "Warm southern ports, shipyards, deltas, and industrial shoreline", battlefield_consequence: "Water access, amphibious routes, naval denial, and contested port logistics."}
+meridian_crossing:
+  status: v1_battlefield
+  setting: "a compact, mirrored Central Belt rail-and-canal junction"
+  layout: "Two headquarters sit on opposite ends of three readable routes. Resource fields sit near each home area; the central crossing is contested and contains the capture objective."
+  decision_readability: "The map is symmetrical enough to test decisions rather than spawn luck."
+  distinguishing_features: "Sight blockers, side approaches, and a dry canal trench prevent it from feeling like a featureless rectangle."
+  water_layer: absent
+  fiction: "a damaged transfer hub, not an entire city"
+  player_problem: "secure the resource lanes, cross the junction, and hold the signal station long enough to make the opponent respond."
+infrastructure_as_stakes:
+  principle: "Strategic sites are valuable because they connect regions."
+  examples:
+    - {site: dam, value: supplies_power_to_factories}
+    - {site: rail_junction, value: moves_fuel}
+    - {site: port, value: receives_machine_parts}
+    - {site: broadcast_station, value: establishes_a_claim_of_lawful_authority}
+  usage: "Maps may use these as objectives or scenery, but a site does not automatically become a bespoke game system."
+  ownership: "The map design owns geometry and objective rules; this document owns their setting meaning."
+climate_and_material_language:
+  weather: "Weather is usually a readability layer—light rain, dust, snow haze, or warm coastal glare—not a persistent simulation modifier."
+  materials: "painted state concrete, repaired steel, local brick, tarpaulin, timber, ballast, mud, and oxidized machinery"
+  readability: "Terrain must communicate passability and cover before it communicates lore."
+scope:
+  v1: "uses one Central Belt map."
+  near_term: "adds authored battlefields from the regions above."
+  far_vision: "campaign material may travel between regions, but geography must remain a source of missions and art direction, not a second strategy game."

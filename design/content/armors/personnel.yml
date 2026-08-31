@@ -1,0 +1,7 @@
+display_name: "Personnel"
+description: Unarmored people or lightly protected teams.
+status: designed
+kind: "armor"
+protection: Unarmored people or lightly protected teams. Small arms, anti-personnel fire, suppression, and explosives are effective.
+design:
+  damage_interaction_role: This profile is the personnel column in reusable damage interaction objects.

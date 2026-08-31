@@ -1,0 +1,16 @@
+kind: production_contract
+document_id: design.production
+title: Production Objects
+ownership:
+  - Production owns first-class production tiers, queues, and recipe definitions.
+  - Concrete costs, build times, queues, and capacities belong to relevant product or producer; recipe only connects objects to availability scope.
+  - Recipe documents are connectors, not owners of balance values.
+schema_fields:
+  - Queue or tier requires id, kind production-tier or production, status, references, name, Meaning, and Availability.
+  - Recipe uses kind recipe, product, producer, category, availability, prerequisites, and references as defined by the recipe contract.
+rules:
+  - Availability order is scenario allow-list, faction scope, explicit prerequisite group, operational producer, queue/category/capacity, product-card cost reservation.
+  - V1 has no research nodes; scenario allow-list is complete technology and production state.
+  - Missing recipe is unavailable; no facility or faction infers one from platform label.
+  - Faction-specific production matrices are faction-owned; shared recipe schema and queue semantics remain here.
+index: [factions.irregular_network production matrix is the canonical Network matrix and is not duplicated here]

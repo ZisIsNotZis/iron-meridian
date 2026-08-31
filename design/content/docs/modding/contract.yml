@@ -1,0 +1,73 @@
+kind: modding_contract
+source_document: design/modding/README.md
+ownership: "Package identity, composition, validation, loading, trust boundaries, and compatibility. Gameplay collections own schemas and values; packages never become an alternate simulation authority."
+capability_policy:
+  v1: built_in_content_only_external_packages_rejected
+  near_term: "Explicitly enabled, local, declarative packages for maps, scenarios, presentation, and content; no executable code."
+  far_vision: signed_distribution_and_narrowly_sandboxed_deterministic_scenario_logic
+  unavailable_rule: "A capability is unavailable unless host mode explicitly enables it. Unknown fields, unsupported capabilities, and absent required values are errors, never silent defaults."
+manifest:
+  filename: package.yaml
+  required_fields: [schema, id, version, game, gameCompatibility, contentSchema, objects, assets, dependencies, capabilities, loadPriority]
+  distributable_required: [authors, license]
+  example:
+    schema: iron_meridian_package_1
+    id: example.frontier_expedition
+    version: 1.2.0
+    game: iron_meridian
+    gameCompatibility: ">=0.1.0 <0.2.0"
+    contentSchema: 1
+    objects: [{id: example.frontier_expedition.scenario.frontier, kind: scenario, path: content/scenarios/frontier.yaml}]
+    assets: [{id: example.frontier_expedition.asset.logo, path: assets/logo.webp, sha256: "..."}]
+    dependencies: [{id: iron_meridian.base, version: ">=0.1.0 <0.2.0", required: true}]
+    capabilities: [maps, scenarios, presentation]
+    loadPriority: 100
+    authors: [Example_Studio]
+    license: CC_BY_4_0
+  id_rules: "IDs use a lowercase namespace, remain immutable, and are not paths. Versions use semantic versioning. Object IDs are package-id plus local-id; built-in content uses reserved iron-meridian namespace. Normalization collisions are errors."
+  uniqueness: "Each object and asset appears exactly once, resolves inside archive, and has matching declared ID and kind. Unknown gameplay fields are rejected."
+archive:
+  extension: .imod
+  entries: [package.yaml, content/<domain>/<object>.yaml_or_md, assets/<kind>/<file>, locales/<locale>.json, docs/README.md, signatures/manifest.sig]
+  path_rules: [UTF_8, relative, slash_separators, no_parent_segments, no_absolute_roots, no_symlinks, no_device_names, no_executables, no_duplicate_normalized_names]
+  quotas_before_registration: [entry_count, compressed_bytes, decompressed_bytes]
+references:
+  content: content://package-id/object-id
+  asset: asset://package-id/asset-id
+  raw_paths: manifest_entries_only
+  asset_fields: [MIME_type, byte_hash, dimensions_or_duration, fallback_class]
+  gameplay_exclusion: "Gameplay may not be hidden in image/audio metadata, localization strings, shaders, HTML, or JavaScript."
+overrides:
+  operations: add_or_override
+  override_fields: [operation, target, targetVersion, fields]
+  rules: [schema_known_paths, type_checked, field_scoped, no_whole_file_replacement, no_silent_last_write_wins]
+  forbidden_changes: [id, kind, required_references, simulation_phase, visibility_policy, deterministic_command_semantics, schema_versions]
+  balance: local_unranked_only_unless_ranked_policy_approves
+  addable: [factions, units, buildings, maps, campaigns, UI_flavor, audio, assets]
+  cannot_add: simulation_system
+resolved_manifest: "Canonical sorted list of package IDs and versions, object IDs, source hashes, and applied override paths; SHA-256 digest is copied into scenario setup, saves, replays, and future remote sessions; running match pins immutable resolution."
+resolution:
+  dependencies: "Declare package ID, version range, and required/optional status; resolver loads transitive closure, rejects cycles and unsatisfied ranges, verifies every source hash, and reports selected/rejected versions."
+  order: [built_in_base, dependencies_by_package_id, packages_by_ascending_load_priority_then_package_id]
+  conflicts: "Within package, override target paths are canonicalized and sorted; equal-priority writes to one field are load errors."
+  report: [selected_graph, additions, overrides, failures, final_digest]
+trust_and_sandbox:
+  built_in: release_signed
+  local: explicit_user_enablement_no_code
+  distributed: trusted_publisher_signature
+  signature: "Authenticates publisher/version, not host privileges; revoked keys cannot activate; unsigned packages are visibly local-only."
+  forbidden_access: [files, credentials, hidden_simulation_state, DOM, network, wall_clock, workers]
+  future_scripts: "Declared scenario API and filtered observations only; return intents/events rather than direct state writes; fixed instruction, memory, output, recursion, and per-tick time budgets."
+  script_failure: stable_error_and_termination
+  ranked_remote: scripts_disabled
+  quotas: [package, file, object, asset, localization, decompression, decoded_memory]
+  optional_art: declared_fallback
+  required_gameplay: hard_failure
+errors_and_lifecycle:
+  error_fields: [stable_code, package, archive_path, object, field, reason]
+  reject_whole_package: [malformed_metadata, duplicate_ids, missing_references, unsupported_schemas, dependency_cycles, invalid_overrides, unsafe_paths, quota_excess, signature_failures, capability_violations]
+  operations: [validate_read_only, build_reproducible_archive, sign_canonical_manifest, inspect_resolution_report]
+  build_exclusions: [timestamps, machine_paths]
+  installation: [validate, resolve, compile_immutable_manifest, load_safe_assets, expose_content]
+  failed_update: preserve_prior_installation
+compatibility: "Future remote or ranked sessions require identical gameplay content digest and compatible trust status; presentation-only differences are allowed only when they cannot affect simulation, visibility, or replay meaning. Clients verify hashes, signatures, compatibility, and quotas locally."

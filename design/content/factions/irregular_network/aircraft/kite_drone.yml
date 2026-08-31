@@ -1,0 +1,25 @@
+display_name: Kite Drone
+description: "Core Established authored expendable recon aircraft/deployable. Low-altitude orbit around a commanded point with limited endurance; high-air while loitering and low-air during observation passes. Anti-air always engages; selected ground weapons engage only low pass. No weapon or damage, no swarm resurrection. Loiter mark commands a point within 10.0 cells, orbit radius 1.5, active 120 ticks, cooldown 180; reveals/designates a 2.0-cell area, consumes endurance, exposes the drone. Dive and recover retreats 30 ticks to a friendly site, cooldown 90, and stops observation. Not producible: N/A resource/ticks, no queue or replacement; campaign/map may provide one authored drone. Body 70 HP, light armor, orbit 7.0, radius 0.20, footprint 1x1, vision 10.0, alert/acquisition 12.0."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: aircraft
+tier: established
+battlefield_roles: [reconnaissance, designation, decoy]
+hpmax: 70
+armor: armors.light
+locomotor: locomotors.hovering
+targetability: [targetabilities.low_air, targetabilities.high_air]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 7.0
+visionrange: 10.0
+alertrange: 12.0
+footprint: {radius_cells: 0.20, width_cells: 1, height_cells: 1}
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: loiter_mark, activation: active, active_ticks: 120, cooldown_ticks: 180, target: commanded_point, targetrange: 10.0, targetradius: 2.0, design: {player_decision: "Spend a disposable scout to expose a valuable lane or preserve it.", counterplay: "Anti-air, patrols, and forcing it away."}}
+  - {skill: skills.default_lifecycle, skill_name: dive_and_recover, activation: active, recovery_ticks: 30, cooldown_ticks: 90, target: friendly_site, movement_allowed: false}
+presentation: {fallback_policy: inherit, silhouette: "Fabric-and-carbon kite silhouette with blinking red camera; designation paints a brief white triangle on the ground.", readability: "Low/high-air transition, observation pass, and retreat remain readable; bespoke assets are N/A until production."}
+audio: {identity: "Camera, orbit, designation, retreat, damage, and destruction use faction fallback; authored audio is N/A until production."}
+fx: {identity: "Blinking red camera and white designation triangle; observation exposes the drone under shared detection rules."}
+design: {tactical_identity: "Expendable information asset with high vision and no weapon.", player_decision: "Spend a disposable scout to expose a lane or preserve it for later.", counterplay: "Anti-air, patrols, and forcing it away from the target.", offense_behavior: "None; designation only.", defense_behavior: "Very low durability; air protection and no swarm resurrection.", support_behavior: "Observation and local designation only; no damage, repair, or swarm system.", locomotion_behavior: "Low-altitude orbit, 7.0 cells/s, limited endurance.", targetability_behavior: "High air loiter, low-air observation pass; ground weapons only in low pass.", acquisition_behavior: "No weapon; Loiter mark exposes and designates a 2-cell area.", lock_behavior: "Loiter active 120/cooldown 180; Dive recovery 30/cooldown 90 and stops observing.", lifecycle_behavior: "Authored one-off asset; no queue or replacement.", production_behavior: "Scenario-provided; N/A resource and ticks.", visual_identity: "Kite silhouette and blinking red camera.", audio_identity: "Light camera and wind cues with faction fallback.", fx_identity: "White ground triangle and readable exposure.", design_rationale: "Low/high-air transitions follow shared targetability rather than a new drone rule."}

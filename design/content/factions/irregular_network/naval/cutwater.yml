@@ -1,0 +1,29 @@
+display_name: Cutwater
+description: "Core Established amphibious raider. Amphibious land/water movement at 4.5/5.0 cells/s with explicit 30-tick transition reducing speed and weapon access; not submerged or hidden. Ground vehicle on land and naval surface in water; light armor on land and light naval protection afloat. Light cannon uses machine gun/autocannon against ground personnel, light armor, and naval surface, range 5.0, 40 damage/event, 45 ticks, projectile speed 12, point hit, no tracking. Rocket rack uses explosive/area against ground personnel and light armor, range 4.0, 30 damage/event, 60 ticks, projectile speed 10, area radius .5, no tracking. Beach dash +50 percent speed for 45 ticks, cooldown 150, firing disabled during transition. Raid load carries one infantry group, load/unload channel 30, cooldown 90, vehicle slows 50 percent. Production 360 resource / 150 ticks from Boat Shed plus Field Workshop; coastal FIFO. Body 340 HP, radius .45, footprint 2x2, vision 7, alert 9."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: naval
+tier: established
+battlefield_roles: [amphibious_raider, transport, anti_infantry]
+hpmax: 340
+armor: armors.light
+locomotor: locomotors.amphibious
+targetability: [targetabilities.ground, targetabilities.naval_surface]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 4.5
+visionrange: 7.0
+alertrange: 9.0
+footprint: {radius_cells: 0.45, width_cells: 2, height_cells: 2}
+weapon_mounts:
+  - {weapon: weapons.default_resolution, mount_name: light_cannon, damage: damages.machine_gun_autocannon, targetability: [targetabilities.ground, targetabilities.naval_surface], attackrange: 5.0, attackdamage: 40, attackperiod: 45, projectile_speed: 12, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}
+  - {weapon: weapons.default_resolution, mount_name: rocket_rack, damage: damages.explosive_area, targetability: [targetabilities.ground], attackrange: 4.0, attackdamage: 30, attackperiod: 60, projectile_speed: 10, area_radius_cells: 0.5, delivery: projectile, hit_model: area, tracking: none, acquisition: direct}
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: beach_dash, activation: active, active_ticks: 45, cooldown_ticks: 150, target: self, design: {player_decision: "Exploit a shoreline gap and choose speed versus firing access.", counterplay: "Mines, anti-armor, shore defenses, and catching the transition."}}
+  - {skill: skills.default_lifecycle, skill_name: raid_load, activation: active, channel_ticks: 30, cooldown_ticks: 90, target: allied_infantry_group, targetrange: 1.0, movement_allowed: false}
+production: {producer: factions.irregular_network.buildings.boat_shed, queue: coastal, category: naval, cost: {resource: 360}, buildtime: 150, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: false}}
+presentation: {fallback_policy: inherit, silhouette: "Flat-bottomed armored skiff with folding wheels; spray, wheel mud, and mechanical clank communicate each domain switch.", readability: "Land/water transition, firing lock, transport, and unloading remain readable; bespoke assets are N/A."}
+audio: {identity: "Mechanical domain switch, spray, wheel mud, rocket, damage, and destruction use faction fallback."}
+fx: {identity: "Spray, wheel mud, and clank identify the land/water transition; transport approach is visible."}
+design: {tactical_identity: "Fast amphibious raider that trades transition safety against firing access.", player_decision: "Exploit a shoreline gap and choose speed versus firing access.", counterplay: "Mines, anti-armor, shore defenses, and catching transition.", offense_behavior: "Light cannon hits personnel/light armor/naval surface; rockets hit personnel/light armor; poor heavy-armor efficiency.", defense_behavior: "Light land armor and light naval protection afloat; vulnerable during transition.", support_behavior: "Raid load carries one infantry group; no repair or command.", locomotion_behavior: "Amphibious 4.5 land/5 water, explicit 30-tick transition with reduced speed and weapon access.", targetability_behavior: "Ground vehicle on land, naval surface in water; never submerged or hidden.", acquisition_behavior: "Cannon range 5/40/45/speed 12; rockets range 4/30/60/speed 10/radius .5; no tracking.", lock_behavior: "Beach dash +50 percent for 45/cooldown 150 and disables firing during transition; Raid load channel 30/cooldown 90 and slows 50 percent.", lifecycle_behavior: "One infantry-group transport capacity.", production_behavior: "Boat Shed plus Field Workshop; 360 resource, 150 ticks, coastal FIFO.", visual_identity: "Armored skiff, folding wheels, spray and mud.", audio_identity: "Mechanical domain switch and wake.", fx_identity: "Spray and wheel-mud transition cues.", design_rationale: "Amphibious state owns explicit land/water defense and targetability; no submerged or hidden mode."}

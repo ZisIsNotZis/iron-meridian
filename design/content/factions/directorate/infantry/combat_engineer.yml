@@ -1,0 +1,72 @@
+display_name: "Combat Engineer"
+description: "Combat Engineer Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "infantry"
+tier: "established"
+battlefield_roles: ["capture_specialist_and_field_sustainment", "temporary_fortification_it_is_not_a_front_line_damage_unit"]
+hpmax: 150
+armor: "armors.personnel"
+locomotor: "locomotors.default_ground"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 3
+visionrange: 6.5
+alertrange: 8
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.22
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.default_ground", "damages.rifle_small_arms", "targetabilities.low_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.barracks"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Utility harnesses, modular crates, welding sparks, and hard-edged temporary steelwork."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Utility harnesses, modular crates, welding sparks, and hard-edged temporary steelwork."
+fx:
+  identity: "Utility harnesses, modular crates, welding sparks, and hard-edged temporary steelwork."
+design:
+  tactical_identity: "Capture specialist and field sustainment; secondary temporary fortification. It is not a front-line damage unit."
+  player_decision: "Spend a scarce specialist on capture, repair, or a defensive pause. It fails when sent alone or used as disposable rifle infantry."
+  counterplay: "Kill or displace the engineer, interrupt the interaction, and attack the temporary work after its duration ends."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Personnel protection; low combat value makes escorting and timing essential."
+  support_behavior: "Captures objectives and provides the only infantry-scale field works interaction; its help is local and channelled."
+  locomotion_behavior: "Foot; enters transports and can interact with objectives, damaged friendly vehicles, and designated construction sites."
+  targetability_behavior: "Ground personnel; ordinary sight and anti-personnel targeting. Interaction creates a readable vulnerable channel."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "This card uses the entity-owned infantry role values except where marked. Field Works is a support skill; it does not create a new damage or repair rule. Compact carbine | Rifle; ground personnel, low air | 4.0 / 10 / 30 ticks | Projectile 14 cells/s; point; no tracking Field Works | 30-tick setup; 150-tick channel; 30-tick recovery; 300-tick cooldown; 1.0-cell interaction range; choose vehicle repair at 3 condition/tick or a 30-tick temporary barricade | Kill, displace, or interrupt engineer; attack barricade after expiry"
+production:
+  producer: "factions.directorate.buildings.barracks"
+  queue: "default_queue"
+  category: "infantry_specialist"
+  prerequisites: ["factions.directorate.buildings.barracks", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 200
+  buildtime: 75
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Compact carbine"
+    damage: "damages.rifle_small_arms"
+    targetability: ["targetabilities.ground", "targetabilities.low_air"]
+    attackrange: 4
+    attackdamage: 10
+    attackperiod: 30
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Compact carbine | Rifle; ground personnel, low air | 4.0 / 10 / 30 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Kill or displace the engineer, interrupt the interaction, and attack the temporary work after its duration ends."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Field Works"
+    activation: "active"
+    setup_ticks: 30
+    recovery_ticks: 30
+    cooldown_ticks: 300
+    movement_allowed: true
+    design:
+      player_decision: "Spend a scarce specialist on capture, repair, or a defensive pause. It fails when sent alone or used as disposable rifle infantry."
+      counterplay: "Kill or displace the engineer, interrupt the interaction, and attack the temporary work after its duration ends."
+      interruption_readability: "Field Works | 30-tick setup; 150-tick channel; 30-tick recovery; 300-tick cooldown; 1.0-cell interaction range; choose vehicle repair at 3 condition/tick or a 30-tick temporary barricade | Kill, displace, or interrupt engineer; attack barricade after expiry"

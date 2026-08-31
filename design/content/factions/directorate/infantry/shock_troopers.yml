@@ -1,0 +1,72 @@
+display_name: "Shock Troopers"
+description: "Shock Troopers Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "infantry"
+tier: "established"
+battlefield_roles: ["durable_anti_armor_infantry_and_line_reinforcement", "close_assault_against_heavy_vehicles"]
+hpmax: 260
+armor: "armors.personnel"
+locomotor: "locomotors.default_ground"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.4
+visionrange: 6.5
+alertrange: 8
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.24
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.default_ground", "damages.anti_armor_penetrator", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.barracks"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Heavy plated coats, power cables, synchronized lance arcs, and a grounded blue-white charge effect."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Heavy plated coats, power cables, synchronized lance arcs, and a grounded blue-white charge effect."
+fx:
+  identity: "Heavy plated coats, power cables, synchronized lance arcs, and a grounded blue-white charge effect."
+design:
+  tactical_identity: "Durable anti-armor infantry and line reinforcement; secondary close assault against heavy vehicles."
+  player_decision: "Hold position for a killing lane or remain mobile and lose the strongest shot. Its failure mode is being surrounded or forced to redeploy."
+  counterplay: "Infantry-clearing weapons, indirect fire, flanking, and attacks from outside the lance lane."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Reinforced personnel protection and limited suppression resistance; still vulnerable to area damage and isolation."
+  support_behavior: "Creates a stationary anti-armor lane for the formation; it has no repair, command, or detection dependency."
+  locomotion_behavior: "Foot with heavy movement; transportable but slower to reposition. Crushable in ordinary ground state."
+  targetability_behavior: "Ground personnel; ordinary sight, anti-personnel weapons, and vehicle crush rules apply."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Shared damage, freeze, suppression, and lock semantics apply. Reinforced personnel and the deployed lance profile are intentional overrides. Magnetic lance | Anti-armor penetrator + protection condition; ground light/heavy | 5.5 / 70 + 12 condition / 75 ticks | Beam 12-tick active; point; no tracking after aim Brace Lances | 30-tick setup; active until packed; 30-tick recovery; 180-tick cooldown; +1.5 range and +25% protection-condition damage, movement disabled | Flank, artillery, suppress, or attack from outside lane"
+production:
+  producer: "factions.directorate.buildings.barracks"
+  queue: "default_queue"
+  category: "heavy_anti_armor_infantry"
+  prerequisites: ["factions.directorate.buildings.barracks", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 300
+  buildtime: 105
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Magnetic lance"
+    damage: "damages.anti_armor_penetrator"
+    targetability: ["targetabilities.ground"]
+    attackrange: 5.5
+    attackdamage: 70
+    attackperiod: 75
+    delivery: "beam_12_tick_active_point_no_tracking_after_aim"
+    design:
+      tactical_use: "Magnetic lance | Anti-armor penetrator + protection condition; ground light/heavy | 5.5 / 70 + 12 condition / 75 ticks | Beam 12-tick active; point; no tracking after aim"
+      counterplay: "Infantry-clearing weapons, indirect fire, flanking, and attacks from outside the lance lane."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Brace Lances"
+    activation: "active"
+    setup_ticks: 30
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: false
+    design:
+      player_decision: "Hold position for a killing lane or remain mobile and lose the strongest shot. Its failure mode is being surrounded or forced to redeploy."
+      counterplay: "Infantry-clearing weapons, indirect fire, flanking, and attacks from outside the lance lane."
+      interruption_readability: "Brace Lances | 30-tick setup; active until packed; 30-tick recovery; 180-tick cooldown; +1.5 range and +25% protection-condition damage, movement disabled | Flank, artillery, suppress, or attack from outside lane"

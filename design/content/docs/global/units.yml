@@ -1,0 +1,45 @@
+kind: unit_contract
+document_id: design.units
+title: Unit Design
+ownership:
+  - An entity is designed across platform, battlefield role, target profile, locomotion/state, targetability, offense/defense, skill set, production, and faction expression.
+  - Platform means what an entity is: infantry, vehicle, aircraft, naval, structure, or deployable.
+  - Battlefield role means the strategic job.
+  - Targetability means what can detect or attack the entity now.
+  - Locomotion governs movement domain, terrain, height/depth, transitions, collision, and attack approach.
+  - Damage channels, protection, sensing, production, and skills are separate concerns.
+principles:
+  - Infantry may be airborne, floating, swimming, submerged, or transported.
+  - Aircraft and ground units may transform.
+  - Low-flight units can be targetable by selected ground weapons and anti-air.
+  - Floating units may avoid ground hazards while exposing themselves to air/hover counters.
+  - These are explicit readable states, not exceptions hidden in platform tags.
+  - Normal movement and attack movement are separate: direct, orbit, standoff, strafe, charge, ram, deploy-and-fire, stationary, or teleport-strike.
+roster_target:
+  - Complete two-faction target: approximately 6–8 infantry per faction.
+  - Complete two-faction target: 8–10 combat/support vehicles per faction, excluding MCV and harvester.
+  - Complete two-faction target: 4–6 aircraft per faction.
+  - Complete two-faction target: 3–5 naval units per faction.
+  - Complete two-faction target: 12–16 buildings per faction.
+  - Complete two-faction target: 2–4 defining high-tech units per faction.
+  - This is a design target, not V1 scope.
+schema_fields:
+  - Identity: name, faction, platform, tier.
+  - Roles: primary, secondary, target profiles.
+  - Locomotion: states, transitions, terrain, height/depth, collision/crush.
+  - Targetability: current domains, detection requirements, vulnerable states.
+  - Offense: weapons, damage channels, statuses, range, attack movement.
+  - Defense: health, protection, condition tracks, resistances, disable/freeze.
+  - Support: buffs, repair, transport, EMP/control, detection/jamming.
+  - Production: facility, cost, build time, replacement difficulty.
+  - Skill set: family, target, range, area, duration, cooldown, warning, counter.
+  - Player experience: decision, failure mode, visuals, faction expression.
+constraints:
+  - Cards use Numerics and reference first-class objects for armor, damage, locomotion, sensing, targetability, collision, weapons, skills, statuses, and production.
+  - Concrete entity values belong on the entity card; every required field has an explicit value, object reference, or N/A.
+  - A prose role label is not a substitute for a numeric value.
+  - This contract defines the card schema; it does not own any unit's balance, mechanics, or presentation.
+  - Entity-specific silhouette, icon, model, animation, audio, and effect decisions belong in the owning YAML record's typed presentation, audio, and fx fields.
+presentation:
+  - Cards link to the shared asset production contract.
+  - Presentation facts are not duplicated gameplay sections.

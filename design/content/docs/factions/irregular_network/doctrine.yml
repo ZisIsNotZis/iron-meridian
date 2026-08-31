@@ -1,0 +1,22 @@
+display_name: Irregular Network Doctrine
+description: Strategic doctrine for the Irregular Network.
+source_document: design/factions/irregular-network/doctrine.md
+strategic_idea: "The Network wins by choosing where a fight becomes expensive, then leaving before a conventional response arrives. It conceals local intent, creates a false or temporary problem, isolates a capability, and turns infrastructure or attention into the scarce resource it denies the opponent."
+battlefield_habits:
+  - "Scout patiently and attack exposed logistics rather than the strongest formation."
+  - "Use concealment to create a decision window, not permanent immunity."
+  - "Make temporary sites and false signatures legible to careful opponents."
+  - "Recover or repurpose a limited battlefield asset, then accept the cost of supporting it."
+  - "Disengage when the opponent has assembled a conventional answer."
+production_philosophy: "Use hidden caches, improvised workshops, local fabrication, and bounded salvage. Production should feel like assembling an operation from available opportunities, not operating a smaller copy of either major faction’s industrial tree."
+economy_identity: "Temporary sites have setup windows, limited lifetimes, visible counterplay, and a maintenance cost in attention."
+matchup_expression: "Against the Directorate, attack supply, repair, routes, and isolated heavy assets. Against the Coalition, exploit distributed trust, false reports, and specialist support that has moved too far forward. Both major factions retain credible detection and area denial."
+exclusions:
+  - "The Network is not permanently invisible."
+  - "The Network is not universally disguised."
+  - "The Network is not stronger in a fair open battle."
+  - "The Network is not required to field a complete conventional roster."
+  - "The Network does not gain every technology it salvages."
+scope_use:
+  - "The player decides whether a local advantage is worth revealing the cell and spending the escape route."
+  - "Shared targetability, locomotors, skills, and status effects remain authoritative."

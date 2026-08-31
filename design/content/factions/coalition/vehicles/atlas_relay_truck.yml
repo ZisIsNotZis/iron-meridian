@@ -1,0 +1,33 @@
+display_name: "Atlas Relay Truck"
+description: "Atlas Relay Truck migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: vehicle
+tier: advanced
+battlefield_roles: ["mobile_command_support", "local_information_sharing_does_not_provide_baseline_production_or_orders"]
+hpmax: 280
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: ["targetabilities.ground"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 5
+visionrange: 8
+alertrange: 10
+skill_bindings: [{skill: "skills.default_lifecycle", skill_name: "Deploy relay", activation: "active", interruption_conditions: ["movement", "emp"]}]
+production: {cost: {resource: 600}, buildtime: 180, producer: "factions.coalition.buildings.vehicle_assembly", queue: "vehicle", category: "advanced_communications", capacity: {max_active: 2, replacement_allowed: false, replacement_competes_with_new: true}}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.light", "locomotors.wheeled", "targetabilities.ground"]
+design:
+  tactical_identity: "Mobile command support primary; local information sharing secondary. Does not provide baseline production or orders."
+  offense_behavior: "No meaningful weapon; light armor, low health, self-defense flare only."
+  locomotion_behavior: "Wheeled; fast enough to follow an army, but deploying the mast requires a stationary transition."
+  targetability_behavior: "Ground/vehicle; light armor and an obvious communications signature when deployed."
+  acquisition_behavior: "Atlas has no combat acquisition and no damage weapon. Deploy relay targets its own position; allied units inside retain their ordinary acquisition, target-domain, and line-of-sight rules."
+  lock_behavior: "No weapon lock or projectile tracking. The relay supplies only +15% warning radius and -5 lock ticks inside 5.0 cells; it does not grant shared omniscience or make disconnected units inoperable."
+  production_behavior: "Cost: `600 resource`; build time: `180 ticks`; facility: `Vehicle Assembly`; prerequisites: `Signals Laboratory operational`; queue/category: `vehicle / advanced communications`; replacement/capacity: `maximum 2 active Atlas trucks per player; one FIFO vehicle queue; replacement competes with new units`."
+  player_decision: "Bring the relay into danger for a stronger timing window or keep the army independent and safer. Counter by flanking, jamming, forcing pack-up, or destroying the truck."
+  visual_identity: "Six-wheel truck with telescoping mast; deployed relay is a restrained segmented wavefront, with a visible mast-light vulnerability cue."
+  design_rationale: "# Atlas Relay Truck\n\n## Gameplay identity\n\n- **Roles:** Mobile command support primary; local information sharing secondary. Does not provide baseline production or orders.\n- **Locomotion:** Wheeled; fast enough to follow an army, but deploying the mast requires a stationary transition.\n- **Targetability:** Ground/vehicle; light armor and an obvious communications signature when deployed.\n- **Offense/defense:** No meaningful weapon; light armor, low health, self-defense flare only.\n- **Skill:** **Deploy relay** — creates a temporary local bubble improving allied designation, warning, and communication range; units outside retain normal function. Pack-up has recovery time.\n- **Production:** Cost: `600 resource`; build time: `180 ticks`; facility: `Vehicle Assembly`; prerequisites: `Signals Laboratory operational`; queue/category: `vehicle / advanced communications`; replacement/capacity: `maximum 2 active Atlas trucks per player; one FIFO vehicle queue; replacement competes with new units`.\n- **Player experience:** Bring the relay into danger for a stronger timing window or keep the army independent and safer. Counter by flanking, jamming, forcing pack-up, or destroying the truck.\n- **Asset design:** See [entity asset manifest](assets.md).\n\n## Entity specification\n\nIntentional support override: no combat weapon and low protection for a mobile information tool.\n\n| HP | Armor | Move | Footprint radius | Vision | Alert radius |\n|---:|---|---:|---:|---:|---:|\n| 280 | Light | 5.0 cells/s | 0.46 cell | 8.0 cells | 10.0 cells |\n\n| Weapon | Damage family / domains | Range | Damage/event; period | Delivery / hit / tracking |\n|---|---|---:|---:|---|\n| None | — | — | — | No attack; self-defense is visual flare only |\n\n**Deploy relay:** 30-tick stationary deployment; creates a 5.0-cell bubble for 180 ticks, granting allied units inside +15% warning radius and -5 lock ticks. 300-tick cooldown; movement, damage, or EMP packs it up.\n\n### Acquisition and lock semantics\n\n- **Vision / alert radius:** 8.0 / 10.0 cells; the relay bubble modifies warning and lock timing only after deployment and never extends weapon range.\n- **Acquisition:** Atlas has no combat acquisition and no damage weapon. Deploy relay targets its own position; allied units inside retain their ordinary acquisition, target-domain, and line-of-sight rules.\n- **Lock / tracking:** No weapon lock or projectile tracking. The relay supplies only +15% warning radius and -5 lock ticks inside 5.0 cells; it does not grant shared omniscience or make disconnected units inoperable.\n\n\n### Counterplay\n\nFlank or destroy the lightly protected truck, jam it, or force it to pack up. Fight outside the 5.0-cell bubble and exploit the fact that its visual flare is not an attack."
+presentation: {fallback_policy: "inherit", silhouette: "Six-wheel truck with telescoping mast; deployed relay is a restrained segmented wavefront, with a visible mast-light vulnerability cue.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

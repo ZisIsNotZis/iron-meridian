@@ -1,0 +1,36 @@
+display_name: "Sensor Mast"
+description: "Sensor Mast migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: established
+building_roles: ["local_detection"]
+hpmax: 400
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 2, height_cells: 2, facings: "cardinal"}
+construction:
+  cost: {resource: 350}
+  buildtime: 180
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}]
+production: {max_operational: 3, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "local detection"
+  construction_behavior: "Buildable terrain within shared anchors; prefers a clear sightline but cannot override fog, blockers, or map restrictions."
+  production_behavior: "Role: local detection; cost: `350 resource`; build time: `180 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / detection`; replacement/capacity: `maximum 3 operational masts; no production queue; one builder assignment`."
+  defense_behavior: "Structure; visible when discovered; its sensor can be disabled by EMP."
+  capture_behavior: "**Active scan** — 15-tick setup, reveals a 120° cone to `12` cells for 90 ticks, 240-tick cooldown; scan broadcasts the mast."
+  repair_behavior: "Expose a valuable mast for information or rely on mobile scouts and accept uncertainty."
+  lifecycle_behavior: "Attack, EMP, jam, or approach through blockers; the mast does not grant global firing permission."
+  player_decision: "Expose a valuable mast for information or rely on mobile scouts and accept uncertainty."
+  counterplay: "Attack, EMP, jam, or approach through blockers; the mast does not grant global firing permission."
+  visual_identity: "Tall segmented antenna, rotating blue sweep, red alarm blink on detection, and a localized coverage wedge in the UI."
+  design_rationale: "# Sensor Mast\n\n## Gameplay identity\n\n- **Footprint:** `2 × 2` cells; four facings; mast occupies a visual center but not extra collision space.\n- **Health / protection:** 400 HP; `reinforcedStructure`; intentionally fragile support-site override.\n- **Targetability:** Structure; visible when discovered; its sensor can be disabled by EMP.\n- **Production:** Role: local detection; cost: `350 resource`; build time: `180 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / detection`; replacement/capacity: `maximum 3 operational masts; no production queue; one builder assignment`.\n- **Skill / passive:** **Active scan** — 15-tick setup, reveals a 120° cone to `12` cells for 90 ticks, 240-tick cooldown; scan broadcasts the mast.\n- **Placement:** Buildable terrain within shared anchors; prefers a clear sightline but cannot override fog, blockers, or map restrictions.\n- **Player decision:** Expose a valuable mast for information or rely on mobile scouts and accept uncertainty.\n- **Counterplay:** Attack, EMP, jam, or approach through blockers; the mast does not grant global firing permission.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Tall segmented antenna, rotating blue sweep, red alarm blink on detection, and a localized coverage wedge in the UI.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

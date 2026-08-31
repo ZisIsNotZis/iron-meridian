@@ -1,0 +1,23 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_air_operations
+type: object
+additionalProperties: false
+required: [kind, document_id, title, source_document, ownership, airspace_boundary, facility_schema, aircraft_schema, airspace_collision, facility_lifecycle, takeoff_flight_return, landing_service, commands, sensing_targeting_combat, interruptions, presentation_events, scope]
+properties:
+  kind: {const: air_operations_contract}
+  document_id: {type: string}
+  title: {type: string}
+  source_document: {type: string}
+  ownership: {type: array, items: {type: string}}
+  airspace_boundary: {type: array, items: {type: string}}
+  facility_schema: {type: array, items: {type: string}}
+  aircraft_schema: {type: array, items: {type: string}}
+  airspace_collision: {type: array, items: {type: string}}
+  facility_lifecycle: {type: array, items: {type: string}}
+  takeoff_flight_return: {type: array, items: {type: string}}
+  landing_service: {type: array, items: {type: string}}
+  commands: {type: array, items: {type: object, additionalProperties: false, required: [command, required_payload, accepted_when], properties: {command: {type: string}, required_payload: {type: string}, accepted_when: {type: string}}}}
+  sensing_targeting_combat: {type: array, items: {type: string}}
+  interruptions: {type: array, items: {type: string}}
+  presentation_events: {type: array, items: {type: string}}
+  scope: {type: array, items: {type: string}}

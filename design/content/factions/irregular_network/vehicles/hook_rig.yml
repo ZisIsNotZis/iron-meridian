@@ -1,0 +1,25 @@
+display_name: Hook Rig
+description: "Core Established vehicle/deployable for battlefield recovery and repositioning, with secondary anti-vehicle mobility disruption. Wheeled, slow and clumsy; hook attack uses stationary setup and short direct pull. Targets disabled vehicles, wrecks, and selected light vehicles, not heavy units or structures. Light armor requires protection. Hook and haul channels a wreck or eligible light vehicle, drags it 2.0 cells over 30 ticks or prepares it for Wrecker/Mechanic recovery; channel lasts 45 ticks, cooldown 150, movement disabled and interruption breaks the cable. Hook launcher is control, ground light vehicles and wrecks, range 4.0, zero health damage, period 90 ticks, direct cable at 10 cells/s, point attachment, no tracking after latch. Production 360 resource / 165 ticks from Field Workshop, vehicle FIFO, no hard roster cap, one active channel. Body 300 HP, light armor, speed 2.8, radius 0.45, footprint 2x2."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: established
+battlefield_roles: [recovery, mobility_disruption]
+hpmax: 300
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.8
+visionrange: 6.5
+alertrange: 8.0
+footprint: {radius_cells: 0.45, width_cells: 2, height_cells: 2}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: hook_launcher, damage: damages.machine_gun_autocannon, targetability: [targetabilities.ground], attackrange: 4.0, attackdamage: 0, attackperiod: 90, projectile_speed: 10, delivery: direct_cable, hit_model: point_attachment, tracking: none, acquisition: direct}]
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: hook_and_haul, activation: active, channel_ticks: 45, cooldown_ticks: 150, target: wreck_or_eligible_light_vehicle, targetrange: 4.0, movement_allowed: false, interruption_conditions: [damage, movement, separation], design: {player_decision: "Move a disabled asset behind cover or interrupt a light vehicle escape while accepting setup exposure.", counterplay: "Focus fire and cancel line of sight."}}]
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 360}, buildtime: 165, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Crane arm, cable, and magnetic clamp; cable tension visibly shows range and interruption.", readability: "Readable vehicle silhouette with footprint, selection, contact, and shadow anchors; hook channel is visible; bespoke assets are N/A until production."}
+audio: {identity: "Cable tension, clamp, selection, damage, and destruction use faction fallback."}
+fx: {identity: "Taut cable and magnetic clamp show the support relationship and interruption."}
+design: {tactical_identity: "Protected recovery and bounded repositioning utility.", player_decision: "Move a disabled asset behind cover or interrupt a light escape while exposed.", counterplay: "Focus fire and cancel line of sight.", offense_behavior: "Control-only hook; zero health damage; heavy vehicles and structures invalid.", defense_behavior: "Light armor; requires protection while operating.", support_behavior: "Hook and haul prepares Wrecker/Mechanic recovery or drags 2 cells; cannot steal active enemy units.", locomotion_behavior: "Wheeled, 2.8 cells/s; stationary during hook setup/channel.", targetability_behavior: "Ground vehicle, ordinary detection and light armor.", acquisition_behavior: "Hook launcher range 4, zero damage, 90 ticks, direct cable speed 10, point latch.", lock_behavior: "45-tick channel, cooldown 150; movement disabled and interruption breaks cable.", lifecycle_behavior: "One active hook channel per Rig.", production_behavior: "Field Workshop vehicle FIFO; 360 resource, 165 ticks, no hard roster cap.", visual_identity: "Crane, cable, magnetic clamp.", audio_identity: "Mechanical clamp and cable strain cues.", fx_identity: "Tension line makes interruption and range readable.", design_rationale: "Control-only weapon creates repositioning decisions and never steals or permanently disables an active unit."}

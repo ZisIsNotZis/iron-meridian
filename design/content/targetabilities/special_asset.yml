@@ -1,0 +1,8 @@
+display_name: "Special-Asset Targetability"
+description: Special-asset target-domain profile.
+status: designed
+kind: "targetability"
+domains: [special_asset]
+design:
+  state_rules: The owner declares which weapons, sensing rules, and transitions apply. This profile is not a synonym for invulnerable or hidden; when the asset becomes a normal platform state it leaves this profile at the authoritative transition tick.
+  feedback: Presentation distinguishes a special asset from a normal unit while showing its actual vulnerability and ownership.

@@ -1,0 +1,58 @@
+display_name: "Ballistic Bastion"
+description: "Ballistic Bastion Directorate building card."
+status: "optional"
+faction: "factions.directorate"
+platform: "anti_vehicle_point_defense"
+tier: "advanced"
+hpmax: 1000
+building_roles: ["directional_heavy_cannon_that_anchors_one_route_and_creates_a_clear_flanking_problem"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 3, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground", "damages.siege_structural", "targetabilities.ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Large slab bunker, exposed traverse gear, red firing-sector overlay, heavy muzzle shock, and delayed impact boom."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Large slab bunker, exposed traverse gear, red firing-sector overlay, heavy muzzle shock, and delayed impact boom."
+fx:
+  identity: "Large slab bunker, exposed traverse gear, red firing-sector overlay, heavy muzzle shock, and delayed impact boom."
+design:
+  counterplay: "Flank, outrange, use artillery/air, break line of sight, or attack during windup."
+  defense_behavior: "Structure; ordinary sight and structure-capable attacks; slow traverse and blind side are visible."
+  design_rationale: "Siege/structural cannon; ground light, heavy, structure; range 8.0, damage 110, period 96 ticks (30 windup / 6 recovery / 60 cooldown); projectile 8 cells/s, point hit, no tracking."
+construction:
+  cost:
+    resource: 750
+  buildtime: 420
+  builder: "factions.directorate.buildings.construction_yard"
+  prerequisites:
+    - object: "factions.directorate.buildings.heavy_works"
+      state: "operational"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+production:
+  max_operational: 2
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Siege/structural cannon"
+    damage: "damages.siege_structural"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 8
+    attackdamage: 110
+    attackperiod: 96
+    projectile_speed: 8
+    hit_model: "point"
+    tracking: "none"
+    delivery: "projectile"

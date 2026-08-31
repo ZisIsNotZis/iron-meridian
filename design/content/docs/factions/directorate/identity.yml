@@ -1,0 +1,6 @@
+display_name: "Directorate Identity"
+description: "Identity principles for the Directorate."
+source_document: "design/factions/directorate/identity.md"
+symbols: ["The Directorate mark is a closed iron chevron enclosing a small vertical meridian bar.", "The chevron reads as protection and command; the bar preserves the Union’s geographic symbol while making it rigid and centralized.", "The mark must work as a one-color stencil on crates, a small HUD badge, and a formal seal.", "It must not resemble a real-world flag, extremist insignia, or borrowed RTS faction logo."]
+wordmark: "Square, condensed capitals with measured spacing and a restrained serial-stencil detail; formal labels favor function and numbering over ornament."
+scope: ["Identity owns faction identity principles; individual gameplay belongs in unit records and global presentation rules remain global.", "The Directorate does not receive a separate internal-politics simulation.", "Rival ministries, defections, and reforms are authored story pressures or campaign choices, not another resource layer."]

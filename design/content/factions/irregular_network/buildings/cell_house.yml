@@ -1,0 +1,26 @@
+display_name: Cell House
+description: "Core Field infantry-production site. One infantry FIFO queue for replaceable cells and specialists; 2x2 footprint, four cardinal facings, two infantry exit/interaction cells; buildable ground within shared construction anchors and pathable exits. Construction 350 resource / 240 ticks, operational Safehouse and Network builder required. Body 420 HP, light armor, ordinary structure targetability, no passive concealment. Queue capacity 1, Field/Established entries require Cell House, Advanced entries additionally require operational Hideout or Relay Cache; no roster cap; queued work lost on destruction. No repair or defense weapon. Rally cells is a passive 3.0-cell rally interaction radius and does not buff damage, share vision, or replace command relay. Persistent shared blueprint, constructing, operational, damaged, destroyed lifecycle."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: production
+tier: field
+building_roles: [manufacturing, command]
+hpmax: 420
+armor: armors.light
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 6.0
+alertrange: 8.0
+footprint: {width_cells: 2, height_cells: 2, facings: cardinal, interaction_cells: 2}
+placement: {terrain: buildable_ground, anchor: construction_radius, facing: cardinal}
+construction: {cost: {resource: 350}, buildtime: 240, prerequisites: [{object: factions.irregular_network.buildings.safehouse}]}
+exits: [{exit_name: infantry_exit, direction: any, exit_type: infantry, capacity: 1, blocked_behavior: pause}]
+production: {queues: [{queue_name: infantry, category: infantry, capacity: 1, exit_name: infantry_exit, blocked_behavior: pause}], max_operational: 1, replacement_allowed: false, replacement_scope: none}
+lifecycle: {states: [blueprint, constructing, operational, damaged, destroyed], destruction_behavior: remove}
+presentation: {fallback_policy: inherit, silhouette: "Converted apartment shell with chalk marks and rooftop laundry signals; recruitment uses brief window lights and hand-signal audio.", readability: "Construction, recruitment, rally, damage, disabled, and destruction are explicit."}
+audio: {identity: "Hand-signal recruitment, window lights, construction, damage, and destruction use faction fallback."}
+fx: {identity: "Brief recruitment window lights and chalk marks communicate the small distributed queue."}
+design: {construction_behavior: "350 resource, 240 ticks, Safehouse and builder required.", production_behavior: "One infantry FIFO queue, capacity 1; standard/established cells need the house, advanced cells also need Hideout or Relay Cache; queued work is lost on destruction.", defense_behavior: "No static weapon or area defense; 420 HP light armor and ordinary structure targetability.", capture_behavior: "No capture behavior is declared.", repair_behavior: "None; use shared field repair rules and units.", lifecycle_behavior: "Persistent shared construction lifecycle; no temporary expiry.", player_decision: "Spread cheap infantry production safely or concentrate it near the front for faster reinforcement.", counterplay: "Strike the building or exits, pressure rally routes, and use armor or area fire.", visual_identity: "Apartment shell, chalk, laundry signals, window lights.", audio_identity: "Hand signals and recruitment taps.", fx_identity: "Window lights and rally cue.", design_rationale: "Rally cells is only a 3-cell interaction radius and never a damage, vision, or command aura."}

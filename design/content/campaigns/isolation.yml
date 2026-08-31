@@ -1,0 +1,84 @@
+display_name: Isolation
+description: Make retreat, recovery, and preservation the winning line rather than a rubber-band rescue.
+status: designed
+kind: campaign_mission
+mode: campaign
+version: 1
+map: maps.three_arches
+references: [maps.three_arches, factions.coalition, factions.directorate, factions.coalition.vehicles.harvester, factions.coalition.vehicles.mcv, factions.coalition.infantry.line_rifle, factions.coalition.infantry.pathfinder, factions.coalition.infantry.combat_medic, factions.coalition.vehicles.valiant_mbt, factions.directorate.vehicles.harvester, factions.directorate.vehicles.mcv, factions.directorate.infantry.rifle_squad, factions.directorate.vehicles.sentinel, factions.directorate.vehicles.bastion, factions.directorate.vehicles.lancer]
+design:
+  tactical_identity: Scout a safe route, preserve irreplaceable units, capture a foothold, and survive until limited relief arrives.
+  player_decision: Retreat and adapt through a flank while buying time, rather than treating survival as victory.
+  narrative_identity: Isolation is a condition, not a sentence; relief matters only if the force survives to choose where it matters.
+  rationale: The damaged force is valuable but replaceable through ordinary production; no starting unit is secretly invulnerable.
+  scope: near_term
+faction_slots:
+  - {role: player, faction: factions.coalition, side: west, behavior: regular}
+  - {role: opponent, faction: factions.directorate, side: east, behavior: regular}
+setup:
+  starting_bank_resource: 900
+  player:
+    structures: [{content: factions.coalition.buildings.coalition_hq, quantity: 1}, {content: factions.coalition.buildings.resource_exchange, quantity: 1}]
+    units:
+      - {content: factions.coalition.vehicles.harvester, quantity: 1, health_percent: 70}
+      - {content: factions.coalition.vehicles.mcv, quantity: 1}
+      - {content: factions.coalition.infantry.line_rifle, quantity: 1, health_percent: 65}
+      - {content: factions.coalition.infantry.pathfinder, quantity: 1, health_percent: 65}
+      - {content: factions.coalition.infantry.combat_medic, quantity: 1, health_percent: 65}
+      - {content: factions.coalition.vehicles.valiant_mbt, quantity: 1, health_percent: 65}
+  opponent:
+    structures: [{content: factions.directorate.buildings.construction_yard, quantity: 1}, {content: factions.directorate.buildings.ore_refinery, quantity: 1}, {content: factions.directorate.buildings.barracks, quantity: 1}]
+    units:
+      - {content: factions.directorate.vehicles.harvester, quantity: 1}
+      - {content: factions.directorate.vehicles.mcv, quantity: 1}
+      - {content: factions.directorate.infantry.rifle_squad, quantity: 1}
+      - {content: factions.directorate.vehicles.sentinel, quantity: 1}
+      - {content: factions.directorate.vehicles.bastion, quantity: 1}
+      - {content: factions.directorate.vehicles.lancer, quantity: 1}
+  fog: Basic fog.
+  progression: Veterancy disabled.
+availability:
+  player_recipes: [Line Rifle, Pathfinder, Combat Medic, Lynx Scout Car, Valiant MBT, Harvester replacement]
+  opponent_recipes: [Rifle Squad, Sentinel, Bastion, Lancer, Harvester replacement]
+  closed_world: true
+  unavailable_features: [research, veterancy]
+objectives:
+  primary: Keep the Coalition HQ alive until relief arrives, then hold the objective for 45 cumulative seconds.
+  primary_hold_seconds: 45
+  optional: Keep the starting Valiant MBT alive through mission end.
+  failure: HQ destroyed, all starting combat units destroyed before the relief trigger, or player surrender.
+triggers:
+  - event: mission_start
+    action: Show north and south escape routes; do not mark the direct center route as safe.
+    visible: true
+  - event: timer
+    after_seconds: 90
+    action: Directorate probing force enters the center route.
+    visible: true
+  - event: starting_combat_unit_lost
+    action: Show a non-blocking recovery hint and mark the nearest safe retreat area.
+    visible: true
+  - event: timer
+    after_seconds: 210
+    condition: Coalition HQ remains alive.
+    action: One authored Combat Medic replacement and one Line Rifle reinforcement arrive at the declared west exit.
+    reinforcements: [{content: factions.coalition.infantry.combat_medic, quantity: 1}, {content: factions.coalition.infantry.line_rifle, quantity: 1}]
+    spawn_anchor: west_combat_exit
+    warning: Announce arrival before the units become visible.
+    visible: true
+  - event: relief_arrives
+    action: Directorate shifts from pressure to objective denial and retreats from a losing visible engagement.
+    visible: true
+dialogue:
+  purpose: Make retreat, recovery, and preservation valid progress.
+  briefing: The line was cut before the convoy arrived. Preserve what can move, find a route that can be held, and buy time without mistaking survival for victory.
+  success: Isolation was a condition, not a sentence. The force survived long enough to choose where the relief mattered.
+  failure: The rescue could not repair a force spent too early. Retreat is part of the order, not an admission that the operation has ended.
+  plain_text_equivalent: true
+  voice_policy: Voice only if a voice asset is available.
+checkpoints:
+  boundaries: [Immediately after the first Directorate probe is repelled, when the relief warning appears]
+  restart_behavior: Restore authored damage and resource state exactly.
+  optional_outcome: Optional tank objective changes only debrief text and a campaign outcome flag.
+fairness:
+  rules: [No starting unit is secretly invulnerable., Relief arrives only if the Coalition HQ remains., Reinforcements are authored and announced before visibility.]

@@ -1,0 +1,28 @@
+kind: world_organizations
+source_document: design/world/organizations.md
+meridian_union_institutions:
+  - {name: Union_Treasury, responsibility: "allocated fuel, wages, and industrial contracts across regions"}
+  - {name: Rail_and_Works_Authority, responsibility: "scheduled freight, maintained bridges, and controlled strategic junctions"}
+  - {name: Federal_Security_Directorate, responsibility: "coordinated internal security, counterintelligence, and emergency command"}
+  - {name: Regional_Defense_Commands, responsibility: "maintained local formations and knew the terrain better than the capital"}
+  - {name: Technical_and_Port_Consortiums, responsibility: "linked universities, factories, shipyards, and export cities"}
+union_assessment: "None of these institutions was wholly good or bad. Their competing records and loyalties are why both successor governments can make a credible claim to continuity."
+directorate:
+  formation: "The Directorate is the emergency government formed when the Federal Security Directorate, central arsenals, and loyal rail commands declared continuity of state authority."
+  internal_composition: "Its civilian administrators, officers, and industrial boards are not a single-minded cult: some want to restore law quickly, some want permanent emergency powers, and some simply fear the country will disintegrate."
+  fault_line: restoration_versus_control
+  campaign_expression: "A successful Directorate campaign can reunify infrastructure while making the emergency apparatus harder to dismantle. This tension belongs in briefings and mission outcomes, not in a second faction resource system."
+coalition:
+  formation: "The Coalition is a treaty rather than a unitary state."
+  members: "Regional defense commands, elected governments, port authorities, reform officers, and technical consortiums share communications and procurement while retaining local authority."
+  agreement: "Prevent the Directorate from taking the treasury and arsenals, then negotiate a new federation."
+  fault_line: consent_versus_speed
+  campaign_expression: "Coalition commanders can respond flexibly, but every region asks who will control the tools built during the emergency. Coalition victories should create political obligations rather than imply effortless unity."
+irregular_network:
+  formation: "The Irregular Network has no public headquarters and no single founding charter."
+  members: "trusted couriers, defectors, repair crews, safe houses, smugglers, and local defense councils"
+  motivations: "Some members seek regional autonomy, some protect their families, and some want evidence of the Aster attack exposed before either major faction can write the history."
+  fault_line: liberation_versus_fragmentation
+  limits: "The Network can deny both governments strategic assets, but it cannot automatically replace them."
+  presentation: "It remains a hidden minor faction and should not be presented as a conventional third country."
+naming_rule: "Use institutional names in formal documents and human shorthand in dialogue. Avoid real-world country, military, corporation, or ideology names. A title should reveal what an organization does—rail authority, regional command, security directorate—before it tries to sound exotic."

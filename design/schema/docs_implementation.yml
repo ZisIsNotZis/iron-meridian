@@ -1,0 +1,15 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_implementation
+type: object
+additionalProperties: false
+required: [kind, document_id, title, stages, boundaries, pipeline, acceptance, failure_recovery, deferred]
+properties:
+  kind: {const: implementation_contract}
+  document_id: {type: string}
+  title: {type: string}
+  stages: {type: array, items: {type: object, additionalProperties: false, required: [name, scope, steps, excludes], properties: {name: {type: string}, scope: {type: string}, steps: {type: array, items: {type: string}}, excludes: {type: array, items: {type: string}}}}}
+  boundaries: {type: array, items: {type: string}}
+  pipeline: {type: array, items: {type: string}}
+  acceptance: {type: array, items: {type: string}}
+  failure_recovery: {type: array, items: {type: string}}
+  deferred: {type: array, items: {type: string}}

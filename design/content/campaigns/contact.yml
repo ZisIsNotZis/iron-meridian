@@ -1,0 +1,80 @@
+display_name: Contact
+description: Teach the complete loop without requiring a surprise mechanic.
+status: designed
+kind: campaign_mission
+mode: campaign
+version: 1
+map: maps.meridian_crossing
+references: [maps.meridian_crossing, factions.directorate, factions.coalition, factions.directorate.vehicles.harvester, factions.directorate.vehicles.mcv, factions.directorate.infantry.rifle_squad, factions.directorate.vehicles.sentinel, factions.directorate.vehicles.bastion, factions.directorate.vehicles.lancer, factions.coalition.vehicles.harvester, factions.coalition.vehicles.mcv, factions.coalition.infantry.line_rifle, factions.coalition.vehicles.lynx_scout_car, factions.coalition.vehicles.valiant_mbt, factions.coalition.vehicles.halberd_tank_destroyer]
+design:
+  tactical_identity: Scout an unknown approach, establish production, field a mixed starter force, and contest the central objective.
+  player_decision: Establish the line, find the Coalition approach, and decide when the crossing is worth the armor.
+  narrative_identity: The first contact turns the crossing from a rumor into a position.
+  rationale: The mission teaches select, move, scout, construct, produce, attack, and capture through skippable prompts.
+  scope: near_term
+faction_slots:
+  - {role: player, faction: factions.directorate, side: west, behavior: recruit}
+  - {role: opponent, faction: factions.coalition, side: east, behavior: recruit}
+setup:
+  starting_bank_resource: 1500
+  player:
+    structures: [{content: factions.directorate.buildings.construction_yard, quantity: 1}, {content: factions.directorate.buildings.ore_refinery, quantity: 1}, {content: factions.directorate.buildings.vehicle_plant, quantity: 1}]
+    units:
+      - {content: factions.directorate.vehicles.harvester, quantity: 1, position: west home resource node}
+      - {content: factions.directorate.vehicles.mcv, quantity: 1, position: west base}
+      - {content: factions.directorate.infantry.rifle_squad, quantity: 1, position: west combat exit}
+      - {content: factions.directorate.vehicles.sentinel, quantity: 1, position: west combat exit}
+      - {content: factions.directorate.vehicles.bastion, quantity: 1, position: west combat exit}
+      - {content: factions.directorate.vehicles.lancer, quantity: 1, position: west combat exit}
+  opponent:
+    structures: [{content: factions.coalition.buildings.coalition_hq, quantity: 1}, {content: factions.coalition.buildings.resource_exchange, quantity: 1}, {content: factions.coalition.buildings.vehicle_assembly, quantity: 1}]
+    units:
+      - {content: factions.coalition.vehicles.harvester, quantity: 1, position: east home resource node}
+      - {content: factions.coalition.vehicles.mcv, quantity: 1, position: east base}
+      - {content: factions.coalition.infantry.line_rifle, quantity: 1, position: east combat exit}
+      - {content: factions.coalition.vehicles.lynx_scout_car, quantity: 1, position: east combat exit}
+      - {content: factions.coalition.vehicles.valiant_mbt, quantity: 1, position: east combat exit}
+      - {content: factions.coalition.vehicles.halberd_tank_destroyer, quantity: 1, position: east combat exit}
+  fog: Basic fog.
+  progression: Veterancy disabled.
+  pause: Local pause allowed.
+availability:
+  player_recipes: [Rifle Squad, Sentinel, Bastion, Lancer, Harvester replacement, MCV replacement]
+  opponent_recipes: [Line Rifle, Lynx Scout Car, Valiant MBT, Halberd Tank Destroyer, Harvester replacement, MCV replacement]
+  closed_world: true
+  unavailable_features: [research, veterancy, hidden faction content]
+objectives:
+  primary: Control the central objective or destroy the Coalition HQ.
+  primary_hold_seconds: 75
+  optional: Reveal the east approach with the Sentinel before the first player production completes.
+  failure: Directorate HQ destroyed or player surrender.
+  end_state_priority: Resolve the objective/HQ rule first, then show the authored debrief.
+triggers:
+  - event: mission_start
+    action: Show objective marker and text briefing; offer one optional prompt for each taught action: select, move, scout, construct, produce, attack, capture.
+    visible: true
+  - event: first_enemy_contact
+    action: Pause for the optional tutorial prompt only; never pause automatically after dismissal.
+    visible: true
+  - event: first_player_production_completed
+    action: Unlock attack prompt and send a visible Coalition scout toward the center.
+    visible: true
+  - event: timer
+    after_seconds: 180
+    condition: Objective is neutral.
+    action: Coalition sends its first mixed group through the center route.
+    warning: Visible radio toast before contact.
+    visible: true
+dialogue:
+  purpose: Teach the complete loop without a surprise mechanic.
+  briefing: The crossing is still open, but neither command can hold it. Establish the line, find the Coalition approach, and decide when the crossing is worth your armor.
+  success: You made contact on your terms. The crossing is now a position, not a rumor.
+  failure: The line broke before the command could read the battlefield. Review the approach, the reserve, and the moment the objective was left unanswered.
+  plain_text_equivalent: true
+  voice_policy: Voice only if a voice asset is available.
+checkpoints:
+  boundaries: [After the first player production completes, when the player first reaches the objective]
+  restart_behavior: Reset all simulation state to the checkpoint tick.
+  optional_outcome: Optional objective changes only the success debrief and grants no resources or units.
+fairness:
+  rules: [Starting combat units are operational, at full health, and have no queued orders., Prompts can be skipped., The optional objective grants no resources or units.]

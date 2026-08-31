@@ -1,0 +1,14 @@
+display_name: "Anti-Armor Penetrator"
+description: Direct health damage specialized for armor.
+status: designed
+kind: "damage"
+damage_channel: health
+references: [armors.personnel, armors.light, armors.heavy, armors.reinforced_structure]
+damage_interactions:
+  - {armor: armors.personnel, multiplier_percent: 45}
+  - {armor: armors.light, multiplier_percent: 100}
+  - {armor: armors.heavy, multiplier_percent: 110}
+  - {armor: armors.reinforced_structure, multiplier_percent: 70}
+design:
+  channel: Direct health damage specialized for armor.
+  feedback: It rewards dedicated target selection but is inefficient against personnel.

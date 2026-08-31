@@ -1,0 +1,221 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: map
+type: object
+additionalProperties: false
+required: [display_name, description, status, dimensions, coordinate_contract, layers, anchors, routes, validation]
+properties:
+  display_name: {type: string, minLength: 1}
+  description: {type: string, minLength: 1}
+  status: {type: string, enum: [core, designed, optional, near-term, deferred, deprecated]}
+  design:
+    type: object
+    additionalProperties: false
+    properties:
+      tactical_identity: {type: string, minLength: 1}
+      player_decision: {type: string, minLength: 1}
+      visual_identity: {type: string, minLength: 1}
+      rationale: {type: string, minLength: 1}
+      scope: {type: string, enum: [v1, near_term, far_vision, deferred]}
+  dimensions:
+    type: object
+    additionalProperties: false
+    required: [width, height, cell_units, distance_units_per_cell]
+    properties:
+      width: {type: integer, minimum: 1}
+      height: {type: integer, minimum: 1}
+      cell_units: {type: string, minLength: 1}
+      distance_units_per_cell: {type: integer, minimum: 1}
+  coordinate_contract:
+    type: object
+    additionalProperties: false
+    required: [cell_index_bounds, bounds_order, world_point_center, cell_center, reflection]
+    properties:
+      cell_index_bounds: {type: string, minLength: 1}
+      bounds_order: {type: array, minItems: 4, items: {type: string, enum: [min_x, max_x, min_y, max_y]}}
+      world_point_center: {type: array, minItems: 2, items: {type: number}}
+      cell_center: {type: string, minLength: 1}
+      reflection:
+        type: object
+        additionalProperties: false
+        required: [world_point, cell_index]
+        properties:
+          world_point: {type: string, minLength: 1}
+          cell_index: {type: string, minLength: 1}
+  layers:
+    type: object
+    additionalProperties: false
+    required: [authoritative, base_rules, cover_rectangles, route_bands, base_pockets, exclusions, deferred]
+    properties:
+      authoritative: {type: string, minLength: 1}
+      base_rules: {type: array, minItems: 1, items: {type: string, minLength: 1}}
+      layer_precedence: {type: array, minItems: 1, items: {type: string, minLength: 1}}
+      cover_contract:
+        type: object
+        additionalProperties: false
+        properties:
+          traversable: {type: boolean}
+          line_of_sight_blocking: {type: boolean}
+          damage_modifier: {type: string, minLength: 1}
+          route_overlap: {type: string, minLength: 1}
+      border:
+        type: object
+        additionalProperties: false
+        required: [x_cells, y_cells, terrain, walkable, buildable]
+        properties:
+          x_cells: {type: array, minItems: 2, items: {type: integer, minimum: 0}}
+          y_cells: {type: array, minItems: 2, items: {type: integer, minimum: 0}}
+          terrain: {type: string, minLength: 1}
+          walkable: {type: boolean}
+          buildable: {type: boolean}
+      cover_rectangles:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [id, function]
+          properties:
+            id: {type: string, minLength: 1}
+            bounds: {type: array, minItems: 4, items: {type: integer, minimum: 0}}
+            center: {type: array, minItems: 2, items: {type: number}}
+            size_cells: {type: array, minItems: 2, items: {type: integer, minimum: 1}}
+            function: {type: string, minLength: 1}
+            cover: {type: boolean}
+            traversable: {type: boolean}
+            line_of_sight_blocking: {type: boolean}
+            damage_modifier: {type: string, minLength: 1}
+            no_build: {type: boolean}
+            reflection_of: {type: string, minLength: 1}
+            decorative_only: {type: boolean}
+          oneOf:
+            - required: [bounds]
+            - required: [center, size_cells]
+            - required: [decorative_only]
+      construction_exclusion_rectangles:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [id, bounds, function]
+          properties:
+            id: {type: string, minLength: 1}
+            bounds: {type: array, minItems: 4, items: {type: integer, minimum: 0}}
+            function: {type: string, minLength: 1}
+            reflection_of: {type: string, minLength: 1}
+      route_bands:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          additionalProperties: false
+          required: [id, bounds, intended_use]
+          properties:
+            id: {type: string, minLength: 1}
+            bounds: {type: array, minItems: 4, items: {type: integer, minimum: 0}}
+            intended_use: {type: string, minLength: 1}
+            flags: {type: array, items: {type: string, enum: [no_build, primary_route]}}
+      corridors:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [id, centerline_x, function]
+          properties:
+            id: {type: string, minLength: 1}
+            centerline_x: {type: integer, minimum: 0}
+            function: {type: string, minLength: 1}
+      base_pockets:
+        type: array
+        minItems: 2
+        items:
+          type: object
+          additionalProperties: false
+          required: [side, bounds, buildable]
+          properties:
+            side: {type: string, enum: [west, east]}
+            bounds: {type: array, minItems: 4, items: {type: integer, minimum: 0}}
+            buildable: {type: boolean}
+      exclusions:
+        type: object
+        additionalProperties: false
+        required: [rule, objective, resource_nodes]
+        properties:
+          rule: {type: string, minLength: 1}
+          objective: {type: string, minLength: 1}
+          resource_nodes: {type: string, minLength: 1}
+      deferred: {type: array, items: {type: string, minLength: 1}}
+  anchors:
+    type: object
+    additionalProperties: false
+    required: [player, central]
+    properties:
+      player:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [id, west, east, anchor_role]
+          properties:
+            id: {type: string, minLength: 1}
+            reserve: {type: integer, minimum: 0}
+            interaction_point_rule: {type: string, minLength: 1}
+            west:
+              oneOf:
+                - {type: object, additionalProperties: false, required: [bounds], properties: {bounds: {type: array, minItems: 4, items: {type: integer, minimum: 0}}}}
+                - {type: object, additionalProperties: false, required: [point], properties: {point: {type: array, minItems: 2, items: {type: number}}}}
+            east:
+              oneOf:
+                - {type: object, additionalProperties: false, required: [bounds], properties: {bounds: {type: array, minItems: 4, items: {type: integer, minimum: 0}}}}
+                - {type: object, additionalProperties: false, required: [point], properties: {point: {type: array, minItems: 2, items: {type: number}}}}
+            anchor_role: {type: string, minLength: 1}
+      central:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [id, point, rule]
+          properties:
+            id: {type: string, minLength: 1}
+            point: {type: array, minItems: 2, items: {type: number}}
+            capture_radius_cells: {type: number, minimum: 0}
+            no_build_radius_cells: {type: number, minimum: 0}
+            exclusion_radius_cells: {type: number, minimum: 0}
+            reserve: {type: integer, minimum: 0}
+            rule: {type: string, minLength: 1}
+      resource_interaction_point_rule: {type: string, minLength: 1}
+  routes:
+    type: object
+    additionalProperties: false
+    required: [tactical_intent, waypoints, connectivity]
+    properties:
+      tactical_intent: {type: string, minLength: 1}
+      waypoints:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          additionalProperties: false
+          required: [id, points]
+          properties:
+            id: {type: string, minLength: 1}
+            points: {type: array, minItems: 2, items: {type: array, minItems: 2, items: {type: number}}}
+      connectors:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [id, from_route, to_route, at_x, function]
+          properties:
+            id: {type: string, minLength: 1}
+            from_route: {type: string, minLength: 1}
+            to_route: {type: string, minLength: 1}
+            at_x: {type: integer, minimum: 0}
+            function: {type: string, minLength: 1}
+      connectivity: {type: array, minItems: 1, items: {type: string, minLength: 1}}
+  vision: {type: object, additionalProperties: false, required: [rules], properties: {rules: {type: array, minItems: 1, items: {type: string, minLength: 1}}}}
+  validation:
+    type: object
+    additionalProperties: false
+    required: [invariants, acceptance_target]
+    properties:
+      invariants: {type: array, minItems: 1, items: {type: string, minLength: 1}}
+      acceptance_target: {type: string, minLength: 1}

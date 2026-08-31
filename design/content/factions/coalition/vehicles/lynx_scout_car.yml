@@ -1,0 +1,34 @@
+display_name: "Lynx Scout Car"
+description: "Lynx Scout Car migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: vehicle
+tier: field
+battlefield_roles: ["mobile_recon", "harassment_and_escort_targets_scouts", "harvesters", "and_exposed_infantry"]
+hpmax: 260
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: ["targetabilities.ground"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 7
+visionrange: 9
+alertrange: 11
+weapon_mounts: [{weapon: "weapons.default_resolution", mount_name: "light_autocannon", damage: "damages.machine_gun_autocannon", targetability: ["targetabilities.ground"], attackrange: 5.5, attackdamage: 24, attackperiod: 24, projectile_speed: 16, delivery: "projectile", hit_model: "point", tracking: "none", acquisition: "direct", requires_observation: true}]
+skill_bindings: [{skill: "skills.default_lifecycle", skill_name: "Active scan", activation: "active"}]
+production: {cost: {resource: 300}, buildtime: 90, producer: "factions.coalition.buildings.vehicle_assembly", queue: "vehicle", category: "field_recon"}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.light", "locomotors.wheeled", "targetabilities.ground"]
+design:
+  tactical_identity: "Mobile recon primary; harassment and escort secondary. Targets scouts, harvesters, and exposed infantry."
+  offense_behavior: "Light autocannon effective against personnel and light vehicles; light armor and low health."
+  locomotion_behavior: "Wheeled; fast on roads and firm ground, poor in rough terrain. Direct attack movement and quick retreat."
+  targetability_behavior: "Ground/vehicle; ordinary vision with a low silhouette, no stealth."
+  acquisition_behavior: "The autocannon uses Direct acquisition against observed legal ground-personnel or light targets. Active scan detects and exposes signatures; it does not create a damage lock or fire through fog of war."
+  lock_behavior: "No lock or post-launch tracking. Scan information lasts 120 ticks and is not a guaranteed projectile position; movement, damage, or EMP during setup interrupts the scan."
+  production_behavior: "Cost: `300 resource`; build time: `90 ticks`; facility: `Vehicle Assembly`; prerequisites: `Coalition HQ operational`; queue/category: `vehicle / field recon`; replacement/capacity: `no per-unit cap; one FIFO vehicle queue; replacement competes with new units`."
+  player_decision: "Use speed to ask a question, then leave before the answer becomes a fight. Counter with ambushes, terrain, mines, armor, and dedicated detection denial."
+  visual_identity: "Compact four-wheel chassis with roof lidar; scan is a thin rotating fan and a short blue map-ring pulse."
+  design_rationale: "# Lynx Scout Car\n\n## Gameplay identity\n\n- **Roles:** Mobile recon primary; harassment and escort secondary. Targets scouts, harvesters, and exposed infantry.\n- **Locomotion:** Wheeled; fast on roads and firm ground, poor in rough terrain. Direct attack movement and quick retreat.\n- **Targetability:** Ground/vehicle; ordinary vision with a low silhouette, no stealth.\n- **Offense/defense:** Light autocannon effective against personnel and light vehicles; light armor and low health.\n- **Skill:** **Active scan** — briefly reveals a cone beyond normal sight and exposes hidden signatures; the scan broadcasts the Lynx's location and has recovery time.\n- **Production:** Cost: `300 resource`; build time: `90 ticks`; facility: `Vehicle Assembly`; prerequisites: `Coalition HQ operational`; queue/category: `vehicle / field recon`; replacement/capacity: `no per-unit cap; one FIFO vehicle queue; replacement competes with new units`.\n- **Player experience:** Use speed to ask a question, then leave before the answer becomes a fight. Counter with ambushes, terrain, mines, armor, and dedicated detection denial.\n- **Asset design:** See [entity asset manifest](assets.md).\n\n## Entity specification\n\nUses the entity-owned scout role values with vehicle locomotion and an autocannon tradeoff.\n\n| HP | Armor | Move | Footprint radius | Vision | Alert radius |\n|---:|---|---:|---:|---:|---:|\n| 260 | Light | 7.0 cells/s | 0.42 cell | 9.0 cells | 11.0 cells |\n\n| Weapon | Damage family / domains | Range | Damage/event; period | Delivery / hit / tracking |\n|---|---|---:|---:|---|\n| Light autocannon | Machine gun/autocannon / ground-personnel, light | 5.5 | 24; 24 ticks (0/3/21) | Projectile 16 cells/s; point; direct, no homing |\n\n**Active scan:** 15-tick setup; reveals a 90° cone to 13 cells and exposes hidden signatures for 120 ticks. 240-tick cooldown; the scan broadcasts the Lynx and movement interrupts setup.\n\n### Acquisition and lock semantics\n\n- **Vision / alert radius:** 9.0 / 11.0 cells; Active scan adds a 90° observation cone to 13 cells but does not extend the autocannon's 5.5-cell range.\n- **Acquisition:** The autocannon uses Direct acquisition against observed legal ground-personnel or light targets. Active scan detects and exposes signatures; it does not create a damage lock or fire through fog of war.\n- **Lock / tracking:** No lock or post-launch tracking. Scan information lasts 120 ticks and is not a guaranteed projectile position; movement, damage, or EMP during setup interrupts the scan.\n\n\n### Counterplay\n\nUse ambushes, terrain, mines, armor, and detection denial. Force the Lynx to move during setup or punish its broadcast location; it cannot convert scan information into homing fire."
+presentation: {fallback_policy: "inherit", silhouette: "Compact four-wheel chassis with roof lidar; scan is a thin rotating fan and a short blue map-ring pulse.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

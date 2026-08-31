@@ -1,0 +1,23 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_scope
+type: object
+additionalProperties: false
+required: [kind, document_id, title, authority, priorities, product_goal, player_experience, included_systems, canonical_match, initial_content, recipe_allowlist, unavailable_content, command_allowlist, ui_surfaces, acceptance, boundaries, reconciliation]
+properties:
+  kind: {const: v1_scope}
+  document_id: {type: string}
+  title: {type: string}
+  authority: {type: array, items: {type: string}}
+  priorities: {type: array, items: {type: string}}
+  product_goal: {type: array, items: {type: string}}
+  player_experience: {type: array, items: {type: string}}
+  included_systems: {type: array, items: {type: object, additionalProperties: false, required: [system, decision], properties: {system: {type: string}, decision: {type: string}}}}
+  canonical_match: {type: array, items: {type: object, additionalProperties: false, required: [field, value], properties: {field: {type: string}, value: {type: string}}}}
+  initial_content: {type: array, items: {type: string}}
+  recipe_allowlist: {type: array, items: {type: string}}
+  unavailable_content: {type: array, items: {type: string}}
+  command_allowlist: {type: array, items: {type: object, additionalProperties: false, required: [command, availability], properties: {command: {type: string}, availability: {type: string}}}}
+  ui_surfaces: {type: array, items: {type: string}}
+  acceptance: {type: array, items: {type: object, additionalProperties: false, required: [area, criteria], properties: {area: {type: string}, criteria: {type: array, items: {type: string}}}}}
+  boundaries: {type: array, items: {type: object, additionalProperties: false, required: [name, rule], properties: {name: {type: string}, rule: {type: string}}}}
+  reconciliation: {type: array, items: {type: string}}

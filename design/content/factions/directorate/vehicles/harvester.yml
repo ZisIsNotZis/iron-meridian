@@ -1,0 +1,66 @@
+display_name: "Harvester"
+description: "Harvester Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "field"
+battlefield_roles: ["resource_extraction_and_return", "emergency_body_blocking_only_it_is_not_a_combat_unit"]
+hpmax: 300
+armor: "armors.light"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 3.5
+visionrange: 6
+alertrange: 8
+footprint:
+  radius_cells: 0.52
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.ore_refinery", "factions.directorate.buildings.vehicle_plant"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "No entity-specific override is currently defined; inherit Directorate faction assets."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "No entity-specific override is currently defined; inherit Directorate faction assets."
+fx:
+  identity: "No entity-specific override is currently defined; inherit Directorate faction assets."
+design:
+  tactical_identity: "Resource extraction and return; emergency body-blocking only. It is not a combat unit."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Light protection; it survives through escort, route choice, and early return rather than dueling."
+  support_behavior: "Extracts finite node resource and unloads it at the Directorate Ore Refinery; it does not create resource or passive income."
+  locomotion_behavior: "Tracked ground vehicle using the shared Idle → TravelToNode → Harvesting → TravelToProcessor → Unloading → Idle loop."
+  targetability_behavior: "Ground vehicle; ordinary sight and explicit economic priority feedback make it a valuable raid target."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  economy_behavior: "| Field | Value |"
+  design_rationale: "The extraction, cargo, node reservation, unloading, and repair behavior is Return | Valid at any time; cancels harvesting after the current tick and preserves cargo | Cut off the route, attack before unloading, or force a longer return Stop | Immediate movement stop; releases node reservation; cargo remains intact | Attack the stationary vehicle or deny its next route"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "economy"
+  prerequisites: ["factions.directorate.buildings.ore_refinery"]
+  cost:
+    resource: 700
+  buildtime: 180
+  capacity:
+    max_active: 2
+economy:
+  resource_type: "ore"
+  cargo_capacity: 200
+  extraction_amount: 20
+  extraction_period_ticks: 30
+  processor: "factions.directorate.buildings.ore_refinery"
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Return"
+    activation: "active"
+    movement_allowed: true
+    design:
+      interruption_readability: "Return | Valid at any time; cancels harvesting after the current tick and preserves cargo | Cut off the route, attack before unloading, or force a longer return"
+  - skill: "skills.default_lifecycle"
+    skill_name: "Stop"
+    activation: "active"
+    movement_allowed: true
+    design:
+      interruption_readability: "Stop | Immediate movement stop; releases node reservation; cargo remains intact | Attack the stationary vehicle or deny its next route"

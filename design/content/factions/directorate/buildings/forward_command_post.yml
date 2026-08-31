@@ -1,0 +1,47 @@
+display_name: "Forward Command Post"
+description: "Forward Command Post Directorate building card."
+status: "optional"
+faction: "factions.directorate"
+platform: "forward_command_deployable_site"
+tier: "advanced"
+hpmax: 700
+building_roles: ["second_local_construction_anchor_that_extends_planned_pressure_without_replacing_the_hq_or_granting_an_army_wide_aura"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 3, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Folding command mast, cable trenches, steel slab, red beacon, measured deployment klaxon, and a local construction-radius grid."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Folding command mast, cable trenches, steel slab, red beacon, measured deployment klaxon, and a local construction-radius grid."
+fx:
+  identity: "Folding command mast, cable trenches, steel slab, red beacon, measured deployment klaxon, and a local construction-radius grid."
+design:
+  counterplay: "Raid before deployment, interrupt setup, isolate the site, destroy it, or force the Mobile Command Post to pack."
+  defense_behavior: "Structure when deployed; visible to ordinary sight and structure-capable weapons; no hidden command state."
+construction:
+  cost:
+    resource: 0
+  buildtime: 45
+  builder: "factions.directorate.buildings.construction_yard"
+  prerequisites:
+    - object: "factions.directorate.vehicles.mobile_command_post"
+    - object: "factions.directorate.buildings.heavy_works"
+      state: "operational"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+  builder_range: 10
+production:
+  max_operational: 1
+  replacement_allowed: true
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false

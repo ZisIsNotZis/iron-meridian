@@ -1,0 +1,29 @@
+display_name: Tomas Rusk
+description: "Coalition intelligence officer and former signal technician. Rusk is useful because he distinguishes a contact, a last-known position, and a guess. He does not know the complete truth about the Aster incident."
+kind: character
+status: near-term
+source_document: design/world/characters/tomas-rusk.md
+source_references:
+  - ../../factions/coalition/README.md
+  - ../relationships.md
+identity:
+  role: intelligence officer
+  background: Former signal technician.
+  capabilities: Distinguishes a contact, a last-known position, and a guess.
+  limitations: Does not know the complete truth about the Aster incident.
+affiliation:
+  faction: factions.coalition
+  organization: Coalition intelligence
+  position: intelligence officer
+relationships:
+  - subject: Aster incident
+    nature: Does not know the complete truth about it.
+  - subject: reconnaissance claims
+    nature: Separates contacts, last-known positions, and guesses instead of presenting them as equivalent facts.
+presentation:
+  visual: pale field-gray uniform, cyan signal tab, compact map receiver.
+audio:
+  voice: clipped radio reports, confidence stated plainly, no omniscient narration.
+narrative:
+  use: reconnaissance warnings and optional mission reports
+  constraints: Every claim is grounded in an authored reveal or the player's observed state.

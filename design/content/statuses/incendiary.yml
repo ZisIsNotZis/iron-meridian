@@ -1,0 +1,15 @@
+display_name: "Incendiary Hazard"
+description: Incendiary area hazard status.
+status: designed
+kind: "status"
+references: [damages.incendiary]
+application:
+  duration_ticks: 60
+  application_rule: refresh
+stacking:
+  rule: unique_source_area
+  refreshes_duration: true
+design:
+  application_rules: The default hazard deals 10–20 damage/tick for 60 ticks.
+  resolution_rule: One hazard exists per source/area. Reapplication refreshes duration and does not create infinite stacks.
+  counterplay: Movement, spacing, or clearing the source counters the hazard.

@@ -1,0 +1,52 @@
+display_name: "Garrison Blockhouse"
+description: "Garrison Blockhouse Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "point_defense"
+tier: "established"
+hpmax: 700
+building_roles: ["local_anti_personnel_hardpoint_for_a_narrow_approach", "it_buys_time_not_universal_protection"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 2, height_cells: 2, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground", "damages.machine_gun_autocannon", "targetabilities.ground", "targetabilities.low_air"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Low armored casemate, exposed barrel movement, short tracer bursts, muzzle flash, and local warning klaxon."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Low armored casemate, exposed barrel movement, short tracer bursts, muzzle flash, and local warning klaxon."
+fx:
+  identity: "Low armored casemate, exposed barrel movement, short tracer bursts, muzzle flash, and local warning klaxon."
+design:
+  counterplay: "Armor, indirect fire, flanking, aircraft, and attacking its repair support."
+  defense_behavior: "Structure; ordinary sight and structure-capable attacks; barrel traverse and arc are visible."
+  design_rationale: "Machine gun/autocannon; ground personnel, low air; range 5.0, damage 24, period 18 ticks (0 windup / 3 recovery / 15 cooldown); projectile 14 cells/s, point hit, no tracking."
+construction:
+  cost:
+    resource: 550
+  buildtime: 300
+  builder: "factions.directorate.buildings.construction_yard"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+production:
+  max_operational: 4
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Machine gun/autocannon"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground", "targetabilities.low_air"]
+    attackrange: 5
+    attackdamage: 24
+    attackperiod: 18
+    delivery: "machine_gun_autocannon_ground_personnel_low_air_range_5_0_damage_24_period_18_ticks_projectile_14_cells_s_point_hit_no_tracking"

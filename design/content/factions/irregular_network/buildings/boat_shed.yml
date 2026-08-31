@@ -1,0 +1,27 @@
+display_name: Boat Shed
+description: "Optional Advanced coastal production and extraction site. 3x2 shoreline-facing footprint with one water launch and one land interaction cell; every footprint cell buildable and launch connects to navigable shallow water. Construction 500 resource / 300 ticks, operational Safehouse, Field Workshop, and builder required on suitable shoreline. Body 480 HP with deliberate light naval/structure protection, vulnerable to shore fire and naval attacks. Structure targetability and ordinary vision; launch activity reveals site and route. One FIFO queue for Skiff Cell, Cutwater, and Diver Team coastal package; no deep-water navy or air production; queued work lost on destruction. Emergency haul repairs one docked Network coastal asset at 3 HP/s within one launch cell, no cooldown while docked, interrupted by separation/destruction; no static weapon or area defense. Persistent shared lifecycle."
+status: designed
+scope: near_term
+faction: factions.irregular_network
+platform: coastal_production
+tier: advanced
+building_roles: [manufacturing, sustainment]
+hpmax: 480
+armor: armors.light
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 6.0
+alertrange: 8.0
+footprint: {width_cells: 3, height_cells: 2, facings: cardinal, interaction_cells: 2}
+placement: {terrain: shoreline_buildable, anchor: construction_radius, water_access: true, facing: cardinal}
+construction: {cost: {resource: 500}, buildtime: 300, prerequisites: [{object: factions.irregular_network.buildings.safehouse}, {object: factions.irregular_network.buildings.field_workshop}]}
+exits: [{exit_name: water_launch, direction: any, exit_type: naval, capacity: 1, blocked_behavior: pause}]
+production: {queues: [{queue_name: coastal, category: naval, capacity: 1, exit_name: water_launch, blocked_behavior: pause}], max_operational: 1, replacement_allowed: false, replacement_scope: none}
+repair: {available: true, target: allied_units, rate_per_tick: 3, range_cells: 1.0, interrupted_by_damage: true}
+lifecycle: {states: [blueprint, constructing, operational, damaged, destroyed], destruction_behavior: remove}
+presentation: {fallback_policy: inherit, silhouette: "Half-submerged warehouse, rope ramps, and mismatched pontoons; wake and launch clatter make production readable from shore.", readability: "Shoreline placement, launch cell, queue, repair, damage, and destruction remain clear."}
+audio: {identity: "Rope ramps, launch clatter, wake, construction, repair, damage, and destruction use faction fallback."}
+fx: {identity: "Wake and launch route reveal coastal production and extraction."}
+design: {construction_behavior: "500 resource, 300 ticks, Safehouse/Field Workshop/builder and suitable shoreline required.", production_behavior: "One coastal FIFO queue for Skiff Cell, Cutwater, and Diver Team; no deep-water navy or air queue; queued work lost on destruction.", defense_behavior: "No static weapon or area defense; 480 HP light naval/structure protection, vulnerable to shore/naval fire.", capture_behavior: "No capture behavior is declared.", repair_behavior: "Emergency haul repairs one docked coastal asset at 3 HP/s in launch cell; separation/destruction interrupts.", lifecycle_behavior: "Persistent shared construction lifecycle; no expiry.", player_decision: "Spend infrastructure on a shoreline flank or accept land roster limits.", counterplay: "Patrol launch cell, attack before completion, and punish exits with aircraft or shore fire.", visual_identity: "Half-submerged warehouse, rope ramps, mismatched pontoons.", audio_identity: "Launch clatter and wake.", fx_identity: "Wake and visible launch route.", design_rationale: "Coastal production is map-gated and never creates a general naval or air tree."}

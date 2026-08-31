@@ -1,0 +1,26 @@
+display_name: Hideout
+description: "Core Established temporary recovery and concealment site. 2x2 fixed-facing footprint with one infantry interaction cell; place near Network builder or active Safehouse, never on routes, resources, or objectives. Construction 300 resource / 180 ticks, operational Safehouse and builder required. Body 350 HP light armor, no wreck/refund; structure targetability is detailed only after detection/proximity while concealed, and setup, recovery, attack, or area damage reveal it. No production, repair, or weapon. One nearby infantry group recovers 4 HP/s while stationary and out of combat; no revival, vehicle repair, or global healing. Lie low after 60 quiet ticks, concealment within 1.5 cells for 180 ticks, visible 30-tick expiry countdown, sensor or attack reveals; temporary lifecycle expires and is removed without wreck/refund."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: temporary_site
+tier: established
+building_roles: [sustainment, defense]
+hpmax: 350
+armor: armors.light
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 5.0
+alertrange: 7.0
+footprint: {width_cells: 2, height_cells: 2, facings: fixed, interaction_cells: 1}
+placement: {terrain: buildable_ground, anchor: network_builder_or_safehouse, route_exclusion: true, resource_exclusion: true, objective_exclusion: true, facing: fixed}
+construction: {cost: {resource: 300}, buildtime: 180, prerequisites: [{object: factions.irregular_network.buildings.safehouse}]}
+repair: {available: true, target: allied_units, rate_per_tick: 4, range_cells: 1.5, interrupted_by_damage: true}
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: lie_low, activation: automatic, setup_ticks: 60, active_ticks: 180, target: self, targetradius: 1.5, interruption_conditions: [detection, attack]}]
+lifecycle: {states: [blueprint, constructing, operational, expiring, removed], destruction_behavior: remove, expiry_ticks: 180, expiry_warning_ticks: 30}
+presentation: {fallback_policy: inherit, silhouette: "Collapsed shed, canvas roof, and covered bicycle tracks; concealment removes hard edges locally but leaves cloth movement and faint smoke.", readability: "Setup, concealment, recovery, expiry, damage, and destruction remain visible."}
+audio: {identity: "Canvas movement, faint smoke, recovery, construction, damage, and destruction use faction fallback."}
+fx: {identity: "Broken local silhouette, cloth movement, and faint smoke show concealment without invisibility."}
+design: {construction_behavior: "300 resource, 180 ticks, Safehouse and builder required; setup is visible.", production_behavior: "No queue or unit dependency beyond declared advanced prerequisites.", defense_behavior: "No static weapon or area defense; 350 HP light armor; search, detection, and area attacks are valid.", capture_behavior: "No capture behavior is declared.", repair_behavior: "One nearby infantry group recovers 4 HP/s while stationary/out of combat; no revival or vehicle repair.", lifecycle_behavior: "Temporary blueprint to constructing, operational, expiring, removed; 30-tick warning and no wreck/refund.", player_decision: "Invest in a forward safe pocket or keep units mobile and avoid a fixed target.", counterplay: "Search likely cells, detect, area attack, and wait out finite lifecycle.", visual_identity: "Collapsed shed, canvas roof, covered bicycle tracks.", audio_identity: "Canvas and faint smoke cues.", fx_identity: "Local broken silhouette and expiry countdown.", design_rationale: "Concealment changes information only; it is local, temporary, and never invulnerability."}

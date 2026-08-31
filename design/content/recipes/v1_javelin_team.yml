@@ -1,0 +1,14 @@
+display_name: "V1 Javelin Team Recipe"
+description: "Reusable recipe definition."
+status: core
+kind: "recipe"
+product: factions.coalition.infantry.javelin_team
+producer: factions.coalition.buildings.infantry_center
+category: "infantry"
+availability: scenarios.v1_meridian_crossing
+prerequisites: [{object: factions.coalition.buildings.infantry_center, state: operational}]
+references: [factions.coalition.infantry.javelin_team, factions.coalition.buildings.infantry_center]
+player_exposed: true
+product_quantity: 1
+design:
+  meaning: Queues one Javelin Team in an operational Infantry Center. Cost, buildtime, capacity, and replacement rules come from the Javelin card.

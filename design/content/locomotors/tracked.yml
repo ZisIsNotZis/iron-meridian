@@ -1,0 +1,13 @@
+display_name: "Tracked"
+description: Deliberate all-terrain vehicle movement.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [grounded, moving, reversing, boarding, interacting]
+transition_rules:
+  - {transition: harvesting, owner: carrier}
+  - {transition: construction, owner: carrier}
+  - {transition: deployed, owner: carrier, requires_stop: true, carrier_disabled_weapons_fire: false}
+design:
+  movement_rules: Tracked units use broad ground access with shared ground acceleration and deliberate turning. Roads do not remove turning or stopping time.
+  interaction_rules: Tracked units use vehicle collision, separation, and crush rules. They cannot enter water unless a separate amphibious or transforming profile is declared. A deployed tracked carrier must stop before its state transition and cannot fire weapons that its carrier disables during the transition.

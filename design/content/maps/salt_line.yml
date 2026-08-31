@@ -1,0 +1,60 @@
+display_name: Salt Line
+description: Near-term two-player land map with longer lanes and a visible economy-versus-army choice.
+status: near-term
+design:
+  tactical_identity: Long lanes reward scouting while the south resource competes with an objective commitment.
+  player_decision: Contest the objective quickly or secure the south resource before committing.
+  visual_identity: Mirrored salt-line battlefield with open sightlines and four cover landmarks.
+  rationale: The wider grid is the only geometry variation; shared economy, production, objective, fog, and construction rules remain authoritative. The south resource is reachable before the objective but never needed to win, and the map retains a clear retreat route and enough home buildable area for recovery.
+  scope: near_term
+dimensions:
+  width: 72
+  height: 36
+  cell_units: cell
+  distance_units_per_cell: 1000
+coordinate_contract:
+  cell_index_bounds: x=0..71,y=0..35
+  bounds_order: [min_x, max_x, min_y, max_y]
+  world_point_center: [36, 18]
+  cell_center: '[x+0.5,y+0.5]'
+  reflection: {world_point: 'R(x,y)=(72-x,y)', cell_index: 'R(x,y)=(71-x,y)'}
+layers:
+  authoritative: Cell flags using the shared map convention; decorative salt-pan texture is non-authoritative.
+  border: {x_cells: [0, 71], y_cells: [0, 35], terrain: edge, walkable: true, buildable: false}
+  layer_precedence: [playable, border, cover, no_build, primary_route, base_pocket, decorative]
+  base_rules: [Shared two-player land contract applies., Long lanes are open sightlines., No route, cover block, or resource creates a faction-only advantage., No water, elevation, hazard, or random resource layer is authored.]
+  cover_rectangles:
+    - {id: north_west, center: [24, 9], size_cells: [3, 2], function: Asymmetric-looking north visual landmark preserving mirrored route lengths., cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none}
+    - {id: north_east, center: [48, 9], size_cells: [3, 2], function: 'Reflection of north_west, preserving mirrored route lengths.', cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, reflection_of: north_west}
+    - {id: south_west, center: [48, 27], size_cells: [3, 2], function: Asymmetric-looking south visual landmark preserving mirrored route lengths., cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none}
+    - {id: south_east, center: [24, 27], size_cells: [3, 2], function: 'Reflection of south_west, preserving mirrored route lengths.', cover: true, traversable: true, line_of_sight_blocking: true, damage_modifier: none, reflection_of: south_west}
+  route_bands:
+    - {id: north, bounds: [14, 58, 8, 10], intended_use: Long mostly open sightline., flags: [no_build, primary_route]}
+    - {id: center, bounds: [14, 58, 17, 20], intended_use: Fastest objective approach., flags: [no_build, primary_route]}
+    - {id: south, bounds: [14, 58, 27, 29], intended_use: South resource approach and economy-versus-army route., flags: [no_build, primary_route]}
+  base_pockets:
+    - {side: west, bounds: [4, 12, 14, 21], buildable: true}
+    - {side: east, bounds: [60, 68, 14, 21], buildable: true}
+  exclusions: {rule: 'Shared objective and resource exclusion rules apply; exclusion cells remain walkable unless another layer says otherwise.', objective: 'Primary objective at (36,18) has capture radius 4 and no-build radius 8.', resource_nodes: 'Home nodes at (11,10) and (61,10) have 24000 reserve; contested node at (36,28) has 12000 reserve and 2-cell exclusion.'}
+  deferred: [air topology, naval topology, elevation, hazards, random resources]
+anchors:
+  player:
+    - {id: base_pocket, west: {bounds: [4, 12, 14, 21]}, east: {bounds: [60, 68, 14, 21]}, anchor_role: Home buildable areas with recovery space.}
+    - {id: hq_footprint, west: {bounds: [4, 7, 16, 19]}, east: {bounds: [65, 68, 16, 19]}, anchor_role: Mirrored HQ footprints.}
+    - {id: home_resource_node, west: {point: [11, 10]}, east: {point: [61, 10]}, reserve: 24000, interaction_point_rule: nearest_clear_cell, anchor_role: Mirrored home resource nodes.}
+  central:
+    - {id: objective, point: [36, 18], capture_radius_cells: 4, no_build_radius_cells: 8, rule: Central objective; shared objective behavior applies.}
+    - {id: contested_resource_node, point: [36, 28], exclusion_radius_cells: 2, reserve: 12000, rule: Reachable before the objective but never required to win; no respawn.}
+  resource_interaction_point_rule: Nearest clear cell under the shared deterministic neighbor rule.
+routes:
+  tactical_intent: Long lanes increase scouting value; center reaches the objective fastest and south trades resource exposure for expansion.
+  waypoints:
+    - {id: north, points: [[14, 9], [36, 9], [58, 9]]}
+    - {id: center, points: [[14, 18.5], [36, 18.5], [58, 18.5]]}
+    - {id: south, points: [[14, 28], [36, 28], [58, 28]]}
+  connectivity: [A clear retreat route remains from the objective to each base., Every route remains reachable by V1 ground locomotors., Unsupported attacks are visible through the long lanes.]
+vision:
+  rules: [Shared basic fog and sensing rules apply., Long open sightlines make unsupported attacks easy to see., Cover changes line of sight only., Decorative salt-pan texture never affects sensing or pathfinding.]
+validation:
+  invariants: [The wider 72x36 grid is the only geometry variation., Cover blocks preserve mirrored route lengths., Starting economies, production, objective behavior, fog, and construction legality remain shared., No faction-only advantage, unlisted hazard, waterway, or random resource layer exists.]
+  acceptance_target: Near-term map supporting two viable plans and recovery space around both home bases.

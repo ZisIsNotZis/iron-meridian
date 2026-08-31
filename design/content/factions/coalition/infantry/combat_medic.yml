@@ -1,0 +1,33 @@
+display_name: "Combat Medic"
+description: "Combat Medic migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: infantry
+tier: established
+battlefield_roles: ["infantry_sustainment", "light_debuff_cleansing_supports_personnel_and_nearby_infantry", "not_vehicles_or_structures"]
+hpmax: 150
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: ["targetabilities.ground"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 3
+visionrange: 6.5
+alertrange: 8
+skill_bindings: [{skill: "skills.default_lifecycle", skill_name: "Field triage", activation: "active", interruption_conditions: ["movement", "emp"]}]
+production: {cost: {resource: 180}, buildtime: 75, producer: "factions.coalition.buildings.infantry_center", queue: "infantry", category: "established"}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "locomotors.default_ground", "targetabilities.ground"]
+design:
+  tactical_identity: "Infantry sustainment primary; light debuff cleansing secondary. Supports personnel and nearby infantry, not vehicles or structures."
+  offense_behavior: "Small sidearm only; personnel armor, low health. Healing is a support interaction rather than damage output."
+  locomotion_behavior: "Foot; keeps pace with line troops but has no special traversal."
+  targetability_behavior: "Ground/personnel; ordinary vision and fragile personnel protection. Enemies can prioritize it visibly."
+  acquisition_behavior: "The sidearm uses Direct acquisition against an observed legal ground-personnel target. Field triage uses a friendly ground-personnel target selected within 2.5 cells."
+  lock_behavior: "The sidearm has no lock or post-launch tracking. Triage is a 90-tick command-linked channel; movement, damage, EMP, or range loss breaks it."
+  production_behavior: "Cost: `180 resource`; build time: `75 ticks`; facility: `Infantry Center`; prerequisites: `Coalition HQ operational`; queue/category: `infantry / established`; replacement/capacity: `no per-unit cap; one FIFO infantry queue; replacement competes with new units`."
+  player_decision: "Keep the medic behind the line but within reach, deciding when sustain is worth exposing the channel. Counter with focus fire, area damage, disruption, or forcing separation."
+  visual_identity: "White-red medical pack with Coalition blue; healing is a restrained connecting pulse and rising shield-like medical glyph, never a full-screen beam."
+  design_rationale: "# Combat Medic\n\n## Gameplay identity\n\n- **Roles:** Infantry sustainment primary; light debuff cleansing secondary. Supports personnel and nearby infantry, not vehicles or structures.\n- **Locomotion:** Foot; keeps pace with line troops but has no special traversal.\n- **Targetability:** Ground/personnel; ordinary vision and fragile personnel protection. Enemies can prioritize it visibly.\n- **Offense/defense:** Small sidearm only; personnel armor, low health. Healing is a support interaction rather than damage output.\n- **Skill:** **Field triage** — channels a short-range heal on one squad and removes suppression; channel breaks on movement, damage, or range loss.\n- **Production:** Cost: `180 resource`; build time: `75 ticks`; facility: `Infantry Center`; prerequisites: `Coalition HQ operational`; queue/category: `infantry / established`; replacement/capacity: `no per-unit cap; one FIFO infantry queue; replacement competes with new units`.\n- **Player experience:** Keep the medic behind the line but within reach, deciding when sustain is worth exposing the channel. Counter with focus fire, area damage, disruption, or forcing separation.\n- **Asset design:** See [entity asset manifest](assets.md).\n\n## Entity specification\n\nIntentional support override: lower HP and negligible weapon damage than the entity-owned infantry role values.\n\n| HP | Armor | Move | Footprint radius | Vision | Alert radius |\n|---:|---|---:|---:|---:|---:|\n| 150 | Personnel | 3.0 cells/s | 0.22 cell | 6.5 cells | 8.0 cells |\n\nThe mounted weapon is [Service Pistol](../../../../../weapons/service-pistol/service-pistol.md).\nIts concrete damage, range, delivery, and timing are defined only by that\nfirst-class weapon object.\n\n**Field triage:** channels one allied ground-personnel target within 2.5 cells for 90 ticks; restores 6 HP per second and removes 10 suppression points per second. 30-tick setup, interrupted by movement, damage, EMP, or range loss; 180-tick cooldown.\n\n### Acquisition and lock semantics\n\n- **Vision / alert radius:** 6.5 / 8.0 cells; alerting cannot extend the sidearm's 3.0-cell range or the triage range.\n- **Acquisition:** The sidearm uses Direct acquisition against an observed legal ground-personnel target. Field triage uses a friendly ground-personnel target selected within 2.5 cells.\n- **Lock / tracking:** The sidearm has no lock or post-launch tracking. Triage is a 90-tick command-linked channel; movement, damage, EMP, or range loss breaks it.\n\n\n### Counterplay\n\nFocus the medic, separate it from the squad, use area damage or EMP, or force it to move. The short range and channel interruption prevent healing from being a safe backline aura."
+presentation: {fallback_policy: "inherit", silhouette: "White-red medical pack with Coalition blue; healing is a restrained connecting pulse and rising shield-like medical glyph, never a full-screen beam.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

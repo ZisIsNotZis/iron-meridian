@@ -1,0 +1,32 @@
+kind: world_history
+source_document: design/world/history.md
+union_bargain:
+  polity: "The Meridian Union was a federation of industrial republics, port cities, agricultural provinces, and autonomous mountain districts."
+  founding_conditions: "After a generation of famine, border insecurity, and infrastructure collapse, the founding settlement gave the central government control of defense, currency, rail scheduling, and strategic industry."
+  regional_exchange: "In exchange, regions received guaranteed investment, local administrations, and a predictable share of state contracts."
+  success: "The bargain worked while growth continued."
+  achievements: "Rail electrification, machine-tool plants, hydroelectric dams, and a state technical-education system made the Union a credible regional power."
+  central_role: "It also made the center indispensable: one treasury, one rail timetable, and one security bureaucracy bound otherwise different regions together."
+stagnation_and_karsk_war:
+  period: "By the late 1980s"
+  conditions: "Export revenue fell, maintenance was deferred, and provincial officials learned to survive by hiding production and tax figures."
+  war: "A short border war in the Karsk Pass exposed shortages and contradictory chains of command."
+  aftermath: "Veterans returned to towns that already distrusted the capital; the security ministries used the war to justify emergency procurement and tighter communications control."
+  directorate_interpretation: "The Directorate’s senior officers cite the war as proof that decentralization invites invasion."
+  coalition_interpretation: "Coalition leaders cite it as proof that secrecy and centralized procurement waste lives."
+reform_failure:
+  attempt: "The Reform Parliament attempted to replace central appointments with negotiated regional authority, publish the treasury, and divide the security ministries."
+  directorate_response: "The Directorate accepted economic reform but rejected a timetable that would have transferred command of strategic arsenals."
+  regional_response: "Several regional governments then withheld tax and fuel allocations until the parliament received real authority."
+  result: "The result was a state that still had armies and factories but no trusted answer to the question: who may issue a lawful order?"
+meridian_crisis:
+  location: Aster_Rail_Command_Center
+  event: "Delegates from the parliament and the security ministries met to settle control of fuel routing. An explosion killed the delegation, destroyed the dispatch archive, and severed the main east-west communications trunk."
+  evidence: "Each side released evidence implicating the other. Neither investigation is conclusive; the surviving records can support several plausible stories."
+  military_split: "Emergency decrees split the armed forces. The Directorate secured the central arsenals, treasury servers, and inner rail belt. The Coalition retained regional commands, ports, and mobile communications units."
+  irregular_network: "Local authorities, smugglers, defectors, and technical crews began hiding people and equipment from both sides. This mesh became the Irregular Network."
+  stakes: "The war is therefore a succession crisis, not a fight to conquer an invented globe. Rail junctions, fuel depots, factories, ports, dams, broadcast stations, and evidence from Aster matter because they determine who can govern after the shooting stops."
+story_posture:
+  central_question: "whether a broken federation can be reunited without restoring the machinery that broke it"
+  moral_frame: "No faction is secretly morally pure, and no single revelation removes the need for political choice."
+  campaign_rule: "Campaign missions should show the human and logistical cost of each doctrine through objectives, briefings, and aftermath rather than long exposition."

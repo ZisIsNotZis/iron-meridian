@@ -1,0 +1,85 @@
+display_name: "Monitor"
+description: "Monitor Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "naval"
+tier: "established"
+battlefield_roles: ["armored_shore_bombardment_and_naval_line_anchor", "defense_against_surface_ships"]
+hpmax: 800
+armor: "armors.heavy"
+locomotor: "locomotors.surface_naval"
+targetability: ["targetabilities.naval_surface"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 1.8
+visionrange: 7
+alertrange: 9
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.7
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.heavy", "sensing.default_sensing", "collisions.default_collision", "targetabilities.naval_surface", "locomotors.surface_naval", "damages.siege_structural", "targetabilities.ground", "targetabilities.structure", "damages.machine_gun_autocannon", "targetabilities.high_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.naval_yard"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Low armored superstructure, naval-gray plating, muzzle shock over water, and deep coastal impact audio."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Low armored superstructure, naval-gray plating, muzzle shock over water, and deep coastal impact audio."
+fx:
+  identity: "Low armored superstructure, naval-gray plating, muzzle shock over water, and deep coastal impact audio."
+design:
+  tactical_identity: "Armored shore bombardment and naval line anchor; secondary defense against surface ships."
+  player_decision: "Secure a coast before turning the ship into a siege gun, or stay mobile and lose the strongest bombardment. It fails when isolated in open water."
+  counterplay: "Submarines, aircraft, fast attack craft, flanking, and forcing it to move before the barrage completes."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Naval protection with strong frontal profile; vulnerable to submarines, aircraft, and flanking surface fire."
+  support_behavior: "Converts secured water into shore pressure for a land assault; it cannot protect a fleet from every domain."
+  locomotion_behavior: "Naval surface; slow turn and deliberate attack approach, with no land transition."
+  targetability_behavior: "Naval surface; visible to ordinary sight and naval weapons, with air attack also valid."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Monitor uses surface-naval targetability and shared area/structure resolution; Anchor Barrage is a deliberate stationary override. Main gun | Siege/structural; naval surface, ground light/heavy, structure | 8.0 / 120 / 90 ticks | Projectile 7 cells/s; area 0.5 cells; no tracking Deck gun | Machine gun/autocannon; naval surface, low/high air | 5.0 / 18 / 30 ticks | Projectile 14 cells/s; point; no tracking Anchor Barrage | 30-tick setup; 120-tick active; 30-tick recovery; 240-tick cooldown; +3.0 range and +25% structural damage, movement disabled; 30-tick impact warning | Force movement, submarines, aircraft, flank, attack before setup"
+production:
+  producer: "factions.directorate.buildings.naval_yard"
+  queue: "default_queue"
+  category: "shore_bombardment"
+  prerequisites: ["factions.directorate.buildings.naval_yard", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 600
+  buildtime: 165
+  capacity:
+    max_active: 4
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Main gun"
+    damage: "damages.siege_structural"
+    targetability: ["targetabilities.ground", "targetabilities.naval_surface", "targetabilities.structure"]
+    attackrange: 8
+    attackdamage: 120
+    attackperiod: 90
+    delivery: "projectile_7_cells_s_area_0_5_cells_no_tracking"
+    design:
+      tactical_use: "Main gun | Siege/structural; naval surface, ground light/heavy, structure | 8.0 / 120 / 90 ticks | Projectile 7 cells/s; area 0.5 cells; no tracking"
+      counterplay: "Submarines, aircraft, fast attack craft, flanking, and forcing it to move before the barrage completes."
+  - weapon: "weapons.default_resolution"
+    mount_name: "Deck gun"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.high_air", "targetabilities.naval_surface"]
+    attackrange: 5
+    attackdamage: 18
+    attackperiod: 30
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Deck gun | Machine gun/autocannon; naval surface, low/high air | 5.0 / 18 / 30 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Submarines, aircraft, fast attack craft, flanking, and forcing it to move before the barrage completes."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Anchor Barrage"
+    activation: "active"
+    setup_ticks: 30
+    active_ticks: 120
+    recovery_ticks: 30
+    cooldown_ticks: 240
+    movement_allowed: false
+    design:
+      player_decision: "Secure a coast before turning the ship into a siege gun, or stay mobile and lose the strongest bombardment. It fails when isolated in open water."
+      counterplay: "Submarines, aircraft, fast attack craft, flanking, and forcing it to move before the barrage completes."
+      interruption_readability: "Anchor Barrage | 30-tick setup; 120-tick active; 30-tick recovery; 240-tick cooldown; +3.0 range and +25% structural damage, movement disabled; 30-tick impact warning | Force movement, submarines, aircraft, flank, attack before setup"

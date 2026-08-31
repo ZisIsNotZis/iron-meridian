@@ -1,0 +1,74 @@
+kind: persistence_contract
+source_document: design/persistence/README.md
+ownership: "Durable artifacts, playback, storage, migration, corruption, and compatibility. Architecture owns authoritative state, ordering, and canonical serialization. Modding owns package resolution; this domain stores the resulting content digest."
+scope: {v1: in_memory_accepted_command_log_and_per_tick_digest_only, near_term: local_manual_saves_campaign_checkpoints_replay_import_export, far_vision: portable_verified_artifacts_and_recovery_snapshots}
+artifact_types:
+  save: resumable_snapshot
+  replay: initial_setup_plus_accepted_commands
+  checkpoint: campaign_owned_save_at_declared_safe_point
+  recovery_snapshot: future_operational_snapshot_plus_authoritative_command_suffix
+  excluded_payload: [rendered_frames, camera_ui_state, audio, rejected_commands, credentials, private_client_views, wall_clock_timestamps]
+canonical_envelope:
+  status: illustrative_near_term_artifact_using_v1_scenario
+  fields: [format, artifactId, artifactKind, createdAt, gameVersion, schemaVersion, ruleset, contentManifest, scenario, map, seed, tick, payload, integrity]
+  example:
+    format: iron_meridian_save_1
+    artifactId: save_0001
+    artifactKind: save
+    createdAt: 2026_08_26T00:00:00Z
+    gameVersion: 0.1.0
+    schemaVersion: 1
+    ruleset: {id: iron_meridian_v1, version: 1}
+    contentManifest: {digest: sha256_ellipsis, packages: [{id: iron_meridian_base, version: 0.1.0}]}
+    scenario: {id: scenarios.v1_meridian_crossing, version: 1}
+    map: {id: maps.meridian_crossing, version: 1}
+    seed: 0x0000000000000000
+    tick: 18420
+    payload: authoritative_payload
+    integrity: {algorithm: sha256, value: ellipsis}
+  canonicalization: [UTF_8, validate_before_compress, stable_ids_arrays_integers_fixed_point_hashes]
+  metadata: "artifactId and createdAt are display labels only; integrity hashes canonical authoritative envelope excluding integrity and display metadata."
+  extensions: {save: .imsave, replay: .imreplay, checkpoint: .imcheckpoint, authority: format_and_artifactKind}
+  bounds: [decompression_size, parsed_size]
+save_payload:
+  snapshot_fields: [tick, phase, nextEntityId, nextEventId, entities, players, resources, productionQueues, construction, objectives, terrainState, rngStreams, pendingCommands, eventCursor]
+  example: {tick: 18420, phase: running, nextEntityId: 97, nextEventId: 412, eventCursor: 412}
+  additional_required_for_continuation: [orders, reservations, cooldowns, status_timers, cargo, construction_progress, required_visibility_state, RNG_streams, event_sequencing]
+  result: null
+  resumePolicy: manual
+  invariants: [stable_id_sorted_entities_and_events, snapshot_tick_equals_envelope_tick, validate_before_write, validate_after_load]
+  campaign_metadata: [mission_id, completed_objective_ids, declared_unlocks]
+  prohibited: [credentials, private_client_views]
+replay_payload:
+  initial_setup: [scenario, map, players, seed, initialStateDigest]
+  commands: accepted_canonical_commands
+  verification: {checkpoints: [{tick: 0, digest: sha256_ellipsis}], final: {tick: 36000, digest: sha256_ellipsis, result: victory}}
+  viewer: {annotations: [], markers: []}
+  rules: [accepted_commands_authoritative, rejected_commands_diagnostic_only, initial_setup_and_content_digest_mandatory, long_replays_verified_by_checkpoints, short_replays_may_use_final_verification]
+  playback: "Uses same headless simulation, stops at first digest mismatch, reports expected/actual and artifact/build identity; unverified playback is visibly marked and cannot claim authenticity."
+viewer_local: [speed, pause, camera, selection, follow_mode, fog_display, annotations]
+fog_rule: "Uses recorded permitted perspective; all-visible perspective only when authored with that disclosure; missing hidden data cannot be reconstructed from commands."
+storage:
+  save_boundary: between_ticks_without_mutating_simulation
+  atomic_write: "Bounded temporary record, verify, atomically replace named slot; failure leaves prior artifact."
+  autosaves: "When enabled, rotate auto-1 through auto-3 at safe boundaries and never overwrite manual slots."
+  separation: "Campaign and match saves are distinct and cannot be interchanged because maps happen to match."
+  browser: "IndexedDB or another origin-scoped durable store; API-independent contract."
+  capacity: [available, reserved, used, failed]
+  quotas: [per_artifact, total]
+  quota_failure: "Does not pause or corrupt match; export is portable fallback; clearing browser data may remove local slots and never implies cloud backup."
+load_transaction:
+  steps: [read_within_limits, parse_and_verify_integrity, resolve_exact_content_and_ruleset, apply_named_migration_to_isolated_copy, validate_references_ids_invariants_tick, replace_local_state_after_all_checks]
+  failures_leave_untouched: [current_state, prior_slots]
+  errors: [file_unreadable, format_invalid, integrity_failed, quota_exceeded, content_missing, content_mismatch, schema_unsupported, migration_failed, snapshot_invalid, replay_diverged]
+compatibility:
+  axes: [artifact_schema, ruleset, content_digest, game_build]
+  direct_load: all_axes_match
+  migration: [source, target, preconditions, pure_transformation, postconditions, fixture_ids]
+  forbidden_migration: [invent_balance_values, change_command_meaning, resolve_ambiguous_mod_conflicts, silently_change_content]
+  content_migration: affected_objects_and_source_target_digests
+  failed_migration: preserve_original_bytes
+  replay: preserve_accepted_command_semantics_and_verification_or_mark_unverified
+  save: preserve_continuation_equivalence_or_refuse_load
+  report: [source, target, steps, result]
+privacy: "Export copies bytes and integrity data. Future sharing stores opaque artifacts; clients verify after download. Publishing defaults to replay data and public annotations, never private save/campaign/profile data, and requires explicit perspective/disclosure choice. Labels, annotations, and asset references are escaped and bounded and cannot execute code or load paths."

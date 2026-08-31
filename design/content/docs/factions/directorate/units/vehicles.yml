@@ -1,0 +1,4 @@
+display_name: "Directorate Vehicles"
+description: "The main expression of planned pressure: scout, line tank, assault tank, anti-armor, siege, repair, anti-air, and utility vehicles."
+source_document: "design/factions/directorate/units/vehicles/README.md"
+platform_constraints: ["MCV and Harvester are core utility vehicles and excluded from the combat count.", "The core combat roster has one clear unit for each named job; optional units deepen doctrine without duplicating those jobs."]

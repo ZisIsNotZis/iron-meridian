@@ -1,0 +1,72 @@
+display_name: "Siege Grenadiers"
+description: "Siege Grenadiers Directorate unit card."
+status: "optional"
+faction: "factions.directorate"
+platform: "infantry"
+tier: "advanced"
+battlefield_roles: ["portable_area_denial_and_light_structural_pressure", "anti_personnel_support"]
+hpmax: 160
+armor: "armors.personnel"
+locomotor: "locomotors.default_ground"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.2
+visionrange: 6.5
+alertrange: 8
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.24
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.default_ground", "damages.incendiary", "targetabilities.structure", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.barracks", "factions.directorate.buildings.munitions_foundry"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Compact mortar frames, shell racks, orange incendiary arcs, and regimented reload calls."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Compact mortar frames, shell racks, orange incendiary arcs, and regimented reload calls."
+fx:
+  identity: "Compact mortar frames, shell racks, orange incendiary arcs, and regimented reload calls."
+design:
+  tactical_identity: "Portable area denial and light structural pressure; secondary anti-personnel support."
+  player_decision: "Create a temporary denial zone with infantry that can occupy terrain, accepting setup risk and limited reach. It fails when rushed or forced to relocate."
+  counterplay: "Rush the setup, counter-battery it, disperse, or use aircraft and fast vehicles to attack its flanks."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Personnel protection; poor against direct assault and air attack."
+  support_behavior: "Provides a portable denial alternative to Ballista; it contributes no repair, command, or detection effect."
+  locomotion_behavior: "Foot; slow while carrying launchers and stationary while deployed."
+  targetability_behavior: "Ground personnel; ordinary sight. Deployment produces an obvious firing signature."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Shared area falloff and incendiary rules apply. The deployed range and weapon timing are deliberate optional-unit overrides. Mortar grenade | Explosive + incendiary; ground personnel, light, structure | 8.0 / 60 + 10/tick / 90 ticks | Projectile 7 cells/s; area 1.0 cells; no tracking Set Mortars | 45-tick setup; active until packed; 45-tick recovery; 210-tick cooldown; +2.0 range, movement disabled; impact warning 30 ticks | Rush setup, counter-battery, disperse, or attack flank"
+production:
+  producer: "factions.directorate.buildings.barracks"
+  queue: "default_queue"
+  category: "indirect_fire_infantry"
+  prerequisites: ["factions.directorate.buildings.barracks", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.munitions_foundry"]
+  cost:
+    resource: 360
+  buildtime: 135
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Mortar grenade"
+    damage: "damages.incendiary"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 8
+    attackdamage: 60
+    attackperiod: 90
+    delivery: "projectile_7_cells_s_area_1_0_cells_no_tracking"
+    design:
+      tactical_use: "Mortar grenade | Explosive + incendiary; ground personnel, light, structure | 8.0 / 60 + 10/tick / 90 ticks | Projectile 7 cells/s; area 1.0 cells; no tracking"
+      counterplay: "Rush the setup, counter-battery it, disperse, or use aircraft and fast vehicles to attack its flanks."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Set Mortars"
+    activation: "active"
+    setup_ticks: 45
+    recovery_ticks: 45
+    cooldown_ticks: 210
+    movement_allowed: false
+    design:
+      player_decision: "Create a temporary denial zone with infantry that can occupy terrain, accepting setup risk and limited reach. It fails when rushed or forced to relocate."
+      counterplay: "Rush the setup, counter-battery it, disperse, or use aircraft and fast vehicles to attack its flanks."
+      interruption_readability: "Set Mortars | 45-tick setup; active until packed; 45-tick recovery; 210-tick cooldown; +2.0 range, movement disabled; impact warning 30 ticks | Rush setup, counter-battery, disperse, or attack flank"

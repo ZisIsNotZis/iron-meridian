@@ -1,0 +1,10 @@
+display_name: "Low-Air Targetability"
+description: Low-air target-domain profile.
+status: designed
+kind: "targetability"
+references: [targetabilities.ground, targetabilities.high_air]
+domains: [low_air]
+additional_domains: {allowed: [ground, high_air], owner: carrier, declaration: carrier_declared}
+design:
+  state_rules: Low-air is a transitional or deliberately low flight state, not a universal aircraft property. Ground and anti-air weapons may engage only when their weapon object accepts low_air; takeoff, landing, and low-hover transitions declare their duration and interruption behavior.
+  feedback: The state is visibly distinct from stable ground and high-air, and the player can understand why a weapon can or cannot engage it.

@@ -1,0 +1,45 @@
+display_name: Lookout
+description: "Irregular Network infantry, Core, Field. Primary recon and secondary target designation and ambush setup; information rather than damage targets exposed infantry, vehicles, and structures. Foot movement with concealment near cover or in a prepared hide, no burrowing; firing, capturing, or prolonged designation breaks concealment. Ground infantry targetability requires detection or proximity while concealed, and ordinary vision reveals the disturbance after a short readable cue. Personnel armor makes it fragile in open ground; concealment is not armor and does not stop area damage. Mark target is a visible single-target channel interrupted by damage, with a bounded duration and local link; Hide enters local concealment after setup and breaks on attack or displacement. Production is 125 resource / 75 ticks in the Cell House, infantry FIFO, no hard roster cap, fully replaceable while the Cell House operates. Body 110 HP, personnel armor, foot speed 3.0 cells/s, radius 0.22, footprint 1x1. Vision 9.5, alert/acquisition 11.0 cells, ground domain, ordinary vision. Carbine uses rifle/small arms, ground personnel and light armor, range 4.5, 10 damage/event, period 30 ticks, projectile speed 14 cells/s, point hit, no tracking, direct acquisition. Mark target range 9.5, channel 15 ticks, mark duration 120 ticks, cooldown 180 ticks; one target and only local allied use. Hide setup 30 ticks, cooldown 90 ticks, stationary while concealed."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: infantry
+tier: field
+battlefield_roles: [reconnaissance, designation, ambush]
+hpmax: 110
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 3.0
+visionrange: 9.5
+alertrange: 11.0
+footprint: {radius_cells: 0.22, width_cells: 1, height_cells: 1}
+production:
+  producer: factions.irregular_network.buildings.cell_house
+  queue: infantry
+  category: infantry
+  cost: {resource: 125}
+  buildtime: 75
+  capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: false}
+presentation: {fallback_policy: inherit, silhouette: "Patched optics, cloth map tabs, and dim amber lens glint; readable infantry silhouette with footprint, selection, contact, and shadow anchors.", readability: "Icon covers command, selection, queued, disabled, damaged, and unavailable states and is N/A until asset production; model inherits the global platform contract; animation covers idle, move, attack, damage, disabled, and destruction, with deploy/transform N/A unless declared."}
+audio: {identity: "Selection, acknowledgement, attack/skill, damage, and destruction cues are N/A until audio production with faction fallback."}
+fx: {identity: "Designation is a narrow amber thread rather than a faction-wide UI glow; declared weapon, skill, status, construction, and destruction events use faction-flavored presets, undeclared effects are N/A."}
+design:
+  tactical_identity: "Concealed recon that trades its information advantage for a valuable visible mark."
+  player_decision: "Reveal the scout for a valuable mark or preserve information."
+  counterplay: "Use detection, patrols, area fire, and force the Lookout out of cover."
+  offense_behavior: "Carbine is low direct damage; designation marks one visible target for allied ambush weapons without global sharing."
+  defense_behavior: "Personnel armor; fragile in open ground; concealment changes information only."
+  support_behavior: "Mark target and Hide provide local designation and concealment; no repair, transport, or global vision."
+  locomotion_behavior: "Foot; ordinary ground movement and cover interaction; no burrowing."
+  targetability_behavior: "Ground infantry; concealment requires local cover or hide and detection/proximity, and acting reveals a readable disturbance."
+  acquisition_behavior: "Mark target is a single visible target at 9.5 cells, channel 15, duration 120, cooldown 180, interrupted by damage; local link only."
+  lock_behavior: "Hide setup 30, cooldown 90; stationary while hidden; attack, capture, displacement, or prolonged designation reveals it."
+  lifecycle_behavior: "No special lifecycle beyond shared unit states."
+  production_behavior: "Cell House infantry FIFO; 125 resource, 75 ticks, no hard roster cap, fully replaceable while operational."
+  visual_identity: "Patched optics, cloth map tabs, dim amber lens glint."
+  audio_identity: "Faction fallback for selection, acknowledgement, attack/skill, damage, and destruction."
+  fx_identity: "Narrow amber designation thread and readable concealment disturbance."
+  design_rationale: "Vision and designation range exceed the scout profile because information is the primary role; concealment never changes armor or blocks area damage."

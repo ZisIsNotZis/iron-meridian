@@ -1,0 +1,69 @@
+kind: asset_production_contract
+source_document: design/presentation/assets.md
+purpose: "Defines ownership and naming for visual, audio, animation, and effect assets without redefining simulation behavior."
+entity_layout:
+  entity_records: [design/content/factions/<faction>/<platform>/<unit_id>.yml, design/content/factions/<faction>/buildings/<building_id>.yml]
+  asset_records: design/content/assets/<scope>/<asset_id>.yml
+authoritative_records: "YAML entity records are authoritative; typed presentation, audio, and fx fields own entity-specific mappings."
+shared_assets: "Shared assets belong in design/content/assets/; faction assets belong under faction scope; unit-specific assets belong in that unit’s YAML record."
+manifest_fields: [owner, fallback, icon, model, animation, audio, fx, budget_exceptions]
+manifest_value_rule: "Each field names a shared asset ID or says inherit; omission is not a silent new default."
+resolution_order: [entity_override, faction_asset, global_shared_asset, placeholder]
+missing_asset_rule: "A missing asset preserves the gameplay event through the next fallback and does not alter simulation state."
+naming:
+  ids: lowercase_kebab_case
+  event_examples: [directorate.rifle-squad.fire, coalition.capture-pulse]
+  generated_outputs: "Generated atlases and compressed outputs are build products, not canonical design inputs."
+  source_runtime_separation: "Keep source files and imported runtime assets separate."
+  scale: "Models and sprites use a consistent ground scale, origin at the locomotor contact point, and a shadow anchor independent of decorative height."
+required_state_coverage:
+  every_playable_entity: [idle, move, turn, attack_windup_fire_recovery, hit, damaged, selected, destroyed]
+  conditional: [harvest, build, capture, disabled, frozen, burning, transforming]
+  icons: [identity, visible_status_family]
+icon_system:
+  rule: "Icons are information assets, not miniature illustrations."
+  identity: [single_dominant_silhouette, stable_facing, reserved_status_corner, same_entity_id_across_sizes_and_states]
+  state_treatment:
+    cooldown: clockwise_radial_mask
+    unavailable: 45_degree_desaturation_and_lock_or_requirement_badge
+    selected: shared_team_colored_frame
+    disabled: broken_line_treatment
+    active: short_pulse
+  color_rule: "Never communicate state with color alone. A faction may change material and accent, but not the shared symbol grammar."
+icon_matrix:
+  - {asset: entity_or_building, content: distinct_silhouette_plus_role_cue_no_tiny_text, variants: consuming_ui_owns_size_and_context}
+  - {asset: skill_or_status, content: one_action_symbol_with_stable_family_shape, variants: ready_active_cooldown_resisted_unavailable}
+  - {asset: objective_resource_or_command, content: geometric_marker_legible_without_color, variants: world_hud_briefing_cursor_queue}
+model_sprite_standard:
+  target: directional_2_5d_asset
+  preserve: [gameplay_footprint, contact_point, silhouette]
+  classes:
+    - {asset_class: mobile_entity, baseline: directional_presentation_with_separate_footprint_and_contact_origin, escalation: facing_layers_and_bespoke_gameplay_state_transitions}
+    - {asset_class: building, baseline: placement_facing_readable_role_silhouette, escalation: damage_and_destruction_stages_when_persistent}
+    - {asset_class: temporary_or_deployable, baseline: clearly_different_mobile_and_deployed_silhouettes, escalation: transition_treatment_for_committed_vulnerable_window}
+  declarations: [logical_footprint, contact_origin, shadow_anchor, nominal_height_layer, directional_convention, palette_or_material_family, lowest_detail_fallback]
+  height_rule: "Decorative height never changes collision or targetability unless the owning card explicitly changes state."
+owned_presentation_values: "Exact sizes, frame counts, lifetimes, and budgets belong to the relevant presentation contract, faction asset document, or entity manifest."
+animation_state_matrix:
+  - {state: idle_move_turn, cue: readable_silhouette_and_facing, mandatory: every_mobile_entity}
+  - {state: windup_fire_recovery, cue: aim_launch_and_return_beat, mandatory: every_visible_weapon_event}
+  - {state: hit_damaged, cue: directional_flash_and_escalating_smoke_or_deformation, mandatory: every_damageable_entity}
+  - {state: selected_commanded, cue: ring_bracket_order_line_or_destination_marker, mandatory: every_selectable_entity}
+  - {state: disabled_emp, cue: muted_motion_plus_command_or_status_icon, mandatory: electronic_or_disable_eligible_entity}
+  - {state: frozen_burning_suppressed, cue: family_specific_overlay_and_world_cue, mandatory: status_eligible_entity}
+  - {state: deploy_transform, cue: setup_and_transition_pose, mandatory: transform_or_deploy_skill_or_locomotor}
+  - {state: construct_repair_capture, cue: progress_treatment_and_active_link, mandatory: structure_or_interaction_owner}
+  - {state: destroyed_wreck, cue: final_readable_state_then_cleanup_policy, mandatory: every_damageable_entity}
+effect_vocabulary:
+  - {event: muzzle_or_launch, visual: brief_source_flash_and_direction_cue, parameters: mount_point_color_or_material_scale}
+  - {event: projectile_or_beam, visual: readable_travel_path_with_bounded_lifetime, parameters: speed_trail_length_homing_or_arc_appearance}
+  - {event: impact, visual: point_spark_dust_scorch_or_splash_matching_damage_family, parameters: impact_material_scale_area_falloff_cue}
+  - {event: area_attack, visual: ground_reticle_before_impact_and_bounded_ring_or_wave, parameters: radius_warning_duration_faction_accent}
+  - {event: status, visual: one_persistent_localized_treatment_plus_icon, parameters: family_variant_intensity_transition_cue}
+  - {event: movement, visual: dust_wake_rotor_wash_or_track_mark, parameters: locomotor_material_and_emission_rate}
+  - {event: detection_or_reveal, visual: sweep_ping_and_fog_edge_reveal, parameters: cone_or_range_shape_color_duration}
+  - {event: jam_or_decoy, visual: broken_link_interference_ring_or_false_contact_marker, parameters: radius_pulse_rate_faction_material}
+  - {event: construction_or_repair, visual: grid_progress_link_sparks_and_completion_pulse, parameters: owner_accent_progress_speed_completion_scale}
+  - {event: capture_or_objective, visual: contested_ring_ownership_pulse_and_beacon_change, parameters: objective_accent_and_stage_symbols}
+  - {event: destruction, visual: hit_flash_smoke_debris_burst_wreck_or_collapse, parameters: stage_count_debris_silhouette_cleanup_lifetime}
+fallbacks: {missing_icon: faction_marker, missing_model: placeholder_silhouette, missing_audio: silent_event_with_visual_feedback, missing_fx: event_marker}

@@ -1,0 +1,77 @@
+kind: presentation_contract
+source_document: design/presentation/README.md
+goal: "Make the battlefield instantly readable: terrain, ownership, unit role, threat, order, damage, and objective state."
+priority_order: [simulation_correctness, input_responsiveness, information_clarity, role_recognition, faction_identity, spectacle]
+ownership: "Global presentation owns shared camera, terrain readability, selection, HUD, feedback grammar, audio mixing, and performance rules. Faction and entity asset documents own their visual, audio, animation, and FX choices within that grammar."
+focused_contracts: [ui_feedback, accessibility, camera, audio, fx, animation, performance, assets, v1_spec]
+v1_visual_target:
+  style: stylized_2_5d_top_down_battlefield
+  coordinates: planar_gameplay_coordinates
+  layers: layered_terrain
+  entities: directional_placeholder_sprites_or_low_cost_meshes
+  support: [height_offsets, contact_shadows, selection_rings, restrained_particles]
+  exclusions: [realism, full_3d_terrain, skeletal_animation_pipelines, cinematic_camera_work]
+first_readable_asset_set:
+  - two terrain materials and clear walkable/buildable overlays
+  - four unit silhouettes for scout, infantry, tank, and anti-tank
+  - team-color marker, selection ring, health/condition bar, and order line
+  - resource node, processor, production building, construction vehicle, and objective beacon
+  - muzzle flash, projectile/tracer, impact spark, damage smoke, destruction, capture pulse, and fog reveal
+readability_rules:
+  identity_order: [silhouette, scale, team_marker, motion, texture_detail]
+  color: "Faction color is a secondary cue; ownership must remain readable for color-blind players or when units overlap."
+information_grammar:
+  selection: "thin team-colored ring; selected group uses a subtle shared bracket, not a screen-filling glow"
+  move_attack_capture: "projected point, path/order line, target bracket, and capture progress ring appear immediately after accepted commands"
+  rejection: "short text/icon reason near the command area and a restrained world marker at the invalid target; never silently ignore an input"
+  damage: "directional hit spark, brief health/condition change, and escalating smoke; use stronger treatment for disabled, frozen, or burning than ordinary damage"
+  discovery: "fog edge dissolves briefly, a contact ping and unit silhouette appear, then the effect fades; last-known contacts use a desaturated marker"
+  objective: "persistent world beacon plus compact HUD progress; ownership, contest, and hold time use shape and motion as well as color"
+  construction: "ghost footprint shows valid/invalid placement, radius, overlap, and blocked cells before confirmation; completion uses a short assembly burst"
+  destruction: "readable collapse or wreck state with a short audio accent; avoid large screen shake that obscures remaining units"
+  channel_rule: "Every important state has at least two channels among shape, motion, color/value, text/icon, and sound. Do not use particle intensity as the only way to communicate a rule."
+animation_direction:
+  states: [idle, move, turn, attack_windup_fire_recovery, hit, damaged, selected, disabled, harvest, build, capture, destroyed]
+  implementation: [sprite_flipbooks, simple_directional_poses]
+  bespoke_only_for: [construction_deployment, attack_run_commitment, capture, freeze, state_transitions_that_affect_play]
+  motion: "Movement should telegraph acceleration and stopping enough for orders to feel intentional."
+  attack: "Attacks need a windup, travel/impact, and recovery beat where applicable."
+  skill_sync: "A special skill’s animation must match its actual vulnerable/setup window."
+  simulation_boundary: "Cosmetic animation must not delay simulation state or make a command appear accepted when it was rejected."
+audio_direction:
+  mix: [faction_specific_weapon_materials, mechanical_movement, construction_machinery, radio_command_accents, objective_hum, restrained_music_bed]
+  priority_sounds: [command_confirmation, command_rejection, unit_discovery, incoming_attack_warning, low_health_or_disable, production_complete, capture_contest, victory, defeat]
+  repetition: "Group repeated fire and movement sounds with concurrency limits and distance attenuation."
+  ducking: "Duck music and ambient beds briefly for high-priority warnings; never let sound-effect spam become the dominant strategy cue."
+fx_direction:
+  preferred: [muzzle_flashes, directional_tracers, impact_sparks, dust, smoke, scorch, wake, construction_grids, capture_pulses, fog_reveal]
+  implementation: [shared_materials, atlas_textures, pooled_emitters, bounded_lifetimes]
+  status: "Status effects use one consistent icon plus a localized world treatment; freeze, EMP, suppression, and fire must not be confused."
+  exclusions: [persistent_per_unit_lights, full_screen_post_processing, simulated_debris, volumetric_fog, fluid_simulation, decorative_particles_competing_with_selection_or_pathing]
+camera:
+  default: "top-down with a modest tilt, pan, and bounded zoom"
+  follow: "follows no unit automatically during ordinary play"
+  controls: [edge_scroll, middle_button_drag, cursor_centered_zoom, jump_to_selected_units_hq_or_objective, recenter_on_alert]
+  state: "Camera movement is application state and never changes simulation coordinates or orders."
+  hud: "Keep the battlefield visible above the fold. The HUD occupies a predictable edge region and may collapse for screenshots, but never covers the objective or selected unit’s immediate feedback without a deliberate toggle."
+  shake: "Camera shake is short, local, and disabled by accessibility settings."
+performance_budgets:
+  target: "stable 60 rendered frames per second on an ordinary modern desktop browser at the V1 camera view"
+  simulation_rate_hz: 30
+  active_entities: 50_to_80
+  validation_scene_entities: 100
+  simulation_update_ms_max_per_tick: 8
+  render_update_ms_average_per_frame: 12
+  sustained_fps_minimum: 30
+  active_world_fx_baseline: 150
+  active_world_fx_brief_climax: 400
+  dynamic_lights_v1: 0
+  dynamic_lights_later_maximum: 8
+  audio_voices_total: 32
+  material_strategy: atlases_and_shared_materials_before_unique_per_entity_resources
+  degradation_order: [particle_count, animation_rate, shadow_detail, post_processing]
+  preservation_order: [input_latency, selection_feedback, simulation_correctness, readable_silhouettes]
+asset_ownership:
+  global: presentation
+  faction_and_entity: owning_faction_or_entity_yaml
+  placeholder_rule: "Generated placeholders may use the same silhouette and feedback contracts as final assets, so replacing art does not change gameplay or UI behavior."

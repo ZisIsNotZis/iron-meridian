@@ -1,0 +1,4 @@
+display_name: "Coalition Vehicles"
+description: "Mobile vehicles express reconnaissance, adaptation, missile pressure, repair, and bounded support."
+source_document: "design/factions/coalition/units/vehicles/README.md"
+platform_constraints: ["MCV and Harvester are core utility vehicles.", "The roster uses one command-support vehicle, one repair vehicle, and one main artillery line to avoid support duplication.", "Mobility pays in armor, range, ammunition, setup, or replacement cost."]

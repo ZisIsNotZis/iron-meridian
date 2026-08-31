@@ -1,0 +1,28 @@
+display_name: Sera Vale
+description: "Rail-and-works liaison who has kept civilian freight moving through the crisis. Vale is not a covert super-agent: she knows schedules, evacuation routes, and which promises local workers no longer believe."
+kind: character
+status: near-term
+source_document: design/world/characters/sera-vale.md
+source_references:
+  - ../organizations.md
+  - ../relationships.md
+identity:
+  role: rail-and-works liaison
+  background: Has kept civilian freight moving through the crisis.
+  capabilities: Knows schedules, evacuation routes, and which promises local workers no longer believe.
+  limitations: Not a covert super-agent.
+affiliation:
+  organization: Rail and Works Authority
+  position: rail-and-works liaison
+relationships:
+  - subject: civilian freight
+    nature: Keeps civilian freight moving through the crisis.
+  - subject: local workers
+    nature: Knows which promises they no longer believe.
+presentation:
+  visual: weathered transit coat, route ledger, broken Union meridian pin.
+audio:
+  voice: direct and human, with place names and material consequences.
+narrative:
+  use: optional briefing/debrief context and campaign continuity flavor
+  constraints: Never supplies tactical information unavailable to the player's force.

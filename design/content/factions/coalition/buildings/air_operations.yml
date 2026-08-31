@@ -1,0 +1,36 @@
+display_name: "Air Operations"
+description: "Air Operations migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: established
+building_roles: ["aircraft_production", "rearm"]
+hpmax: 700
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 3, height_cells: 4, facings: "cardinal"}
+construction:
+  cost: {resource: 850}
+  buildtime: 420
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}]
+production: {max_operational: 2, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "aircraft production and rearm"
+  construction_behavior: "Buildable terrain with a legal apron and no route/objective overlap; map water or cliff rules may make it invalid."
+  production_behavior: "Role: aircraft production and rearm; cost: `850 resource`; build time: `420 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / aircraft sortie`; replacement/capacity: `maximum 2 operational buildings; one FIFO aircraft queue and one service apron per building; one builder assignment`."
+  defense_behavior: "Structure; aircraft on the apron are not hidden and can be interrupted by the shared state rules."
+  capture_behavior: "**Sortie control** — passive launch/rearm handling; aircraft must use the declared return path and do not gain infinite loiter."
+  repair_behavior: "Place close enough for response while risking a valuable runway and predictable return point."
+  lifecycle_behavior: "Attack the airfield, layer anti-air over its approach, or strike aircraft during launch/return; destroying it stops new sorties."
+  player_decision: "Place close enough for response while risking a valuable runway and predictable return point."
+  counterplay: "Attack the airfield, layer anti-air over its approach, or strike aircraft during launch/return; destroying it stops new sorties."
+  visual_identity: "Low hangar blocks, marked apron, blue runway lamps, rotating service cranes, and a launch warning sweep."
+  design_rationale: "# Air Operations\n\n## Gameplay identity\n\n- **Footprint:** `3 × 4` cells; facing chooses the long apron edge; one clear aircraft launch/return lane.\n- **Health / protection:** 700 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; aircraft on the apron are not hidden and can be interrupted by the shared state rules.\n- **Production:** Role: aircraft production and rearm; cost: `850 resource`; build time: `420 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / aircraft sortie`; replacement/capacity: `maximum 2 operational buildings; one FIFO aircraft queue and one service apron per building; one builder assignment`.\n- **Skill / passive:** **Sortie control** — passive launch/rearm handling; aircraft must use the declared return path and do not gain infinite loiter.\n- **Placement:** Buildable terrain with a legal apron and no route/objective overlap; map water or cliff rules may make it invalid.\n- **Player decision:** Place close enough for response while risking a valuable runway and predictable return point.\n- **Counterplay:** Attack the airfield, layer anti-air over its approach, or strike aircraft during launch/return; destroying it stops new sorties.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Low hangar blocks, marked apron, blue runway lamps, rotating service cranes, and a launch warning sweep.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

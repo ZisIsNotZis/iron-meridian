@@ -1,0 +1,28 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common
+type: object
+additionalProperties: false
+properties:
+  display_name: {type: string, minLength: 1}
+  description: {type: string, minLength: 1}
+  status: {type: string, enum: [core, designed, optional, near-term, deferred, deprecated]}
+  references:
+    type: array
+    items: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  design:
+    type: object
+    additionalProperties: false
+    properties:
+      tactical_identity: {type: string, minLength: 1}
+      player_decision: {type: string, minLength: 1}
+      counterplay: {type: string, minLength: 1}
+      visual_identity: {type: string, minLength: 1}
+      audio_identity: {type: string, minLength: 1}
+      fx_identity: {type: string, minLength: 1}
+      narrative_identity: {type: string, minLength: 1}
+      rationale: {type: string, minLength: 1}
+      meaning: {type: string, minLength: 1}
+      behavior: {type: string, minLength: 1}
+      rules: {type: string, minLength: 1}
+      countermeasure: {type: string, minLength: 1}
+      scope: {type: string, enum: [v1, near_term, far_vision, deferred]}

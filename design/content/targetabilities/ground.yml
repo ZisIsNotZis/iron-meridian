@@ -1,0 +1,8 @@
+display_name: "Ground Targetability"
+description: Ground target-domain profile.
+status: designed
+kind: "targetability"
+domains: [ground]
+design:
+  state_rules: The entity may be engaged only when the attacking weapon accepts ground and the required observation or lock is valid. Air, naval_surface, and submerged legality do not follow from this profile.
+  feedback: Ground state is communicated through ordinary contact, footprint, and movement presentation. A carrier must declare any state that changes its domain.

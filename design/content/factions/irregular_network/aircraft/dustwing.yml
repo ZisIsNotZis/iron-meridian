@@ -1,0 +1,26 @@
+display_name: Dustwing
+description: "Optional Advanced authored helicopter transport. Low-air flight with hover/landing transition; can land briefly but is vulnerable during landing/takeoff. Low/high air in flight and ground target while landed; anti-air and selected ground weapons engage low flight. Door guns use machine gun/autocannon against ground personnel/light armor, range 4.0, 16 damage/event, 24 ticks, projectile speed 14, point hit, no tracking, unavailable landed or transporting. Airlift picks up allied infantry within 1.0 cell after 45-tick hover channel, cooldown 240. Dust drop unloads within 6.0 cells after 30-tick recovery, smoke radius 1.2 for 60 ticks; both expose aircraft and are interruptible. Body 360 HP, light armor, speed 6.0, radius .50, footprint 2x2, vision 8.0, alert/acquisition 10.0; landing/takeoff transition 30 ticks. Not producible; authored campaign asset with no queue/replacement."
+status: designed
+scope: near_term
+faction: factions.irregular_network
+platform: aircraft
+tier: advanced
+battlefield_roles: [transport, extraction]
+hpmax: 360
+armor: armors.light
+locomotor: locomotors.helicopter
+targetability: [targetabilities.ground, targetabilities.low_air, targetabilities.high_air]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 6.0
+visionrange: 8.0
+alertrange: 10.0
+footprint: {radius_cells: 0.50, width_cells: 2, height_cells: 2}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: door_guns, damage: damages.machine_gun_autocannon, targetability: [targetabilities.ground], attackrange: 4.0, attackdamage: 16, attackperiod: 24, projectile_speed: 14, delivery: projectile, hit_model: point, tracking: none, acquisition: direct, disabled_in_states: [landed, transporting]}]
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: airlift, activation: active, channel_ticks: 45, cooldown_ticks: 240, target: allied_infantry, targetrange: 1.0, interruption_conditions: [damage], design: {player_decision: "Turn hidden infantry into rapid flank while accepting loud vulnerable insertion.", counterplay: "Anti-air, patrols, and guarded drop zones."}}
+  - {skill: skills.default_lifecycle, skill_name: dust_drop, activation: active, recovery_ticks: 30, duration_ticks: 60, target: point, targetrange: 6.0, targetradius: 1.2, interruption_conditions: [damage]}
+presentation: {fallback_policy: inherit, silhouette: "Twin rotors, tarp panels, and cargo sling; rotor wash creates a large dust signature revealing intent.", readability: "Landing/takeoff, transport, drop, and recovery are readable; authored assets are N/A."}
+audio: {identity: "Rotor wash, cargo sling, hover, drop, damage, and destruction use faction fallback."}
+fx: {identity: "Large rotor dust signature and short drop smoke screen make insertion visible."}
+design: {tactical_identity: "Rapid infantry airlift traded against loud vulnerable insertion.", player_decision: "Turn hidden infantry into a rapid flank while risking the transport.", counterplay: "Anti-air, patrols, and guarding drop zones.", offense_behavior: "Door guns are weak anti-personnel self-defense and unavailable landed/transporting.", defense_behavior: "Moderate transport durability, vulnerable during 30-tick landing/takeoff transition.", support_behavior: "Airlift one infantry group and Dust drop with smoke; no repair or command aura.", locomotion_behavior: "Helicopter low-air flight with hover/landing transition.", targetability_behavior: "Low/high air in flight, ground landed; selected ground weapons engage low flight.", acquisition_behavior: "Door guns range 4, 16 damage, 24 ticks, projectile speed 14, point hit.", lock_behavior: "Airlift channel 45/cooldown 240; Dust drop recovery 30, smoke radius 1.2/duration 60; interruptible.", lifecycle_behavior: "Authored asset; no queue or replacement.", production_behavior: "Scenario-provided; N/A resource and ticks.", visual_identity: "Twin rotors, tarp panels, cargo sling.", audio_identity: "Rotor wash and insertion warning.", fx_identity: "Dust signature and smoke drop.", design_rationale: "Low-flight ground targetability and transition windows are deliberate transport counterplay; airlift does not teleport units."}

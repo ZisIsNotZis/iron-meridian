@@ -1,0 +1,72 @@
+display_name: "Sentinel"
+description: "Sentinel Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "field"
+battlefield_roles: ["reconnaissance_and_route_security", "harassment_of_exposed_infantry"]
+hpmax: 120
+armor: "armors.light"
+locomotor: "locomotors.wheeled"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 5.5
+visionrange: 9
+alertrange: 11
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.28
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.wheeled", "damages.machine_gun_autocannon", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Boxy armored scout car, folding antenna, white search lamps, and crisp map-ping feedback."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Boxy armored scout car, folding antenna, white search lamps, and crisp map-ping feedback."
+fx:
+  identity: "Boxy armored scout car, folding antenna, white search lamps, and crisp map-ping feedback."
+design:
+  tactical_identity: "Reconnaissance and route security; secondary harassment of exposed infantry."
+  player_decision: "Gather information before the army commits, then retreat before the scout becomes an acceptable trade. It fails when used as a tank."
+  counterplay: "Infantry ambush, mines, fast pursuit, and denying roads or vision."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Light armor; survives incidental fire but not a committed counterattack."
+  support_behavior: "Supplies local information and route security; it does not grant global vision or buff nearby units."
+  locomotion_behavior: "Wheeled; fast on roads and firm ground, poor in rough terrain; light collision presence."
+  targetability_behavior: "Ground vehicle; ordinary sight and anti-vehicle targeting. No stealth."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Uses the explicit recon values; no hidden scouting exception is added. Light autocannon | Machine gun/autocannon; ground personnel, light | 5.5 / 16 / 24 ticks | Projectile 12 cells/s; point; no tracking Mark Route | 15-tick setup; 90-tick reveal; 30-tick recovery; 180-tick cooldown; 9.0-cell forward line | Interrupt, ambush, or deny route; scout must expose itself"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "scout"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 220
+  buildtime: 60
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Light autocannon"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground"]
+    attackrange: 5.5
+    attackdamage: 16
+    attackperiod: 24
+    delivery: "projectile_12_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Light autocannon | Machine gun/autocannon; ground personnel, light | 5.5 / 16 / 24 ticks | Projectile 12 cells/s; point; no tracking"
+      counterplay: "Infantry ambush, mines, fast pursuit, and denying roads or vision."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Mark Route"
+    activation: "active"
+    setup_ticks: 15
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: true
+    design:
+      player_decision: "Gather information before the army commits, then retreat before the scout becomes an acceptable trade. It fails when used as a tank."
+      counterplay: "Infantry ambush, mines, fast pursuit, and denying roads or vision."
+      interruption_readability: "Mark Route | 15-tick setup; 90-tick reveal; 30-tick recovery; 180-tick cooldown; 9.0-cell forward line | Interrupt, ambush, or deny route; scout must expose itself"

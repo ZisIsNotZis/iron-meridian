@@ -1,0 +1,9 @@
+kind: audio_contract
+source_document: design/presentation/audio.md
+authority: "Audio is a feedback channel, not simulation authority. Every critical cue has a visual equivalent."
+event_fields: [owner, semantic_event, optional_world_position, priority, concurrency_group, fallback]
+mixer: "The mixer may attenuate, duck, or drop low-priority repeats, but must not change gameplay."
+shared_events: [command_confirmation, command_rejection, discovery, incoming_danger, damage_or_disable, production, capture, victory, defeat, construction, weapon, movement, destruction]
+identity: "Faction assets supply sound identity; entity manifests select bespoke events or inherit shared ones."
+buses: [ui, voice, effects, ambient, music]
+mix_values: "Exact mix values belong to the V1/platform profile, not an entity."

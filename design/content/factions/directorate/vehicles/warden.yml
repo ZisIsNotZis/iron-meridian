@@ -1,0 +1,84 @@
+display_name: "Warden"
+description: "Warden Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "established"
+battlefield_roles: ["mobile_close_anti_air_escort", "defense_against_low_flight_units"]
+hpmax: 440
+armor: "armors.light"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.8
+visionrange: 8
+alertrange: 10
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.52
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.explosive_area", "targetabilities.low_air", "targetabilities.high_air", "damages.machine_gun_autocannon", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.air_command"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Box radar dish, flak rings, bright tracer lattice, and clipped tracking alarms."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Box radar dish, flak rings, bright tracer lattice, and clipped tracking alarms."
+fx:
+  identity: "Box radar dish, flak rings, bright tracer lattice, and clipped tracking alarms."
+design:
+  tactical_identity: "Mobile close anti-air escort; secondary defense against low-flight units."
+  player_decision: "Keep it with the force, detach it to cover a vulnerable flank, or accept an air gap. It fails when isolated or used as a ground tank."
+  counterplay: "Ground assault, artillery, standoff attack, baiting the screen, and attacking from outside its coverage."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Medium armor; survives incidental raids but cannot protect itself from ground specialists."
+  support_behavior: "Escorts the moving ground force with local anti-air coverage; it does not replace the positional Aegis Carrier."
+  locomotion_behavior: "Tracked; ordinary ground movement and turning, able to keep pace with the armored line."
+  targetability_behavior: "Ground vehicle; ordinary sight and anti-vehicle targeting. Its radar does not grant universal vision."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "The Warden is the mobile anti-air baseline with a modest ground suppression sidearm. Twin flak cannons | Explosive; low air, high air, ground personnel | 6.5 / 34 / 36 ticks | Projectile 13 cells/s; area 0.35 cells; tracking within 45° cone, 90°/s Defensive machine gun | Machine gun/autocannon; ground personnel, light | 4.5 / 10 / 30 ticks | Projectile 14 cells/s; point; no tracking Airburst Screen | 15-tick setup; 90-tick active; 30-tick recovery; 180-tick cooldown; 4.0-cell radius, +25% anti-air fire rate; ground weapon access reduced 50% | Wait out, attack carrier, use ground assault, or approach outside zone"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "mobile_anti_air"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.air_command"]
+  cost:
+    resource: 450
+  buildtime: 120
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Twin flak cannons"
+    damage: "damages.explosive_area"
+    targetability: ["targetabilities.ground", "targetabilities.low_air", "targetabilities.high_air"]
+    attackrange: 6.5
+    attackdamage: 34
+    attackperiod: 36
+    delivery: "projectile_13_cells_s_area_0_35_cells_tracking_within_45_cone_90_s"
+    design:
+      tactical_use: "Twin flak cannons | Explosive; low air, high air, ground personnel | 6.5 / 34 / 36 ticks | Projectile 13 cells/s; area 0.35 cells; tracking within 45° cone, 90°/s"
+      counterplay: "Ground assault, artillery, standoff attack, baiting the screen, and attacking from outside its coverage."
+  - weapon: "weapons.default_resolution"
+    mount_name: "Defensive machine gun"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground"]
+    attackrange: 4.5
+    attackdamage: 10
+    attackperiod: 30
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Defensive machine gun | Machine gun/autocannon; ground personnel, light | 4.5 / 10 / 30 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Ground assault, artillery, standoff attack, baiting the screen, and attacking from outside its coverage."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Airburst Screen"
+    activation: "active"
+    setup_ticks: 15
+    active_ticks: 90
+    recovery_ticks: 30
+    cooldown_ticks: 180
+    movement_allowed: true
+    design:
+      player_decision: "Keep it with the force, detach it to cover a vulnerable flank, or accept an air gap. It fails when isolated or used as a ground tank."
+      counterplay: "Ground assault, artillery, standoff attack, baiting the screen, and attacking from outside its coverage."
+      interruption_readability: "Airburst Screen | 15-tick setup; 90-tick active; 30-tick recovery; 180-tick cooldown; 4.0-cell radius, +25% anti-air fire rate; ground weapon access reduced 50% | Wait out, attack carrier, use ground assault, or approach outside zone"

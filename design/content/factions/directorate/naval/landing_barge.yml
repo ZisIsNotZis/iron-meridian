@@ -1,0 +1,74 @@
+display_name: "Landing Barge"
+description: "Landing Barge Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "naval"
+tier: "field"
+battlefield_roles: ["ground_force_transport_and_beachhead_delivery", "mobile_construction_logistics_ferry"]
+hpmax: 500
+armor: "armors.light"
+locomotor: "locomotors.surface_naval"
+targetability: ["targetabilities.naval_surface"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2.2
+visionrange: 6
+alertrange: 7.5
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.65
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.light", "sensing.default_sensing", "collisions.default_collision", "targetabilities.naval_surface", "locomotors.surface_naval", "damages.machine_gun_autocannon", "targetabilities.ground", "targetabilities.low_air", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.naval_yard"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Boxy armored ramp, stenciled unit markings, floodlights, wake foam, and a heavy landing alarm."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Boxy armored ramp, stenciled unit markings, floodlights, wake foam, and a heavy landing alarm."
+fx:
+  identity: "Boxy armored ramp, stenciled unit markings, floodlights, wake foam, and a heavy landing alarm."
+design:
+  tactical_identity: "Ground-force transport and beachhead delivery; secondary mobile construction/logistics ferry."
+  player_decision: "Commit a valuable route to bypass a front or reinforce a coast, accepting escort and timing risk. It fails when discovered without naval cover."
+  counterplay: "Scout routes, attack escorts, block shore access, focus the barge before unloading, or punish the exposed beachhead."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Light naval protection; high value while carrying units."
+  support_behavior: "Moves one ground force to a valid coast; it does not construct a permanent naval logistics network."
+  locomotion_behavior: "Naval surface; slow and unable to fight effectively while loaded. It can unload only at valid shore locations."
+  targetability_behavior: "Naval surface; ordinary sight, naval weapons, aircraft, and shore weapons."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Landing Barge is a transport first. It carries one ground group; loading is a short Defensive machine gun | Machine gun/autocannon; naval surface, ground personnel, low air | 4.0 / 12 / 30 ticks | Projectile 14 cells/s; point; no tracking Beachhead Deploy | 45-tick setup; 90-tick unload; 45-tick recovery; 240-tick cooldown; valid shore within 1.0 cell; 1 ground group; landing marker visible throughout | Block shore, kill barge/escort, interrupt unload, punish beachhead"
+production:
+  producer: "factions.directorate.buildings.naval_yard"
+  queue: "default_queue"
+  category: "transport"
+  prerequisites: ["factions.directorate.buildings.naval_yard", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 350
+  buildtime: 105
+  capacity:
+    max_active: 2
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Defensive machine gun"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground", "targetabilities.low_air", "targetabilities.naval_surface"]
+    attackrange: 4
+    attackdamage: 12
+    attackperiod: 30
+    delivery: "projectile_14_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Defensive machine gun | Machine gun/autocannon; naval surface, ground personnel, low air | 4.0 / 12 / 30 ticks | Projectile 14 cells/s; point; no tracking"
+      counterplay: "Scout routes, attack escorts, block shore access, focus the barge before unloading, or punish the exposed beachhead."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Beachhead Deploy"
+    activation: "active"
+    setup_ticks: 45
+    recovery_ticks: 45
+    cooldown_ticks: 240
+    targetrange: 1
+    movement_allowed: true
+    design:
+      player_decision: "Commit a valuable route to bypass a front or reinforce a coast, accepting escort and timing risk. It fails when discovered without naval cover."
+      counterplay: "Scout routes, attack escorts, block shore access, focus the barge before unloading, or punish the exposed beachhead."
+      interruption_readability: "Beachhead Deploy | 45-tick setup; 90-tick unload; 45-tick recovery; 240-tick cooldown; valid shore within 1.0 cell; 1 ground group; landing marker visible throughout | Block shore, kill barge/escort, interrupt unload, punish beachhead"

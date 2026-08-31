@@ -1,0 +1,25 @@
+display_name: Jammer Van
+description: "Core Established local information-denial vehicle. Wheeled, 3.8 cells/s and 2.0 while jamming; ordinary road preference. Ground vehicle with light armor; local false-signature field does not prevent close vision, attack, or counter-jamming. Defensive carbine uses rifle/small arms against personnel, range 3.0, 6 damage/event, 45 ticks, projectile speed 12, point hit, no tracking. Blackout is radius 5.0, setup 30, active 120, cooldown 240; suppresses shared vision and selected remote targeting, not direct vision or ordinary weapon damage; van stationary, visible through pulsing interference ring, EMP or destruction ends it. Production 420 resource / 210 ticks from Field Workshop plus operational Jammer Post; vehicle FIFO; no hard roster cap; one field per van and one supported field per post. Body 240 HP, radius 0.42, footprint 2x1."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: established
+battlefield_roles: [information_denial, concealment_support]
+hpmax: 240
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 3.8
+visionrange: 7.0
+alertrange: 9.0
+footprint: {radius_cells: 0.42, width_cells: 2, height_cells: 1}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: defensive_carbine, damage: damages.rifle_small_arms, targetability: [targetabilities.ground], attackrange: 3.0, attackdamage: 6, attackperiod: 45, projectile_speed: 12, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}]
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: blackout, activation: active, setup_ticks: 30, active_ticks: 120, cooldown_ticks: 240, target: self, targetradius: 5.0, movement_allowed: false, interruption_conditions: [emp, destruction], design: {player_decision: "Hide an approach or force local fighting while sacrificing the van's mobility.", counterplay: "Scout the ring, counter-jam, and collapse the source."}}]
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 420}, buildtime: 210, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Antenna forest and patched generator; screen noise, radio chirps, and broken unit-link icons communicate the bounded field.", readability: "Readable vehicle silhouette with footprint, selection, contact, and shadow anchors; pulsing interference ring and stationary state are visible."}
+audio: {identity: "Screen noise, radio chirps, selection, attack, damage, and destruction use faction fallback."}
+fx: {identity: "Pulsing interference ring and broken-link icon show exact local field; no stealth effect."}
+design: {tactical_identity: "Local information denial with visible source and finite radius.", player_decision: "Force a fight without network support while sacrificing mobility.", counterplay: "Direct scouting, counter-jamming, or destroying the van.", offense_behavior: "Defensive carbine only; range 3, 6 damage, 45 ticks.", defense_behavior: "Light armor; field does not reduce incoming damage; close detection always reveals it.", support_behavior: "Blackout suppresses shared vision and selected remote targeting, not direct vision or ordinary damage.", locomotion_behavior: "Wheeled, 3.8 cells/s moving and 2.0 jamming; stationary while field active.", targetability_behavior: "Ground vehicle; ordinary vision and close detection reveal the van.", acquisition_behavior: "Carbine point projectile, no tracking; field modifies information/command links only.", lock_behavior: "Radius 5, setup 30, active 120, cooldown 240; EMP or destruction ends it.", lifecycle_behavior: "One Blackout field per Van and one supported field per Jammer Post.", production_behavior: "Field Workshop plus Jammer Post; 420 resource, 210 ticks, vehicle FIFO.", visual_identity: "Antenna forest and patched generator.", audio_identity: "Radio chirps and bounded interference.", fx_identity: "Screen noise and broken unit-link icons.", design_rationale: "Jamming never grants stealth, armor, or a second fog system."}

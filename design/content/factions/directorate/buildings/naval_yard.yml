@@ -1,0 +1,50 @@
+display_name: "Naval Yard"
+description: "Naval Yard Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "naval_production"
+tier: "established"
+hpmax: 1000
+building_roles: ["converts_shoreline_access_into_surface_patrol_submerged_ambush_bombardment_and_landing_pressure"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 4, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Drydock trench, gantry cranes, floodlights on black water, launch siren, wake spray, and steel-on-steel assembly sounds."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Drydock trench, gantry cranes, floodlights on black water, launch siren, wake spray, and steel-on-steel assembly sounds."
+fx:
+  identity: "Drydock trench, gantry cranes, floodlights on black water, launch siren, wake spray, and steel-on-steel assembly sounds."
+design:
+  counterplay: "Deny shoreline, attack the yard before launch, blockade the exit, or use aircraft/submarines against the fleet."
+  defense_behavior: "Structure; ordinary sight, structure-capable attacks, aircraft, and naval weapons where line of fire allows."
+construction:
+  cost:
+    resource: 900
+  buildtime: 420
+  builder: "factions.directorate.buildings.construction_yard"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+  water_access: true
+  exit_clearance_cells: 1
+production:
+  max_operational: 1
+  replacement_allowed: false
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false
+  queues:
+    - queue_name: "naval"
+      category: "naval"
+      capacity: 1
+      exit_name: "water_launch"
+      blocked_behavior: "pause"

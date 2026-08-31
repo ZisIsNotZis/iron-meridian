@@ -1,0 +1,14 @@
+display_name: "Naval Torpedo"
+description: Direct naval health damage.
+status: designed
+kind: "damage"
+damage_channel: health
+references: [armors.personnel, armors.light, armors.heavy, armors.reinforced_structure]
+damage_interactions:
+  - {armor: armors.personnel, multiplier_percent: 20}
+  - {armor: armors.light, multiplier_percent: 90}
+  - {armor: armors.heavy, multiplier_percent: 110}
+  - {armor: armors.reinforced_structure, multiplier_percent: 65}
+design:
+  channel: Direct naval health damage.
+  feedback: It is a naval target-selection tool, not a general infantry weapon.

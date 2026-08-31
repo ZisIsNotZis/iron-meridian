@@ -1,0 +1,17 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_campaign
+type: object
+additionalProperties: false
+required: [kind, document_id, title, scope, sequence, mission_requirements, mission_contract, pacing, progression, continuity, deferred]
+properties:
+  kind: {const: campaign_contract}
+  document_id: {type: string}
+  title: {type: string}
+  scope: {type: array, items: {type: string}}
+  sequence: {type: array, items: {type: object, additionalProperties: false, required: [order, key, purpose], properties: {order: {type: integer}, key: {type: string}, purpose: {type: string}}}}
+  mission_requirements: {type: array, items: {type: string}}
+  mission_contract: {type: array, items: {type: string}}
+  pacing: {type: array, items: {type: string}}
+  progression: {type: array, items: {type: string}}
+  continuity: {type: array, items: {type: string}}
+  deferred: {type: array, items: {type: string}}

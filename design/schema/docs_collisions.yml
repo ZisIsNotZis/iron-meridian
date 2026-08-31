@@ -1,0 +1,14 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_collisions
+type: object
+additionalProperties: false
+required: [kind, document_id, title, source_document, ownership, profiles, crush, required_fields]
+properties:
+  kind: {const: collision_contract}
+  document_id: {type: string}
+  title: {type: string}
+  source_document: {type: string}
+  ownership: {type: array, items: {type: string}}
+  profiles: {type: array, items: {type: string}}
+  crush: {type: array, items: {type: string}}
+  required_fields: {type: array, items: {type: string}}

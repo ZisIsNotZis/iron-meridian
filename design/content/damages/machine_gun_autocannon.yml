@@ -1,0 +1,14 @@
+display_name: "Machine Gun / Autocannon"
+description: Health damage; general anti-personnel and light-armor family.
+status: designed
+kind: "damage"
+damage_channel: health
+references: [armors.personnel, armors.light, armors.heavy, armors.reinforced_structure]
+damage_interactions:
+  - {armor: armors.personnel, multiplier_percent: 120}
+  - {armor: armors.light, multiplier_percent: 80}
+  - {armor: armors.heavy, multiplier_percent: 25}
+  - {armor: armors.reinforced_structure, multiplier_percent: 10}
+design:
+  channel: Health damage; general anti-personnel and light-armor family.
+  feedback: Effective against personnel, useful against light armor, and poor against heavy armor.

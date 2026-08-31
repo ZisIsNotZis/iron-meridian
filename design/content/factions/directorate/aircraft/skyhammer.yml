@@ -1,0 +1,73 @@
+display_name: "Skyhammer"
+description: "Skyhammer Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "aircraft"
+tier: "advanced"
+battlefield_roles: ["heavy_standoff_strike_against_armored_formations_and_structures", "command_target_pressure"]
+hpmax: 600
+armor: "armors.heavy"
+locomotor: "locomotors.fixed_wing"
+targetability: ["targetabilities.high_air"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 4.5
+visionrange: 7
+alertrange: 10
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.46
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.heavy", "sensing.default_sensing", "collisions.default_collision", "targetabilities.high_air", "locomotors.fixed_wing", "damages.air_to_ground_strike", "targetabilities.ground", "targetabilities.structure", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.air_command", "factions.directorate.buildings.heavy_works", "factions.directorate.buildings.munitions_foundry"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Massive armored fuselage, illuminated payload rails, white lock geometry, and a deep launch shockwave."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Massive armored fuselage, illuminated payload rails, white lock geometry, and a deep launch shockwave."
+fx:
+  identity: "Massive armored fuselage, illuminated payload rails, white lock geometry, and a deep launch shockwave."
+design:
+  tactical_identity: "Heavy standoff strike against armored formations and structures; secondary command-target pressure."
+  player_decision: "Create a window for a ground assault by threatening one key target, or preserve the bomber when the lock is unsafe. It fails when screened, jammed, or intercepted."
+  counterplay: "Fighters, long-range anti-air, jamming/line-of-sight denial, decoys, and attacking the airfield."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Reinforced air protection but low maneuverability; an expensive loss."
+  support_behavior: "Creates a single strike window for the planned assault; it does not provide reconnaissance, air cover, or repeated free bombardment."
+  locomotion_behavior: "Fixed-wing; slow, high-momentum bomber with a committed attack run and long recovery."
+  targetability_behavior: "High air in flight; visible to ordinary air detection and vulnerable to anti-air/fighters."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Skyhammer intentionally exceeds normal air durability and payload commitment; its strategic warning and counterplay remain shared. Guided siege payload | Air-to-ground strike + protection condition + structural; ground light, heavy, structure | 9.0 / 220 + 25 condition / 150 ticks | Projectile 7 cells/s; point; tracking within 20° cone, 45°/s after lock Siege Salvo | 30-tick lock; 30-tick windup; 60-tick recovery; 300-tick cooldown; 10.0-cell visible target lock; movement/jam cancels setup | Fighters, anti-air, jam/break LOS, decoys, attack airfield"
+production:
+  producer: "factions.directorate.buildings.air_command"
+  queue: "default_queue"
+  category: "strategic_strike"
+  prerequisites: ["factions.directorate.buildings.air_command", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.heavy_works", "factions.directorate.buildings.munitions_foundry"]
+  cost:
+    resource: 1000
+  buildtime: 270
+  capacity:
+    max_active: 1
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Guided siege payload"
+    damage: "damages.air_to_ground_strike"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 9
+    attackdamage: 220
+    attackperiod: 150
+    delivery: "projectile_7_cells_s_point_tracking_within_20_cone_45_s_after_lock"
+    design:
+      tactical_use: "Guided siege payload | Air-to-ground strike + protection condition + structural; ground light, heavy, structure | 9.0 / 220 + 25 condition / 150 ticks | Projectile 7 cells/s; point; tracking within 20° cone, 45°/s after lock"
+      counterplay: "Fighters, long-range anti-air, jamming/line-of-sight denial, decoys, and attacking the airfield."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Siege Salvo"
+    activation: "active"
+    setup_ticks: 30
+    recovery_ticks: 60
+    cooldown_ticks: 300
+    movement_allowed: true
+    design:
+      player_decision: "Create a window for a ground assault by threatening one key target, or preserve the bomber when the lock is unsafe. It fails when screened, jammed, or intercepted."
+      counterplay: "Fighters, long-range anti-air, jamming/line-of-sight denial, decoys, and attacking the airfield."
+      interruption_readability: "Siege Salvo | 30-tick lock; 30-tick windup; 60-tick recovery; 300-tick cooldown; 10.0-cell visible target lock; movement/jam cancels setup | Fighters, anti-air, jam/break LOS, decoys, attack airfield"

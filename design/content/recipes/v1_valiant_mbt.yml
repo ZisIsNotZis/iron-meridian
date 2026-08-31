@@ -1,0 +1,14 @@
+display_name: "V1 Valiant MBT Recipe"
+description: "Reusable recipe definition."
+status: core
+kind: "recipe"
+product: factions.coalition.vehicles.valiant_mbt
+producer: factions.coalition.buildings.vehicle_assembly
+category: "vehicle"
+availability: scenarios.v1_meridian_crossing
+prerequisites: [{object: factions.coalition.buildings.vehicle_assembly, state: operational}]
+references: [factions.coalition.vehicles.valiant_mbt, factions.coalition.buildings.vehicle_assembly]
+player_exposed: true
+product_quantity: 1
+design:
+  meaning: Queues one Valiant Main Battle Tank in an operational Vehicle Assembly. Cost, buildtime, capacity, and replacement rules come from the Valiant card.

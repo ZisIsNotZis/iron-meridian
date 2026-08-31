@@ -1,0 +1,18 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_architecture
+type: object
+additionalProperties: false
+required: [kind, document_id, title, ownership, boundary_flow, implementation_constraints, simulation_loop, command_boundary, observation_boundary, determinism, future_seams, verification]
+properties:
+  kind: {const: architecture_contract}
+  document_id: {type: string}
+  title: {type: string}
+  ownership: {type: array, items: {type: string}}
+  boundary_flow: {type: array, items: {type: object, additionalProperties: false, required: [stage, owner, output], properties: {stage: {type: string}, owner: {type: string}, output: {type: string}}}}
+  implementation_constraints: {type: array, items: {type: string}}
+  simulation_loop: {type: array, items: {type: string}}
+  command_boundary: {type: object, additionalProperties: false, required: [fields, limits, payloads, exposure, rejection_taxonomy, application_actions], properties: {fields: {type: array, items: {type: string}}, limits: {type: array, items: {type: string}}, payloads: {type: array, items: {type: object, additionalProperties: false, required: [kind, required_payload, validation], properties: {kind: {type: string}, required_payload: {type: string}, validation: {type: string}}}}, exposure: {type: array, items: {type: string}}, rejection_taxonomy: {type: array, items: {type: string}}, application_actions: {type: array, items: {type: string}}}}
+  observation_boundary: {type: object, additionalProperties: false, required: [fields, entity_view, contact_view, derived_views, privacy_rules], properties: {fields: {type: array, items: {type: string}}, entity_view: {type: array, items: {type: string}}, contact_view: {type: array, items: {type: string}}, derived_views: {type: array, items: {type: string}}, privacy_rules: {type: array, items: {type: string}}}}
+  determinism: {type: array, items: {type: string}}
+  future_seams: {type: array, items: {type: string}}
+  verification: {type: array, items: {type: string}}

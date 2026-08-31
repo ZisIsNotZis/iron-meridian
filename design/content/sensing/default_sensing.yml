@@ -1,0 +1,33 @@
+display_name: "Default Sensing"
+description: Default observation and information-sharing profile.
+status: designed
+kind: "sensing"
+detection:
+  radar_range_cells: 12
+  radar_refresh_ticks: 15
+  contact_memory_ticks: 45
+  ordinary_vision_detection_strength: 50
+  detection_strength_scale: 100
+  close_reveal_radius_cells: 1.5
+  firing_reveal_ticks: 30
+  line_of_sight_required: true
+  line_of_sight_rule: Integer cell ray; cover blocks after revealing the cover cell.
+  source_strength_rule: Detection succeeds when source strength minus concealment strength is at least zero.
+  source_tie_break_rule: Strongest valid source wins; equal strengths use source entity ID.
+  close_reveal_uses_strength_test: true
+information_flow:
+  designation_ticks: 90
+  designation_relay_delay_ticks: 3
+  observation_relay_delay_ticks: 6
+  jamming_range_reduction_cells: 5
+  decoy_duration_ticks: 90
+  observation_levels: [unknown, contact, identified, detailed]
+  shared_vision: false
+  stale_contact_allowed: true
+  stale_contact_attackable: false
+  terrain_memory: explored
+sensing_rules: "Ordinary vision uses a circle and integer cell-ray occlusion; radar and relay require range and permission but not a clear ray. Firing reveal creates a contact."
+design:
+  detection_rules: Detection succeeds when source strength minus concealment strength is at least zero. Radar gives contact rather than perfect detail; decoys cannot deal damage.
+  information_flow: Radar and relay provide contact; ordinary vision provides detailed; designation provides identified while its source and relay remain valid. Contact memory is measured from the last successful source update. Terrain remains explored, but entity positions and state do not.
+  feedback: The observer sees a stale-contact marker after visibility ends, with last-seen tick and source kind. A firing reveal creates a temporary opposing contact. No source grants shared vision in V1, and no presentation effect may reveal an entity absent from the filtered view.

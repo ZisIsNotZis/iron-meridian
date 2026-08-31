@@ -1,0 +1,8 @@
+display_name: "Structure Targetability"
+description: Structure target-domain profile.
+status: designed
+kind: "targetability"
+domains: [structure]
+design:
+  state_rules: The entity is targetable as structure and uses a footprint-based occupancy shape. A defense or building may additionally own a weapon domain, but this profile deals no damage.
+  feedback: Footprint, placement state, health state, and disabled capabilities are shown separately so the player can distinguish target legality from functionality.

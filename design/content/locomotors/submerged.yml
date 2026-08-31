@@ -1,0 +1,12 @@
+display_name: "Submerged"
+description: Depth-state movement with explicit surfacing vulnerability.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [submerged, surfacing, surfaced, diving]
+transition_rules:
+  - {transition: surfacing, owner: carrier, visible: true, interruptible: true, timing_owner: carrier}
+  - {transition: diving, owner: carrier, visible: true, interruptible: true, timing_owner: carrier}
+design:
+  movement_rules: Submerged units use navigable depth cells and cannot use ordinary surface routes while submerged. Speed, signature, sonar interaction, and weapon access are state-owned by the carrier.
+  interaction_rules: Submerged units are targetable only through a legal submerged-domain profile or explicit reveal. They cannot board ordinary transports or beach unless a carrier contract provides that interaction.

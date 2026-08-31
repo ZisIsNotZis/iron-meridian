@@ -1,0 +1,9 @@
+display_name: "Surface Naval"
+description: Water-only vessel movement.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [afloat, moving, turning, anchored, beaching, boarding]
+design:
+  movement_rules: Surface naval units use navigable water cells, obey water depth and shoreline rules, and retain momentum while turning and stopping.
+  interaction_rules: A vessel cannot silently change between water and land states. Surface vessels may beach or unload only when their carrier and the map permit it; wake and collision are presentation consequences, not extra damage by default.

@@ -1,0 +1,27 @@
+display_name: Scrap Truck
+description: "Core Field temporary-site logistics vehicle for salvage collection and cover placement. Wheeled, 3.0 cells/s and 2.0 loaded; deploys into a visible temporary scrap cache or barricade with setup. Ground vehicle mobile and structure-like temporary site deployed; light armor mobile and reinforcedStructure deployed; both visible and attackable. Scrap pistol uses rifle/small arms against personnel, range 3.0, 5 damage/event, 45 ticks, projectile speed 12, point hit, no tracking. Sort salvage channels one eligible wreck/drop at 1.0 cell for 60 ticks, cooldown 240, one bounded recovery payout. Drop barricade setup 30 ticks creates one 2x1 temporary cover piece for 240 ticks, no damage or chaining; both interruptible. Production 250 resource / 120 ticks from Field Workshop, vehicle FIFO, no hard roster cap, one salvage load and one barricade deployment. Body 250/300 HP mobile/deployed, radius 0.44/0.50, footprint 2x1/2x2."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: field
+battlefield_roles: [salvage, temporary_cover]
+hpmax: 250
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: [targetabilities.ground, targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 3.0
+visionrange: 6.5
+alertrange: 8.0
+footprint: {radius_cells: 0.44, width_cells: 2, height_cells: 1}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: scrap_pistol, damage: damages.rifle_small_arms, targetability: [targetabilities.ground], attackrange: 3.0, attackdamage: 5, attackperiod: 45, projectile_speed: 12, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}]
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: sort_salvage, activation: active, channel_ticks: 60, cooldown_ticks: 240, target: eligible_wreck_or_drop, targetrange: 1.0, interruption_conditions: [damage], design: {player_decision: "Convert a dangerous wreck into a short-lived positional advantage or keep the truck available.", counterplay: "Deny wrecks and destroy the deployed cache."}}
+  - {skill: skills.default_lifecycle, skill_name: drop_barricade, activation: active, setup_ticks: 30, duration_ticks: 240, target: self, movement_allowed: false, interruption_conditions: [damage], design: {player_decision: "Spend one carried load to create temporary cover.", counterplay: "Destroy the temporary cover or the truck before deployment."}}
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 250}, buildtime: 120, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Flatbed piled with tagged metal; deployment unfolds orange hazard frames and showers sparks.", readability: "Readable mobile and deployed silhouettes with footprint, selection, contact, and shadow anchors; state transition is explicit; bespoke assets are N/A."}
+audio: {identity: "Scrap handling, deployment, selection, damage, and destruction use faction fallback."}
+fx: {identity: "Orange hazard frames and sparks mark barricade deployment; salvage uses readable sorting feedback."}
+design: {tactical_identity: "One-load salvage and temporary-cover logistics truck.", player_decision: "Convert a dangerous wreck into a short-lived positional advantage or save the truck for later.", counterplay: "Deny wrecks and destroy the deployed cache.", offense_behavior: "Weak scrap pistol only; no meaningful combat damage.", defense_behavior: "Light mobile armor and reinforcedStructure deployed; visible and attackable in both states.", support_behavior: "Sort salvage yields one bounded payout; Drop barricade creates one 2x1 cover piece for 240 ticks; no repair, transport, or command aura.", locomotion_behavior: "Wheeled, 3.0 cells/s mobile and 2.0 loaded; deployable temporary site.", targetability_behavior: "Ground vehicle mobile, structure-like deployed.", acquisition_behavior: "Scrap pistol range 3, 5 damage, 45 ticks, point projectile.", lock_behavior: "Sort salvage range 1/channel 60/cooldown 240; barricade setup 30/duration 240; both interruptible.", lifecycle_behavior: "One salvage load and one barricade deployment; deployed state is finite.", production_behavior: "Field Workshop vehicle FIFO; 250 resource, 120 ticks, replaceable.", visual_identity: "Tagged scrap flatbed, orange hazard frames, sparks.", audio_identity: "Metal sorting and deployment clatter.", fx_identity: "Orange construction sparks and salvage arc.", design_rationale: "Deployed structure-like state is temporary and self-limited; salvage never creates a second resource or permanent production capability."}

@@ -1,0 +1,185 @@
+title: Irregular Network Production Matrix
+source_document: design/factions/irregular-network/production.md
+document_type: production_matrix
+ownership:
+  matrix: authoritative relationship between Network products, producers, and availability classes
+  excluded: unit/building statistics and queue mechanics remain on linked entity cards and the production contract
+  missing_row: product is not producible
+availability_classes:
+  - class: standard
+    resolution: requires an operational Safehouse and the listed producer
+    allowed_modes: Network skirmish, campaign, and compatible multiplayer rulesets
+  - class: optional
+    resolution: supported extension that the scenario must explicitly enable
+    allowed_modes: explicitly enabled Network skirmish, campaign, and compatible multiplayer rulesets
+  - class: coastal
+    resolution: also requires an operational Boat Shed and a navigable shallow-water map layer
+    allowed_modes: Coastal campaign, skirmish, and compatible multiplayer rulesets
+  - class: authored
+    resolution: scenario setup may spawn the product, but no queue or replacement exists
+    allowed_modes: explicit campaign/scenario content only
+  - class: rejected
+    resolution: retained as a design boundary; no recipe and cannot be selected
+    allowed_modes: none
+global_rules:
+  scenario: must allow the class and product; faction ownership alone never makes a recipe available
+  queues: FIFO; reserve card-owned cost on acceptance; lose queued work when producer is destroyed unless selected mode explicitly supplies a different rule
+standard_production:
+  - product: factions.irregular_network.infantry.lookout
+    producer: Cell House
+    prerequisites: [Safehouse, Cell House]
+    class: standard
+  - product: factions.irregular_network.infantry.blocker_team
+    producer: Cell House
+    prerequisites: [Safehouse, Cell House]
+    class: standard
+  - product: factions.irregular_network.infantry.rifle_cell
+    producer: Cell House
+    prerequisites: [Safehouse, Cell House]
+    class: standard
+  - product: factions.irregular_network.infantry.breacher_cell
+    producer: Cell House
+    prerequisites: [Safehouse, Cell House, Field Workshop]
+    class: standard
+  - product: factions.irregular_network.infantry.hunter_team
+    producer: Cell House
+    prerequisites: [Safehouse, Cell House, Field Workshop]
+    class: standard
+  - product: factions.irregular_network.infantry.field_mechanic
+    producer: Cell House
+    prerequisites: [Safehouse, Cell House, Field Workshop]
+    class: standard
+  - product: factions.irregular_network.infantry.saboteur
+    producer: Cell House
+    prerequisites: [Safehouse, Cell House, Hideout or Relay Cache]
+    class: standard
+  - product: factions.irregular_network.infantry.signal_runner
+    producer: Cell House
+    prerequisites: [Safehouse, Cell House, Hideout or Relay Cache]
+    class: optional
+  - product: factions.irregular_network.vehicles.courier_technical
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop]
+    class: standard
+  - product: factions.irregular_network.vehicles.needle_technical
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop]
+    class: standard
+  - product: factions.irregular_network.vehicles.scrap_truck
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop]
+    class: standard
+  - product: factions.irregular_network.vehicles.mole_carrier
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop, Hideout]
+    class: standard
+  - product: factions.irregular_network.vehicles.jammer_van
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop, Jammer Post]
+    class: standard
+  - product: factions.irregular_network.vehicles.hook_rig
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop]
+    class: standard
+  - product: factions.irregular_network.vehicles.wrecker
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop]
+    class: standard
+  - product: factions.irregular_network.vehicles.ambush_gun
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop, Hideout]
+    class: standard
+  - product: factions.irregular_network.vehicles.improvised_mortar
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop, Hideout]
+    class: standard
+  - product: factions.irregular_network.buildings.cell_house
+    producer: Network construction
+    prerequisites: [Safehouse]
+    class: standard
+  - product: factions.irregular_network.buildings.field_workshop
+    producer: Network construction
+    prerequisites: [Safehouse]
+    class: standard
+  - product: factions.irregular_network.buildings.scrap_exchange
+    producer: Network construction
+    prerequisites: [Safehouse]
+    class: standard
+  - product: factions.irregular_network.buildings.hideout
+    producer: Network construction
+    prerequisites: [Safehouse]
+    class: standard
+  - product: factions.irregular_network.buildings.jammer_post
+    producer: Network construction
+    prerequisites: [Safehouse]
+    class: standard
+safehouse_rule: scenario-started in a standard match and has no replacement recipe
+forward_anchor_rule: one additional forward anchor only when the scenario explicitly allows that anchor; no card silently creates a second construction origin
+coastal_production:
+  - product: factions.irregular_network.naval.skiff_cell
+    producer: Boat Shed
+    prerequisites: [Safehouse, Field Workshop, Boat Shed, shallow water]
+    class: coastal
+  - product: factions.irregular_network.naval.diver_team
+    producer: Boat Shed
+    prerequisites: [Safehouse, Field Workshop, Boat Shed, Hideout, shallow water]
+    class: coastal
+  - product: factions.irregular_network.naval.cutwater
+    producer: Boat Shed
+    prerequisites: [Safehouse, Field Workshop, Boat Shed, shallow water]
+    class: coastal
+  - product: factions.irregular_network.naval.net_barge
+    producer: Boat Shed
+    prerequisites: [Safehouse, Field Workshop, Boat Shed, Hideout, shallow water]
+    class: coastal
+  - product: factions.irregular_network.buildings.boat_shed
+    producer: Network construction
+    prerequisites: [Safehouse, Field Workshop, shoreline]
+    class: coastal
+boat_shed_rule: owns one coastal FIFO queue; land maps expose no coastal queue, recipe, or disabled placeholder button; coastal units do not unlock a general naval tree
+optional_sites:
+  - product: factions.irregular_network.buildings.relay_cache
+    producer: Network construction
+    prerequisites: [Safehouse, Hideout or active forward anchor]
+    class: optional
+  - product: factions.irregular_network.buildings.false_depot
+    producer: Network construction
+    prerequisites: [Safehouse, Hideout or active forward anchor]
+    class: optional
+  - product: factions.irregular_network.vehicles.relay_truck
+    producer: Field Workshop
+    prerequisites: [Safehouse, Field Workshop, Hideout]
+    class: optional
+optional_rule: selectable in the Network ruleset, not required for the basic economy or combat loop; temporary sites do not satisfy a prerequisite after removal
+authored_content:
+  - product: factions.irregular_network.aircraft.kite_drone
+    reason: scenario-provided reconnaissance asset until a shared air facility exists
+    class: authored
+  - product: factions.irregular_network.aircraft.razorwing
+    reason: scenario-provided strike asset until a shared air facility exists
+    class: authored
+  - product: factions.irregular_network.aircraft.dustwing
+    reason: scenario-provided extraction asset until a shared air facility exists
+    class: authored
+  - product: factions.irregular_network.aircraft.moth_balloon
+    reason: scenario-provided strategic sensor/decoy
+    class: authored
+rejected_content:
+  - product: Full-disguise operative
+    reason: Identification and scouting failure risk.
+    class: rejected
+  - product: Tunnel network
+    reason: Multiplies pathing, fog, construction, and attack-state rules.
+    class: rejected
+  - product: Open-ended captured-unit factory
+    reason: Erases the bounded-salvage identity.
+    class: rejected
+  - product: Giant drone swarm
+    reason: Adds a second economy and selection burden.
+    class: rejected
+authored_aircraft_rule: visible in scenario content, consume authored asset slots, can be lost permanently, cannot be queued or rebuilt, and cannot be a prerequisite for another Network product
+salvage:
+  owners: [Field Mechanic, Wrecker, Scrap Truck]
+  category: action, not production
+  results: health, a resource payout, or a temporary charge declared by the owning card
+  boundaries: never creates a recipe, changes faction ownership, or bypasses the matrix

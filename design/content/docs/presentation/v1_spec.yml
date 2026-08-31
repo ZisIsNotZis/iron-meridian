@@ -1,0 +1,94 @@
+kind: presentation_scope
+source_document: design/presentation/v1-spec.md
+ownership: "Concrete V1 presentation target for the compact browser slice; simulation values remain in their system or entity documents."
+hud_wireframe:
+  top_strip: one_row
+  top: resource_income_objective_state_hold_alerts
+  middle: battlefield
+  bottom: selected_entity_command_buttons_production_queue
+  footer: status_tooltip_order_rejection
+  command_area: "One compact panel; may be visually rearranged at the supported floor but not hidden during active play."
+minimap:
+  location: small_square_inside_top_right_alert_area
+  retained_by: [near_term_skirmish, campaign]
+  displays: [terrain, owned_entities, objective, currently_revealed_contacts]
+  never_displays: [hidden_enemy_units, stale_contacts_as_current, unexplored_terrain_as_safe]
+ui_states:
+  - {element: command_button, states: [available, hover, pressed, queued, cooldown, unavailable_with_reason]}
+  - {element: construction_ghost, states: [valid, invalid_terrain, invalid_overlap, invalid_radius, invalid_exclusion]}
+  - {element: contact, states: [owned, visible_enemy, stale_last_known, objective_or_neutral_landmark]}
+  - {element: objective, states: [neutral, friendly, enemy, contested, hold_victory_progress]}
+  - {element: queue, states: [empty, active_progress, waiting_for_exit, paused_by_building, completed]}
+  - {element: match_shell, states: [loading, briefing, active, paused, victory, defeat, aborted]}
+  - {element: alert, states: [incoming, discovery, damage_or_disable, production, objective, result]}
+unavailable_command: "Includes one short reason in text and an icon. Tooltip adds cost, target restriction, range, cooldown, and counterplay when those fields exist."
+alert_order: [result, hq_threat, production_loss, objective_transition, incoming_force, discovery, routine_completion]
+alert_tie_break: [simulation_tick, stable_event_id]
+interaction_mapping:
+  command_set: [select, move, attack, stop, harvest, produce, construct, capture]
+  left_click: selects_or_confirms_visible_legal_target
+  right_click: context_action
+  shift: queues_only_compatible_orders
+  escape: cancels_preview
+  space: pauses_against_ai
+  control_groups: "1–5 are the five fixed control groups; Ctrl+1–5 assigns them."
+  hidden_controls: [repair, attack_move, patrol, transport, aircraft, naval_actions, entity_skills]
+visual_mappings:
+  - {event: accepted_order, icon_or_shape: solid_order_marker, motion: 6_frame_settle_pulse, sound: short_ui_tick}
+  - {event: rejected_order, icon_or_shape: crossed_command_icon, motion: 8_frame_red_or_amber_nudge, sound: short_ui_error}
+  - {event: visible_contact, icon_or_shape: role_silhouette_plus_team_shape, motion: one_discovery_ping, sound: contact_ping}
+  - {event: stale_contact, icon_or_shape: desaturated_diamond_plus_age, motion: none_looping, sound: none_by_default}
+  - {event: objective_contest, icon_or_shape: split_ring_plus_striped_center, motion: slow_opposing_pulse, sound: low_objective_tone}
+  - {event: construction, icon_or_shape: ghost_footprint_plus_radius_ring, motion: grid_sweep_and_progress_fill, sound: hydraulic_loop}
+  - {event: damage, icon_or_shape: health_strip_plus_directional_flash, motion: 4_frame_hit_flash_and_bounded_smoke, sound: material_impact}
+  - {event: disabled_or_status, icon_or_shape: status_icon_plus_outline_pattern, motion: family_specific_low_rate_overlay, sound: one_state_cue}
+  - {event: victory_or_defeat, icon_or_shape: full_width_result_panel, motion: one_restrained_transition, sound: result_cue}
+visual_fallback: "Shape and text remain when color, motion, or sound is disabled. Effects are pooled and short-lived; persistent effects correspond to a visible state and are removed when the next observation removes that state."
+animation_profile:
+  facing_directions: 8
+  reference: cardinal_direction
+  mirroring: "Allowed only for non-directional silhouettes."
+  placeholder_flipbook_fps: 12
+  loops: {idle: true, move: true, attack: false, hit: false, destroyed: static_wreck_before_cleanup}
+  event_authority: "Simulation event timing is authoritative. The muzzle frame is the launch event; impact feedback begins on the impact event; no animation can delay a command or damage result."
+  shared_families: [idle, move, hit, wreck]
+  bespoke_transitions: [construction, capture, gameplay_state_changing_entity_skill]
+fx_profile:
+  - {family: rifle_or_projectile, shape: thin_warm_tracer_small_point_impact, lifetime_frames_max: 12}
+  - {family: anti_armor, shape: heavier_tracer_directional_impact_shard, lifetime_frames_max: 18}
+  - {family: explosive_area, shape: ground_reticle_ring_dust_burst, lifetime_frames_max: 30}
+  - {family: suppression, shape: short_white_stagger_mark_and_icon, lifetime: state_owned}
+  - {family: emp, shape: cyan_broken_circuit_arc_and_icon, lifetime: state_owned}
+  - {family: fire, shape: amber_core_dark_smoke_icon, lifetime: state_owned}
+  - {family: construction_or_capture, shape: grid_pulse_and_progress_fill, lifetime: state_owned}
+  - {family: destruction, shape: one_burst_smoke_readable_wreck, lifetime_frames_max: 90}
+fx_cap: "When the emitter cap is reached, preserve the newest high-priority event and replace low-priority repeated movement effects with a static marker."
+audio_profile:
+  buses: [ui, voice, effects, ambient, music]
+  default_mix_db: {ui: 0, voice: -2, effects: -4, ambient: -10, music: -12}
+  effects_simultaneous_voices_max: 32
+  concurrency: "Repeated weapon and track events share concurrency groups; the newest event wins only when it is nearer or higher priority."
+  critical_cues: [command_rejection, enemy_discovery, incoming_attack, hq_damage, objective_contest, production_completion, victory_or_defeat]
+  voice: "Optional in V1. Captions use the same event text as the HUD; missing audio never removes information."
+placeholder_assets:
+  - {id: terrain_clear, use: buildable_clear_ground}
+  - {id: terrain_cover, use: traversable_line_of_sight_cover}
+  - {id: iron_block, use: Directorate_unit_building_silhouette_family}
+  - {id: slate_frame, use: Coalition_unit_building_silhouette_family}
+  - {id: unit_scout, use: role_silhouette}
+  - {id: unit_infantry, use: role_silhouette}
+  - {id: unit_tank, use: role_silhouette}
+  - {id: unit_anti_armor, use: role_silhouette}
+  - {id: building_hq, use: V1_structure}
+  - {id: building_processor, use: V1_structure}
+  - {id: building_production, use: V1_structure}
+  - {id: fx_tracer, use: shared_effect}
+  - {id: fx_impact, use: shared_effect}
+  - {id: fx_smoke, use: shared_effect}
+  - {id: fx_capture, use: shared_effect}
+  - {id: fx_reveal, use: shared_effect}
+  - {id: ui_order, use: shared_UI_icon}
+  - {id: ui_reject, use: shared_UI_icon}
+  - {id: ui_objective, use: shared_UI_icon}
+  - {id: ui_status, use: shared_UI_icon}
+placeholder_rule: "Every placeholder uses the owning card’s footprint, origin, targetability, and selection rules. Replacing a placeholder changes no simulation data."

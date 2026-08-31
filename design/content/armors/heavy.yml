@@ -1,0 +1,7 @@
+display_name: "Heavy Armor"
+description: Tanks and heavily protected assault vehicles.
+status: designed
+kind: "armor"
+protection: Tanks and heavily protected assault vehicles. Ordinary weapons are reduced; dedicated anti-armor, mines, aircraft, flanking, or sustained fire are useful.
+design:
+  damage_interaction_role: This profile is the heavy column in reusable damage interaction objects.

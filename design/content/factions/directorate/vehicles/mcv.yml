@@ -1,0 +1,100 @@
+display_name: "Mobile Construction Vehicle (MCV)"
+description: "Mobile Construction Vehicle (MCV) Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "established"
+battlefield_roles: ["mobile_base_deployment_and_construction_origin", "no_combat_role"]
+hpmax: 700
+armor: "armors.heavy"
+locomotor: "locomotors.transforming"
+targetability: ["targetabilities.ground", "targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 2
+visionrange: 7
+alertrange: 9
+footprint:
+  radius_cells: 0.65
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.heavy", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "targetabilities.structure", "locomotors.transforming", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "No entity-specific override is currently defined; inherit Directorate faction assets."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "No entity-specific override is currently defined; inherit Directorate faction assets."
+fx:
+  identity: "No entity-specific override is currently defined; inherit Directorate faction assets."
+design:
+  tactical_identity: "Mobile base deployment and construction origin; no combat role."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Heavy protection while mobile and reinforced-structure protection while deployed; its defense is escort, timing, and placement."
+  support_behavior: "Creates one Construction Yard anchor and enables the normal construction lifecycle; it does not bypass placement validation."
+  locomotion_behavior: "Tracked vehicle; transitions to a stationary Construction Yard. Deployment and packing are visible, stationary, and interruptible before completion."
+  targetability_behavior: "Ground vehicle while mobile; structure and special asset while deployed. It is visible and high-value in both states."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Deployment is a state transition, not a second entity. Construction rules and Deploy | 60-tick stationary transition; creates one Construction Yard anchor; construction disabled during transition | Attack or displace the MCV before completion; deny the landing site Pack | 180-tick stationary transition; construction disabled during transition; returns to mobile state | Attack during the visible transition or block the safe destination"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "strategic_construction"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 1
+  buildtime: 420
+  capacity:
+    max_active: 1
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Deploy"
+    activation: "active"
+    movement_allowed: true
+    design:
+      interruption_readability: "Deploy | 60-tick stationary transition; creates one Construction Yard anchor; construction disabled during transition | Attack or displace the MCV before completion; deny the landing site"
+  - skill: "skills.default_lifecycle"
+    skill_name: "Pack"
+    activation: "active"
+    movement_allowed: true
+    design:
+      interruption_readability: "Pack | 180-tick stationary transition; construction disabled during transition; returns to mobile state | Attack during the visible transition or block the safe destination"
+states:
+  - state: "mobile"
+    initial: true
+    hpmax: 700
+    armor: "armors.heavy"
+    locomotor: "locomotors.transforming"
+    targetability: ["targetabilities.ground"]
+    sensing: "sensing.default_sensing"
+    collision: "collisions.default_collision"
+    movespeed: 2
+    visionrange: 7
+    alertrange: 9
+    footprint: {radius_cells: 0.65}
+  - state: "deployed"
+    hpmax: 900
+    armor: "armors.reinforced_structure"
+    locomotor: "locomotors.transforming"
+    targetability: ["targetabilities.structure"]
+    sensing: "sensing.default_sensing"
+    collision: "collisions.default_collision"
+    movespeed: 0
+    visionrange: 8
+    alertrange: 10
+    footprint: {radius_cells: 0.8}
+transitions:
+  - from: "mobile"
+    to: "deployed"
+    trigger: "deploy"
+    setup_ticks: 60
+    interruptible: true
+    cancellable: true
+    vulnerable: true
+    cancellation_rule: "Attack or displace the MCV before completion; deny the landing site."
+  - from: "deployed"
+    to: "mobile"
+    trigger: "pack"
+    setup_ticks: 180
+    interruptible: true
+    cancellable: true
+    vulnerable: true
+    cancellation_rule: "Attack during the visible transition or block the safe destination."

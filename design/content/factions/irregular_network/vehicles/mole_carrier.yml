@@ -1,0 +1,27 @@
+display_name: Mole Carrier
+description: "Core Established concealed infantry-delivery vehicle/deployable. Tracked ground travel at 2.6 cells/s, then one brief straight limited subsurface route; no persistent tunnels or attacks while submerged. Ground vehicle while surfaced; during subsurface transit detectable but not directly targetable by ordinary weapons, with dust/ground disturbance, area effects, and exit interception as counterplay. Light armor, vulnerable during loading, surfacing, and recovery. Nose gun uses machine gun/autocannon against ground personnel, range 3.5, 10 damage/event, 36 ticks, projectile speed 14, point hit, no tracking, unavailable subsurface. Dive route is a visible destination within 8.0 cells, setup 30, subsurface travel 60, cooldown 240, fixed route and no attacks. Eject surface recovery 30, unload channel 30, cooldown 60; carrier and passengers vulnerable. Production 450 resource / 210 ticks from Field Workshop plus operational Hideout; one infantry group capacity and one active route. Body 320 HP, radius 0.48, footprint 2x2; vision 6.5, alert/acquisition 8.0."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: established
+battlefield_roles: [concealed_transport, extraction]
+hpmax: 320
+armor: armors.light
+locomotor: locomotors.transforming
+targetability: [targetabilities.ground, targetabilities.special_asset]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.6
+visionrange: 6.5
+alertrange: 8.0
+footprint: {radius_cells: 0.48, width_cells: 2, height_cells: 2}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: nose_gun, damage: damages.machine_gun_autocannon, targetability: [targetabilities.ground], attackrange: 3.5, attackdamage: 10, attackperiod: 36, projectile_speed: 14, delivery: projectile, hit_model: point, tracking: none, acquisition: direct, disabled_in_states: [subsurface]}]
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: dive_route, activation: active, setup_ticks: 30, active_ticks: 60, cooldown_ticks: 240, target: visible_destination, targetrange: 8.0, movement_allowed: false, interruption_conditions: [damage], design: {player_decision: "Bypass a watched approach once while accepting a predictable exit and loss of firepower.", counterplay: "Detection, area denial, guarded exits, and striking before the dive."}}
+  - {skill: skills.default_lifecycle, skill_name: eject, activation: active, recovery_ticks: 30, channel_ticks: 30, cooldown_ticks: 60, target: self, movement_allowed: false, design: {player_decision: "Surface and unload through a vulnerable recovery window.", counterplay: "Strike the carrier and passengers during surfacing and unloading."}}
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 450}, buildtime: 210, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Low tracked chassis with drill-like nose; ground ripples and loose stones telegraph the route, while surfacing is loud and dusty.", readability: "Surface, subsurface, loading, and recovery states have readable silhouettes and disturbance cues."}
+audio: {identity: "Tracked movement, ground ripple, surfacing, loading, and destruction use faction fallback."}
+fx: {identity: "Ground ripples, loose stones, loud dusty surfacing, and visible exit telegraph the bounded route."}
+design: {tactical_identity: "One-route concealed infantry delivery and emergency extraction.", player_decision: "Bypass a watched approach once for a predictable exit and reduced firepower.", counterplay: "Detection, area denial, guarding exits, and striking before the dive.", offense_behavior: "Nose gun is surfaced-only defensive fire; none while subsurface.", defense_behavior: "Light armor; vulnerable during loading, surfacing, and recovery; subsurface is not invulnerability.", support_behavior: "One infantry-group capacity via Dive route and Eject; no repair or command.", locomotion_behavior: "Tracked ground travel then straight limited subsurface transit; no persistent tunnel.", targetability_behavior: "Ground vehicle surfaced; special non-targetable transition requiring proximity/area detection with disturbance.", acquisition_behavior: "Nose gun range 3.5, 10 damage, 36 ticks; disabled subsurface.", lock_behavior: "Dive setup 30/travel 60/cooldown 240; Eject recovery 30/unload 30/cooldown 60; passengers vulnerable.", lifecycle_behavior: "One infantry-group capacity and one active route.", production_behavior: "Field Workshop plus Hideout; 450 resource, 210 ticks, vehicle FIFO.", visual_identity: "Drill-like nose, ripples, loose stones, dusty surfacing.", audio_identity: "Ground disturbance and loud surfacing.", fx_identity: "Visible bounded route and dusty exit.", design_rationale: "Special subsurface targetability is bounded to one transition; disturbance, exits, and area attacks provide counterplay."}

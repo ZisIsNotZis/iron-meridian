@@ -1,0 +1,25 @@
+display_name: Skiff Cell
+description: "Core Field cheap coastal ambush boat and infantry ferry. Surface naval, fast in shallow coastal water at 5.5 cells/s, cannot enter deep-water routes or land. Naval-surface targetability, light naval protection, visible to ordinary coastal vision. Shore rockets use explosive/area against naval surface and ground personnel, range 4.5, 35 damage/event, period 45, projectile speed 10, area radius 0.5, no tracking, direct point/designated fire. Shore drop unloads one allied infantry group at range 1.0, channel 30 ticks, cooldown 90; beach approach is visible and boat cannot fire while unloading. Production 180 resource / 75 ticks from Boat Shed, coastal FIFO, no hard roster cap, only on navigable shallow water. Body 220 HP, radius 0.40, footprint 2x1, vision 7.0, alert/acquisition 9.0."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: naval
+tier: field
+battlefield_roles: [coastal_ambush, transport]
+hpmax: 220
+armor: armors.light
+locomotor: locomotors.surface_naval
+targetability: [targetabilities.naval_surface]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 5.5
+visionrange: 7.0
+alertrange: 9.0
+footprint: {radius_cells: 0.40, width_cells: 2, height_cells: 1}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: shore_rockets, damage: damages.explosive_area, targetability: [targetabilities.naval_surface, targetabilities.ground], attackrange: 4.5, attackdamage: 35, attackperiod: 45, projectile_speed: 10, area_radius_cells: 0.5, delivery: projectile, hit_model: area, tracking: none, acquisition: direct_designated}]
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: shore_drop, activation: active, channel_ticks: 30, cooldown_ticks: 90, target: allied_infantry_group, targetrange: 1.0, movement_allowed: false, design: {player_decision: "Threaten a flank or ferry a raiding party while accepting poor open-water performance.", counterplay: "Patrol boats, shore batteries, and air reconnaissance."}}]
+production: {producer: factions.irregular_network.buildings.boat_shed, queue: coastal, category: naval, cost: {resource: 180}, buildtime: 75, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: false}}
+presentation: {fallback_policy: inherit, silhouette: "Fishing hull with welded weapon pods; engine smoke and wake make approach readable.", readability: "Shallow-water restriction, beach approach, unloading, and weapon lock are visible; bespoke assets are N/A until production."}
+audio: {identity: "Engine smoke, wake, unloading, rocket, damage, and destruction use faction fallback."}
+fx: {identity: "Wake and engine smoke communicate approach; beach unload uses a visible shared transport cue."}
+design: {tactical_identity: "Cheap shallow-water raider and infantry ferry.", player_decision: "Threaten a flank or ferry a raiding party, accepting poor open-water performance.", counterplay: "Patrol boats, shore batteries, and air reconnaissance.", offense_behavior: "Shore rockets target naval surface and ground personnel; weak against armor.", defense_behavior: "Fragile light naval protection; survives by cover and numbers.", support_behavior: "Shore drop carries one infantry group; no repair or command.", locomotion_behavior: "Surface naval, 5.5 cells/s shallow water only; cannot land or enter deep lanes.", targetability_behavior: "Naval surface and visible to ordinary coastal vision.", acquisition_behavior: "Range 4.5, 35 damage, 45 ticks, projectile speed 10, area radius .5, no tracking.", lock_behavior: "Shore drop range 1/channel 30/cooldown 90; boat cannot fire while unloading.", lifecycle_behavior: "No hard roster cap; map water required.", production_behavior: "Boat Shed coastal FIFO; 180 resource, 75 ticks.", visual_identity: "Fishing hull and welded weapon pods.", audio_identity: "Engine, wake, and rocket cues.", fx_identity: "Wake and engine smoke make the approach readable.", design_rationale: "Shallow-water restriction and weak naval protection prevent replacing a navy; explosive damage uses shared conversion."}

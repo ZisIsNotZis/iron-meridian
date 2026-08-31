@@ -1,0 +1,45 @@
+display_name: "Munitions Foundry"
+description: "Munitions Foundry Directorate building card."
+status: "core"
+faction: "factions.directorate"
+platform: "advanced_weapons_support"
+tier: "advanced"
+hpmax: 900
+building_roles: ["unlocks_siege_and_high_commitment_weapon_families_making_a_preparation_choice_rather_than_adding_a_passive_damage_aura"]
+armor: "armors.reinforced_structure"
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+footprint: {width_cells: 3, height_cells: 3, facings: cardinal}
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "sensing.default_sensing", "collisions.default_collision", "targetabilities.structure", "locomotors.default_ground"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Reinforced magazine blocks, shell elevators, amber safety lines, measured loading booms, and brief red warning strobes."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Reinforced magazine blocks, shell elevators, amber safety lines, measured loading booms, and brief red warning strobes."
+fx:
+  identity: "Reinforced magazine blocks, shell elevators, amber safety lines, measured loading booms, and brief red warning strobes."
+design:
+  counterplay: "Destroy or isolate the Foundry, disperse formations, counter-battery, or attack delivery units."
+  defense_behavior: "Structure; ordinary sight and structure-capable attacks; no hidden ammunition state."
+construction:
+  cost:
+    resource: 900
+  buildtime: 420
+  builder: "factions.directorate.buildings.construction_yard"
+  prerequisites:
+    - object: "factions.directorate.buildings.vehicle_plant"
+      state: "operational"
+placement:
+  terrain: "ground"
+  anchor: "construction_anchor"
+  route_exclusion: true
+  objective_exclusion: true
+  facing: "cardinal"
+production:
+  max_operational: 1
+  replacement_allowed: true
+  replacement_scope: "per_player"
+  replacement_competes_with_new: false

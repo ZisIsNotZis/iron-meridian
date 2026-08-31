@@ -1,0 +1,8 @@
+display_name: "Submerged Targetability"
+description: Submerged target-domain profile.
+status: designed
+kind: "targetability"
+domains: [submerged]
+design:
+  state_rules: The entity requires an explicit submerged-capable detection source and weapon. Dive, surface, and failure transitions may expose both submerged and another domain for their declared transition window.
+  feedback: Detection is shown as a contact with declared freshness and detail. A stale or indirect contact never becomes a silent guarantee of a hit.

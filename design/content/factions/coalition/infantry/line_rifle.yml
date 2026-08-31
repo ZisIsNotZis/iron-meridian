@@ -1,0 +1,34 @@
+display_name: "Line Rifle"
+description: "Line Rifle migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: infantry
+tier: field
+battlefield_roles: ["line_infantry", "screening_and_capture_targets_personnel_and_light_exposed_units"]
+hpmax: 180
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: ["targetabilities.ground"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 3
+visionrange: 6.5
+alertrange: 8
+weapon_mounts: [{weapon: "weapons.default_resolution", mount_name: "service_rifle_volley", damage: "damages.rifle_small_arms", targetability: ["targetabilities.ground"], attackrange: 4.5, attackdamage: 22, attackperiod: 30, projectile_speed: 14, delivery: "projectile", hit_model: "point", tracking: "none", acquisition: "direct", requires_observation: true}]
+skill_bindings: [{skill: "skills.default_lifecycle", skill_name: "Brace", activation: "active", movement_allowed: false, interruption_conditions: ["movement", "emp"]}]
+production: {cost: {resource: 100}, buildtime: 45, producer: "factions.coalition.buildings.infantry_center", queue: "infantry", category: "field"}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "locomotors.default_ground", "targetabilities.ground"]
+design:
+  tactical_identity: "Line infantry primary; screening and capture secondary. Targets personnel and light exposed units."
+  offense_behavior: "Reliable rifle volley, personnel armor, moderate squad health. Poor against heavy armor and structures."
+  locomotion_behavior: "Foot; ordinary ground movement, can garrison suitable structures. Infantry collision and crush vulnerability apply."
+  targetability_behavior: "Ground/personnel; visible at ordinary sight range and vulnerable to explosives and suppression."
+  acquisition_behavior: "The service rifle uses Direct acquisition against observed legal ground-personnel or light targets. Garrisoning preserves ordinary target legality but does not create extra range."
+  lock_behavior: "No lock or post-launch tracking; each point projectile resolves from its firing position. Brace is not an attack lock and does not retain a target."
+  production_behavior: "Cost: `100 resource`; build time: `45 ticks`; facility: `Infantry Center`; prerequisites: `Coalition HQ operational`; queue/category: `infantry / field`; replacement/capacity: `no per-unit cap; one FIFO infantry queue; replacement competes with new units`."
+  player_decision: "Hold a firing line at the right moment or keep moving to avoid artillery and vehicles. Counter with armor, area damage, flanking, or crush pressure."
+  visual_identity: "Mixed regional uniforms and standardized blue identification tabs; muzzle flashes tighten into a synchronized volley while braced."
+  design_rationale: "# Line Rifle\n\n## Gameplay identity\n\n- **Roles:** Line infantry primary; screening and capture secondary. Targets personnel and light exposed units.\n- **Locomotion:** Foot; ordinary ground movement, can garrison suitable structures. Infantry collision and crush vulnerability apply.\n- **Targetability:** Ground/personnel; visible at ordinary sight range and vulnerable to explosives and suppression.\n- **Offense/defense:** Reliable rifle volley, personnel armor, moderate squad health. Poor against heavy armor and structures.\n- **Skill:** **Brace** — squad anchors briefly, improving accuracy and suppression resistance while reducing movement; canceling early gives no benefit.\n- **Production:** Cost: `100 resource`; build time: `45 ticks`; facility: `Infantry Center`; prerequisites: `Coalition HQ operational`; queue/category: `infantry / field`; replacement/capacity: `no per-unit cap; one FIFO infantry queue; replacement competes with new units`.\n- **Player experience:** Hold a firing line at the right moment or keep moving to avoid artillery and vehicles. Counter with armor, area damage, flanking, or crush pressure.\n- **Asset design:** See [entity asset manifest](assets.md).\n\n## Entity specification\n\nUses the referenced global profiles and the explicit values below.\n\n| HP | Armor | Move | Footprint radius | Vision | Alert radius |\n|---:|---|---:|---:|---:|---:|\n| 180 | Personnel | 3.0 cells/s | 0.22 cell | 6.5 cells | 8.0 cells |\n\n| Weapon | Damage family / domains | Range | Damage/event; period | Delivery / hit / tracking |\n|---|---|---:|---:|---|\n| Service rifle volley | Rifle / ground-personnel, light | 4.5 | 22; 30 ticks (3/3/24) | Projectile 14 cells/s; point; direct, no homing |\n\n**Brace:** 30-tick setup; lasts 120 ticks, grants +20% suppression resistance and +10% effective range, and prevents movement. 180-tick cooldown; movement or EMP cancels it.\n\n### Acquisition and lock semantics\n\n- **Vision / alert radius:** 6.5 / 8.0 cells; alerting selects observed candidates but cannot extend the rifle's range.\n- **Acquisition:** The service rifle uses Direct acquisition against observed legal ground-personnel or light targets. Garrisoning preserves ordinary target legality but does not create extra range.\n- **Lock / tracking:** No lock or post-launch tracking; each point projectile resolves from its firing position. Brace is not an attack lock and does not retain a target.\n\n\n### Counterplay\n\nUse area damage, artillery, armor, flanking, or crush pressure while the squad is anchored. Force it to move and it loses the brace benefit; heavy armor remains a poor rifle target under the shared matrix."
+presentation: {fallback_policy: "inherit", silhouette: "Mixed regional uniforms and standardized blue identification tabs; muzzle flashes tighten into a synchronized volley while braced.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

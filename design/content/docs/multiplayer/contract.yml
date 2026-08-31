@@ -1,0 +1,72 @@
+kind: multiplayer_contract
+source_document: design/multiplayer/README.md
+ownership: "Remote-session policy and externally visible wire contract. Simulation remains authoritative for rules, state, visibility, command validation, and tick ordering."
+shared_semantics: "Local and remote play use the same resolved content, seed, and accepted command semantics."
+authority_model: server_authoritative_simulation_with_client_command_input
+authority_exclusions: [peer_to_peer_lockstep, client_host_election, client_owned_state]
+server_duties: [fixed_simulation_clock, validate_commands, assign_authoritative_application_tick, publish_filtered_views, record_accepted_command_stream]
+prediction: "Clients may predict only presentation—selection, cursor feedback, and local movement animation. Predicted gameplay never changes an outcome."
+scope: {v1: no_remote_session_or_lobby, near_term: loopback_transport_same_schemas_without_public_matchmaking, full_game: authenticated_remote_matches_spectators_reconnect_server_recovery}
+session:
+  fields: [sessionId, matchId, protocolVersion, schemaVersion, phase, map, scenario, contentManifest, ruleset, seed, tickRate, currentTick, slots, policy]
+  phase: [lobby, loading, running, paused, finished, aborted]
+  tick_rate: 30
+  map_and_scenario: {shape: "id and version", resolution: before_readiness}
+  content_manifest: {fields: [id, digest_sha256]}
+  seed: server_generated_or_scenario_supplied_visible_before_first_tick
+player_slot:
+  fields: [playerId, role, faction, team, status, displayName]
+  role: [player, spectator]
+  status: [empty, invited, connected, ready, disconnected, surrendered, defeated]
+  nullable: [faction, team]
+ruleset_resolution: "Server resolves map, scenario, ruleset, faction, and manifest before readiness. Participants report compatible protocol and content digest. Mismatch is a lobby error; no definitions or packages change after loading begins."
+session_policy:
+  fields: [maxPlayers, pause, surrender, disconnect, reconnectWindowTicks, spectator]
+  values: {pause: [disabled, host_only, unanimous_vote], surrender: [disabled, player_command, team_vote], disconnect: [surrender, ai_takeover, reconnect_hold], spectator: [disabled, delayed, live]}
+  default: {pause: unanimous_vote, surrender: player_command, disconnect: reconnect_hold, reconnect_window: bounded}
+transport:
+  public: TLS_protected_bidirectional_WebSocket
+  https: authentication_and_session_discovery
+  representation: JSON_canonical_for_control_commands_views_events_errors
+  compression: optimization_only
+envelope: {fields: [protocolVersion, schemaVersion, sessionId, sender, messageId, sentAtTick, body], sender: [server, client], sentAtTick: non_negative_integer_or_null, body: object}
+envelope_rules: [message_id_unique_within_connection, retries_deduplicated_by_message_identity_and_command_sequence, unknown_versions_rejected_before_match, unknown_authoritative_body_fields_rejected]
+authorization: "Short-lived access credential identifies account, not player slot; server separately authorizes session discovery, joining, slot control, spectating, chatting, and administration."
+untrusted_fields: [player_ownership, resources, visibility, entity_ids, ticks, faction, result]
+digest_exclusions: [credentials, chat_text, display_names]
+command_message:
+  fields: [clientSequence, requestedTick, command]
+  command_fields: [playerId, sequence, applyAtTick, kind, subjectIds, targetId, point, recipeId, skillId, mode]
+  kind: [move, attack, stop, harvest, produce, construct, capture, skill, repair]
+  null_fields: [targetId, point, recipeId, skillId, mode]
+  tick_window: current_tick_plus_2_through_current_tick_plus_8
+  stale_rule: earlier_request_is_stale
+  late_rule: later_request_is_capacity_limit
+  ordering: [applyTick, playerId, sequence]
+  batch: {all_or_nothing: true, commands_max: 8, encoded_bytes_max: 131072}
+  duplicate_rule: "Duplicate clientSequence or command sequence is idempotently acknowledged; different payload with consumed sequence is malformed."
+command_result: {fields: [clientSequence, commandSequence, accepted, authoritativeTick, reason, eventIds], nullable: [commandSequence, authoritativeTick, reason]}
+rejection_codes: [malformed, stale, not_owner, not_visible, invalid_subject, invalid_target, out_of_range, blocked, unavailable, insufficient_resource, queue_full, state_conflict, unsupported_in_scenario, capacity_limit, unauthenticated, not_in_session, content_mismatch, rate_limited]
+delivery:
+  full_view: [loading_completion, reconnect, requested_resynchronization]
+  view_interval_running_ticks_max: 3
+  events_interval_running_ticks_max: 3
+  immediate_events: [victory, defeat, surrender, disconnect_policy, command_results]
+  forbidden: [hidden_units, hidden_orders, opponent_economy, server_ai_state, unseen_exact_position]
+  event_fields: [stable_id, authoritative_tick]
+view_message: {fields: [view_GameView, baseEventCursor_opaque, serverSequence_positive_integer]}
+event_message: {fields: [cursor_opaque, items_EventView, serverSequence_positive_integer]}
+backpressure: "Client acknowledges highest applied serverSequence. A slow client is disconnected from live delta stream when bounded queue is full; it may reconnect for a fresh filtered view and never backpressures simulation."
+lobby_and_roles:
+  lobby_exposes: [slots, faction_assignments, map_or_scenario, content_digest, ruleset, readiness, policy]
+  load_gate: required_player_slots_ready
+  freeze_at_loading: [slot_assignment, teams, faction_changes]
+  pause: "Application/session action with explicit server events; paused match accepts neither simulation commands nor ticks, but processes membership and resume votes."
+  surrender: irreversible_slot_action_normal_authoritative_end_phase
+  spectators: "Separate role-scoped view; live receives player-equivalent public information without commands, delayed receives advertised delay; cannot inspect player-only fog, vote, or affect digest."
+failure_recovery:
+  disconnect: "Server does not pause running match. reconnect-hold uses scenario-defined neutral/hold behavior; surrender ends immediately; ai-takeover uses same filtered boundary and explicit takeover/return events."
+  reconnect_requires: [authenticated_account, session_id, player_id, protocol_version, content_digest, last_acknowledged_server_sequence]
+  reconnect_result: "Fresh view and new cursor; no rewind and no trusted client snapshot."
+  server_recovery: "Validated snapshot plus accepted command log must match map, scenario, ruleset, content digest, seed, and state digest; otherwise abort and report, with no host election or silent rollback."
+acceptance: [equivalent_permitted_views_without_forbidden_data, identical_logs_reproduce_per_tick_digests, duplicate_delivery_idempotent, late_forged_malformed_unauthorized_commands_cannot_mutate, reconnect_current_truth_without_rewind_or_fog_leak, slow_observers_do_not_stall, content_protocol_mismatch_blocks_readiness]

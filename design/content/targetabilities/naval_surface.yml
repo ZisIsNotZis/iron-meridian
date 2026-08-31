@@ -1,0 +1,8 @@
+display_name: "Naval-Surface Targetability"
+description: Naval-surface target-domain profile.
+status: designed
+kind: "targetability"
+domains: [naval_surface]
+design:
+  state_rules: The entity is targetable as naval_surface while occupying surface water. A shore or air weapon must explicitly accept this domain; naval membership does not grant cross-domain targeting.
+  feedback: Surface-water occupancy, wake, and launch or beaching state make the domain readable. Shoreline legality is separate from target legality.

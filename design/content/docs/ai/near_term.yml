@@ -1,0 +1,42 @@
+kind: ai_profile
+source_document: design/ai/near-term.md
+status: near-term
+references: [maps.meridian_crossing, maps.relay_yard, maps.three_arches, maps.salt_line, gameplay.control]
+purpose: "The smallest reusable opponent that can support skirmish and campaign."
+observation_boundary: "Consumes the same fog-filtered observations and submits the same commands as a human. It does not inspect hidden queues, resources, units, or terrain."
+decision_cadence:
+  evaluation_interval_ticks: 15
+  strategic_batches_per_evaluation_max: 1
+  local_corrections_per_evaluation_max: 1
+blackboard_fields: [current_phase, own_bank_and_income_trend, visible_threats, last_known_contacts_with_age, objective_state, production_state, role_counts]
+ordering:
+  entities: stable_id
+  equal_score_routes: [center, north, south]
+  final_tie_break: stable_id
+  stale_contact_after_ticks: 90
+  stale_contact_use: search_hint_never_attack_target
+states:
+  - {state: opening, enter: match_begins, actions: "Start harvesting, queue authored opening force, send scout on center then north.", leave: "First queue and construction orders accepted."}
+  - {state: economy, enter: "Opening complete and no urgent threat", actions: "Keep one harvester active, construct next authored facility, retain reserve.", leave: "Attack threshold, visible threat, or objective event."}
+  - {state: contest, enter: "Objective neutral/contested and force ready", actions: "Send scout first, then mixed group; capture only with visible support.", leave: "Objective controlled, force defeated, or base threat."}
+  - {state: attack, enter: "Force threshold met and enemy approach known", actions: "Attack highest-value visible target on chosen route; stop at retreat threshold.", leave: "Force below threshold, target lost, or base threat."}
+  - {state: defense, enter: "Visible enemy within home-defense radius or production under attack", actions: "Call nearest legal force home; protect HQ then processor then production.", leave: "No visible threat for 60 ticks."}
+  - {state: recover, enter: "Force below threshold or economy disrupted", actions: "Retreat damaged units, rebuild line and scout, then return to Economy.", leave: "Force and bank recover to selected difficulty threshold."}
+profiles:
+  - {profile: recruit, opening_force: "1 scout, 2 line, 1 tank", attack_threshold_combat_units: 4, retreat_threshold: "35% visible force loss or average health below 45%", scout_interval_ticks: 90}
+  - {profile: regular, alias: standard, opening_force: "1 scout, 2 line, 1 tank, 1 counter unit", attack_threshold_combat_units: 5, retreat_threshold: "30% visible force loss or average health below 50%", scout_interval_ticks: 75}
+  - {profile: veteran, opening_force: "1 scout, 3 line, 1 tank, 1 counter unit", attack_threshold_combat_units: 6, retreat_threshold: "25% visible force loss or average health below 55%", scout_interval_ticks: 60}
+  - {profile: commander, opening_force: "1 scout, 3 line, 2 tanks, 1 counter unit", attack_threshold_combat_units: 7, retreat_threshold: "20% visible force loss or average health below 60%", scout_interval_ticks: 45}
+difficulty_invariants: "Difficulty never changes damage, health, income, production speed, fog, or starting resources."
+role_choice: "Use visible enemy composition: line infantry against exposed personnel, authored anti-armor role against visible tanks, and line/tank bodies to screen specialists. If no legal target is visible, hold a route or objective; do not fire into fog. Keep support within one ordinary movement group and withdraw it before sacrificing the screen."
+fixture_definition: "Each fixture uses a fixed seed, a named map, and a scripted observation stream. The expected assertion is behavioral, not a mandated winner."
+fixtures:
+  - {id: opening_economy, observation: "Home node visible, no enemy contact", expected_decision: "Harvest, start authored queue, scout center."}
+  - {id: lost_scout, observation: "Scout destroyed; no enemy contact", expected_decision: "Rebuild/replace scout when legal; do not attack from stale data."}
+  - {id: objective_disadvantage, observation: "Enemy owns objective, visible mixed force", expected_decision: "Contest or deny with a supported group; do not trickle units."}
+  - {id: damaged_force, observation: "Own force below retreat threshold", expected_decision: "Retreat toward owned safe area and rebuild."}
+  - {id: base_raid, observation: "Visible enemy near production", expected_decision: "Defense state calls nearest group home and protects production."}
+  - {id: failed_attack, observation: "Previous attack lost, enemy last-known contact stale", expected_decision: "Recover, scout a different route, and do not repeat same attack immediately."}
+  - {id: fog_parity, observation: "Enemy exists outside observation", expected_decision: "No command targets or attacks the hidden entity."}
+  - {id: tie_break, observation: "Two routes and two targets score equally", expected_decision: "Choose center, then lowest stable ID."}
+fixture_rule: "Fixture stream and expected command log become implementation test data; they do not authorize a hidden AI shortcut."

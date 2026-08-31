@@ -1,0 +1,28 @@
+display_name: Field Mechanic
+description: "Core Established field-repair infantry and limited wreck recovery. Foot movement is slow while repairing and cannot keep pace with a retreating vehicle unless transported; exposed during repair and recovery. Tool pistol gives negligible anti-personnel damage. Patch channels a nearby allied vehicle, restores health over time, and stops when damaged or out of range. Recover wreck channels one eligible wreck for a bounded salvage payout or temporary battlefield-use charge, never a permanent production unlock. Production 200 resource / 120 ticks; Cell House plus operational Field Workshop; infantry FIFO; no hard roster cap, one mechanic per target under the shared repair limit. Body 130 HP, personnel armor, speed 2.4 cells/s, radius 0.23, footprint 1x1; vision 5.8, alert/acquisition 7.0. Tool pistol uses rifle/small arms, range 3.0, 4 damage/event, 45 ticks, projectile speed 12, point hit, no tracking. Patch targets an allied ground vehicle at range 1.0, channel 30 ticks, restores 8 HP/tick, interrupted by hostile hit or separation, cooldown 30 after release. Recover wreck targets an eligible allied wreck at range 1.0, channel 90 ticks, cooldown 300, visible cable and interruptible."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: infantry
+tier: established
+battlefield_roles: [repair, recovery]
+hpmax: 130
+armor: armors.personnel
+locomotor: locomotors.default_ground
+targetability: [targetabilities.ground]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.4
+visionrange: 5.8
+alertrange: 7.0
+footprint: {radius_cells: 0.23, width_cells: 1, height_cells: 1}
+weapon_mounts:
+  - {weapon: weapons.default_resolution, mount_name: tool_pistol, damage: damages.rifle_small_arms, targetability: [targetabilities.ground], attackrange: 3.0, attackdamage: 4, attackperiod: 45, projectile_speed: 12, delivery: projectile, hit_model: point, tracking: none, acquisition: direct}
+skill_bindings:
+  - {skill: skills.default_lifecycle, skill_name: patch, activation: active, channel_ticks: 30, target: allied_ground_vehicle, targetrange: 1.0, interruption_conditions: [damage, separation], design: {player_decision: "Keep an expensive improvised vehicle alive under fire.", counterplay: "Focus fire, displacement, and denying the repair lane."}}
+  - {skill: skills.default_lifecycle, skill_name: recover_wreck, activation: active, channel_ticks: 90, cooldown_ticks: 300, target: eligible_allied_wreck, targetrange: 1.0, interruption_conditions: [damage, separation], design: {player_decision: "Risk a recovery channel for a bounded salvage charge.", counterplay: "Deny or guard wrecks and interrupt the visible cable."}}
+production: {producer: factions.irregular_network.buildings.cell_house, queue: infantry, category: infantry, cost: {resource: 200}, buildtime: 120, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Portable welding mask and bright blue repair arc; recovery creates a small finite crate marked with a stamped serial.", readability: "Readable infantry silhouette with footprint, selection, contact, and shadow anchors; repair and recovery state are visible; remaining bespoke assets are N/A until production."}
+audio: {identity: "Tool taps, repair cues, selection, acknowledgement, damage, and destruction use faction fallback; bespoke files are N/A."}
+fx: {identity: "Bright blue repair arc, visible cable, and finite recovery crate; declared events use faction-flavored presets."}
+design: {tactical_identity: "Exposed support that turns selected wrecks and vehicles into bounded recovery value.", player_decision: "Keep an expensive vehicle alive or risk a recovery channel under fire.", counterplay: "Focus fire, displacement, and denying wrecks.", offense_behavior: "Tool pistol is negligible anti-personnel self-defense: range 3, 4 damage, 45 ticks.", defense_behavior: "Personnel armor; requires screening and is exposed during repair and recovery.", support_behavior: "Patch restores 8 HP/tick for 30 ticks; Recover wreck returns only bounded salvage or one temporary charge; no command or transport.", locomotion_behavior: "Foot, 2.4 cells/s; slow while repairing and cannot keep pace unless transported.", targetability_behavior: "Ground infantry, ordinary vision; repair channel exposes the unit.", acquisition_behavior: "Tool pistol uses direct point acquisition with no tracking.", lock_behavior: "Patch range 1, hostile hit/separation interrupts and starts 30-tick post-release cooldown; Recover wreck range 1, 90 ticks, cooldown 300.", lifecycle_behavior: "No special lifecycle beyond shared unit states.", production_behavior: "Cell House plus operational Field Workshop; 200 resource, 120 ticks, shared repair limit.", visual_identity: "Welding mask, blue arc, stamped salvage crate.", audio_identity: "Tool and repair cues with faction fallback.", fx_identity: "Visible blue repair arc and taut recovery cable.", design_rationale: "Repair values are per-entity support values and obey shared one-source and repair-grace rules."}

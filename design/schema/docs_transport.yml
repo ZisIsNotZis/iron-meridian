@@ -1,0 +1,23 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: docs_transport
+type: object
+additionalProperties: false
+required: [kind, document_id, title, source_document, ownership, scope, carrier_schema, transfer_record, eligibility_reservation, boarding, embarked, unloading, commands, platform_rules, destruction, edge_cases, presentation_events]
+properties:
+  kind: {const: transport_contract}
+  document_id: {type: string}
+  title: {type: string}
+  source_document: {type: string}
+  ownership: {type: array, items: {type: string}}
+  scope: {type: array, items: {type: string}}
+  carrier_schema: {type: array, items: {type: string}}
+  transfer_record: {type: array, items: {type: string}}
+  eligibility_reservation: {type: array, items: {type: string}}
+  boarding: {type: array, items: {type: string}}
+  embarked: {type: array, items: {type: string}}
+  unloading: {type: array, items: {type: string}}
+  commands: {type: array, items: {type: object, additionalProperties: false, required: [command, required_payload, accepted_when], properties: {command: {type: string}, required_payload: {type: string}, accepted_when: {type: string}}}}
+  platform_rules: {type: array, items: {type: string}}
+  destruction: {type: array, items: {type: string}}
+  edge_cases: {type: array, items: {type: string}}
+  presentation_events: {type: array, items: {type: string}}

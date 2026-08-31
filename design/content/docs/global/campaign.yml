@@ -1,0 +1,48 @@
+kind: campaign_contract
+document_id: design.campaign
+title: Campaign Design
+scope:
+  - Campaign owns mission sequencing, briefing/debrief behavior, and progression state.
+  - Mission-specific rosters, maps, starting resources, and objective parameters belong to mission definitions; this contract is not a second unit, map, or economy specification.
+  - Campaign is near-term solo content, not V1.
+  - It uses the same simulation, unit rules, economy, construction, fog, objectives, and victory conditions as skirmish.
+  - There is no persistent grand-strategy layer, research web, inventory, or between-mission army that must be balanced and saved.
+sequence:
+  - {order: 1, key: contact, purpose: "Learn the basic loop: scout an unknown approach, establish first production chain, field mixed starter force, and contest central objective; enemy is legible and allows time for fog and construction; success is objective hold or HQ destruction after first meaningful engagement."}
+  - {order: 2, key: breakthrough, purpose: "Choose between additional income position and faster attack against a prepared blocking force with a vulnerable flank; test route choice, placement, combined arms, and exploiting a revealed weakness without abandoning base."}
+  - {order: 3, key: isolation, purpose: "Recover from constrained income and damaged or incomplete force by scouting a safe route, preserving irreplaceable units, capturing temporary foothold, and surviving until limited reinforcement; teach retreat and adaptation rather than rubber-band rescue."}
+  - {order: 4, key: decision, purpose: "Face combined pressure on economy, objective, and base approaches; choose among at least two viable plans while enemy changes visible pressure after commitment; test information, timing, composition, construction, and objective control without surprise subsystem or superweapon."}
+mission_requirements:
+  - Faction, map, starting bases/units/resources, available production, and fog rules.
+  - Primary objective, optional objective, success condition, fail condition, and explicit end-state text.
+  - Authored triggers based on simulation events or observable state, not render timing.
+  - Enemy plan and reinforcement schedule with visible or discoverable warnings.
+  - Dialogue/briefing/debrief text, camera-safe markers, and accessibility text.
+  - Checkpoint boundaries and restart behavior.
+mission_contract:
+  - Mission scripts may alter setup, unlock a unit already designed for the faction, schedule reinforcements, or change the objective.
+  - They may not bypass command validation, reveal hidden information without an authored reveal, or introduce a one-off combat rule that cannot be explained in UI.
+  - Canonical mission files are campaigns.contact, campaigns.breakthrough, campaigns.isolation, and campaigns.decision; they own setup, triggers, dialogue, and mission-specific numbers.
+pacing:
+  - Use short briefing, early playable confirmation of goal, one escalation, and readable climax.
+  - Do not hide the only winning action behind dialogue.
+  - Warn before reinforcements, objective phase changes, or mission-ending attacks; warnings may be discovered through scouting but must not be purely audio-only.
+  - Player can pause, restart latest checkpoint, and review current objectives.
+  - Failure names immediate cause: HQ destroyed, objective lost too long, escort lost, or time expired, while preserving enough event history to understand it.
+  - Optional objectives improve debrief or starting context and do not create accumulating power advantage.
+progression:
+  - Mission order is fixed for first release.
+  - Completing a mission unlocks its next briefing.
+  - Outcomes may change briefing/debrief text, starting formation, or emphasized route; all branches rejoin and use same content rules.
+  - Manual saves store mission setup and simulation snapshot, not hidden campaign economy.
+  - Campaign is complete when a new player can finish four missions, understand losses, and carry learned decisions from Contact through Decision.
+continuity:
+  - Continuity is bounded authored state, not a second simulation.
+  - It may contain completed mission IDs, outcome flags, optional-objective results, unlocked briefings, and explicitly named carry-over units or starting formations.
+  - It never contains alternate resource bank, hidden technology graph, arbitrary surviving army, or duplicate unit statistics.
+  - Result commits only after victory or authored failure resolution.
+  - Checkpoint restart does not mutate continuity; failed attempts cannot accumulate resources, experience, unlocks, or enemy damage.
+  - Named-unit carry-over is opt-in per mission and retains only mission-listed fields.
+  - Missing, destroyed, or incompatible units resolve to declared replacement or absence; campaign never invents a free equivalent.
+  - V1 has no campaign continuity; near-term owns fixed four-mission spine and bounded carry-over; far vision may add inspectable, deterministic, migration-safe branching and Irregular Network.
+deferred: [additional factions, larger maps, larger character cast, branching history, Irregular Network missions until spine is playtested]

@@ -1,0 +1,8 @@
+display_name: "High-Air Targetability"
+description: High-air target-domain profile.
+status: designed
+kind: "targetability"
+domains: [high_air]
+design:
+  state_rules: Only weapons accepting high_air, with required air observation, may engage this state. Takeoff, landing, low-flight, crash, or transformation states must declare a separate profile or additional domains.
+  feedback: High-air presentation communicates altitude and movement commitment. The player receives a clear transition cue before the entity enters or leaves this domain.

@@ -1,0 +1,34 @@
+display_name: Skills
+description: Reusable active ability lifecycle and effect contracts.
+status: designed
+kind: collection_contract
+collection_name: skills
+source_documents: [design/skills.md, design/skills/README.md]
+source_documents_status: deleted_after_migration
+schema_id: profile
+object_schema:
+  required_fields: [id, kind, status, references, display_name, family, target, lifecycle, costs, interruption, restrictions, effects, counters, feedback]
+  field_types:
+    object_id: dotted_id
+    kind: {type: enum, values: [skill]}
+    status: status
+    references: list_of_dotted_ids
+    display_name: string
+    family: skill_family
+    target: target_record
+    lifecycle: lifecycle_record
+    costs: cost_record
+    interruption: interruption_record
+    restrictions: restriction_record
+    effects: effect_record
+    counters: counterplay_record
+    feedback: string
+families: [transform_deploy, active_weapon, support, mobility_transport, electronic_warfare, control, information, temporary_deployment, infiltration]
+lifecycle: [ready, activated, windup, active, recovery, cooldown]
+cycle_closes_to: ready
+reuse_gate:
+  minimum_carriers: 2
+  matching_fields: [effect, target_contract, lifecycle, interruption_rule, player_feedback]
+  no_current_concrete_skill_passes: true
+  carrier_specific_names_insufficient: true
+passive_behavior_is_cooldown: false

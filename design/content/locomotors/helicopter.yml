@@ -1,0 +1,14 @@
+display_name: "Helicopter"
+description: Freely hovering air movement with orbit-capable attack positioning.
+status: designed
+kind: "locomotor"
+references: [locomotors.attack_movement]
+states: [airborne, hovering, orbiting, landing, taking_off]
+transition_rules:
+  - {transition: landing, owner: carrier, visible: true, vulnerable: true, timing_owner: carrier}
+  - {transition: taking_off, owner: carrier, visible: true, vulnerable: true, timing_owner: carrier}
+movement:
+  altitude_and_air_target_domain_owner: carrier_targetability_profile
+design:
+  movement_rules: Helicopters ignore ordinary ground path blockers while airborne and may use orbit attack movement.
+  interaction_rules: Helicopters do not crush ground units. They cannot occupy ground cells as ground units unless the carrier explicitly declares a landing state. Air operations own rearm, endurance, and facility interaction; EMP or a carrier skill may restrict weapon access without changing locomotor state.

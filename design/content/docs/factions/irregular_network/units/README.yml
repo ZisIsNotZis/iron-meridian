@@ -1,0 +1,156 @@
+title: Irregular Network Units
+source_document: design/factions/irregular-network/units/README.md
+document_type: unit_roster_contract
+identity: hidden minor faction built around concealment, ambush, sabotage, temporary sites, and limited salvage
+roster_boundary: intentionally incomplete as a conventional army; wins by choosing where the fight happens and making the opponent spend time and attention
+availability_source: production matrix, not platform symmetry
+shared_rules:
+  transport: transport operations
+  aircraft: air operations
+  naval: naval operations
+  card_schema: shared unit design card
+  semantics: combat, economy, and construction contracts
+roster_status:
+  standard: smallest coherent land roster
+  optional: deepens a proven doctrine or supports a later map/campaign need
+  coastal: requires a suitable map and Boat Shed
+  authored: scenario-provided and has no replacement recipe
+  rejected: recorded so excluded complexity is not quietly reintroduced
+platform_membership:
+  - platform: Infantry
+    standard: [Lookout, Blocker Team, Rifle Cell, Breacher Cell, Hunter Team, Saboteur, Field Mechanic]
+    coastal: [Signal Runner]
+    authored_or_rejected: [full disguise operative]
+  - platform: Vehicles/deployables
+    standard: [Courier Technical, Needle Technical, Scrap Truck, Mole Carrier, Jammer Van, Hook Rig, Wrecker, Ambush Gun, Improvised Mortar]
+    coastal: [Relay Truck]
+    authored_or_rejected: [tunnel network, giant drone swarm]
+  - platform: Aircraft
+    standard: none
+    coastal: none
+    authored_or_rejected: [Kite Drone, Razorwing, Dustwing, Moth Balloon are authored assets]
+  - platform: Naval/coastal
+    standard: none
+    coastal: [Skiff Cell, Diver Team, Cutwater, Net Barge]
+    authored_or_rejected: none
+platform_boundary: aircraft and naval entries are intentionally map-dependent; land maps remain functional without them and coastal assets provide asymmetry rather than a complete navy
+shared_constraints:
+  - salvage is bounded; Field Mechanic, Wrecker, and Scrap Truck recover a declared health, payout, or temporary battlefield charge, never an open-ended captured-unit production line
+  - concealment is readable and local; units can hide, spoof a position, or create a false signature, but there is no universal permanent disguise or faction-wide invisibility
+  - temporary sites expire, have a visible setup window, and can be scouted or destroyed; they do not become a second conventional base
+  - sabotage targets a specific capability with a bounded duration or delayed warning; no chain sabotage, global resource, or silent irreversible base lockout
+  - drones are authored tactical tools, not a free-flying swarm economy; granting one by scenario does not create a replacement recipe
+roster_invariants:
+  - every standard or optional unit has exactly one producer in the production matrix and is replaceable while that producer is operational
+  - every coastal unit names Boat Shed and a suitable map water layer as prerequisites; no land map may expose a dead queue button
+  - every authored aircraft is spawned by scenario data and has no production, replacement, or roster-cap rule outside that scenario
+  - a temporary state changes targetability, locomotion, or support only for the declared duration; it never creates a hidden second entity or permanent technology
+  - unit cards own cost, build time, health, weapons, skills, locomotion, and presentation references; this index owns roles and availability only
+roles:
+  infantry:
+    - name: Lookout
+      role: concealed recon and target designation
+    - name: Blocker Team
+      role: cheap area denial and anti-infantry screen
+    - name: Rifle Cell
+      role: replaceable line infantry with ambush advantage
+    - name: Breacher Cell
+      role: close assault against structures and light armor
+    - name: Hunter Team
+      role: concealed anti-armor ambush
+    - name: Saboteur
+      role: bounded infiltration and capability disruption
+    - name: Field Mechanic
+      role: exposed repair and recovery support
+    - name: Signal Runner
+      role: optional mobile command relay
+  vehicles_and_deployables:
+    - name: Courier Technical
+      role: fast transport and extraction
+    - name: Needle Technical
+      role: fragile hit-and-run anti-infantry fire
+    - name: Scrap Truck
+      role: limited salvage and temporary cover
+    - name: Mole Carrier
+      role: concealed infantry delivery, not a tunnel system
+    - name: Jammer Van
+      role: local information denial
+    - name: Hook Rig
+      role: temporary vehicle lift/recovery utility
+    - name: Wrecker
+      role: repair and battlefield recovery
+    - name: Ambush Gun
+      role: hidden anti-vehicle strike
+    - name: Improvised Mortar
+      role: fragile area/structural siege
+    - name: Relay Truck
+      role: optional temporary command site
+  aircraft:
+    - name: Kite Drone
+      role: expendable observation and designation
+    - name: Razorwing
+      role: low-end strike aircraft with attack-run commitment
+    - name: Dustwing
+      role: optional transport and emergency extraction
+    - name: Moth Balloon
+      role: optional slow floating sensor/decoy
+  naval_and_coastal:
+    - name: Skiff Cell
+      role: cheap coastal ambush boat
+    - name: Diver Team
+      role: swimming/submerged sabotage infantry
+    - name: Cutwater
+      role: fast amphibious raider
+    - name: Net Barge
+      role: optional temporary coastal denial site
+rejected_and_deferred:
+  - candidate: Full-disguise operative
+    status: rejected
+    reason: creates identification problems and invalidates normal scouting; a local false signature is sufficient
+  - candidate: Tunnel network
+    status: rejected
+    reason: multiplies pathing, scouting, construction, and attack-state rules; Mole Carrier supplies a bounded concealed-delivery decision
+  - candidate: Open-ended captured-unit production
+    status: rejected
+    reason: limited salvage is a tactical choice, not a second faction roster
+  - candidate: Giant drone swarm
+    status: rejected
+    reason: creates a separate economy and selection burden; Kite Drone and temporary-site tools cover the information role
+  - candidate: Chain sabotage
+    status: rejected
+    reason: sabotage remains one bounded, telegraphed capability disruption per action
+card_semantics:
+  non_producible: says so explicitly
+  unavailable_value: N/A means genuinely inapplicable or unavailable under the card schema, never unresolved balance
+  presentation: owning YAML record’s typed presentation, audio, and fx fields
+entity_card_paths:
+  infantry:
+    - design/content/factions/irregular_network/infantry/lookout.yml
+    - design/content/factions/irregular_network/infantry/blocker_team.yml
+    - design/content/factions/irregular_network/infantry/rifle_cell.yml
+    - design/content/factions/irregular_network/infantry/breacher_cell.yml
+    - design/content/factions/irregular_network/infantry/hunter_team.yml
+    - design/content/factions/irregular_network/infantry/saboteur.yml
+    - design/content/factions/irregular_network/infantry/field_mechanic.yml
+    - design/content/factions/irregular_network/infantry/signal_runner.yml
+  vehicles_and_deployables:
+    - design/content/factions/irregular_network/vehicles/courier_technical.yml
+    - design/content/factions/irregular_network/vehicles/needle_technical.yml
+    - design/content/factions/irregular_network/vehicles/scrap_truck.yml
+    - design/content/factions/irregular_network/vehicles/mole_carrier.yml
+    - design/content/factions/irregular_network/vehicles/jammer_van.yml
+    - design/content/factions/irregular_network/vehicles/hook_rig.yml
+    - design/content/factions/irregular_network/vehicles/wrecker.yml
+    - design/content/factions/irregular_network/vehicles/ambush_gun.yml
+    - design/content/factions/irregular_network/vehicles/improvised_mortar.yml
+    - design/content/factions/irregular_network/vehicles/relay_truck.yml
+  aircraft:
+    - design/content/factions/irregular_network/aircraft/kite_drone.yml
+    - design/content/factions/irregular_network/aircraft/razorwing.yml
+    - design/content/factions/irregular_network/aircraft/dustwing.yml
+    - design/content/factions/irregular_network/aircraft/moth_balloon.yml
+  naval_and_coastal:
+    - design/content/factions/irregular_network/naval/skiff_cell.yml
+    - design/content/factions/irregular_network/naval/diver_team.yml
+    - design/content/factions/irregular_network/naval/cutwater.yml
+    - design/content/factions/irregular_network/naval/net_barge.yml

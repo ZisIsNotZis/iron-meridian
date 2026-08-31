@@ -1,0 +1,36 @@
+display_name: "Littoral Dock"
+description: "Littoral Dock migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: established
+building_roles: ["naval_production"]
+hpmax: 650
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 4, height_cells: 3, facings: "cardinal"}
+construction:
+  cost: {resource: 650}
+  buildtime: 360
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}]
+production: {max_operational: 2, replacement_allowed: false}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "naval production"
+  construction_behavior: "Must touch legal shoreline with the full footprint on buildable cells and a valid water channel; irrelevant on land-only maps."
+  production_behavior: "Role: naval production; cost: `650 resource`; build time: `360 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational and legal shoreline`; queue/category: `construction / naval production`; replacement/capacity: `maximum 2 operational docks on legal shorelines; one FIFO naval queue per dock; one builder assignment`."
+  defense_behavior: "Structure; surface target from land, naval weapons from water; channel is not a hidden escape."
+  capture_behavior: "**Launch control** — passive launch and repair handling; does not provide a global naval network."
+  repair_behavior: "Establish sea denial from a protected inlet or accept a forward dock's shorter route and raid risk."
+  lifecycle_behavior: "Shore fire, aircraft, submarines, or a direct dock raid stop production; attack the launch channel to delay completed vessels."
+  player_decision: "Establish sea denial from a protected inlet or accept a forward dock's shorter route and raid risk."
+  counterplay: "Shore fire, aircraft, submarines, or a direct dock raid stop production; attack the launch channel to delay completed vessels."
+  visual_identity: "Modular pier and drydock, blue waterline markers, crane lights, wake on launch, and a low harbor horn on completion."
+  design_rationale: "# Littoral Dock\n\n## Gameplay identity\n\n- **Footprint:** `4 × 3` cells; shoreline-facing construction only; one water launch channel and one service cell.\n- **Health / protection:** 650 HP; `reinforcedStructure`; no override.\n- **Targetability:** Structure; surface target from land, naval weapons from water; channel is not a hidden escape.\n- **Production:** Role: naval production; cost: `650 resource`; build time: `360 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational and legal shoreline`; queue/category: `construction / naval production`; replacement/capacity: `maximum 2 operational docks on legal shorelines; one FIFO naval queue per dock; one builder assignment`.\n- **Skill / passive:** **Launch control** — passive launch and repair handling; does not provide a global naval network.\n- **Placement:** Must touch legal shoreline with the full footprint on buildable cells and a valid water channel; irrelevant on land-only maps.\n- **Player decision:** Establish sea denial from a protected inlet or accept a forward dock's shorter route and raid risk.\n- **Counterplay:** Shore fire, aircraft, submarines, or a direct dock raid stop production; attack the launch channel to delay completed vessels.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Modular pier and drydock, blue waterline markers, crane lights, wake on launch, and a low harbor horn on completion.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

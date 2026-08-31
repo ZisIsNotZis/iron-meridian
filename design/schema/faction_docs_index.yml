@@ -1,0 +1,52 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: faction_docs_index
+type: object
+additionalProperties: false
+required: [display_name, description, source_document, canonical_factions, shared_role_matrix, roster_targets, balance_rules, ownership]
+properties:
+  display_name: {type: string, minLength: 1}
+  description: {type: string, minLength: 1}
+  source_document: {type: string, minLength: 1}
+  canonical_factions:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required: [faction, description]
+      properties:
+        faction: {type: string, minLength: 1}
+        description: {type: string, minLength: 1}
+  shared_role_matrix:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required: [directorate_answer, coalition_pressure, intended_exchange]
+      properties:
+        directorate_answer: {type: string, minLength: 1}
+        coalition_pressure: {type: string, minLength: 1}
+        intended_exchange: {type: string, minLength: 1}
+  roster_targets:
+    type: object
+    additionalProperties: false
+    required: [infantry, combat_support_ground_vehicles, aircraft, naval, high_tech]
+    properties:
+      infantry: {type: string, minLength: 1}
+      combat_support_ground_vehicles: {type: string, minLength: 1}
+      aircraft: {type: string, minLength: 1}
+      naval: {type: string, minLength: 1}
+      high_tech: {type: string, minLength: 1}
+  balance_rules:
+    type: array
+    minItems: 1
+    items: {type: string, minLength: 1}
+  ownership:
+    type: object
+    additionalProperties: false
+    required: [faction_records, entity_records, shared_rules]
+    properties:
+      faction_records: {type: string, minLength: 1}
+      entity_records: {type: string, minLength: 1}
+      shared_rules: {type: string, minLength: 1}

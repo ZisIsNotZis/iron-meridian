@@ -1,0 +1,25 @@
+kind: world_identity
+source_document: design/world/identity.md
+tone:
+  setting: "Iron Meridian is grave about consequences but clear about play. Its world is tense, material, and politically ambiguous."
+  interface: "Its interface and battlefield feedback remain direct enough that players always know what happened."
+  humor: "Humor may appear in human dialogue, but the war is never treated as disposable spectacle."
+global_marks:
+  union_mark: "The pre-crisis Union mark is a broken meridian ring crossed by a straight rail line."
+  meaning: "It suggests shared geography, movement, and a state whose promise has been interrupted."
+  usage: "It is a setting-level historical symbol, not a faction logo. The break should remain visible when the mark appears on documents, station signs, or old equipment."
+  game_logo: "The game logo should use the title IRON MERIDIAN in a condensed, industrial wordmark with one restrained meridian/rail cut."
+  exclusions: "Avoid copying recognizable military-game typography, flags, slogans, or iconography."
+  colors: "A two-color treatment—oxidized iron and warm signal amber—keeps it legible in a browser header and on a dark loading screen."
+naming_and_language:
+  rule: "Names should be pronounceable, functional, and regionally consistent."
+  examples: [Aster_Rail_Command, Karsk_Pass, Meridian_Crossing, Field_Marshal, Signal_Officer]
+  faction_names: "Faction names describe political form or method rather than a real-world nationality."
+  dialogue: "Dialogue favors short operational sentences, specific places, and contested interpretations of lawful authority."
+sound_motif:
+  palette: "diesel idle, relay clicks, distant rail metal, wind over open ground, paper and switch noise, and restrained analog synth tones"
+  music: "low strings, prepared percussion, radio pulse, and sparse brass"
+  ownership: "Faction-specific audio language belongs to each faction’s identity document; global presentation rules remain in design/presentation/README.md."
+scope_rule:
+  requirement: "Every global symbol or title treatment must work as a small UI mark, a map prop, and a campaign document stamp."
+  exclusion: "Do not create a world encyclopedia, fictional language, or historical asset library unless a mission or player-facing feature needs it."

@@ -1,0 +1,79 @@
+display_name: Breakthrough
+description: Test route choice, construction placement, and exploiting a visible weakness without abandoning the economy.
+status: designed
+kind: campaign_mission
+mode: campaign
+version: 1
+map: maps.relay_yard
+references: [maps.relay_yard, factions.directorate, factions.coalition, factions.directorate.vehicles.harvester, factions.directorate.vehicles.mcv, factions.directorate.vehicles.sentinel, factions.directorate.vehicles.bastion, factions.directorate.vehicles.lancer, factions.coalition.vehicles.harvester, factions.coalition.vehicles.mcv, factions.coalition.vehicles.lynx_scout_car, factions.coalition.vehicles.valiant_mbt, factions.coalition.vehicles.halberd_tank_destroyer]
+design:
+  tactical_identity: Choose a relay route, place production, and exploit a visible Coalition weakness while preserving the economy.
+  player_decision: Place the Vehicle Plant toward the center or keep the production route safer; neither choice has an invisible bonus.
+  narrative_identity: The relay blockade is a commitment that can be opened from the side.
+  rationale: The mission teaches route choice, construction placement, combined arms, and exploiting a revealed weakness.
+  scope: near_term
+faction_slots:
+  - {role: player, faction: factions.directorate, side: west, behavior: regular}
+  - {role: opponent, faction: factions.coalition, side: east, behavior: regular}
+setup:
+  starting_bank_resource: 1350
+  player:
+    structures: [{content: factions.directorate.buildings.construction_yard, quantity: 1}, {content: factions.directorate.buildings.ore_refinery, quantity: 1}, {content: factions.directorate.buildings.barracks, quantity: 1}]
+    units:
+      - {content: factions.directorate.vehicles.harvester, quantity: 1}
+      - {content: factions.directorate.vehicles.mcv, quantity: 1}
+      - {content: factions.directorate.vehicles.sentinel, quantity: 1}
+      - {content: factions.directorate.vehicles.bastion, quantity: 1}
+      - {content: factions.directorate.vehicles.lancer, quantity: 1}
+  opponent:
+    structures: [{content: factions.coalition.buildings.coalition_hq, quantity: 1}, {content: factions.coalition.buildings.resource_exchange, quantity: 1}, {content: factions.coalition.buildings.infantry_center, quantity: 1}]
+    units:
+      - {content: factions.coalition.vehicles.harvester, quantity: 1}
+      - {content: factions.coalition.vehicles.mcv, quantity: 1}
+      - {content: factions.coalition.vehicles.lynx_scout_car, quantity: 1}
+      - {content: factions.coalition.vehicles.valiant_mbt, quantity: 1}
+      - {content: factions.coalition.vehicles.halberd_tank_destroyer, quantity: 1}
+  fog: Basic fog.
+  progression: Veterancy disabled.
+availability:
+  player_recipes: [Rifle Squad, Sentinel, Bastion, Lancer, Ballista, Harvester replacement]
+  opponent_recipes: [Line Rifle, Lynx Scout Car, Valiant MBT, Halberd Tank Destroyer, Peregrine Missile Carrier, Harvester replacement]
+  closed_world: true
+  unavailable_features: [research, veterancy]
+objectives:
+  primary: Destroy the Coalition HQ.
+  optional: Control the objective for 30 cumulative seconds before the HQ is destroyed.
+  optional_hold_seconds: 30
+  failure: Directorate HQ destroyed or player surrender.
+triggers:
+  - event: mission_start
+    action: Mark the center relay corridor and two outer approaches without revealing the Coalition army.
+    visible: true
+  - event: vehicle_plant_placed
+    after_event: player_places_vehicle_plant
+    action: Coalition reveals a prepared blocking force on the same route through ordinary scouting.
+    visible: true
+  - event: first_vehicle_plant_completed
+    after_seconds: 90
+    action: Coalition attacks the nearest visible production route.
+    warning: Visible scout or warning before contact.
+    visible: true
+    retreat_at_visible_force_fraction: 0.5
+  - event: objective_held
+    after_seconds: 30
+    hold_seconds: 30
+    action: Coalition switches to base-defense priority and stops unsupported center attacks.
+    visible: true
+dialogue:
+  purpose: Test route choice, construction placement, and visible weakness exploitation.
+  briefing: The relay yard has three ways through it. A direct push is shortest; a flank is slower but can open the blockade. Build for the plan you can still defend.
+  success: The blockade was not a wall. It was a commitment. You found the side the Coalition could not cover.
+  failure: The breach became the only plan. Production, route, and reserve must survive long enough to make the opening meaningful.
+  plain_text_equivalent: true
+  voice_policy: Voice only if a voice asset is available.
+checkpoints:
+  boundaries: [After the Vehicle Plant completes, after the first objective contest]
+  restart_behavior: Restore the authored simulation state at the checkpoint.
+  optional_outcome: Optional objective affects only debrief text.
+fairness:
+  rules: [Every Coalition attack has a visible scout or warning before contact., No mission trigger reads hidden player state.]

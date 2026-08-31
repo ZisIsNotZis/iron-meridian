@@ -1,0 +1,25 @@
+display_name: Jammer Post
+description: "Core Established local information-denial and false-signature site. 2x2 footprint, four cardinal facings, one antenna service cell; buildable ground within shared anchors outside route/objective exclusions. Construction 400 resource / 240 ticks, operational Safehouse and builder required. Body 380 HP, light armor, ordinary structure targetability; counter-jamming, direct vision, and attack reveal it, jamming never reduces damage. No production, repair, or weapon. Supports one local Jammer Van field. Blackout pulse setup 30, radius 4.0, active 120, cooldown 240; suppresses shared vision and selected remote targeting, while direct vision, local attacks, and dedicated counter-jamming remain valid; destruction ends it. Persistent shared construction lifecycle, no expiry."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: detection_control
+tier: established
+building_roles: [defense, strategic_threat]
+hpmax: 380
+armor: armors.light
+locomotor: none
+targetability: [targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+visionrange: 6.0
+alertrange: 8.0
+footprint: {width_cells: 2, height_cells: 2, facings: cardinal, service_cells: 1}
+placement: {terrain: buildable_ground, anchor: construction_radius, route_exclusion: true, objective_exclusion: true, facing: cardinal}
+construction: {cost: {resource: 400}, buildtime: 240, prerequisites: [{object: factions.irregular_network.buildings.safehouse}]}
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: blackout_pulse, activation: active, setup_ticks: 30, active_ticks: 120, cooldown_ticks: 240, target: self, targetradius: 4.0, movement_allowed: false, interruption_conditions: [damage, destruction]}]
+lifecycle: {states: [blueprint, constructing, operational, damaged, destroyed], destruction_behavior: remove}
+presentation: {fallback_policy: inherit, silhouette: "Tripod antennas and taped batteries with a visible interference ring; broken-link icon and readable setup pulse.", readability: "Setup, exact field, interference, counter-jam, damage, disabled, and destruction are explicit."}
+audio: {identity: "Radio static, chirps, setup pulse, damage, and destruction use faction fallback."}
+fx: {identity: "Visible interference ring and broken-link icon show the bounded field and source."}
+design: {construction_behavior: "400 resource, 240 ticks, Safehouse and builder required.", production_behavior: "No queue; supports one local Jammer Van field only.", defense_behavior: "No static weapon or area defense; 380 HP light armor and no jamming damage reduction.", capture_behavior: "No capture behavior is declared.", repair_behavior: "None; jamming does not restore health or protection.", lifecycle_behavior: "Persistent shared construction lifecycle; no temporary expiry.", player_decision: "Cover a route with fixed information denial or preserve resource for mobile units.", counterplay: "Approach with direct vision, counter-jam, sabotage, or destroy before remote attack.", visual_identity: "Tripod antennas, taped batteries, interference ring.", audio_identity: "Radio static and chirps.", fx_identity: "Broken-link icon and exact field boundary.", design_rationale: "Blackout modifies information and command links only; it grants no stealth, armor, or second fog system."}

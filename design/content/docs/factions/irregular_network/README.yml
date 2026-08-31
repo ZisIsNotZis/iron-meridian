@@ -1,0 +1,86 @@
+display_name: Irregular Network
+description: "Hidden minor faction: a covert mesh of regional self-defense groups, defectors, smugglers, dissident engineers, and intelligence cells that prevents either major faction from rebuilding centralized rule."
+source_document: design/factions/irregular-network/README.md
+doctrine_summary: "Asymmetry, concealment, improvisation, and denial: make expensive assets unsafe, steal time and information, open temporary corridors, and choose when not to fight."
+strengths:
+  - "Local information and positioning advantage through concealment, jamming, false contacts, and designation."
+  - "Fast technicals, temporary cover, short subsurface route, extraction, ambush specialists, and bounded recovery."
+  - "Salvage can turn a contested wreck into a brief timing gain."
+weaknesses:
+  - "Weak in sustained open battles and conventional production."
+  - "Light protection, setup exposure, low sustained damage, weak heavy-armor replacement, inefficient processing, and fragile sites."
+future_direction:
+  - "Fully designed far-vision faction, not a third conventional country or a mirror of the Directorate or Coalition."
+  - "Standard ruleset is playable with a small land roster; coastal content is map-gated; aircraft are authored campaign assets until the shared air-production contract is promoted."
+  - "Candidate expressions: hidden depots, false positions, saboteurs, ambush teams, technicals, stolen armor, drones, improvised workshops, and disguised coastal craft."
+  - "Do not add a complete conventional roster merely to satisfy category symmetry."
+canonical_context:
+  - "background.md: cells’ origin, disagreements, and political objective"
+  - "identity.md: local marks, concealment language, materials, voice, and audio"
+  - "doctrine.md: asymmetric strategic habits and limits on faction complexity"
+  - "buildings/README.md: temporary sites, hideouts, and bounded salvage infrastructure"
+  - "design/content/factions/irregular_network/: finalized roster and individual YAML records"
+  - "design/world/organizations.md and design/world/relationships.md: hidden position in the crisis"
+roster_policy:
+  - "Final playable core: six-site base, seven infantry, and nine ground vehicle/deployable cards marked standard."
+  - "Signal Runner, Relay Truck, and three optional sites are complete supported extensions, not mandatory for a functional land match."
+  - "Skiff Cell, Diver Team, Cutwater, and Net Barge are coastal. Kite Drone, Razorwing, Dustwing, and Moth Balloon are authored."
+  - "The class is a ruleset decision, not a balance placeholder; a scenario must list the allowed class explicitly and absence never promotes an entity."
+balance_position:
+  - "Information: advantage=local concealment, jamming, false contacts, designation; liability=bounded effects reveal source or signature; answer=scouts, sensors, direct vision, area search, counter-jamming."
+  - "Position: advantage=fast technicals, temporary cover, short subsurface route, extraction; liability=light protection and setup exposure; answer=hold routes, guard exits, punish channels, force open fights."
+  - "Economy: advantage=salvage creates a brief timing gain; liability=inefficient normal processing and fragile sites; answer=deny wrecks, raid Scrap Exchange, win sustained income."
+  - "Firepower: advantage=Ambush Gun, mortar, breachers, and specialists punish commitment; liability=low sustained damage and weak heavy-armor replacement; answer=screen, disperse, counter-battery, attack production."
+  - "Recovery: advantage=field repair and bounded towing preserve selected assets; liability=exposed repair sources cannot revive a destroyed army; answer=focus support, interrupt channels, deny recovery space."
+campaign_role:
+  - "The Network appears before it is named through missing freight, a false report, a repaired enemy vehicle, or a guide who refuses both flags."
+  - "The player learns methods, then political disagreement, then identity."
+  - "A late mission presents a Network cell as a third actor with a bounded objective: preserve civilians, extract an archive, or deny a strategic site; cooperation may be temporary and victory is not automatic government succession."
+  - "The full playable Network campaign begins only after the four-mission Directorate/Coalition spine; ordinary scenario setup defines cells, starting assets, and political outcomes without a hidden resource or second campaign economy."
+  - "Mission-specific unlock timing belongs to the mission; the faction graph remains in tech."
+matchup_rules:
+  - "Directorate: attack repair lanes, isolated heavy assets, and predictable centralized routes; do not defeat prepared armor head-on."
+  - "Coalition: disrupt relays, forward support, and flexible flanks; do not assume mobility makes Coalition scouting weak."
+  - "Either major faction: exposure is required to claim an objective, process resources, construct sites, or sustain a fire mission."
+  - "Detection coverage and protected production give a major faction the long-game advantage; chasing every false contact gives the Network the timing advantage."
+canonical_content:
+  - "Faction contract owns Network-specific asymmetry and matchup intent; tech graph owns progression; production matrix owns availability; individual cards own concrete unit and building values."
+symbols:
+  - "Shared recognition mark: a short broken line forming an incomplete knot, often painted by hand or encoded as three offset bars."
+  - "Different cells alter the mark slightly; common geometry enables recognition without giving an observer a perfect organizational map."
+wordmark: "Campaign title treatment is spare and provisional: stamped text, overwritten labels, clipped photographs, and route marks; never a polished secret corporation."
+scope:
+  - "Far vision: fully designed faction contract."
+  - "Standard land match: six sites, seven infantry, and nine ground vehicle/deployable cards."
+  - "Coastal content is explicitly map-gated; aircraft are authored campaign assets and do not create an air factory."
+  - "No complete conventional roster, power grid, free global production bonus, universal disguise, or open-ended captured-unit economy."
+origin: "The Network is a hidden minor faction, not a third country: regional self-defense groups, defectors, smugglers, dissident engineers, and intelligence cells cooperate against renewed centralized rule."
+public_claim: "No public claim is defined; the Network appears before it is named and is not a conventional country."
+internal_conflict: "The Network must choose between local information and positioning advantages and the cost of revealing cells, exposing support, and spending escape routes; its central conflict is liberation or fragmentation."
+story_posture:
+  - "The Network’s early footprint is consequence before clean faction introduction."
+  - "The reveal is a bounded third-actor mission, not a surprise faction unlock."
+  - "Its victory creates a local advantage or different settlement, not automatic government succession."
+scope_use:
+  - "The faction is weak in sustained open battles and conventional production."
+  - "Coastal assets provide asymmetry rather than a complete navy."
+  - "Aircraft cards define behavior and presentation, but do not create an air factory."
+strategic_idea: "Create a local information or positioning advantage, convert it into one decisive exchange, and withdraw before a conventional force can answer."
+battlefield_habits:
+  - "Scout patiently and attack exposed logistics rather than the strongest formation."
+  - "Use concealment to create a decision window, not permanent immunity."
+  - "Make temporary sites and false signatures legible to careful opponents."
+  - "Recover or repurpose a limited battlefield asset, then accept the cost of supporting it."
+  - "Disengage when the opponent has assembled a conventional answer."
+production_philosophy: "One infantry queue and one vehicle queue serve the standard base; optional coastal production is a third queue only on a supporting map. There is no power grid or free global production bonus."
+economy_identity: "Bounded salvage returns a stated payout, health, or temporary battlefield use and never creates a permanent recipe; normal processing is inefficient and sites are fragile."
+matchup_expression: "The expected matchup is advantage in the first local exchange and disadvantage if the opponent converts the fight into a clean production race."
+exclusions:
+  - "Global concealment, jamming, designation, repair, or relay effects without a source, radius, duration, and visible counterplay."
+  - "Permanent universal disguise, faction-wide invisibility, open-ended captured-unit production, chain sabotage, and silent irreversible base lockout."
+  - "A complete conventional roster added only for category symmetry."
+visual_language: "Silhouettes communicate role before camouflage; concealment is a state, not erased identification. Spaces are temporary and opportunistic."
+audio_language: "Dialogue is personal, coded, and situational; use muted engines, cloth and tools, hand taps, whistles, degraded radio, found percussion, and quiet melodic fragments."
+fx_language: "Effects emphasize surprise and disappearance: brief cover flashes, settling dust, cut power, dropped markers, improvised smoke, and quick extraction."
+animation_rules: "Animation clearly shows setup, concealment failure, salvage, and withdrawal without particle-heavy spectacle."
+near_term_rules: "In the Directorate/Coalition campaign, reveal methods before identity; the full playable Network campaign begins after the four-mission spine and uses ordinary scenario and campaign boundaries."

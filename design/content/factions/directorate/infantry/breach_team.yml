@@ -1,0 +1,83 @@
+display_name: "Breach Team"
+description: "Breach Team Directorate unit card."
+status: "core"
+faction: "factions.directorate"
+platform: "infantry"
+tier: "field"
+battlefield_roles: ["short_range_assault_against_infantry_light_vehicles_and_structures", "anti_garrison_pressure"]
+hpmax: 160
+armor: "armors.personnel"
+locomotor: "locomotors.default_ground"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 3.2
+visionrange: 6
+alertrange: 7.5
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.22
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.personnel", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.default_ground", "damages.explosive_area", "targetabilities.low_air", "damages.siege_structural", "targetabilities.structure", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.barracks"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Armored demolition vests, numbered charge cases, red warning strobes, and a sharp concussive breach effect."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Armored demolition vests, numbered charge cases, red warning strobes, and a sharp concussive breach effect."
+fx:
+  identity: "Armored demolition vests, numbered charge cases, red warning strobes, and a sharp concussive breach effect."
+design:
+  tactical_identity: "Short-range assault against infantry, light vehicles, and structures; secondary anti-garrison pressure."
+  player_decision: "Choose a dangerous approach for a decisive breach or use the squad as ordinary pressure. It fails when screened, kited, or exposed to area fire."
+  counterplay: "Keep distance, use vehicles or area damage, kill the team before the charge completes, and avoid bunching structures."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Personnel protection with no special resistance; depends on smoke, cover, and an escort."
+  support_behavior: "Opens access for the main force by threatening garrisons and structures; cannot replace a line squad."
+  locomotion_behavior: "Foot; moves normally but must close distance to matter. Can enter transports and structures."
+  targetability_behavior: "Ground personnel; ordinary vision and anti-personnel targeting. Vulnerable while crossing open ground."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Damage conversion and timing semantics come from [Combat](../../../../../combat/README.md) and the [numeric policy](../../../../../numerics.md). The close-range profile is an intentional unit override. Breach shotgun | Explosive; ground personnel, low air, light | 2.5 / 48 / 36 ticks | Projectile 11 cells/s; point; no tracking Satchel charge | Siege/structural; ground heavy, structure | 1.0 / 140 / 120 ticks | Point planted impact; point; no tracking Breach Charge | 15-tick plant; 45-tick fuse; 30-tick recovery; 240-tick cooldown; one visible target, 1.0-cell placement range; 180 structural/siege damage in 1.0-cell area | Kill or displace team, clear charge during fuse, leave area"
+production:
+  producer: "factions.directorate.buildings.barracks"
+  queue: "default_queue"
+  category: "infantry"
+  prerequisites: ["factions.directorate.buildings.barracks", "factions.directorate.buildings.construction_yard"]
+  cost:
+    resource: 140
+  buildtime: 60
+
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Breach shotgun"
+    damage: "damages.explosive_area"
+    targetability: ["targetabilities.ground", "targetabilities.low_air"]
+    attackrange: 2.5
+    attackdamage: 48
+    attackperiod: 36
+    delivery: "projectile_11_cells_s_point_no_tracking"
+    design:
+      tactical_use: "Breach shotgun | Explosive; ground personnel, low air, light | 2.5 / 48 / 36 ticks | Projectile 11 cells/s; point; no tracking"
+      counterplay: "Keep distance, use vehicles or area damage, kill the team before the charge completes, and avoid bunching structures."
+  - weapon: "weapons.default_resolution"
+    mount_name: "Satchel charge"
+    damage: "damages.siege_structural"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 1
+    attackdamage: 140
+    attackperiod: 120
+    delivery: "point_planted_impact_point_no_tracking"
+    design:
+      tactical_use: "Satchel charge | Siege/structural; ground heavy, structure | 1.0 / 140 / 120 ticks | Point planted impact; point; no tracking"
+      counterplay: "Keep distance, use vehicles or area damage, kill the team before the charge completes, and avoid bunching structures."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Breach Charge"
+    activation: "active"
+    setup_ticks: 15
+    recovery_ticks: 30
+    cooldown_ticks: 240
+    movement_allowed: true
+    design:
+      player_decision: "Choose a dangerous approach for a decisive breach or use the squad as ordinary pressure. It fails when screened, kited, or exposed to area fire."
+      counterplay: "Keep distance, use vehicles or area damage, kill the team before the charge completes, and avoid bunching structures."
+      interruption_readability: "Breach Charge | 15-tick plant; 45-tick fuse; 30-tick recovery; 240-tick cooldown; one visible target, 1.0-cell placement range; 180 structural/siege damage in 1.0-cell area | Kill or displace team, clear charge during fuse, leave area"

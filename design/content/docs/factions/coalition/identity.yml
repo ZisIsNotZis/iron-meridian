@@ -1,0 +1,6 @@
+display_name: "Coalition Identity"
+description: "Identity principles for the Coalition."
+source_document: "design/factions/coalition/identity.md"
+symbols: ["The Coalition mark is a three-part open ring joined by a small bridge.", "The separated arcs represent regional members; the bridge represents treaty and shared infrastructure without erasing local identity.", "The mark must remain legible as a small stencil, map marker, and interface badge.", "Avoid real-world national symbols, alliance marks, or borrowed faction iconography."]
+wordmark: "A clean humanist grotesk with one deliberately open letterform; regional units may carry local abbreviations, but the shared mark remains visually dominant in official Coalition material."
+scope: ["Identity owns faction identity principles; individual gameplay belongs in unit records and global presentation rules remain global.", "The treaty’s politics are authored context, not a diplomacy simulator.", "More regional factions, elections, and coalition votes remain possible campaign material only after the core solo game proves its value."]

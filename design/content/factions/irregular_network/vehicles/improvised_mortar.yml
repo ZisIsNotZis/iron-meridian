@@ -1,0 +1,26 @@
+display_name: Improvised Mortar
+description: "Core Advanced indirect area and structural-fire vehicle/deployable. Wheeled speed 2.2 cells/s, slow off-road; deploy-and-fire and stationary during windup and firing. Mobile ground vehicle; deployed firing state is structure-like for sensing, visible to detection and counter-battery. Light armor and fragile when discovered. Improvised mortar uses explosive/area against personnel, light/heavy vehicles, and structures, range 10.0, 75 damage/event, 120 ticks, arced projectile speed 6, area radius 1.0, no tracking, indirect point/designated acquisition. Fire mission setup 45, three-shot salvo at 30-tick intervals, cooldown 240, deterministic +/-0.8 scatter, movement/damage/EMP interrupt setup, red impact warning 30 ticks. Production 500 resource / 240 ticks from Field Workshop plus Hideout; one active mission per Mortar. Body 280 HP, light armor, radius 0.45, footprint 2x2; vision 6.5, alert/acquisition 8.0."
+status: designed
+scope: core
+faction: factions.irregular_network
+platform: vehicle
+tier: advanced
+battlefield_roles: [indirect_fire, anti_structure, area_denial]
+hpmax: 280
+armor: armors.light
+locomotor: locomotors.wheeled
+targetability: [targetabilities.ground, targetabilities.structure]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+movespeed: 2.2
+visionrange: 6.5
+alertrange: 8.0
+footprint: {radius_cells: 0.45, width_cells: 2, height_cells: 2}
+movement: {terrain_access: [road, rough], attack_movement: deploy_and_fire}
+weapon_mounts: [{weapon: weapons.default_resolution, mount_name: improvised_mortar, damage: damages.siege_structural, targetability: [targetabilities.ground, targetabilities.structure], attackrange: 10.0, attackdamage: 75, attackperiod: 120, projectile_speed: 6, area_radius_cells: 1.0, delivery: arced_projectile, hit_model: area, tracking: none, acquisition: indirect_designated}]
+skill_bindings: [{skill: skills.default_lifecycle, skill_name: fire_mission, activation: active, setup_ticks: 45, active_ticks: 90, cooldown_ticks: 240, target: visible_or_recent_area, targetradius: 0.8, movement_allowed: false, interruption_conditions: [movement, damage, emp], design: {player_decision: "Trade accuracy and mobility for pressure behind cover.", counterplay: "Counter-battery, fast raids, dispersal, and attacking during setup."}}]
+production: {producer: factions.irregular_network.buildings.field_workshop, queue: vehicle, category: vehicle, cost: {resource: 500}, buildtime: 240, capacity: {replacement_allowed: true, replacement_scope: per_building, replacement_competes_with_new: true}}
+presentation: {fallback_policy: inherit, silhouette: "Truck bed converted to mortar rack; red map flare and arc trails communicate impact timing.", readability: "Setup, warning, salvo, and deployed states are visible; bespoke assets are N/A until production."}
+audio: {identity: "Mortar rack, map warning, impacts, damage, and destruction use faction fallback."}
+fx: {identity: "Red map flare, arc trails, deterministic scatter, and impact warning."}
+design: {tactical_identity: "Fragile indirect area pressure with structural reach.", player_decision: "Trade accuracy and mobility for pressure behind cover.", counterplay: "Counter-battery, fast raids, dispersal, and setup attacks.", offense_behavior: "Indirect explosive/structural fire; small area, poor precision and anti-armor efficiency.", defense_behavior: "Light armor; deployed firing profile is visible and vulnerable.", support_behavior: "Fire mission is indirect pressure only; no repair, transport, or command.", locomotion_behavior: "Wheeled, slow off-road, stationary during setup and firing.", targetability_behavior: "Ground vehicle mobile; structure-like deployed sensing and counter-battery visibility.", acquisition_behavior: "Range 10, 75 damage, 120 ticks, arced speed 6, area radius 1, no tracking, indirect designation.", lock_behavior: "Setup 45; three shots 30 ticks apart; cooldown 240; +/-0.8 scatter; red warning 30; movement/damage/EMP interrupt.", lifecycle_behavior: "One active Fire mission per Mortar.", production_behavior: "Field Workshop plus Hideout; 500 resource, 240 ticks.", visual_identity: "Converted truck bed mortar rack and red map flare.", audio_identity: "Long warning and improvised mortar impacts.", fx_identity: "Arc trails and red impact warning.", design_rationale: "Long range/area coverage are paid for by low damage, scatter, setup, and fragile armor; structure damage uses shared ratio."}

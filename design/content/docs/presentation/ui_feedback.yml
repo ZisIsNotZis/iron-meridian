@@ -1,0 +1,17 @@
+kind: ui_feedback_contract
+source_document: design/presentation/ui-feedback.md
+ownership: "This global contract defines where information is shown; faction and entity asset documents define its visual treatment."
+battlefield_channels:
+  selection: [ring, group_bracket, health_condition_strip, ownership_cue]
+  orders: [accepted_destination_or_path, queued_sequence, rejected_icon_and_reason]
+  combat: [target_bracket, attack_direction, hit_confirmation, damage_state, disabled_status_treatment]
+  combat_rule: "Never hide legality behind a tooltip alone."
+  information: [detailed_visible_contacts, visibly_stale_last_known_contacts, distinct_fog_radar_concealment_jamming_cues]
+  objectives: [world_beacon, HUD_state, ownership, contest, progress]
+  objective_rule: "Use shape and motion as well as color."
+  construction_production: [ghost_footprint, legality_reason, progress, queue_order, prerequisites, completion]
+persistent_hud:
+  command_area: [selected_entity_identity, available_commands, tooltip, production_queue, resource_summary, alerts, objective_summary]
+  tooltip_fields: [action, cost, range_or_target_restriction, cooldown, counterplay]
+  alerts: "Stack by semantic priority, expire when resolved, and remain inspectable in a log."
+channel_rule: "Every important state uses at least two channels. Selection and command feedback must not depend on audio."

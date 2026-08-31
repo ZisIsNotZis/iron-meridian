@@ -1,0 +1,27 @@
+display_name: "Default Skill Lifecycle"
+description: Reusable skill timing and interruption contract, not a carrier ability.
+status: designed
+kind: "skill"
+family: lifecycle
+effect: This is a reusable timing contract, not a carrier ability.
+lifecycle:
+  setup_ticks: 15
+  windup_ticks: 15
+  active_ticks: 60
+  recovery_ticks: 15
+  cooldown_ticks: 180
+  warning_ticks: 15
+  target_range_cells: 6
+  area_radius_cells: 1
+  interrupt_damage_percent: 10
+  interrupt_window_ticks: 15
+  cooldown_start: resolution
+interruptions:
+  interruptible: true
+  interrupt_damage_percent: 10
+  interrupt_window_ticks: 15
+  damage_cancels: true
+  cancellation_rule: Concentrated damage threshold during the interrupt window cancels before resolution.
+design:
+  lifecycle: Cooldown begins on resolution. An interrupted effect pays setup and windup but does not resolve.
+  counterplay: Concentrated damage of 10% maximum health within 15 ticks interrupts a channel.

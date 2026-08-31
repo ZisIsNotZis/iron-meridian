@@ -1,0 +1,84 @@
+display_name: "Mastodon"
+description: "Mastodon Directorate unit card."
+status: "optional"
+faction: "factions.directorate"
+platform: "vehicle"
+tier: "strategic"
+battlefield_roles: ["strategic_breakthrough_and_structure_assault", "heavy_area_pressure"]
+hpmax: 1
+armor: "armors.heavy"
+locomotor: "locomotors.tracked"
+targetability: ["targetabilities.ground"]
+sensing: "sensing.default_sensing"
+collision: "collisions.default_collision"
+movespeed: 1.2
+visionrange: 7
+alertrange: 9
+acquisitiondelay_ticks: 15
+footprint:
+  radius_cells: 0.9
+references: ["weapons.default_resolution", "skills.default_lifecycle", "armors.heavy", "sensing.default_sensing", "collisions.default_collision", "targetabilities.ground", "locomotors.tracked", "damages.siege_structural", "targetabilities.structure", "damages.machine_gun_autocannon", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.heavy_works", "factions.directorate.buildings.munitions_foundry"]
+presentation:
+  fallback_policy: "inherit"
+  silhouette: "Monumental layered hull, industrial hazard markings, synchronized ground shake, and a slow rising engine note."
+  readability: "Icon, selection, health/damage, construction or deployment, operational, disabled, and destruction states follow the global presentation contract."
+audio:
+  identity: "Monumental layered hull, industrial hazard markings, synchronized ground shake, and a slow rising engine note."
+fx:
+  identity: "Monumental layered hull, industrial hazard markings, synchronized ground shake, and a slow rising engine note."
+design:
+  tactical_identity: "Strategic breakthrough and structure assault; secondary heavy area pressure."
+  player_decision: "Build an attack around one visible spearhead or preserve it as a deterrent. It fails when unsupported, diverted, or isolated."
+  counterplay: "Mobility, mines, air attack, artillery, flanking, immobilization, and refusing the frontal lane."
+  offense_behavior: "See **Combat and abilities** for authoritative weapon definitions."
+  defense_behavior: "Heavy armor with a large, obvious target profile; cannot rely on raw values as immunity."
+  support_behavior: "Absorbs attention and opens a narrow breakthrough window; it needs a complete formation and does not replace support units."
+  locomotion_behavior: "Tracked; extremely slow, large collision footprint, and a deliberate attack approach."
+  targetability_behavior: "Ground vehicle; ordinary sight, anti-armor, structural, and air targeting. Its size and signature make concealment impossible."
+  production_behavior: "See **Production** for authoritative cost, timing, facility, and capacity data."
+  design_rationale: "Mastodon is an optional strategic override: its size buys pressure but not immunity. Super-heavy cannon | Siege/structural; ground light, heavy, structure | 8.0 / 180 / 120 ticks | Projectile 8 cells/s; arc 60°; no tracking Hull machine guns | Machine gun/autocannon; ground personnel, light | 5.0 / 22 / 30 ticks | Projectile 14 cells/s; arc 100°; no tracking Overrun Protocol | 30-tick setup; 90-tick advance; 60-tick recovery; 300-tick cooldown; +25% forward cannon damage and crush pressure, steering locked to marked 4.0-cell route | Mine, flank, immobilize, air/artillery, or abandon frontal lane"
+production:
+  producer: "factions.directorate.buildings.vehicle_plant"
+  queue: "default_queue"
+  category: "strategic_super_heavy"
+  prerequisites: ["factions.directorate.buildings.vehicle_plant", "factions.directorate.buildings.construction_yard", "factions.directorate.buildings.heavy_works", "factions.directorate.buildings.munitions_foundry"]
+  cost:
+    resource: 1
+  buildtime: 300
+  capacity:
+    max_active: 1
+weapon_mounts:
+  - weapon: "weapons.default_resolution"
+    mount_name: "Super-heavy cannon"
+    damage: "damages.siege_structural"
+    targetability: ["targetabilities.ground", "targetabilities.structure"]
+    attackrange: 8
+    attackdamage: 180
+    attackperiod: 120
+    delivery: "projectile_8_cells_s_arc_60_no_tracking"
+    design:
+      tactical_use: "Super-heavy cannon | Siege/structural; ground light, heavy, structure | 8.0 / 180 / 120 ticks | Projectile 8 cells/s; arc 60°; no tracking"
+      counterplay: "Mobility, mines, air attack, artillery, flanking, immobilization, and refusing the frontal lane."
+  - weapon: "weapons.default_resolution"
+    mount_name: "Hull machine guns"
+    damage: "damages.machine_gun_autocannon"
+    targetability: ["targetabilities.ground"]
+    attackrange: 5
+    attackdamage: 22
+    attackperiod: 30
+    delivery: "projectile_14_cells_s_arc_100_no_tracking"
+    design:
+      tactical_use: "Hull machine guns | Machine gun/autocannon; ground personnel, light | 5.0 / 22 / 30 ticks | Projectile 14 cells/s; arc 100°; no tracking"
+      counterplay: "Mobility, mines, air attack, artillery, flanking, immobilization, and refusing the frontal lane."
+skill_bindings:
+  - skill: "skills.default_lifecycle"
+    skill_name: "Overrun Protocol"
+    activation: "active"
+    setup_ticks: 30
+    recovery_ticks: 60
+    cooldown_ticks: 300
+    movement_allowed: true
+    design:
+      player_decision: "Build an attack around one visible spearhead or preserve it as a deterrent. It fails when unsupported, diverted, or isolated."
+      counterplay: "Mobility, mines, air attack, artillery, flanking, immobilization, and refusing the frontal lane."
+      interruption_readability: "Overrun Protocol | 30-tick setup; 90-tick advance; 60-tick recovery; 300-tick cooldown; +25% forward cannon damage and crush pressure, steering locked to marked 4.0-cell route | Mine, flank, immobilize, air/artillery, or abandon frontal lane"

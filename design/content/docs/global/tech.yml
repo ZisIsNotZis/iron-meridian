@@ -1,0 +1,21 @@
+kind: tech_contract
+document_id: design.tech
+title: Technology and Prerequisites
+ownership:
+  - Technology owns prerequisite graph semantics and unlock state.
+  - Concrete nodes, costs, build times, faction availability, and prerequisites belong to faction tech-node or production objects.
+  - Unit/building card references unlock node and does not restate graph.
+rules:
+  - Each faction has a directed acyclic graph; node declares ID, faction scope, availability status, prerequisites, unlocks, and player-visible explanation.
+  - Prerequisites are boolean groups joined by explicit all or any; missing operator invalid; cycles, self-references, cross-faction references, and unlocks without owner are schema errors.
+  - Node uses tech.<faction>.<name>, kind tech-node, status designed/core/optional/deferred, faction, availability faction/scenario/campaign/multiplayer-ruleset, prerequisites with exactly one all or any group or none, unlocks, and references.
+  - Availability is scope, not unlock result; selected scenario/ruleset must allow node. Unlock names concrete object or rule, not stat delta, implicit tier, or wildcard. IDs, prerequisite/unlock order, and completion events are stable.
+  - Unlock requires all prerequisites, operational owning faction/building where required, and scenario permission. Unlock is monotonic; operational capability may be disabled by lost tech building but completed research persists unless explicitly defined otherwise.
+  - Technology and production are separate checks: faction/scenario, prerequisites, facility, queue, and resource reservation; queued item remains paid and follows facility-loss rule.
+  - Tech nodes do not generic-scale stats; they unlock named content or explicit rule modifier with visible cost and counterplay; no power grid, adjacency, or global research queue assumed.
+  - Evaluation follows scenario availability, prerequisites, operational capability, recipe availability, resource reservation, production, battlefield capability; lost prerequisite blocks new production but does not rewrite existing stats/cooldowns.
+  - UI groups unavailable content by scenario-locked, prerequisite-locked, facility-offline, insufficient-resource, or queue-unavailable and never shows hidden enemy research.
+  - Simultaneous completion resolves by command and event order, not render timing; loader validates acyclicity, references, faction scope, availability, and deterministic order.
+  - V1 has no research graph; scenario allow-list is complete technology state and unlisted content is locked without hidden node or automatic tier unlock. Future lifecycle labels start, construct, produce, and unavailable remain scenario/recipe data.
+  - Near-term campaign may unlock content in campaign object; skirmish uses faction graph; multiplayer uses resolved ruleset; campaign unlocks do not silently enter skirmish.
+deferred: [branch refunds, research queue switching, tech trading, shared team research, temporary stolen technology, random tech trees, global age-up modifiers]

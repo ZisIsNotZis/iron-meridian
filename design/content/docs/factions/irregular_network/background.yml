@@ -1,0 +1,19 @@
+display_name: Irregular Network Background
+description: Narrative background for the Irregular Network.
+source_document: design/factions/irregular-network/background.md
+origin: "The Network grew from people the Union’s systems left between jurisdictions: village defense groups, rail mechanics, smugglers, defecting soldiers, dissident engineers, journalists, and intelligence cells. They began by hiding fuel, people, and records from emergency requisitions. After Aster, separate acts became a mesh because no major authority could be trusted with every survivor or archive."
+internal_conflict: "The central political question is liberation or fragmentation. Secrecy protects people and makes operations possible, but it also prevents accountability. A Network victory cannot automatically mean a unified government taking power; it may only create the conditions for a different settlement."
+story_posture:
+  - "The Network has no capital, uniform, or universally accepted leader."
+  - "A cell may protect a district, expose a crime, keep a bridge open, or simply prevent both governments from taking its workshop."
+  - "Cooperation is based on favors, proof, and trusted routes."
+  - "In the near-term campaign, the Network appears as unexplained interference, missing equipment, local guides, and contradictory evidence."
+  - "The player should encounter its consequences before receiving a clean faction introduction; its full playable identity belongs to far vision."
+canonical_context:
+  - "Political objective: prevent either major faction from rebuilding the old centralized emergency machine before the truth of Aster is established."
+  - "Members disagree about what follows: restored federation, regional autonomy, negotiated amnesty, or permanent local self-defense."
+scope_use:
+  - "No hidden global resource."
+  - "No universal disguise."
+  - "No open-ended captured-unit economy."
+  - "Campaign implementation remains authored mission content using ordinary scenario and campaign boundaries."

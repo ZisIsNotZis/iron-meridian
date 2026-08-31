@@ -1,0 +1,471 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: unit
+title: Faction or neutral mobile unit
+type: object
+additionalProperties: false
+required: [display_name, description, platform, tier]
+properties:
+  display_name: {type: string, minLength: 1}
+  description: {type: string, minLength: 1}
+  status: {type: string, enum: [core, designed, optional, near-term, deferred, deprecated]}
+  scope: {type: string, enum: [core, v1, near_term, far_vision, deferred]}
+  faction: {type: string, pattern: '^factions\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$'}
+  asset_manifest: {type: string, minLength: 1}
+  references:
+    type: array
+    items: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  inherits:
+    type: array
+    items: {type: string, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+  platform: {type: string, enum: [infantry, vehicle, aircraft, naval]}
+  tier: {type: string, enum: [field, established, advanced, strategic]}
+  battlefield_roles:
+    type: array
+    minItems: 1
+    items: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+  hpmax: {type: number, minimum: 1}
+  armor: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+  locomotor: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+  targetability:
+    type: array
+    minItems: 1
+    items: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+  sensing: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+  collision: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+  movespeed: {type: number, minimum: 0}
+  visionrange: {type: number, minimum: 0}
+  alertrange: {type: number, minimum: 0}
+  acquisitiondelay_ticks: {type: integer, minimum: 0}
+  footprint:
+    type: object
+    additionalProperties: false
+    properties:
+      radius_cells: {type: number, minimum: 0}
+      width_cells: {type: number, minimum: 0}
+      height_cells: {type: number, minimum: 0}
+  movement:
+    type: object
+    additionalProperties: false
+    properties:
+      acceleration_cells_per_second_per_tick: {type: number, minimum: 0}
+      deceleration_cells_per_second_per_tick: {type: number, minimum: 0}
+      turn_rate_degrees_per_second: {type: number, minimum: 0}
+      reverse_speed_percent: {type: number, minimum: 0}
+      maximum_speed_cells_per_second: {type: number, minimum: 0}
+      reverse_speed_cells_per_second: {type: number, minimum: 0}
+      terrain_access:
+        type: array
+        items: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+      terrain_modifiers:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [terrain, movespeed_multiplier]
+          properties:
+            terrain: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+            movespeed_multiplier: {type: number, minimum: 0}
+      attack_movement: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+      attack_movement_reference: {type: string, pattern: '^locomotors\.[a-z][a-z0-9_]*$'}
+      route_shape: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+      orbit_radius_cells: {type: number, minimum: 0}
+      breakoff_distance_cells: {type: number, minimum: 0}
+      attack_run_commitment_ticks: {type: integer, minimum: 0}
+      crush_enabled: {type: boolean}
+  weapon_mounts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [weapon, mount_name]
+      properties:
+        weapon: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+        mount_name: {type: string, minLength: 1}
+        count: {type: integer, minimum: 1}
+        state: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        mount_position: {type: string, minLength: 1}
+        mount_facing_degrees: {type: number, minimum: 0, maximum: 360}
+        traverse_degrees: {type: number, minimum: 0, maximum: 360}
+        damage: {type: string, pattern: '^damages\.[a-z][a-z0-9_]*$'}
+        targetability:
+          type: array
+          items: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}
+        attackrange: {type: number, minimum: 0}
+        attackdamage: {type: number, minimum: 0}
+        attackperiod: {type: integer, minimum: 0}
+        projectile_speed: {type: number, minimum: 0}
+        area_radius_cells: {type: number, minimum: 0}
+        firing_arc_degrees: {type: number, minimum: 0, maximum: 360}
+        delivery: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        hit_model: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        tracking: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        acquisition: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        ammo_capacity: {type: integer, minimum: 0}
+        reload_ticks: {type: integer, minimum: 0}
+        rearm_ticks: {type: integer, minimum: 0}
+        warning_ticks: {type: integer, minimum: 0}
+        requires_observation: {type: boolean}
+        requires_lock: {type: boolean}
+        disabled_in_states:
+          type: array
+          items: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        damage_over_time:
+          type: object
+          additionalProperties: false
+          properties:
+            damage: {type: string, pattern: '^damages\.[a-z][a-z0-9_]*$'}
+            amount_per_tick: {type: number, minimum: 0}
+            duration_ticks: {type: integer, minimum: 0}
+            tick_period: {type: integer, minimum: 0}
+        secondary_damage:
+          type: object
+          additionalProperties: false
+          properties:
+            damage: {type: string, pattern: '^damages\.[a-z][a-z0-9_]*$'}
+            amount: {type: number, minimum: 0}
+            duration_ticks: {type: integer, minimum: 0}
+            tick_period: {type: integer, minimum: 0}
+        design:
+          type: object
+          additionalProperties: false
+          properties:
+            tactical_use: {type: string, minLength: 1}
+            counterplay: {type: string, minLength: 1}
+            readability: {type: string, minLength: 1}
+  skill_bindings:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [skill, skill_name]
+      properties:
+        skill: {type: string, pattern: '^skills\.[a-z][a-z0-9_]*$'}
+        skill_name: {type: string, minLength: 1}
+        hotkey: {type: string, minLength: 1}
+        activation: {type: string, enum: [active, passive, automatic, toggle]}
+        setup_ticks: {type: integer, minimum: 0}
+        active_ticks: {type: integer, minimum: 0}
+        recovery_ticks: {type: integer, minimum: 0}
+        cooldown_ticks: {type: integer, minimum: 0}
+        channel_ticks: {type: integer, minimum: 0}
+        duration_ticks: {type: integer, minimum: 0}
+        warning_ticks: {type: integer, minimum: 0}
+        target: {type: string, minLength: 1}
+        target_classes:
+          type: array
+          items: {type: string, minLength: 1}
+        visible_warning: {type: boolean}
+        movement_allowed: {type: boolean}
+        requires_observation: {type: boolean}
+        requires_current_observation: {type: boolean}
+        available_in_states:
+          type: array
+          items: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        targetrange: {type: number, minimum: 0}
+        targetradius: {type: number, minimum: 0}
+        targetability:
+          type: array
+          items: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}
+        interruption_conditions:
+          type: array
+          items: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        state_transition:
+          type: object
+          additionalProperties: false
+          required: [from, to]
+          properties:
+            from: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+            to: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        movement_effect:
+          type: object
+          additionalProperties: false
+          properties:
+            movespeed_multiplier: {type: number, minimum: 0}
+            movement_locked: {type: boolean}
+            route_shape: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+            attack_cancels: {type: boolean}
+        combat_effect:
+          type: object
+          additionalProperties: false
+          properties:
+            attackdamage_multiplier: {type: number, minimum: 0}
+            attackrange_bonus: {type: number}
+            protection_condition_damage: {type: number, minimum: 0}
+            accuracy_multiplier: {type: number, minimum: 0}
+            reload_paused: {type: boolean}
+            acquisition_priority: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        status_effect:
+          type: object
+          additionalProperties: false
+          required: [status]
+          properties:
+            status: {type: string, pattern: '^statuses\.[a-z][a-z0-9_]*$'}
+            duration_ticks: {type: integer, minimum: 0}
+            magnitude: {type: number}
+        transport_effect:
+          type: object
+          additionalProperties: false
+          properties:
+            capacity_groups: {type: integer, minimum: 0}
+            capacity_personnel: {type: integer, minimum: 0}
+            load_ticks: {type: integer, minimum: 0}
+            unload_ticks: {type: integer, minimum: 0}
+        design:
+          type: object
+          additionalProperties: false
+          properties:
+            player_decision: {type: string, minLength: 1}
+            counterplay: {type: string, minLength: 1}
+            interruption_readability: {type: string, minLength: 1}
+  states:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [state]
+      properties:
+        state: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        initial: {type: boolean}
+        hpmax: {type: number, minimum: 1}
+        armor: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+        locomotor: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+        targetability:
+          type: array
+          items: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}
+        sensing: {type: string, pattern: '^sensing\.[a-z][a-z0-9_]*$'}
+        collision: {type: string, pattern: '^collisions\.[a-z][a-z0-9_]*$'}
+        movespeed: {type: number, minimum: 0}
+        visionrange: {type: number, minimum: 0}
+        alertrange: {type: number, minimum: 0}
+        footprint:
+          type: object
+          additionalProperties: false
+          properties:
+            radius_cells: {type: number, minimum: 0}
+            width_cells: {type: number, minimum: 0}
+            height_cells: {type: number, minimum: 0}
+        weapon_mounts:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required: [weapon, mount_name]
+            properties:
+              weapon: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+              mount_name: {type: string, minLength: 1}
+              count: {type: integer, minimum: 1}
+              damage: {type: string, pattern: '^damages\.[a-z][a-z0-9_]*$'}
+              targetability: {type: array, items: {type: string, pattern: '^targetabilities\.[a-z][a-z0-9_]*$'}}
+              attackrange: {type: number, minimum: 0}
+              attackdamage: {type: number, minimum: 0}
+              attackperiod: {type: integer, minimum: 0}
+              projectile_speed: {type: number, minimum: 0}
+              area_radius_cells: {type: number, minimum: 0}
+              firing_arc_degrees: {type: number, minimum: 0, maximum: 360}
+              delivery: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+              hit_model: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+              tracking: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+              mount_position: {type: string, minLength: 1}
+              mount_facing_degrees: {type: number, minimum: 0, maximum: 360}
+              traverse_degrees: {type: number, minimum: 0, maximum: 360}
+              disabled_in_states:
+                type: array
+                items: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        transitions:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required: [to, trigger]
+            properties:
+              from: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+              to: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+              trigger: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+              setup_ticks: {type: integer, minimum: 0}
+              active_ticks: {type: integer, minimum: 0}
+              recovery_ticks: {type: integer, minimum: 0}
+              warning_ticks: {type: integer, minimum: 0}
+              interruptible: {type: boolean}
+              cancellable: {type: boolean}
+              vulnerable: {type: boolean}
+              cancellation_rule: {type: string, minLength: 1}
+        design:
+          type: object
+          additionalProperties: false
+          properties:
+            gameplay_behavior: {type: string, minLength: 1}
+            targetability_behavior: {type: string, minLength: 1}
+            visual_readability: {type: string, minLength: 1}
+  transitions:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [from, to, trigger]
+      properties:
+        from: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        to: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        trigger: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+        setup_ticks: {type: integer, minimum: 0}
+        active_ticks: {type: integer, minimum: 0}
+        recovery_ticks: {type: integer, minimum: 0}
+        warning_ticks: {type: integer, minimum: 0}
+        interruptible: {type: boolean}
+        cancellable: {type: boolean}
+        vulnerable: {type: boolean}
+        cancellation_rule: {type: string, minLength: 1}
+  economy:
+    type: object
+    additionalProperties: false
+    properties:
+      resource_type: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+      cargo_capacity: {type: number, minimum: 0}
+      extraction_amount: {type: number, minimum: 0}
+      extraction_period_ticks: {type: integer, minimum: 0}
+      unload_amount: {type: number, minimum: 0}
+      unload_period_ticks: {type: integer, minimum: 0}
+      processor: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+      transport:
+        type: object
+        additionalProperties: false
+        properties:
+          capacity_groups: {type: integer, minimum: 0}
+          capacity_personnel: {type: integer, minimum: 0}
+          accepted_platforms:
+            type: array
+            items: {type: string, minLength: 1}
+          load_ticks: {type: integer, minimum: 0}
+          unload_ticks: {type: integer, minimum: 0}
+          unload_range_cells: {type: number, minimum: 0}
+          unload_arc_degrees: {type: number, minimum: 0, maximum: 360}
+          passengers_vulnerable: {type: boolean}
+      emergency_unload:
+        type: object
+        additionalProperties: false
+        properties:
+          setup_ticks: {type: integer, minimum: 0}
+          cargo_fraction: {type: number, minimum: 0, maximum: 1}
+          cooldown_ticks: {type: integer, minimum: 0}
+          movement_locked: {type: boolean}
+          contestable_cache: {type: boolean}
+  production:
+    type: object
+    additionalProperties: false
+    properties:
+      producer: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+      queue: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+      category: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+      cost:
+        type: object
+        additionalProperties: false
+        properties:
+          resource: {type: number, minimum: 0}
+      buildtime: {type: integer, minimum: 0}
+      prerequisites:
+        type: array
+        items: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+      capacity:
+        type: object
+        additionalProperties: false
+        properties:
+          max_active: {type: integer, minimum: 0}
+          replacement_allowed: {type: boolean}
+          replacement_requires: {type: string, pattern: '^([a-z][a-z0-9_]*\.)+[a-z][a-z0-9_]*$'}
+          replacement_scope: {type: string, enum: [per_player, per_building, per_processor, per_node, none]}
+          replacement_competes_with_new: {type: boolean}
+          rearm_queue: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+  lifecycle:
+    type: object
+    additionalProperties: false
+    properties:
+      destruction_behavior: {type: string, enum: [wreck, remove, expire, transform]}
+      wreck_asset: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      expiry_ticks: {type: integer, minimum: 0}
+      expiry_warning_ticks: {type: integer, minimum: 0}
+  repair:
+    type: object
+    additionalProperties: false
+    properties:
+      available: {type: boolean}
+      target: {type: string, enum: [self, allied_units, allied_buildings, wrecks, none]}
+      rate_per_tick: {type: number, minimum: 0}
+      condition_rate_per_tick: {type: number, minimum: 0}
+      range_cells: {type: number, minimum: 0}
+      interrupted_by_damage: {type: boolean}
+  presentation:
+    type: object
+    additionalProperties: false
+    properties:
+      icon: {type: string, minLength: 1}
+      model: {type: string, minLength: 1}
+      shadow: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      selection: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      animation: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      damaged: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      destruction: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      construction: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      operational: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      disabled: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      state_variants:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [state, asset]
+          properties:
+            state: {type: string, pattern: '^[a-z][a-z0-9_]*$'}
+            asset: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      fallback_policy: {type: string, enum: [inherit, placeholder, unavailable, required_before_release]}
+      silhouette: {type: string, minLength: 1}
+      material_language: {type: string, minLength: 1}
+      readability: {type: string, minLength: 1}
+  audio:
+    type: object
+    additionalProperties: false
+    properties:
+      selection: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      acknowledgement: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      attack: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      skill: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      damage: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      destruction: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      ambient: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      movement: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      alert: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      status: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      voice: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      identity: {type: string, minLength: 1}
+  fx:
+    type: object
+    additionalProperties: false
+    properties:
+      weapon: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      skill: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      status: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      transition: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      destruction: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      movement: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      detection: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      repair: {type: string, pattern: '^assets\.[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$'}
+      identity: {type: string, minLength: 1}
+  design:
+    type: object
+    additionalProperties: false
+    properties:
+      tactical_identity: {type: string, minLength: 1}
+      player_decision: {type: string, minLength: 1}
+      counterplay: {type: string, minLength: 1}
+      offense_behavior: {type: string, minLength: 1}
+      defense_behavior: {type: string, minLength: 1}
+      support_behavior: {type: string, minLength: 1}
+      locomotion_behavior: {type: string, minLength: 1}
+      targetability_behavior: {type: string, minLength: 1}
+      acquisition_behavior: {type: string, minLength: 1}
+      lock_behavior: {type: string, minLength: 1}
+      lifecycle_behavior: {type: string, minLength: 1}
+      economy_behavior: {type: string, minLength: 1}
+      production_behavior: {type: string, minLength: 1}
+      visual_identity: {type: string, minLength: 1}
+      audio_identity: {type: string, minLength: 1}
+      fx_identity: {type: string, minLength: 1}
+      design_rationale: {type: string, minLength: 1}

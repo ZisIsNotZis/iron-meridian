@@ -1,0 +1,36 @@
+display_name: "Resource Exchange"
+description: "Resource Exchange migrated from its Coalition design card."
+status: core
+faction: factions.coalition
+platform: building
+tier: field
+building_roles: ["resource_processor"]
+hpmax: 650
+armor: armors.reinforced_structure
+locomotor: not_applicable
+targetability: ["targetabilities.structure"]
+sensing: sensing.default_sensing
+collision: collisions.default_collision
+footprint: {width_cells: 3, height_cells: 3, facings: "cardinal"}
+construction:
+  cost: {resource: 500}
+  buildtime: 300
+  builder: "factions.coalition.vehicles.mcv"
+  prerequisites: [{object: "factions.coalition.buildings.coalition_hq", state: "operational"}]
+production: {max_operational: 1, replacement_allowed: true}
+references: ["sensing.default_sensing", "collisions.default_collision", "weapons.default_resolution", "skills.default_lifecycle", "armors.reinforced_structure", "locomotors.default_ground", "targetabilities.structure"]
+design:
+  tactical_identity: "resource processor"
+  construction_behavior: "Buildable terrain within the shared HQ/builder anchor rules; keep the docking edge clear and off authored routes."
+  production_behavior: "Role: resource processor; cost: `500 resource`; build time: `300 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / economy`; replacement/capacity: `maximum 1 operational processor per player; replacement allowed while HQ survives; one builder assignment`."
+  defense_behavior: "Structure; visible while operational; unloading bay is not a separate target."
+  capture_behavior: "**Process and repair** — unloads a docked cargo load at"
+  repair_behavior: "Place near a rich route for throughput or behind the base for safety, accepting longer travel."
+  lifecycle_behavior: "Raid the processor or cut the approach route; destruction stops unloading and repair but does not remove banked resource."
+  player_decision: "Place near a rich route for throughput or behind the base for safety, accepting longer travel."
+  counterplay: "Raid the processor or cut the approach route; destruction stops unloading and repair but does not remove banked resource."
+  visual_identity: "Open receiving canopy, blue cargo lights, visible transfer stream, and a warning strobe when a loaded harvester is exposed."
+  design_rationale: "# Resource Exchange\n\n## Gameplay identity\n\n- **Footprint:** `3 × 3` cells; four facings; one harvester docking edge and one service interaction cell.\n- **Health / protection:** 650 HP; `reinforcedStructure`; no armor override.\n- **Targetability:** Structure; visible while operational; unloading bay is not a separate target.\n- **Production:** Role: resource processor; cost: `500 resource`; build time: `300 ticks`; facility: `Construction Vehicle`; prerequisites: `Coalition HQ operational`; queue/category: `construction / economy`; replacement/capacity: `maximum 1 operational processor per player; replacement allowed while HQ survives; one builder assignment`.\n- **Skill / passive:** **Process and repair** — unloads a docked cargo load at\n  `40 resource/tick`, repairs a docked harvester at `5 condition/second`, and\n  cannot create resource.\n- **Placement:** Buildable terrain within the shared HQ/builder anchor rules; keep the docking edge clear and off authored routes.\n- **Player decision:** Place near a rich route for throughput or behind the base for safety, accepting longer travel.\n- **Counterplay:** Raid the processor or cut the approach route; destruction stops unloading and repair but does not remove banked resource.\n- **Asset design:** See [entity asset manifest](assets.md)."
+presentation: {fallback_policy: "inherit", silhouette: "Open receiving canopy, blue cargo lights, visible transfer stream, and a warning strobe when a loaded harvester is exposed.", material_language: "Coalition faction accents; bespoke artwork is pending.", readability: "- **Icon:** Inherit global icon grammar and Coalition faction accents; bespoke artwork is pending.\n- **2D model/sprite:** Inherit the platform presentation contract; bespoke silhouette/model is pending.\n- **Animation:** Inherit global state vocabulary; no entity-specific exception is recorded.\n- **Audio:** Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded.\n- **FX:** Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending.\n- **Damage/destruction:** Inherit the global unit/building damage-state fallback.\n- **Fallback:** Use the faction/platform placeholder until bespoke assets exist."}
+audio: {identity: "Inherit global event taxonomy and Coalition audio language; no entity-specific cue list is recorded."}
+fx: {identity: "Inherit global semantic FX vocabulary and Coalition material language; bespoke presets are pending."}

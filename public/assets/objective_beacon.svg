@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="t" width="96" height="96" color-interpolation="linearRGB">
+  <title id="t">Objective beacon — relay mast with ring and pulsing safety-yellow marker</title>
+  <defs>
+    <radialGradient id="oct" cx="0.4" cy="0.35" r="0.9">
+      <stop offset="0%" stop-color="#4a5f8a"/>
+      <stop offset="55%" stop-color="#24314d"/>
+      <stop offset="100%" stop-color="#131a2a"/>
+    </radialGradient>
+    <radialGradient id="hub" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0%" stop-color="#647ba9"/>
+      <stop offset="60%" stop-color="#34456b"/>
+      <stop offset="100%" stop-color="#1b2740"/>
+    </radialGradient>
+    <radialGradient id="yglow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#eac56d" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#eac56d" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cglow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#56d8b0" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#56d8b0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="drop" x="-40%" y="-40%" width="180%" height="190%" color-interpolation-filters="linearRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.4" result="blur"/>
+      <feOffset in="blur" dx="2" dy="4" result="off"/>
+      <feFlood flood-color="#0b1533" flood-opacity="0.42" result="col"/>
+      <feComposite in="col" in2="off" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="spec" cx="0.32" cy="0.28" r="0.8">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- contact shadow -->
+  <ellipse cx="48" cy="50" rx="26" ry="24" fill="#0b1533" opacity="0.30" filter="url(#drop)"/>
+
+  <g filter="url(#drop)">
+    <!-- ground glow -->
+    <circle cx="48" cy="48" r="22" fill="url(#cglow)"/>
+
+    <!-- octagonal platform -->
+    <polygon points="48,27 61.5,32.5 69,48 61.5,63.5 48,69 34.5,63.5 27,48 34.5,32.5" fill="url(#oct)" stroke="#0d1526" stroke-width="1.5"/>
+    <polygon points="48,27 61.5,32.5 69,48 61.5,63.5 48,69 34.5,63.5 27,48 34.5,32.5" fill="url(#spec)"/>
+
+    <!-- relay ring -->
+    <circle cx="48" cy="48" r="16.5" fill="none" stroke="#aeb6c2" stroke-width="2.2"/>
+    <circle cx="48" cy="48" r="12.5" fill="none" stroke="#56d8b0" stroke-width="1.6" opacity="0.9"/>
+    <!-- ring spokes -->
+    <g stroke="#aeb6c2" stroke-opacity="0.75" stroke-width="1.4" stroke-linecap="round">
+      <line x1="48" y1="31.5" x2="48" y2="35.5"/>
+      <line x1="48" y1="60.5" x2="48" y2="64.5"/>
+      <line x1="31.5" y1="48" x2="35.5" y2="48"/>
+      <line x1="60.5" y1="48" x2="64.5" y2="48"/>
+    </g>
+
+    <!-- relay mast -->
+    <rect x="45" y="45" width="6" height="6" rx="1.2" fill="#131a2a" stroke="#0d1526" stroke-width="1"/>
+    <line x1="48" y1="45" x2="48" y2="33.5" stroke="#c8cede" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="48" y1="33.5" x2="48" y2="30" stroke="#aeb6c2" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="48" cy="29.4" r="2" fill="#56d8b0"/>
+    <circle cx="48" cy="29.4" r="3.6" fill="#56d8b0" opacity="0.35"/>
+
+    <!-- central hub -->
+    <circle cx="48" cy="48" r="7" fill="url(#hub)" stroke="#0d1526" stroke-width="1.2"/>
+
+    <!-- pulsing safety-yellow marker -->
+    <circle cx="48" cy="48" r="9" fill="url(#yglow)"/>
+    <circle cx="48" cy="48" r="12" fill="none" stroke="#eac56d" stroke-width="1.4" opacity="0.5"/>
+    <circle cx="48" cy="48" r="15" fill="none" stroke="#eac56d" stroke-width="1" opacity="0.25"/>
+    <circle cx="48" cy="48" r="4.6" fill="#eac56d" stroke="#0d1526" stroke-width="1"/>
+    <circle cx="48" cy="48" r="1.7" fill="#ffffff" opacity="0.9"/>
+  </g>
+</svg>

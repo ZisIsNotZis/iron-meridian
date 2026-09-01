@@ -10,10 +10,10 @@ The project’s decision order is: make a good game; minimize implementation and
 
 **V1**:
 The first playable vertical slice. Its authoritative contents, exclusions, and
-acceptance gates are in [V1 Scope](design/v1/README.md).
+acceptance gates are in [V1 Scope](design/content/docs/global/v1.yml).
 
 **First playable**:
-An older synonym for V1; use [V1 Scope](design/v1/README.md) for the current
+An older synonym for V1; use [V1 Scope](design/content/docs/global/v1.yml) for the current
 boundary.
 
 **Construction vehicle**:
@@ -24,14 +24,14 @@ A minimal internal, fog-filtered read model consumed by the renderer and scripte
 
 **Near-term game**:
 The first complete solo experience after V1. Its current boundary is defined
-in [V1 Scope](design/v1/README.md).
+in [V1 Scope](design/content/docs/global/v1.yml).
 
 **Far vision**:
 Expansion beyond the near-term solo game. Its current boundary is defined in
-[V1 Scope](design/v1/README.md).
+[V1 Scope](design/content/docs/global/v1.yml).
 
 **First demo**:
-An older synonym for the V1 proof; use [V1 Scope](design/v1/README.md) for
+An older synonym for the V1 proof; use [V1 Scope](design/content/docs/global/v1.yml) for
 the current boundary.
 
 **Meridian Crisis**:

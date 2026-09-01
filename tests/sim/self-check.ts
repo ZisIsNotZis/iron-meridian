@@ -164,14 +164,41 @@ function run(): void {
   support.step(1);
   assert.ok(air.y < 35);
 
-  // Scripted AI emits legal deterministic commands for its own slot.
+  // Scripted AI: the east finite-state opponent plays a real match — economy,
+  // construction, production, and objective contest — emitting only legal,
+  // accepted, deterministic commands for its own slot.
   const ai = createSimulation();
-  const aiResults = stepScriptedAI(ai);
-  assert.equal(aiResults.length, 2);
-  assert.ok(aiResults.every(result => result.accepted));
+  const aiFirst = stepScriptedAI(ai);
+  assert.ok(aiFirst.length > 0, "AI emits a non-empty command set");
+  assert.ok(aiFirst.every(result => result.accepted), "AI commands are all accepted");
   ai.step(1);
   assert.equal(find(ai, 2, "scout").state, "moving");
   assert.equal(find(ai, 2, "harvester").state, "moving");
+  assert.ok(find(ai, 2, "mcv").order, "MCV deploys the Infantry Center");
+
+  // The richer match: the AI constructs the Infantry Center, produces a growing
+  // force from both producers, and pushes combat units at the objective while
+  // every submitted command stays legal and accepted.
+  for (let tick = 0; tick < 600; tick++) {
+    const results = stepScriptedAI(ai);
+    assert.ok(results.every(result => result.accepted), `AI command rejected at tick ${tick + 1}`);
+    ai.step(1);
+  }
+  assert.ok(ai.state.entities.some(e => e.ownerId === 2 && e.kind === "infantry-center" && e.alive), "AI constructed an Infantry Center");
+  assert.ok(ai.state.entities.filter(e => e.ownerId === 2 && e.kind === "scout" && e.alive).length >= 2, "AI produced a second scout car");
+  assert.ok(ai.state.entities.filter(e => e.ownerId === 2 && e.kind === "tank" && e.alive).length >= 2, "AI produced a second Valiant MBT");
+  assert.ok(find(ai, 2, "scout").x < 40, "AI scout advanced toward the objective");
+  assert.ok(ai.state.resources[2].banked >= 0 && ai.state.resources[2].reserved >= 0, "AI economy never goes negative");
+
+  // Determinism: same seed plus the same AI stepping schedule reproduces the
+  // same state digest (the AI is a pure function of observation + its state).
+  const aiA = createSimulation();
+  const aiB = createSimulation();
+  for (let tick = 0; tick < 500; tick++) {
+    stepScriptedAI(aiA); aiA.step(1);
+    stepScriptedAI(aiB); aiB.step(1);
+  }
+  assert.equal(digest(aiA.state), digest(aiB.state));
 
   // Same seed and command log reproduce the same digest.
   const a = createSimulation();

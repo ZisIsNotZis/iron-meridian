@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="t" width="96" height="96" color-interpolation="linearRGB">
+  <title id="t">Coalition Infantry Center — 2x2 barracks tubes and entrance</title>
+  <defs>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5a6f9b"/>
+      <stop offset="35%" stop-color="#4a5f8a"/>
+      <stop offset="70%" stop-color="#34456b"/>
+      <stop offset="100%" stop-color="#24314d"/>
+    </linearGradient>
+    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a3854"/>
+      <stop offset="55%" stop-color="#1b2740"/>
+      <stop offset="100%" stop-color="#131a2a"/>
+    </linearGradient>
+    <linearGradient id="tube" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4a5f8a"/>
+      <stop offset="50%" stop-color="#647ba9"/>
+      <stop offset="100%" stop-color="#34456b"/>
+    </linearGradient>
+    <filter id="drop" x="-40%" y="-40%" width="180%" height="190%" color-interpolation-filters="linearRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.4" result="blur"/>
+      <feOffset in="blur" dx="2" dy="4" result="off"/>
+      <feFlood flood-color="#0b1533" flood-opacity="0.42" result="col"/>
+      <feComposite in="col" in2="off" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="spec" cx="0.32" cy="0.28" r="0.8">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- contact shadow -->
+  <ellipse cx="48" cy="54" rx="14" ry="12" fill="#0b1533" opacity="0.30" filter="url(#drop)"/>
+
+  <g filter="url(#drop)">
+    <!-- front face -->
+    <rect x="39" y="52.5" width="18" height="9.5" rx="2" fill="url(#front)" stroke="#0d1526" stroke-width="1.3"/>
+    <rect x="45" y="54.3" width="6" height="5.6" rx="1" fill="#131a2a" stroke="#0d1526" stroke-width="1"/>
+    <rect x="46.8" y="53.6" width="2.4" height="1.3" rx="0.5" fill="#56d8b0"/>
+    <path d="M45.2 61.4 L48 59.7 L50.8 61.4" fill="none" stroke="#eac56d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- main roof -->
+    <rect x="39" y="33" width="18" height="20.5" rx="3" fill="url(#roof)" stroke="#0d1526" stroke-width="1.3"/>
+    <rect x="39" y="33" width="18" height="20.5" rx="3" fill="url(#spec)"/>
+
+    <!-- barracks tubes -->
+    <rect x="40.5" y="35.2" width="15" height="6.8" rx="3.2" fill="url(#tube)" stroke="#0d1526" stroke-width="1"/>
+    <rect x="41.6" y="35.8" width="12.8" height="1.8" rx="0.9" fill="#c8cede" opacity="0.45"/>
+    <circle cx="41.3" cy="38.6" r="1.6" fill="#2a3854" stroke="#0d1526" stroke-width="0.8"/>
+    <circle cx="54.7" cy="38.6" r="1.6" fill="#2a3854" stroke="#0d1526" stroke-width="0.8"/>
+
+    <rect x="40.5" y="43.2" width="15" height="6.8" rx="3.2" fill="url(#tube)" stroke="#0d1526" stroke-width="1"/>
+    <rect x="41.6" y="43.8" width="12.8" height="1.8" rx="0.9" fill="#c8cede" opacity="0.45"/>
+    <circle cx="41.3" cy="46.6" r="1.6" fill="#2a3854" stroke="#0d1526" stroke-width="0.8"/>
+    <circle cx="54.7" cy="46.6" r="1.6" fill="#2a3854" stroke="#0d1526" stroke-width="0.8"/>
+
+    <!-- cyan sensor -->
+    <circle cx="55.6" cy="40" r="1.6" fill="#0c2530" stroke="#56d8b0" stroke-width="1.1"/>
+    <circle cx="55.6" cy="40" r="0.8" fill="#bff4e0"/>
+    <!-- antenna -->
+    <line x1="44.5" y1="35.5" x2="42.8" y2="27" stroke="#aeb6c2" stroke-width="1" stroke-linecap="round"/>
+    <circle cx="42.7" cy="26.3" r="1.2" fill="#aeb6c2"/>
+  </g>
+</svg>

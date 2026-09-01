@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="t" width="96" height="96" color-interpolation="linearRGB">
+  <title id="t">Valiant Main Battle Tank — Coalition, top-down facing up</title>
+  <defs>
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5a6f9b"/>
+      <stop offset="45%" stop-color="#3a4c74"/>
+      <stop offset="100%" stop-color="#24314d"/>
+    </linearGradient>
+    <linearGradient id="turret" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#647ba9"/>
+      <stop offset="50%" stop-color="#3d507a"/>
+      <stop offset="100%" stop-color="#2a3854"/>
+    </linearGradient>
+    <linearGradient id="track" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#131a2a"/>
+      <stop offset="50%" stop-color="#2b3a55"/>
+      <stop offset="100%" stop-color="#131a2a"/>
+    </linearGradient>
+    <filter id="drop" x="-40%" y="-40%" width="180%" height="190%" color-interpolation-filters="linearRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.4" result="blur"/>
+      <feOffset in="blur" dx="2" dy="4" result="off"/>
+      <feFlood flood-color="#0b1533" flood-opacity="0.42" result="col"/>
+      <feComposite in="col" in2="off" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="spec" cx="0.32" cy="0.28" r="0.8">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- contact shadow -->
+  <ellipse cx="48" cy="50" rx="34" ry="30" fill="#0b1533" opacity="0.30" filter="url(#drop)"/>
+
+  <g filter="url(#drop)">
+    <!-- tracks -->
+    <rect x="8" y="20" width="16" height="56" rx="8" fill="url(#track)"/>
+    <rect x="72" y="20" width="16" height="56" rx="8" fill="url(#track)"/>
+    <!-- track links -->
+    <g stroke="#1b2740" stroke-width="1.6" opacity="0.9">
+      <line x1="16" y1="28" x2="16" y2="68"/><line x1="12" y1="32" x2="12" y2="64"/>
+      <line x1="80" y1="28" x2="80" y2="68"/><line x1="84" y1="32" x2="84" y2="64"/>
+    </g>
+
+    <!-- hull -->
+    <rect x="20" y="24" width="56" height="52" rx="9" fill="url(#hull)" stroke="#0d1526" stroke-width="1.5"/>
+    <!-- glacis highlight -->
+    <rect x="24" y="27" width="48" height="12" rx="5" fill="#7d90bb" opacity="0.55"/>
+
+    <!-- turret -->
+    <ellipse cx="48" cy="46" rx="18" ry="15" fill="url(#turret)" stroke="#0d1526" stroke-width="1.4"/>
+    <ellipse cx="48" cy="46" rx="18" ry="15" fill="url(#spec)"/>
+    <!-- targeting chevrons (safety yellow) -->
+    <path d="M40 50 L48 43 L56 50" fill="none" stroke="#eac56d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- cyan sensor -->
+    <circle cx="48" cy="40" r="3.4" fill="#0c2530" stroke="#56d8b0" stroke-width="1.6"/>
+    <circle cx="48" cy="40" r="1.4" fill="#bff4e0"/>
+
+    <!-- barrel -->
+    <rect x="44.5" y="8" width="7" height="30" rx="2.4" fill="#2a3854" stroke="#0d1526" stroke-width="1.2"/>
+    <rect x="42" y="6" width="12" height="9" rx="2.5" fill="#3d507a" stroke="#0d1526" stroke-width="1"/>
+    <rect x="40" y="7" width="4" height="7" fill="#1a2440"/>
+    <rect x="52" y="7" width="4" height="7" fill="#1a2440"/>
+    <!-- antennae -->
+    <line x1="29" y1="30" x2="26" y2="16" stroke="#56d8b0" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="26" cy="15" r="1.8" fill="#56d8b0"/>
+    <line x1="67" y1="30" x2="70" y2="18" stroke="#aeb6c2" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+</svg>

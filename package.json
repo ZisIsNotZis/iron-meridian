@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test:sim": "tsx tests/sim/self-check.ts"
+    "test:sim": "tsx tests/sim/self-check.ts",
+    "test:bench": "tsx tests/sim/benchmark.ts",
+    "test:content": "tsx tests/content/manifest.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
+    "playwright-core": "^1.62.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vite": "^6.0.5"

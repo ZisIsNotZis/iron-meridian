@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="t" width="96" height="96" color-interpolation="linearRGB">
+  <title id="t">Order marker — solid chevron</title>
+  <defs>
+    <linearGradient id="o" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bff4e0"/>
+      <stop offset="100%" stop-color="#56d8b0"/>
+    </linearGradient>
+  </defs>
+  <path d="M22 66 L48 30 L74 66 L66 72 L48 52 L30 72 Z" fill="url(#o)" stroke="#0d1526" stroke-width="3" stroke-linejoin="round"/>
+</svg>

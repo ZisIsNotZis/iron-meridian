@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="t" width="96" height="96" color-interpolation="linearRGB">
+  <title id="t">Coalition clear terrain — buildable ground, subtle grass and rubble, dark and quiet</title>
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34456b" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#0b1533" stop-opacity="0.2"/>
+    </linearGradient>
+    <!-- seamless 24x24 speckle cell -->
+    <pattern id="grime" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="7" r="1.1" fill="#4a5f8a" opacity="0.5"/>
+      <circle cx="13" cy="4" r="0.9" fill="#34456b" opacity="0.75"/>
+      <circle cx="19" cy="12" r="1.2" fill="#0b1533" opacity="0.55"/>
+      <circle cx="8" cy="17" r="0.8" fill="#aeb6c2" opacity="0.16"/>
+      <circle cx="21" cy="20" r="1" fill="#4a5f8a" opacity="0.45"/>
+      <circle cx="15" cy="14" r="0.7" fill="#56d8b0" opacity="0.12"/>
+      <circle cx="3" cy="21" r="0.8" fill="#34456b" opacity="0.6"/>
+      <line x1="10" y1="10" x2="12.5" y2="10.5" stroke="#4a5f8a" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+      <line x1="17" y1="6" x2="18.5" y2="8" stroke="#34456b" stroke-width="1" stroke-linecap="round" opacity="0.55"/>
+      <polygon points="6,12 8,11.5 8.5,13.5 6.5,14" fill="#34456b" opacity="0.85"/>
+      <polygon points="6.8,12.3 7.7,12.2 7.8,13.4 6.9,13.6" fill="#0d1526" opacity="0.7"/>
+      <polygon points="18,18 20.5,17.5 21,19.8 18.5,20.3" fill="#4a5f8a" opacity="0.7"/>
+      <polyline points="11,22 12.5,21.5 14,22.3" stroke="#131a2a" stroke-width="0.9" fill="none" opacity="0.5" stroke-linecap="round"/>
+    </pattern>
+    <!-- seamless 48x48 sparse rubble cell -->
+    <pattern id="rubble" width="48" height="48" patternUnits="userSpaceOnUse">
+      <polygon points="8,10 13,8.5 15,12 11,14.5" fill="#4a5f8a" opacity="0.4" stroke="#0d1526" stroke-width="0.8"/>
+      <line x1="9.5" y1="9.5" x2="12" y2="10.5" stroke="#c8cede" stroke-width="1" opacity="0.3" stroke-linecap="round"/>
+      <polyline points="30,20 34,22 33,26 28,25" stroke="#131a2a" stroke-width="1" fill="none" opacity="0.45" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="20" y1="36" x2="20" y2="40" stroke="#0b1533" stroke-width="1.1" opacity="0.4" stroke-linecap="round"/>
+      <line x1="20" y1="36" x2="23" y2="37" stroke="#0b1533" stroke-width="1.1" opacity="0.4" stroke-linecap="round"/>
+      <line x1="20" y1="40" x2="22" y2="39.5" stroke="#0b1533" stroke-width="1.1" opacity="0.4" stroke-linecap="round"/>
+      <circle cx="40" cy="38" r="1.3" fill="#34456b" opacity="0.55"/>
+      <circle cx="41.5" cy="39.5" r="0.9" fill="#aeb6c2" opacity="0.15"/>
+      <circle cx="5" cy="30" r="1.2" fill="#0b1533" opacity="0.4"/>
+      <line x1="38" y1="8" x2="41" y2="9" stroke="#4a5f8a" stroke-width="1.1" stroke-linecap="round" opacity="0.35"/>
+    </pattern>
+    <!-- faint mottle -->
+    <radialGradient id="mottle" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0%" stop-color="#34456b" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#34456b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="96" height="96" fill="#24314d"/>
+  <rect x="0" y="0" width="96" height="96" fill="#131a2a" opacity="0.42"/>
+  <rect x="0" y="0" width="96" height="96" fill="url(#base)"/>
+  <rect x="0" y="0" width="96" height="96" fill="url(#grime)"/>
+  <rect x="0" y="0" width="96" height="96" fill="url(#rubble)"/>
+  <circle cx="24" cy="24" r="20" fill="url(#mottle)"/>
+  <circle cx="72" cy="72" r="20" fill="url(#mottle)"/>
+</svg>

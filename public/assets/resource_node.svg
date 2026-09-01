@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="t" width="96" height="96" color-interpolation="linearRGB">
+  <title id="t">Resource node — cyan-tinted ore and crystal cluster deposit</title>
+  <defs>
+    <radialGradient id="crystal" cx="0.5" cy="0.5" r="0.55">
+      <stop offset="0%" stop-color="#bff4e0"/>
+      <stop offset="25%" stop-color="#56d8b0"/>
+      <stop offset="60%" stop-color="#4a5f8a"/>
+      <stop offset="100%" stop-color="#24314d"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#56d8b0" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#56d8b0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="drop" x="-40%" y="-40%" width="180%" height="190%" color-interpolation-filters="linearRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.4" result="blur"/>
+      <feOffset in="blur" dx="2" dy="4" result="off"/>
+      <feFlood flood-color="#0b1533" flood-opacity="0.42" result="col"/>
+      <feComposite in="col" in2="off" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- contact shadow -->
+  <ellipse cx="48" cy="50" rx="24" ry="21" fill="#0b1533" opacity="0.30" filter="url(#drop)"/>
+
+  <g filter="url(#drop)">
+    <!-- ground patch -->
+    <ellipse cx="48" cy="50" rx="19" ry="15.5" fill="#131a2a" stroke="#0d1526" stroke-width="1.2"/>
+    <!-- cyan glow -->
+    <circle cx="48" cy="50" r="22" fill="url(#glow)"/>
+
+    <!-- crystal shards -->
+    <g stroke="#0d1526" stroke-width="1.1" stroke-linejoin="round">
+      <polygon points="34,35 44,43.5 49,53 39,44.5" fill="url(#crystal)"/>
+      <polygon points="30,50 39,44.5 45,55 34.5,58" fill="url(#crystal)"/>
+      <polygon points="48,25 40,45 56,45" fill="url(#crystal)"/>
+      <polygon points="63,35 52,44 58,52" fill="url(#crystal)"/>
+      <polygon points="67,50 55,45 61,55" fill="url(#crystal)"/>
+      <polygon points="61,66 50,57 57,63" fill="url(#crystal)"/>
+      <polygon points="48,71 41,57 55,57" fill="url(#crystal)"/>
+      <polygon points="35,66 42,57 49,62" fill="url(#crystal)"/>
+      <polygon points="41,31 45,39.5 50,37" fill="url(#crystal)"/>
+      <polygon points="57,58 60.5,63 55,63.5" fill="url(#crystal)"/>
+    </g>
+
+    <!-- specular edge highlights on left faces -->
+    <g stroke="#ffffff" stroke-opacity="0.4" stroke-width="1" stroke-linecap="round">
+      <line x1="45.5" y1="28" x2="42.5" y2="42.5"/>
+      <line x1="60" y1="37" x2="54" y2="44.5"/>
+      <line x1="64.5" y1="51" x2="57" y2="46.5"/>
+      <line x1="57.5" y1="64.5" x2="52" y2="58.5"/>
+      <line x1="44" y1="69" x2="43" y2="59"/>
+      <line x1="31" y1="51" x2="37" y2="46"/>
+      <line x1="36" y1="37" x2="42.5" y2="44"/>
+    </g>
+
+    <!-- scattered chips -->
+    <g stroke="#0d1526" stroke-width="0.8">
+      <rect x="39" y="60.5" width="2.6" height="2.6" rx="0.6" fill="#56d8b0" opacity="0.9"/>
+      <rect x="54.5" y="52.5" width="2.2" height="2.2" rx="0.5" fill="#bff4e0" opacity="0.85"/>
+      <rect x="44.5" y="33.5" width="2.2" height="2.2" rx="0.5" fill="#56d8b0" opacity="0.8"/>
+    </g>
+
+    <!-- bright core -->
+    <circle cx="48" cy="50" r="6" fill="url(#glow)"/>
+    <circle cx="48" cy="50" r="2.4" fill="#bff4e0"/>
+    <circle cx="48" cy="50" r="1" fill="#ffffff" opacity="0.9"/>
+  </g>
+</svg>

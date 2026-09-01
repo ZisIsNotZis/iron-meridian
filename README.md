@@ -19,16 +19,39 @@ npm run dev
 
 Open the Vite URL. Content validation runs with `node tools/check_content.mjs`.
 
+The [`design/`](design/) tree is data, not prose: rules and docs are strict-YAML
+records with exact dotted IDs derived from their paths. See
+[`design/README.md`](design/README.md) for the layout and validation commands.
+
 ## Product shape
 
 The runtime boundary is `Command → simulation → observation`; Phaser renders
-the observation but does not own game rules. Authored content lives under
-`design/`, and `CONTEXT.md` is only the glossary. This keeps factions, maps,
-units, and scenarios modifiable without rewriting the simulation.
+the observation but does not own game rules. Authored content is a YAML single
+source of truth under [`design/content/`](design/content/) (gameplay data plus
+documentation records), validated against [`design/schema/`](design/schema/);
+`CONTEXT.md` is only the glossary. This keeps factions, maps, units, and
+scenarios modifiable without rewriting the simulation.
 
-Current status: `0.1.0` playable prototype. See
-[`docs/project-status.md`](docs/project-status.md) and the canonical design
-tree under [`design/`](design/).
+Current status: `0.1.0` **playable** V1 vertical slice with a real top-down 2.5D
+asset pack, an active scripted AI opponent, and a full match loop (start → scout
+→ economy → production → construction → combat → objective → victory/defeat →
+restart). Confirmed by the deterministic headless self-check, the content
+manifest check, the 100-entity benchmark, and an in-browser visual smoke. See
+[`docs/project-status.md`](docs/project-status.md), the canonical design index at
+[`design/README.md`](design/README.md), and reviewed screenshots in
+[`docs/media/`](docs/media/).
+
+## Verification
+
+```bash
+node tools/check_content.mjs        # validate every YAML record + references
+python3 tools/audit_design.py       # audit retained Markdown links
+npm run test:sim                    # deterministic headless simulation
+npm run test:content                # content manifest resolution
+npm run test:bench                  # 100-entity deterministic performance smoke
+npm run build                       # compile the browser client
+npm run dev                         # play the game locally
+```
 
 ## Future vision
 

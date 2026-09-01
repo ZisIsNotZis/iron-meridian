@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="t" width="96" height="96" color-interpolation="linearRGB">
+  <title id="t">Coalition Vehicle Assembly — 3x3 bay with gantry crane and garage doors</title>
+  <defs>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5a6f9b"/>
+      <stop offset="35%" stop-color="#4a5f8a"/>
+      <stop offset="70%" stop-color="#34456b"/>
+      <stop offset="100%" stop-color="#24314d"/>
+    </linearGradient>
+    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#34456b"/>
+      <stop offset="55%" stop-color="#24314d"/>
+      <stop offset="100%" stop-color="#1b2740"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4a5f8a"/>
+      <stop offset="50%" stop-color="#647ba9"/>
+      <stop offset="100%" stop-color="#3d507a"/>
+    </linearGradient>
+    <filter id="drop" x="-40%" y="-40%" width="180%" height="190%" color-interpolation-filters="linearRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.4" result="blur"/>
+      <feOffset in="blur" dx="2" dy="4" result="off"/>
+      <feFlood flood-color="#0b1533" flood-opacity="0.42" result="col"/>
+      <feComposite in="col" in2="off" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="spec" cx="0.32" cy="0.28" r="0.8">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- contact shadow -->
+  <ellipse cx="48" cy="56" rx="19" ry="16" fill="#0b1533" opacity="0.30" filter="url(#drop)"/>
+
+  <g filter="url(#drop)">
+    <!-- front face with bay doors -->
+    <rect x="35.5" y="55.5" width="25" height="11" rx="2" fill="url(#front)" stroke="#0d1526" stroke-width="1.4"/>
+    <rect x="37" y="56.6" width="10.4" height="8.6" rx="1" fill="#131a2a" stroke="#0d1526" stroke-width="1.1"/>
+    <g stroke="#1b2740" stroke-width="1">
+      <line x1="40.4" y1="57.6" x2="40.4" y2="64.2"/>
+      <line x1="43.8" y1="57.6" x2="43.8" y2="64.2"/>
+    </g>
+    <rect x="41.6" y="58.9" width="1.2" height="5.7" fill="#4a5f8a" opacity="0.75"/>
+    <rect x="37" y="56.6" width="10.4" height="2.2" rx="0.6" fill="#eac56d"/>
+    <rect x="37" y="63.2" width="10.4" height="2" rx="0.6" fill="#56d8b0" opacity="0.9"/>
+
+    <rect x="48.6" y="56.6" width="10.4" height="8.6" rx="1" fill="#131a2a" stroke="#0d1526" stroke-width="1.1"/>
+    <g stroke="#1b2740" stroke-width="1">
+      <line x1="52" y1="57.6" x2="52" y2="64.2"/>
+      <line x1="55.4" y1="57.6" x2="55.4" y2="64.2"/>
+    </g>
+    <rect x="53.2" y="58.9" width="1.2" height="5.7" fill="#4a5f8a" opacity="0.75"/>
+    <rect x="48.6" y="56.6" width="10.4" height="2.2" rx="0.6" fill="#eac56d"/>
+    <rect x="48.6" y="63.2" width="10.4" height="2" rx="0.6" fill="#56d8b0" opacity="0.9"/>
+
+    <!-- main roof -->
+    <rect x="35.5" y="30.5" width="25" height="26" rx="3.5" fill="url(#roof)" stroke="#0d1526" stroke-width="1.4"/>
+    <rect x="35.5" y="30.5" width="25" height="26" rx="3.5" fill="url(#spec)"/>
+
+    <!-- exhaust stacks -->
+    <rect x="38" y="32.6" width="4.4" height="4.4" rx="1" fill="url(#front)" stroke="#0d1526" stroke-width="1"/>
+    <rect x="39.3" y="33.9" width="1.8" height="1.8" rx="0.4" fill="#0c2530"/>
+    <rect x="53.6" y="32.6" width="4.4" height="4.4" rx="1" fill="url(#front)" stroke="#0d1526" stroke-width="1"/>
+    <rect x="54.9" y="33.9" width="1.8" height="1.8" rx="0.4" fill="#0c2530"/>
+
+    <!-- gantry rails -->
+    <g stroke="#aeb6c2" stroke-opacity="0.55" stroke-width="1.3">
+      <line x1="40.5" y1="32" x2="40.5" y2="55"/>
+      <line x1="55.5" y1="32" x2="55.5" y2="55"/>
+    </g>
+    <!-- cross beam -->
+    <rect x="39.4" y="42.4" width="17.2" height="3.2" rx="1.6" fill="url(#beam)" stroke="#0d1526" stroke-width="1"/>
+    <rect x="40.4" y="42.7" width="15" height="1.2" rx="0.6" fill="#c8cede" opacity="0.5"/>
+    <!-- hoist + hook -->
+    <circle cx="48" cy="44" r="2.1" fill="#131a2a" stroke="#0d1526" stroke-width="0.9"/>
+    <line x1="48" y1="46.1" x2="48" y2="48.6" stroke="#131a2a" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="46.6" y="48.6" width="2.8" height="1.8" rx="0.7" fill="#0d1526"/>
+
+    <!-- safety-yellow chevron -->
+    <path d="M43 52.2 L48 49 L53 52.2" fill="none" stroke="#eac56d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- cyan edge lights -->
+    <circle cx="36.6" cy="46.5" r="1.3" fill="#56d8b0"/>
+    <circle cx="59.4" cy="46.5" r="1.3" fill="#56d8b0"/>
+    <circle cx="48" cy="31.6" r="1.3" fill="#56d8b0"/>
+    <!-- antenna -->
+    <line x1="59" y1="34" x2="61.5" y2="25.5" stroke="#56d8b0" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="61.6" cy="24.8" r="1.4" fill="#56d8b0"/>
+  </g>
+</svg>

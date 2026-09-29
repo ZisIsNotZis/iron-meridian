@@ -1,0 +1,187 @@
+design/presentation/fx.md:6:Shared event families are `muzzle`, `projectile`, `beam`, `impact`,
+design/presentation/fx.md:7:`area-warning`, `status`, `movement`, `detection`, `jam`, `decoy`,
+design/presentation/fx.md:8:`construction`, `repair`, `capture`, and `destruction`. Faction or entity
+design/ai/near-term.md:21:- Evaluate every `15 ticks`; issue at most one strategic batch and one local
+design/ai/near-term.md:27:  order `center, north, south`, then stable ID.
+design/ai/near-term.md:28:- A stale contact older than `90 ticks` is a search hint, never an attack
+design/ai/near-term.md:39:| Defense | Visible enemy within the home-defense radius or production under attack | Call the nearest legal force home, protect HQ then processor then production. | No visible threat for `60 ticks`. |
+design/ai/near-term.md:46:| Recruit | 1 scout, 2 line, 1 tank | 4 combat units | 35% visible force loss or average health below 45% | 90 ticks |
+design/ai/near-term.md:47:| Standard (`regular`) | 1 scout, 2 line, 1 tank, 1 counter unit | 5 combat units | 30% visible force loss or average health below 50% | 75 ticks |
+design/ai/near-term.md:48:| Veteran | 1 scout, 3 line, 1 tank, 1 counter unit | 6 combat units | 25% visible force loss or average health below 55% | 60 ticks |
+design/ai/near-term.md:49:| Commander | 1 scout, 3 line, 2 tanks, 1 counter unit | 7 combat units | 20% visible force loss or average health below 60% | 45 ticks |
+design/ai/near-term.md:69:| `opening-economy` | Home node visible, no enemy contact | Harvest, start authored queue, scout center. |
+design/ai/near-term.md:70:| `lost-scout` | Scout destroyed; no enemy contact | Rebuild/replace scout when legal; do not attack from stale data. |
+design/ai/near-term.md:71:| `objective-disadvantage` | Enemy owns objective, visible mixed force | Contest or deny with a supported group; do not trickle units. |
+design/ai/near-term.md:72:| `damaged-force` | Own force below retreat threshold | Retreat toward owned safe area and rebuild. |
+design/ai/near-term.md:73:| `base-raid` | Visible enemy near production | Defense state calls nearest group home and protects production. |
+design/ai/near-term.md:74:| `failed-attack` | Previous attack lost, enemy last-known contact stale | Recover, scout a different route, and do not repeat the same attack immediately. |
+design/ai/near-term.md:75:| `fog-parity` | Enemy exists outside observation | No command targets or attacks the hidden entity. |
+design/ai/near-term.md:76:| `tie-break` | Two routes and two targets score equally | Choose center, then lowest stable ID. |
+design/presentation/audio.md:16:belong to the V1/platform profile, not an entity.
+design/presentation/animation.md:5:transitions expose their tick event so animation can catch up deterministically.
+design/presentation/animation.md:18:are V1/platform contracts or entity manifest values—not hidden defaults.
+design/ai/README.md:10:AI consumes the same fog-filtered `GameView` and submits the same commands as a human. It does not inspect hidden entities, enemy resources, production queues, or the map outside its observation. Difficulty comes from decision quality, scouting discipline, plan selection, and reaction delay—not hidden income, perfect aim, free units, or omniscience.
+design/ai/README.md:14:## V1 scripted opponent
+design/ai/README.md:16:V1 uses one small finite-state controller for the mirror-match map. It has no generalized planner and no machine learning.
+design/ai/README.md:33:V1 needs only a few readable parameters: minimum reserve, attack force size, retreat health/force ratio, objective urgency, scout interval, and decision interval. Use seeded tie-breaking and deterministic ordering. The AI may remember last-known positions and its own failed plan, but memory is still derived from observations.
+design/ai/README.md:41:After V1, split the controller into small reusable behaviors rather than a large framework:
+design/agents/README.md:1:# MCP Agent Control
+design/agents/README.md:3:This domain defines the externally visible MCP adapter for local and remote
+design/agents/README.md:4:agents. MCP is a client boundary, not a gameplay authority. An agent receives
+design/agents/README.md:11:- **V1:** no MCP endpoint; tests may call the local command boundary directly.
+design/agents/README.md:12:- **Near-term:** a local MCP adapter may exercise this contract against a
+design/agents/README.md:14:- **Full game:** authenticated remote MCP sessions use the stable tools below.
+design/agents/README.md:15:  The MCP transport may be stdio or streamable HTTP; tool semantics and
+design/agents/README.md:21:tick.
+design/agents/README.md:38:  contentDigest: sha256-hex
+design/agents/README.md:45:`observe` permits only the filtered `GameView` and permitted events. `act`
+design/agents/README.md:52:Tool names are stable MCP names. Inputs and outputs are JSON objects matching
+design/agents/README.md:55:### `ra2_session_open`
+design/agents/README.md:64:Returns `{ "session": AgentSession, "view": GameView, "cursor": "string" }`.
+design/agents/README.md:68:### `ra2_game_observe`
+design/agents/README.md:79:  "maxEvents":128
+design/agents/README.md:84:"serverTick": 0, "complete": true }`. `maxEvents` is clamped to `128`. The
+design/agents/README.md:88:### `ra2_game_act`
+design/agents/README.md:91:`act` scope. The adapter does not translate natural language into privileged
+design/agents/README.md:104:      "targetId":null,"point":{"x":20,"y":14},
+design/agents/README.md:111:The batch limit is `8` commands and the encoded request limit is `128 KiB`.
+design/agents/README.md:112:Each command retains architecture limits, including at most `16` sorted,
+design/agents/README.md:113:deduplicated subjects. Player, ownership, visibility, and application tick
+design/agents/README.md:132:The adapter deduplicates a repeated `batchSequence` and returns its original
+design/agents/README.md:134:`sequence-conflict`. Accepted commands may later emit `blocked` or
+design/agents/README.md:135:`target-lost` events when the world changes; that is not a second tool error.
+design/agents/README.md:137:### `ra2_game_events`
+design/agents/README.md:142:{"agentSessionId":"string","cursor":"string","maxEvents":128,"waitTicks":0}
+design/agents/README.md:145:`waitTicks` is optional long-polling up to `30` ticks. It returns the next
+design/agents/README.md:149:### `ra2_session_close`
+design/agents/README.md:157:Returns `{ "agentSessionId":"string", "status":"closed" }`. Slot behavior
+design/agents/README.md:158:after closing follows the multiplayer disconnect policy, not MCP.
+design/agents/README.md:162:The adapter uses the `GameView` information boundary from
+design/agents/README.md:163:[architecture](../architecture/README.md):
+design/agents/README.md:169:- stale contacts include last-known tick and stale marker;
+design/agents/README.md:199:| `unauthenticated` | Credential missing, expired, or revoked. | Re-authenticate. |
+design/agents/README.md:200:| `forbidden` | Principal lacks the requested scope or slot. | Request authorization. |
+design/agents/README.md:201:| `session-not-found` | Session does not exist or is not visible. | Open a valid session. |
+design/agents/README.md:202:| `session-expired` | Agent session lifetime ended. | Open a new session and re-observe. |
+design/agents/README.md:203:| `match-finished` | Match is terminal. | Read final view; no action is possible. |
+design/agents/README.md:204:| `invalid-input` | JSON shape, field, or limit is invalid. | Correct the request. |
+design/agents/README.md:205:| `sequence-conflict` | Sequence reused with different content. | Reconcile the local log. |
+design/agents/README.md:206:| `cursor-expired` | Cursor is outside retained history. | Request a fresh observation. |
+design/agents/README.md:207:| `content-mismatch` | Agent and match manifest/protocol differ. | Reconnect compatibly. |
+design/agents/README.md:208:| `rate-limited` | Frequency or concurrency limit exceeded. | Back off for the retry interval. |
+design/agents/README.md:209:| `timeout` | Tool wait or bounded processing expired. | Re-observe; match continued. |
+design/agents/README.md:210:| `command-rejected` | Command batch failed validation. | Inspect stable reasons, then re-observe. |
+design/agents/README.md:211:| `service-unavailable` | Adapter is unavailable. | Retry with backoff; do not assume action applied. |
+design/agents/README.md:214:order exists. `command-rejected` includes only the stable rejection reason
+design/agents/README.md:223:| Concurrent sessions per principal | 4 |
+design/agents/README.md:224:| Observe calls | 10 per real second per session |
+design/agents/README.md:225:| Action calls | 5 per real second per session |
+design/agents/README.md:226:| Commands per action batch | 8 |
+design/agents/README.md:228:| Events per response | 128 |
+design/agents/README.md:229:| Long-poll wait | 30 simulation ticks |
+design/agents/README.md:230:| Agent session lifetime | 24 real hours, renewable while authorized |
+design/agents/README.md:231:| Cursor retention | 900 simulation ticks or 5 minutes, whichever comes first |
+design/agents/README.md:232:| Request/response body | 128 KiB request, 512 KiB response |
+design/agents/README.md:235:`rate-limited` response and retry interval. Agent calls are timestamped for
+design/agents/README.md:242:batch sequence, command sequences, request ID, authoritative tick, result, and
+design/agents/README.md:253:- agent latency never stalls a tick or grants a later deadline;
+design/presentation/v1-spec.md:1:# V1 Presentation Specification
+design/presentation/v1-spec.md:4:owns only V1 presentation values and mappings; simulation values remain in
+design/presentation/v1-spec.md:20:play. The [V1 Scope](../v1/README.md) includes a minimap; this specification
+design/presentation/v1-spec.md:42:priority alerts are ordered by simulation tick and stable event ID.
+design/presentation/v1-spec.md:46:The V1 command set is the one in [Control](../control.md): select, move,
+design/presentation/v1-spec.md:49:queues only compatible orders. Escape cancels a preview. `Space` pauses against
+design/presentation/v1-spec.md:50:AI. `1–5` are the five fixed control groups; `Ctrl+1–5` assigns them.
+design/presentation/v1-spec.md:59:| Accepted order | solid order marker | 6-frame settle pulse | short UI tick |
+design/presentation/v1-spec.md:60:| Rejected order | crossed command icon | 8-frame red/amber nudge | short UI error |
+design/presentation/v1-spec.md:65:| Damage | health strip + directional flash | 4-frame hit flash, bounded smoke | material impact |
+design/presentation/v1-spec.md:73:## V1 animation profile
+design/presentation/v1-spec.md:77:- Placeholder flipbooks use `12 fps`; idle and move loop, attack and hit do
+design/presentation/v1-spec.md:86:## V1 FX profile
+design/presentation/v1-spec.md:90:| Rifle/projectile | thin warm tracer, small point impact | `≤ 12` frames |
+design/presentation/v1-spec.md:91:| Anti-armor | heavier tracer, directional impact shard | `≤ 18` frames |
+design/presentation/v1-spec.md:92:| Explosive area | ground reticle, ring, dust burst | `≤ 30` frames |
+design/presentation/v1-spec.md:97:| Destruction | one burst, smoke, readable wreck | `≤ 90` frames |
+design/presentation/v1-spec.md:103:## V1 audio profile
+design/presentation/v1-spec.md:105:Use the five buses from [Audio](audio.md): UI, voice, effects, ambient, and
+design/presentation/v1-spec.md:106:music. Default mix is `UI 0 dB`, `voice -2 dB`, `effects -4 dB`, `ambient -10
+design/presentation/v1-spec.md:107:dB`, `music -12 dB`; player controls expose independent mute and volume.
+design/presentation/v1-spec.md:109:Effects use a maximum of `32` simultaneous voices. Repeated weapon and track
+design/presentation/v1-spec.md:115:Voice lines are optional in V1. Captions use the same event text as the HUD;
+design/presentation/v1-spec.md:124:| `terrain-clear` | buildable clear ground |
+design/presentation/v1-spec.md:125:| `terrain-cover` | traversable line-of-sight cover |
+design/presentation/v1-spec.md:126:| `iron-block` | Directorate unit/building silhouette family |
+design/presentation/v1-spec.md:127:| `slate-frame` | Coalition unit/building silhouette family |
+design/presentation/v1-spec.md:128:| `unit-scout`, `unit-infantry`, `unit-tank`, `unit-anti-armor` | role silhouettes |
+design/presentation/v1-spec.md:129:| `building-hq`, `building-processor`, `building-production` | V1 structures |
+design/presentation/v1-spec.md:130:| `fx-tracer`, `fx-impact`, `fx-smoke`, `fx-capture`, `fx-reveal` | shared effects |
+design/presentation/v1-spec.md:131:| `ui-order`, `ui-reject`, `ui-objective`, `ui-status` | shared UI icons |
+design/presentation/accessibility.md:17:## V1 acceptance profile
+design/presentation/accessibility.md:19:Normal body text is at least `16 CSS px`; critical HUD labels and command
+design/presentation/accessibility.md:20:buttons are at least `14 CSS px` at the default UI scale. Text and essential
+design/presentation/accessibility.md:21:icons meet WCAG AA contrast (`4.5:1` for normal text, `3:1` for large text and
+design/presentation/accessibility.md:25:Every V1 action is reachable with keyboard and mouse. Focus order is top bar,
+design/presentation/accessibility.md:33:full-screen flashes and limits emphasis to a brief outline/icon change; no V1
+design/presentation/accessibility.md:36:where relevant. UI scale supports `100%`, `125%`, and `150%` without clipping
+design/presentation/performance.md:3:Target stable 60 FPS on the ordinary V1 desktop-browser baseline while the
+design/presentation/performance.md:8:browser on a 4-core CPU with integrated graphics, a `1280 × 720` CSS-pixel
+design/presentation/performance.md:9:viewport, and hardware acceleration enabled. V1 budgets are: initial download
+design/presentation/performance.md:10:`15 MB` compressed, decoded presentation assets `128 MB`, simulation plus UI
+design/presentation/performance.md:11:memory `256 MB`, first interactive load `5 s` on a warm cache, and one render
+design/presentation/performance.md:12:frame no slower than `16.7 ms` in the 100-entity stress scene. The simulation
+design/presentation/performance.md:13:must sustain `30` ticks/s; a slow render frame may repeat a view but may not
+design/presentation/performance.md:14:drop or merge simulation ticks.
+design/presentation/performance.md:16:The acceptance run is a ten-minute Meridian Crossing match at `1280 × 720`
+design/presentation/performance.md:18:the full V1 feedback set enabled, followed by a 100-entity stress scene. Pass
+design/presentation/performance.md:19:criteria are at least `55 FPS` average, `95th-percentile frame time ≤ 20 ms`,
+design/presentation/performance.md:21:simulation-tick divergence from the headless run. Record browser, device
+design/presentation/performance.md:23:after, and simulation tick count.
+design/presentation/logo/README.md:31:The wordmark is `IRON MERIDIAN` in uppercase, with modest tracking and a
+design/presentation/logo/README.md:38:The default lockup is near-black iron (`#171A1D`) and warm off-white
+design/presentation/logo/README.md:39:(`#E7E1D4`) on a quiet field.
+design/presentation/logo/README.md:40:The optional accent is a restrained signal amber (`#D59A32`) used for a
+design/presentation/logo/README.md:57:- full lockup: emblem plus `IRON MERIDIAN` wordmark;
+design/presentation/logo/README.md:63:The emblem-only form must be recognizable at `16×16` CSS pixels, and the full
+design/presentation/logo/README.md:64:lockup must remain readable at `320` pixels wide. Keep clear space equal to at
+design/presentation/logo/README.md:95:is required for V1. A future asset pass may add optimized files in this
+design/presentation/camera.md:17:## V1 presentation values
+design/presentation/camera.md:19:The V1 baseline viewport is `1280 × 720` CSS pixels in a desktop browser. The
+design/presentation/camera.md:20:playfield keeps a `16:9` aspect ratio; narrower windows letterbox the playfield
+design/presentation/camera.md:22:from `0.75×` to `1.50×` around a `1.00×` default. Wheel zoom changes by
+design/presentation/camera.md:23:`0.10×` per notch, clamps at the bounds, and keeps the cursor's map point
+design/presentation/camera.md:24:stable where possible. Edge scroll is `24` CSS pixels wide at `600` CSS pixels
+design/presentation/camera.md:25:per second; middle-button drag uses `1:1` map-pan response. Camera position is
+design/presentation/camera.md:26:clamped to the playable map plus a `0.5`-cell inspection margin.
+design/presentation/camera.md:29:simulation tick. It is disabled while stepping or inspecting a paused tick.
+design/presentation/camera.md:30:Alert/HQ/objective jumps use `180 ms` ease-out and never move farther than the
+design/presentation/camera.md:32:otherwise capped at `4` CSS pixels for `120 ms`; it never changes the camera's
+design/presentation/README.md:7:Global presentation owns shared camera, terrain readability, selection, HUD, feedback grammar, audio mixing, and performance rules. Faction and entity asset documents own their visual, audio, animation, and FX choices within that grammar. This file is the high-level contract; focused rules live in [UI feedback](ui-feedback.md), [accessibility](accessibility.md), [camera](camera.md), [audio](audio.md), [FX](fx.md), [animation](animation.md), and [performance](performance.md).
+design/presentation/README.md:10:import rules are canonical in [Asset Production Contract](assets.md). Concrete
+design/presentation/README.md:11:near-term HUD, animation, FX, audio, and placeholder mappings are in the [V1
+design/presentation/README.md:14:## V1 visual target
+design/presentation/README.md:23:4. resource node, processor, production building, construction vehicle, and objective beacon;
+design/presentation/README.md:24:5. muzzle flash, projectile/tracer, impact spark, damage smoke, destruction, capture pulse, and fog reveal.
+design/presentation/README.md:39:Every important state has at least two channels among shape, motion, color/value, text/icon, and sound. The detailed feedback contract is in [UI feedback](ui-feedback.md). Do not use particle intensity as the only way to communicate a rule.
+design/presentation/README.md:43:Animation is state-driven and economical. V1 needs idle, move, turn, attack windup/fire/recovery, hit, damaged, selected, disabled, harvest, build, capture, and destroyed states. Use sprite flipbooks or simple directional poses for placeholders; reserve bespoke animation for state transitions that affect play, such as construction deployment, attack-run commitment, capture, or freeze.
+design/presentation/README.md:67:Target a stable 60 rendered frames per second on an ordinary modern desktop browser at the V1 camera view, with simulation at 30 Hz and 50–80 active entities. Validate a 100-entity smoke scene. Budgets are guardrails, measured in a representative match rather than promises for every device:
+design/presentation/README.md:69:- simulation update: 8 ms maximum per 30 Hz tick;
+design/presentation/README.md:70:- render/update work: 12 ms average per frame, with no sustained frame below 30 FPS;
+design/presentation/README.md:72:- dynamic lights: none required for V1, and no more than 8 if later introduced;
+design/presentation/README.md:73:- audio voices: 32 total with priority/concurrency limits;
+design/presentation/README.md:81:the owning faction or entity YAML record. A design record may specify the
+design/presentation/README.md:82:visual/audio/FX identity, but must not duplicate shared combat rules. V1 may
+design/presentation/README.md:86:Global asset principles and the manifest schema are in [Asset Production Contract](assets.md). The global brand direction is [Logo and Brand Direction](logo/README.md).
+design/presentation/assets.md:18:The YAML entity records are authoritative. Their typed `presentation`, `audio`,
+design/presentation/assets.md:19:and `fx` fields own entity-specific mappings; shared presentation principles
+design/presentation/assets.md:24:<entity YAML>
+design/presentation/assets.md:30:Shared assets belong in `design/content/assets/`; faction assets belong under
+design/presentation/assets.md:32:in that unit's YAML record. Do not copy a shared asset into an entity record:
+design/presentation/assets.md:43:Required manifest fields are `owner`, `fallback`, `icon`, `model`, `animation`,
+design/presentation/assets.md:44:`audio`, `fx`, and `budget-exceptions`. Each field either names a shared asset
+design/presentation/assets.md:45:ID or says `inherit`; omission is not a silent new default.
+design/presentation/assets.md:55:events with the owner ID, for example `directorate.rifle-squad.fire` and
+design/presentation/assets.md:56:`coalition.capture-pulse`. Keep source files and imported runtime assets
+design/presentation/assets.md:78:transition. The simulation state changes at the documented tick; animation
+design/presentation/assets.md:160:Do not create a separate entity `assets.md` that only repeats this contract.
+design/presentation/assets.md:161:The owning YAML record records only the entity-specific mapping:
+design/presentation/assets.md:178:particles, and a small number of directional poses. V1 uses placeholders with

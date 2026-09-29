@@ -1,0 +1,326 @@
+design/presentation/v1-spec.md:3:This is the concrete presentation target for the compact browser slice. It
+design/presentation/v1-spec.md:9:```text
+design/presentation/v1-spec.md:16:```
+design/presentation/v1-spec.md:18:The top strip is one row. The lower command area is one compact panel; it may
+design/presentation/v1-spec.md:28:| Element | Required states |
+design/presentation/v1-spec.md:29:|---|---|
+design/presentation/v1-spec.md:30:| Command button | available, hover, pressed, queued, cooldown, unavailable with reason |
+design/presentation/v1-spec.md:31:| Construction ghost | valid, invalid-terrain, invalid-overlap, invalid-radius, invalid-exclusion |
+design/presentation/v1-spec.md:32:| Contact | owned, visible enemy, stale last-known, objective/neutral landmark |
+design/presentation/v1-spec.md:33:| Objective | neutral, friendly, enemy, contested, hold-victory progress |
+design/presentation/v1-spec.md:34:| Queue | empty, active progress, waiting-for-exit, paused-by-building, completed |
+design/presentation/v1-spec.md:35:| Match shell | loading, briefing, active, paused, victory, defeat, aborted |
+design/presentation/v1-spec.md:36:| Alert | incoming, discovery, damage/disable, production, objective, result |
+design/presentation/v1-spec.md:38:Each unavailable command includes one short reason in text and an icon. A
+design/presentation/v1-spec.md:46:The V1 command set is the one in [Control](../control.md): select, move,
+design/presentation/v1-spec.md:52:Do not expose controls for repair, attack-move, patrol, transport, aircraft,
+design/presentation/v1-spec.md:57:| Event | Icon/shape | Motion/effect | Sound |
+design/presentation/v1-spec.md:58:|---|---|---|---|
+design/presentation/v1-spec.md:59:| Accepted order | solid order marker | 6-frame settle pulse | short UI tick |
+design/presentation/v1-spec.md:60:| Rejected order | crossed command icon | 8-frame red/amber nudge | short UI error |
+design/presentation/v1-spec.md:61:| Visible contact | role silhouette + team shape | one discovery ping | contact ping |
+design/presentation/v1-spec.md:62:| Stale contact | desaturated diamond + age | no looping effect | none by default |
+design/presentation/v1-spec.md:63:| Objective contest | split ring + striped center | slow opposing pulse | low objective tone |
+design/presentation/v1-spec.md:64:| Construction | ghost footprint + radius ring | grid sweep and progress fill | hydraulic loop |
+design/presentation/v1-spec.md:65:| Damage | health strip + directional flash | 4-frame hit flash, bounded smoke | material impact |
+design/presentation/v1-spec.md:66:| Disabled/status | status icon + outline pattern | family-specific low-rate overlay | one state cue |
+design/presentation/v1-spec.md:67:| Victory/defeat | full-width result panel | one restrained transition | result cue |
+design/presentation/v1-spec.md:75:- Eight facing directions for units; cardinal direction is the authored
+design/presentation/v1-spec.md:77:- Placeholder flipbooks use `12 fps`; idle and move loop, attack and hit do
+design/presentation/v1-spec.md:79:- Simulation event timing is authoritative. The muzzle frame is the launch
+design/presentation/v1-spec.md:82:- Use one shared idle, move, hit, and wreck family per platform class. Add a
+design/presentation/v1-spec.md:88:| Family | Shape/material rule | Lifetime |
+design/presentation/v1-spec.md:89:|---|---|---:|
+design/presentation/v1-spec.md:90:| Rifle/projectile | thin warm tracer, small point impact | `≤ 12` frames |
+design/presentation/v1-spec.md:91:| Anti-armor | heavier tracer, directional impact shard | `≤ 18` frames |
+design/presentation/v1-spec.md:92:| Explosive area | ground reticle, ring, dust burst | `≤ 30` frames |
+design/presentation/v1-spec.md:93:| Suppression | short white stagger mark and icon | state-owned |
+design/presentation/v1-spec.md:94:| EMP | cyan broken circuit arc and icon | state-owned |
+design/presentation/v1-spec.md:95:| Fire | amber core, dark smoke, icon | state-owned |
+design/presentation/v1-spec.md:96:| Construction/capture | grid pulse and progress fill | state-owned |
+design/presentation/v1-spec.md:97:| Destruction | one burst, smoke, readable wreck | `≤ 90` frames |
+design/presentation/v1-spec.md:99:At baseline, emitters are pooled and capped by the global performance budget.
+design/presentation/v1-spec.md:100:When the cap is reached, preserve the newest high-priority event and replace
+design/presentation/v1-spec.md:105:Use the five buses from [Audio](audio.md): UI, voice, effects, ambient, and
+design/presentation/v1-spec.md:120:Before bespoke art exists, ship these stable placeholder IDs:
+design/presentation/v1-spec.md:122:| ID | Use |
+design/presentation/v1-spec.md:123:|---|---|
+design/presentation/v1-spec.md:124:| `terrain-clear` | buildable clear ground |
+design/presentation/v1-spec.md:125:| `terrain-cover` | traversable line-of-sight cover |
+design/presentation/v1-spec.md:126:| `iron-block` | Directorate unit/building silhouette family |
+design/presentation/v1-spec.md:127:| `slate-frame` | Coalition unit/building silhouette family |
+design/presentation/v1-spec.md:128:| `unit-scout`, `unit-infantry`, `unit-tank`, `unit-anti-armor` | role silhouettes |
+design/presentation/v1-spec.md:129:| `building-hq`, `building-processor`, `building-production` | V1 structures |
+design/presentation/v1-spec.md:130:| `fx-tracer`, `fx-impact`, `fx-smoke`, `fx-capture`, `fx-reveal` | shared effects |
+design/presentation/v1-spec.md:131:| `ui-order`, `ui-reject`, `ui-objective`, `ui-status` | shared UI icons |
+design/presentation/v1-spec.md:133:Every placeholder uses the owning card's footprint, origin, targetability, and
+design/ai/near-term.md:15:This is the smallest reusable opponent that can support skirmish and campaign.
+design/ai/near-term.md:21:- Evaluate every `15 ticks`; issue at most one strategic batch and one local
+design/ai/near-term.md:23:- Keep only derived state: current phase, own bank/income trend, visible
+design/ai/near-term.md:26:- Sort entities by stable ID before every choice. Break equal scores by route
+design/ai/near-term.md:28:- A stale contact older than `90 ticks` is a search hint, never an attack
+design/ai/near-term.md:33:| State | Enter when | Actions | Leave when |
+design/ai/near-term.md:34:|---|---|---|---|
+design/ai/near-term.md:35:| Opening | Match begins | Start harvesting, queue the authored opening force, send the scout on center then north. | First queue and construction orders accepted. |
+design/ai/near-term.md:36:| Economy | Opening complete and no urgent threat | Keep one harvester active, construct the next authored facility, retain the reserve below. | Attack threshold, visible threat, or objective event. |
+design/ai/near-term.md:37:| Contest | Objective neutral/contested and force ready | Send scout first, then mixed group; capture only with visible support. | Objective controlled, force defeated, or base threat. |
+design/ai/near-term.md:38:| Attack | Force threshold met and enemy approach known | Attack the highest-value visible target on the chosen route; stop at retreat threshold. | Force below threshold, target lost, or base threat. |
+design/ai/near-term.md:39:| Defense | Visible enemy within the home-defense radius or production under attack | Call the nearest legal force home, protect HQ then processor then production. | No visible threat for `60 ticks`. |
+design/ai/near-term.md:40:| Recover | Force below threshold or economy disrupted | Retreat damaged units, rebuild line and scout, then return to Economy. | Force and bank recover to the selected difficulty threshold. |
+design/ai/near-term.md:44:| Profile | Opening force | Attack threshold | Retreat threshold | Scout interval |
+design/ai/near-term.md:45:|---|---|---:|---:|---:|
+design/ai/near-term.md:46:| Recruit | 1 scout, 2 line, 1 tank | 4 combat units | 35% visible force loss or average health below 45% | 90 ticks |
+design/ai/near-term.md:47:| Standard (`regular`) | 1 scout, 2 line, 1 tank, 1 counter unit | 5 combat units | 30% visible force loss or average health below 50% | 75 ticks |
+design/ai/near-term.md:48:| Veteran | 1 scout, 3 line, 1 tank, 1 counter unit | 6 combat units | 25% visible force loss or average health below 55% | 60 ticks |
+design/ai/near-term.md:49:| Commander | 1 scout, 3 line, 2 tanks, 1 counter unit | 7 combat units | 20% visible force loss or average health below 60% | 45 ticks |
+design/ai/near-term.md:56:Use the visible enemy composition: line infantry against exposed personnel,
+design/ai/near-term.md:64:Each fixture uses a fixed seed, a named map, and a scripted observation stream.
+design/ai/near-term.md:65:The expected assertion is behavioral, not a mandated winner:
+design/ai/near-term.md:67:| Fixture | Required observation | Expected decision |
+design/ai/near-term.md:68:|---|---|---|
+design/ai/near-term.md:69:| `opening-economy` | Home node visible, no enemy contact | Harvest, start authored queue, scout center. |
+design/ai/near-term.md:70:| `lost-scout` | Scout destroyed; no enemy contact | Rebuild/replace scout when legal; do not attack from stale data. |
+design/ai/near-term.md:71:| `objective-disadvantage` | Enemy owns objective, visible mixed force | Contest or deny with a supported group; do not trickle units. |
+design/ai/near-term.md:72:| `damaged-force` | Own force below retreat threshold | Retreat toward owned safe area and rebuild. |
+design/ai/near-term.md:73:| `base-raid` | Visible enemy near production | Defense state calls nearest group home and protects production. |
+design/ai/near-term.md:74:| `failed-attack` | Previous attack lost, enemy last-known contact stale | Recover, scout a different route, and do not repeat the same attack immediately. |
+design/ai/near-term.md:75:| `fog-parity` | Enemy exists outside observation | No command targets or attacks the hidden entity. |
+design/ai/near-term.md:76:| `tie-break` | Two routes and two targets score equally | Choose center, then lowest stable ID. |
+design/ai/near-term.md:78:The fixture stream and expected command log become implementation test data;
+design/agents/README.md:3:This domain defines the externally visible MCP adapter for local and remote
+design/agents/README.md:11:- **V1:** no MCP endpoint; tests may call the local command boundary directly.
+design/agents/README.md:12:- **Near-term:** a local MCP adapter may exercise this contract against a
+design/agents/README.md:14:- **Full game:** authenticated remote MCP sessions use the stable tools below.
+design/agents/README.md:18:The adapter pins one match, player slot, content digest, protocol version, and
+design/agents/README.md:30:```yaml
+design/agents/README.md:43:```
+design/agents/README.md:60:```json
+design/agents/README.md:62:```
+design/agents/README.md:65:The returned view is full and establishes the first cursor. Requested scope
+design/agents/README.md:74:```json
+design/agents/README.md:81:```
+design/agents/README.md:94:```json
+design/agents/README.md:109:```
+design/agents/README.md:111:The batch limit is `8` commands and the encoded request limit is `128 KiB`.
+design/agents/README.md:112:Each command retains architecture limits, including at most `16` sorted,
+design/agents/README.md:119:```json
+design/agents/README.md:130:```
+design/agents/README.md:132:The adapter deduplicates a repeated `batchSequence` and returns its original
+design/agents/README.md:141:```json
+design/agents/README.md:143:```
+design/agents/README.md:153:```json
+design/agents/README.md:155:```
+design/agents/README.md:162:The adapter uses the `GameView` information boundary from
+design/agents/README.md:165:- owned entities expose legal production, construction, orders, cooldowns,
+design/agents/README.md:167:- enemy entities expose only currently observed fields;
+design/agents/README.md:168:- hidden entities are absent, never zero-filled;
+design/agents/README.md:169:- stale contacts include last-known tick and stale marker;
+design/agents/README.md:170:- queues, resources, construction previews, and objectives are player-scoped;
+design/agents/README.md:171:- cursor recovery returns a fresh view, never an arbitrary hidden event range.
+design/agents/README.md:173:An agent must re-observe after an expired cursor, reconnect, ownership change,
+design/agents/README.md:182:```json
+design/agents/README.md:193:```
+design/agents/README.md:197:| Code | Meaning | Recovery |
+design/agents/README.md:198:| --- | --- | --- |
+design/agents/README.md:199:| `unauthenticated` | Credential missing, expired, or revoked. | Re-authenticate. |
+design/agents/README.md:200:| `forbidden` | Principal lacks the requested scope or slot. | Request authorization. |
+design/agents/README.md:201:| `session-not-found` | Session does not exist or is not visible. | Open a valid session. |
+design/agents/README.md:202:| `session-expired` | Agent session lifetime ended. | Open a new session and re-observe. |
+design/agents/README.md:203:| `match-finished` | Match is terminal. | Read final view; no action is possible. |
+design/agents/README.md:204:| `invalid-input` | JSON shape, field, or limit is invalid. | Correct the request. |
+design/agents/README.md:205:| `sequence-conflict` | Sequence reused with different content. | Reconcile the local log. |
+design/agents/README.md:206:| `cursor-expired` | Cursor is outside retained history. | Request a fresh observation. |
+design/agents/README.md:207:| `content-mismatch` | Agent and match manifest/protocol differ. | Reconnect compatibly. |
+design/agents/README.md:208:| `rate-limited` | Frequency or concurrency limit exceeded. | Back off for the retry interval. |
+design/agents/README.md:209:| `timeout` | Tool wait or bounded processing expired. | Re-observe; match continued. |
+design/agents/README.md:210:| `command-rejected` | Command batch failed validation. | Inspect stable reasons, then re-observe. |
+design/agents/README.md:211:| `service-unavailable` | Adapter is unavailable. | Retry with backoff; do not assume action applied. |
+design/agents/README.md:221:| Resource | Limit |
+design/agents/README.md:222:| --- | --- |
+design/agents/README.md:223:| Concurrent sessions per principal | 4 |
+design/agents/README.md:224:| Observe calls | 10 per real second per session |
+design/agents/README.md:225:| Action calls | 5 per real second per session |
+design/agents/README.md:226:| Commands per action batch | 8 |
+design/agents/README.md:227:| Subjects per command | 16 |
+design/agents/README.md:228:| Events per response | 128 |
+design/agents/README.md:229:| Long-poll wait | 30 simulation ticks |
+design/agents/README.md:230:| Agent session lifetime | 24 real hours, renewable while authorized |
+design/agents/README.md:231:| Cursor retention | 900 simulation ticks or 5 minutes, whichever comes first |
+design/agents/README.md:232:| Request/response body | 128 KiB request, 512 KiB response |
+design/agents/README.md:234:The service may lower limits under load but must advertise a stable
+design/agents/README.md:241:Each accepted or rejected action records principal, agent session, player,
+design/agents/README.md:246:A compliant adapter passes these tests:
+design/agents/README.md:248:- an agent can replace a human slot without changing simulation semantics;
+design/agents/README.md:249:- hidden state cannot be obtained through errors, cursors, IDs, or timing;
+design/agents/README.md:250:- duplicate action delivery cannot duplicate commands;
+design/agents/README.md:251:- an expired cursor recovers through a fresh filtered view;
+design/agents/README.md:252:- stale plans fail safely and are followed by re-observation;
+design/agents/README.md:253:- agent latency never stalls a tick or grants a later deadline;
+design/agents/README.md:254:- manifest mismatch prevents action rather than divergent state;
+design/agents/README.md:255:- every tool, action, and terminal result is auditable.
+design/presentation/performance.md:3:Target stable 60 FPS on the ordinary V1 desktop-browser baseline while the
+design/presentation/performance.md:7:The ordinary baseline is a current Chromium, Firefox, or Safari desktop
+design/presentation/performance.md:16:The acceptance run is a ten-minute Meridian Crossing match at `1280 × 720`
+design/presentation/performance.md:25:Prefer shared materials, atlases, pooled emitters, bounded particles, low-cost
+design/presentation/performance.md:31:The low-end fallback disables post-processing, dynamic shadows, screen shake,
+design/presentation/accessibility.md:5:- Never use color as the only ownership, status, legality, or objective cue.
+design/presentation/accessibility.md:6:- Support scalable UI/text, high contrast, color-blind-safe palettes, and
+design/presentation/accessibility.md:8:- Camera shake, flashing, bloom, and alert intensity are independently
+design/presentation/accessibility.md:10:- Provide master, music, effects, voice, and UI volume controls. Important
+design/presentation/accessibility.md:12:- Support keyboard/mouse controls, remapping, and hold/toggle choices for
+design/presentation/accessibility.md:14:- Tooltips and command results use plain text plus icon and tolerate
+design/presentation/accessibility.md:19:Normal body text is at least `16 CSS px`; critical HUD labels and command
+design/presentation/accessibility.md:25:Every V1 action is reachable with keyboard and mouse. Focus order is top bar,
+design/presentation/animation.md:7:The shared vocabulary is idle, move, turn, windup, fire, recovery, hit,
+design/presentation/animation.md:12:Use sprite flipbooks, sampled low-cost meshes, or equivalent interchangeable
+design/ai/README.md:12:The AI is a strategic opponent, not a unit-by-unit animation controller. The simulation remains responsible for movement, targeting, weapon resolution, and legal actions. AI chooses goals and issues ordinary commands at a bounded decision cadence.
+design/ai/README.md:18:```
+design/ai/README.md:22:```
+design/ai/README.md:26:- **Opening:** queue the prescribed starter force, send one scout route, and begin harvesting. Leave this state when the initial production and construction actions have been accepted.
+design/ai/README.md:27:- **Establish economy:** maintain one working harvester, construct the required production chain, and keep a small reserve for emergency defense. Move to contest when the attack threshold or objective timing is reached.
+design/ai/README.md:28:- **Contest objective:** scout the approaches, send the first combined force toward the objective, and capture when the area is safe enough. Fall back if a superior visible force arrives.
+design/ai/README.md:29:- **Attack:** choose a visible enemy force or base approach, issue a bounded attack group order, and stop pursuing when the retreat threshold is reached. Do not repeatedly feed units into an unwinnable fight.
+design/ai/README.md:30:- **Base defense:** respond to a visible threat near production or the HQ, prioritize the threatened target, and call nearby units home. Return to economy or contest when the threat is gone.
+design/ai/README.md:31:- **Retreat/recover:** move damaged or outnumbered units toward a safe owned area, resume production, and re-enter through the next threshold rather than instantly reversing.
+design/ai/README.md:37:The concrete decision table and deterministic fixtures are in [near-term AI
+design/ai/README.md:43:- **Economy behavior:** maintain harvesters and production; expand only when income or map control justifies it.
+design/ai/README.md:44:- **Recon behavior:** choose patrols and information targets; mark stale knowledge with age.
+design/ai/README.md:45:- **Force behavior:** assemble groups by role, choose a target profile, and avoid unsupported specialist attacks.
+design/ai/README.md:46:- **Objective behavior:** value capture, denial, and recovery based on hold progress and visible threat.
+design/ai/README.md:47:- **Defense behavior:** protect HQ, production, resource, and objective routes in that priority order for the current mission.
+design/ai/README.md:48:- **Escape/recovery behavior:** preserve units when a fight is lost and rebuild through available production.
+design/ai/README.md:54:The same faction rules and content apply at every level.
+design/ai/README.md:56:| Level | Player-facing behavior | Allowed advantage |
+design/ai/README.md:57:| --- | --- | --- |
+design/ai/README.md:58:| Recruit | Slow decisions, obvious attack routes, weak retreat discipline, and generous warnings. | Longer decision interval only. |
+design/ai/README.md:59:| Regular | Uses scouting, combined groups, objective timing, and basic defense. | Normal decision interval. |
+design/ai/README.md:60:| Veteran | Maintains reserves, reacts to visible counters, raids economy, and changes approach after failure. | Shorter but still human-readable reaction delay. |
+design/ai/README.md:61:| Commander | Uses multiple visible fronts, deception through ordinary movement, disciplined production, and role-aware retreats. | Better plan selection and bounded reaction delay; no hidden information or resource bonus. |
+design/ai/README.md:63:Do not make a difficulty level a damage multiplier. If a future mode needs an accessibility assist, label it separately from AI skill and show it in the match setup.
+design/presentation/fx.md:12:Every effect declares anchor, facing, layer, fog visibility, pooling key,
+design/presentation/ui-feedback.md:3:This global contract defines where information is shown; faction and entity
+design/presentation/ui-feedback.md:8:- Selection: ring, group bracket, health/condition strip, and ownership cue.
+design/presentation/ui-feedback.md:9:- Orders: accepted orders show destination/path, queued orders show sequence,
+design/presentation/ui-feedback.md:11:- Combat: target bracket, attack direction, hit confirmation, damage state, and
+design/presentation/ui-feedback.md:13:- Information: visible contacts are detailed; last-known contacts are visibly
+design/presentation/ui-feedback.md:15:- Objectives: world beacon and HUD state show ownership, contest, and progress
+design/presentation/ui-feedback.md:17:- Construction/production: ghost footprint, legality reason, progress, queue
+design/presentation/ui-feedback.md:22:The command area owns selected-entity identity, available commands, tooltip,
+design/presentation/ui-feedback.md:28:Every important state uses at least two channels. Selection and command
+design/presentation/logo/README.md:3:This is the canonical global logo direction. It defines the identity system
+design/presentation/logo/README.md:16:The identity has three readable ideas, in this order:
+design/presentation/logo/README.md:25:Use a compact emblem built from a strong vertical meridian crossing a shorter
+design/presentation/logo/README.md:31:The wordmark is `IRON MERIDIAN` in uppercase, with modest tracking and a
+design/presentation/logo/README.md:38:The default lockup is near-black iron (`#171A1D`) and warm off-white
+design/presentation/logo/README.md:40:The optional accent is a restrained signal amber (`#D59A32`) used for a
+design/presentation/logo/README.md:44:The mark may use a very small value shift or brushed-metal texture in title
+design/presentation/logo/README.md:54:When assets are eventually authored, provide these as the same geometric mark,
+design/presentation/logo/README.md:57:- full lockup: emblem plus `IRON MERIDIAN` wordmark;
+design/presentation/logo/README.md:58:- horizontal lockup: for title bars and wide menus;
+design/presentation/logo/README.md:59:- emblem-only: favicon, loading indicator, and compact HUD locations;
+design/presentation/logo/README.md:60:- one-color light and one-color dark versions;
+design/presentation/logo/README.md:61:- monochrome small-size version with simplified interior spacing.
+design/presentation/logo/README.md:63:The emblem-only form must be recognizable at `16×16` CSS pixels, and the full
+design/presentation/logo/README.md:70:The logo may have one short title reveal: a line aligns, a crossing locks, and
+design/presentation/logo/README.md:75:If a logo sting is added, use a low mechanical lock and a brief radio tone.
+design/presentation/logo/README.md:81:- Keep the mark away from the central objective iconography so the two cannot
+design/presentation/logo/README.md:83:- Use the full lockup on title, campaign, and loading surfaces; use emblem-only
+design/presentation/logo/README.md:85:- Never recolor the mark dynamically to report health, ownership, capture, or
+design/presentation/logo/README.md:87:- Do not put the mark on every unit, projectile, or building. Faction and unit
+design/presentation/logo/README.md:89:- Preserve the same proportions across light/dark backgrounds; do not stretch,
+design/presentation/logo/README.md:94:This document is direction only. No binary logo, font, texture, or audio asset
+design/presentation/camera.md:3:The default camera is top-down with modest tilt, bounded zoom, and no
+design/presentation/camera.md:7:- Pan by edge scroll and middle-button drag; recenter on explicit alert,
+design/presentation/camera.md:9:- Zoom is cursor-centered where bounds allow and remains bounded at both ends.
+design/presentation/camera.md:10:- Camera limits are map-owned; the camera cannot reveal outside the playable
+design/presentation/camera.md:12:- Jump/follow commands are explicit and interruptible. Alerts may offer a
+design/presentation/camera.md:14:- Pause, briefing, replay, and screenshot modes retain inspectable state and
+design/presentation/camera.md:19:The V1 baseline viewport is `1280 × 720` CSS pixels in a desktop browser. The
+design/presentation/README.md:7:Global presentation owns shared camera, terrain readability, selection, HUD, feedback grammar, audio mixing, and performance rules. Faction and entity asset documents own their visual, audio, animation, and FX choices within that grammar. This file is the high-level contract; focused rules live in [UI feedback](ui-feedback.md), [accessibility](accessibility.md), [camera](camera.md), [audio](audio.md), [FX](fx.md), [animation](animation.md), and [performance](performance.md).
+design/presentation/README.md:9:The asset ownership, directory layout, event naming, fallback behavior, and
+design/presentation/README.md:16:Use a deliberately stylized 2.5D top-down battlefield: planar gameplay coordinates, layered terrain, directional placeholder sprites or low-cost meshes, height offsets, contact shadows, selection rings, and restrained particles. Do not chase realism, full 3D terrain, skeletal animation pipelines, or cinematic camera work for the vertical slice.
+design/presentation/README.md:18:The first readable asset set is:
+design/presentation/README.md:30:- **Selection:** thin team-colored ring; selected group uses a subtle shared bracket, not a screen-filling glow.
+design/presentation/README.md:31:- **Move/attack/capture:** projected point, path/order line, target bracket, and capture progress ring appear immediately after accepted commands.
+design/presentation/README.md:32:- **Rejection:** a short text/icon reason near the command area and a restrained world marker at the invalid target; never silently ignore an input.
+design/presentation/README.md:33:- **Damage:** directional hit spark, brief health/condition change, and escalating smoke. Use stronger treatment for a disabled, frozen, or burning state than for ordinary damage.
+design/presentation/README.md:34:- **Discovery:** fog edge dissolves briefly, a contact ping and unit silhouette appear, then the effect fades. Last-known contacts use a desaturated marker.
+design/presentation/README.md:35:- **Objective:** persistent world beacon plus compact HUD progress; ownership, contest, and hold time use shape and motion as well as color.
+design/presentation/README.md:36:- **Construction:** ghost footprint shows valid/invalid placement, radius, overlap, and blocked cells before confirmation; completion uses a short assembly burst.
+design/presentation/README.md:37:- **Destruction:** readable collapse or wreck state with a short audio accent; avoid large screen shake that obscures remaining units.
+design/presentation/README.md:39:Every important state has at least two channels among shape, motion, color/value, text/icon, and sound. The detailed feedback contract is in [UI feedback](ui-feedback.md). Do not use particle intensity as the only way to communicate a rule.
+design/presentation/README.md:49:Use a sparse battlefield mix: faction-specific weapon materials, mechanical movement, construction machinery, radio/command accents, objective hum, and a restrained music bed. Audio communicates danger and state, but all critical information is also visual.
+design/presentation/README.md:55:Prefer cheap, short-lived effects with strong shape: muzzle flashes, directional tracers, impact sparks, dust, smoke, scorch, wake, construction grids, capture pulses, and fog reveal. Reuse materials, atlas textures, pooled emitters, and bounded lifetimes. Status effects use one consistent icon plus a localized world treatment; freeze, EMP, suppression, and fire must not be confused.
+design/presentation/README.md:61:The default camera is top-down with a modest tilt, pan, and bounded zoom. It follows no unit automatically during ordinary play. The player can pan by edge scroll or middle-button drag, zoom around the cursor, jump to selected units/HQ/objective, and recenter on an alert. Camera movement is application state and never changes simulation coordinates or orders.
+design/presentation/README.md:63:Keep the battlefield visible above the fold. The HUD occupies a predictable edge region and may collapse for screenshots, but never covers the objective or selected unit’s immediate feedback without a deliberate toggle. Camera shake is short, local, and disabled by accessibility settings.
+design/presentation/README.md:67:Target a stable 60 rendered frames per second on an ordinary modern desktop browser at the V1 camera view, with simulation at 30 Hz and 50–80 active entities. Validate a 100-entity smoke scene. Budgets are guardrails, measured in a representative match rather than promises for every device:
+design/presentation/README.md:69:- simulation update: 8 ms maximum per 30 Hz tick;
+design/presentation/README.md:70:- render/update work: 12 ms average per frame, with no sustained frame below 30 FPS;
+design/presentation/README.md:71:- active world FX: 150 live particles/emitter sprites at baseline, 400 during a brief climax;
+design/presentation/README.md:72:- dynamic lights: none required for V1, and no more than 8 if later introduced;
+design/presentation/README.md:73:- audio voices: 32 total with priority/concurrency limits;
+design/presentation/README.md:74:- texture/material strategy: atlases and shared materials before unique per-entity resources.
+design/presentation/README.md:76:When a budget is exceeded, reduce particle count, animation rate, shadow detail, and post-processing in that order. Preserve input latency, selection feedback, simulation correctness, and readable silhouettes. Profile before adding a new effect or asset pipeline.
+design/presentation/README.md:80:Global assets belong under presentation; faction and entity mappings belong in
+design/presentation/README.md:86:Global asset principles and the manifest schema are in [Asset Production Contract](assets.md). The global brand direction is [Logo and Brand Direction](logo/README.md).
+design/presentation/audio.md:6:An audio event names its owner, semantic event, optional world position,
+design/presentation/audio.md:10:Use shared semantic events for command confirmation/rejection, discovery,
+design/presentation/audio.md:15:Use separate UI, voice, effects, ambient, and music buses. Exact mix values
+design/presentation/assets.md:3:This document defines ownership and naming for visual, audio, animation, and
+design/presentation/assets.md:12:```text
+design/presentation/assets.md:16:```
+design/presentation/assets.md:18:The YAML entity records are authoritative. Their typed `presentation`, `audio`,
+design/presentation/assets.md:23:```text
+design/presentation/assets.md:28:```
+design/presentation/assets.md:37:This document owns only shared rules: IDs, package boundaries, semantic event
+design/presentation/assets.md:54:Use stable lowercase kebab-case IDs matching the design card. Prefix runtime
+design/presentation/assets.md:69:Every playable entity should provide, directly or through a shared fallback:
+design/presentation/assets.md:71:- idle, move, turn, attack windup/fire/recovery, hit, damaged, selected, and destroyed;
+design/presentation/assets.md:72:- harvest, build, capture, disabled, frozen, burning, or transforming states
+design/presentation/assets.md:74:- one icon for identity and one consistent status treatment for each visible
+design/presentation/assets.md:85:The same entity ID is used across all sizes and states.
+design/presentation/assets.md:87:| Asset | Required content | States / sizes |
+design/presentation/assets.md:88:| --- | --- | --- |
+design/presentation/assets.md:89:| Entity/building | Distinct silhouette plus role cue; no tiny text. | Consuming UI owns size and context variants. |
+design/presentation/assets.md:90:| Skill/status | One action symbol with a stable family shape. | Manifest declares applicable ready, active, cooldown, resisted, or unavailable states. |
+design/presentation/assets.md:91:| Objective/resource/command | Geometric marker legible without color. | Consuming UI owns world, HUD, briefing, cursor, and queue variants. |
+design/presentation/assets.md:101:The production target is a directional 2.5D asset, whether implemented as a
+design/presentation/assets.md:105:| Asset class | Baseline requirement | Escalation rule |
+design/presentation/assets.md:106:| --- | --- | --- |
+design/presentation/assets.md:107:| Mobile entity | Directional presentation with separate footprint and contact origin. | Manifest declares facing, layers, and bespoke gameplay-state transitions. |
+design/presentation/assets.md:108:| Building | Placement-facing presentation with readable role silhouette. | Manifest declares damage/destruction stages when they persist in play. |
+design/presentation/assets.md:109:| Temporary/deployable | Mobile and deployed silhouettes differ clearly. | Manifest declares transition treatment for the committed vulnerable window. |
+design/presentation/assets.md:111:Every model/sprite declares: logical footprint, contact origin, shadow anchor,
+design/presentation/assets.md:118:The shared fallback supplies the ordinary states below. An entity card adds a
+design/presentation/assets.md:122:| State | Minimum visual cue | Mandatory when |
+design/presentation/assets.md:123:| --- | --- | --- |
+design/presentation/assets.md:124:| Idle / move / turn | readable silhouette and facing | every mobile entity |
+design/presentation/assets.md:125:| Windup / fire / recovery | aim, launch, and return beat | every visible weapon event |
+design/presentation/assets.md:126:| Hit / damaged | directional flash and escalating smoke or deformation | every damageable entity |
+design/presentation/assets.md:127:| Selected / commanded | ring, bracket, order line, or destination marker | every selectable entity |
+design/presentation/assets.md:128:| Disabled / EMP | muted motion plus command/status icon | electronic or disable-eligible entity |
+design/presentation/assets.md:129:| Frozen / burning / suppressed | family-specific overlay and world cue | status-eligible entity |
+design/presentation/assets.md:130:| Deploy / transform | setup and transition pose | transform/deploy skill or locomotor |
+design/presentation/assets.md:131:| Construct / repair / capture | progress treatment and active link | structure or interaction owner |
+design/presentation/assets.md:132:| Destroyed / wreck | final readable state, then cleanup policy | every damageable entity |
+design/presentation/assets.md:140:| Event | Shared visual contract | Common parameters owned by card |
+design/presentation/assets.md:141:| --- | --- | --- |
+design/presentation/assets.md:142:| Muzzle / launch | brief source flash and direction cue | mount point, color/material, scale |
+design/presentation/assets.md:143:| Projectile / beam | readable travel path with bounded lifetime | speed, trail length, homing/arc appearance |
+design/presentation/assets.md:144:| Impact | point spark, dust, scorch, or splash matching damage family | impact material, scale, area falloff cue |
+design/presentation/assets.md:145:| Area attack | ground reticle before impact and bounded ring/wave | radius, warning duration, faction accent |
+design/presentation/assets.md:146:| Status | one persistent localized treatment plus icon | family variant, intensity, transition cue |
+design/presentation/assets.md:147:| Movement | dust, wake, rotor wash, or track mark | locomotor-specific material and emission rate |
+design/presentation/assets.md:148:| Detection / reveal | sweep, ping, and fog-edge reveal | cone/range shape, color, duration |
+design/presentation/assets.md:149:| Jam / decoy | broken link, interference ring, or false contact marker | radius, pulse rate, faction material |
+design/presentation/assets.md:150:| Construction / repair | grid, progress link, sparks, and completion pulse | owner accent, progress speed, completion scale |
+design/presentation/assets.md:151:| Capture / objective | contested ring, ownership pulse, and beacon change | objective accent and stage symbols |
+design/presentation/assets.md:152:| Destruction | hit flash, smoke/debris burst, wreck or collapse | stage count, debris silhouette, cleanup lifetime |
+design/presentation/assets.md:160:Do not create a separate entity `assets.md` that only repeats this contract.
+design/presentation/assets.md:161:The owning YAML record records only the entity-specific mapping:
+design/presentation/assets.md:163:```text
+design/presentation/assets.md:168:```
+design/presentation/assets.md:170:The design record remains authoritative for what an entity does. Its typed
+design/presentation/assets.md:177:Prefer atlas-backed sprites, shared materials, pooled emitters, short-lived
+design/presentation/assets.md:180:Every asset has a fallback: missing icon → faction marker, missing model →
+design/presentation/assets.md:184:Reduce particle count, animation rate, shadow detail, and post-processing in

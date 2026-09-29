@@ -1,0 +1,290 @@
+design/collisions/README.md:5:## Schema
+design/transport.md:15:## Ownership and schemas
+design/transport.md:30:## Eligibility and reservation
+design/transport.md:34:1. Carrier and passenger are alive, allied, and owned by the commander.
+design/transport.md:35:2. Neither is embarked, reserved by another transfer, captured, destroyed, or
+design/transport.md:37:3. The carrier is in a card-declared stable state, stationary, and in range.
+design/transport.md:38:4. The passenger matches the carrier filter, has no nested cargo, and fits a
+design/transport.md:40:5. Carrier interaction and passenger approach footprints are legal under the
+design/transport.md:53:## Boarding lifecycle
+design/transport.md:68:## Embarked state
+design/transport.md:83:## Unloading lifecycle
+design/transport.md:103:## Commands and rejection reasons
+design/transport.md:105:| Command | Required payload | Accepted when |
+design/transport.md:106:|---|---|---|
+design/transport.md:107:| board | carrier ID and ordered passenger IDs | eligibility and capacity pass |
+design/transport.md:108:| unload | carrier ID and destination/interaction ID | exit validation can begin |
+design/transport.md:109:| unload-one | carrier ID, passenger ID, destination | named passenger is embarked |
+design/transport.md:110:| hold-unload | carrier ID | active channel may stop before next passenger |
+design/transport.md:111:| cancel-transfer | carrier and passenger IDs | channel is cancellable |
+design/transport.md:112:| move | carrier ID and route | carrier state and route allow movement |
+design/transport.md:113:| return | carrier ID and facility/shore ID | carrier operation owns return |
+design/transport.md:114:| skill | carrier ID and skill payload | card skill permits cargo state |
+design/transport.md:125:## Platform-specific interaction
+design/transport.md:127:- Ground carriers use adjacent interaction cells and ordinary ground collision.
+design/transport.md:128:- Amphibious carriers transfer only in their declared stable land or water
+design/transport.md:130:- Naval carriers use naval operations, a friendly dock, legal shore
+design/transport.md:133:- Air carriers use air operations and must be stable in their declared hover or
+design/transport.md:143:## Combat, sensing, ownership, and destruction
+design/transport.md:164:## Edge cases and deterministic behavior
+design/transport.md:166:- EMP interrupts a channel only when shared status or card rules name it; it
+design/transport.md:168:- Movement, destruction, capture, and invalid destination interrupt the active
+design/transport.md:170:- If all exits are blocked, the carrier remains loaded and reports
+design/transport.md:172:- A carrier with no legal route may hold or return; it never crosses a domain.
+design/transport.md:173:- Passenger owner, health, status, and experience remain in the transfer record
+design/transport.md:175:- Simultaneous boarding, unloading, capture, and destruction use shared tick
+design/transport.md:178:## Presentation and events
+design/economy/README.md:5:## Ownership
+design/economy/README.md:12:## V1 resource lifecycle
+design/economy/README.md:22:- A node has a finite integer reserve. Harvesting removes resource from the node immediately; the player does not receive it until unloading completes.
+design/economy/README.md:23:- A harvester uses the cargo capacity, extraction cadence/rate, and unload
+design/economy/README.md:27:- A node supports one active harvester in V1. A second harvester may be ordered there, but receives a blocked/occupied response rather than creating a stacking exploit.
+design/economy/README.md:28:- The harvester returns to its linked processor when its card declares cargo
+design/economy/README.md:31:- The node becomes depleted at reserve `0` and never respawns in V1. A
+design/economy/README.md:34:- Resource in harvester cargo is not banked. If the harvester is destroyed, its cargo is lost. This makes raids meaningful without adding dropped-resource entities.
+design/economy/README.md:39:## Income timing and spending
+design/economy/README.md:48:- A queued production item is paid when accepted and cannot be queued without the full cost.
+design/economy/README.md:49:- A building is paid when its placement is accepted and becomes a blueprint. Canceling an unfinished blueprint refunds `75%` of its cost, rounded down; destroying it refunds nothing.
+design/economy/README.md:50:- If a command is invalid, it has no economic side effect.
+design/economy/README.md:51:- Costs, build times, extraction rate, cargo capacity, objective income, and
+design/economy/README.md:55:## Harvester behavior
+design/economy/README.md:63:- `Harvest` assigns a node and processor. The harvester chooses the shortest valid route, reserves the node, harvests until its cargo is full or the node is depleted, then returns.
+design/economy/README.md:64:- `Return` cancels harvesting after the current tick and sends the harvester to its processor with cargo intact.
+design/economy/README.md:65:- `Stop` leaves it in place with cargo intact and releases its node reservation.
+design/economy/README.md:66:- A destroyed or unavailable processor causes the harvester to stop before unloading and display `processor required`; it does not silently convert cargo or teleport home.
+design/economy/README.md:67:- A damaged harvester keeps its cargo and movement order. While docked and
+design/economy/README.md:70:- The harvester has no attack command. Its valid player actions are move, harvest, return, and stop. It may be body-blocked or rescued by combat units according to normal collision rules.
+design/economy/README.md:71:- A replacement harvester is ordinary production content, not a free respawn. Its cost and time are balance knobs; V1 should make replacing one painful but possible while the HQ remains alive.
+design/economy/README.md:75:## V1 edge cases and ordering
+design/economy/README.md:115:## V1 economy acceptance cases
+design/economy/README.md:124:## Recovery and counterplay
+design/economy/README.md:128:- A player can escort a harvester, retreat it early with cargo, or attack the opponent's route and processor.
+design/economy/README.md:129:- Losing a harvester loses its unbanked cargo and its future income, but does not delete the node or bank. A replacement can be produced.
+design/economy/README.md:130:- Losing a processor stops unloading and harvester repair until it is rebuilt. Existing banked resource remains spendable.
+design/economy/README.md:131:- A depleted home field forces a player toward the contested field or an objective-led army timing; it does not trigger an automatic comeback bonus.
+design/economy/README.md:132:- Holding the objective supplies modest income, but cannot by itself pay for an army without map control and protection.
+design/economy/README.md:134:## Explicitly deferred
+design/movement/README.md:9:## Movement pipeline
+design/movement/README.md:29:## V1 pathfinding contract
+design/movement/README.md:52:## Formations
+design/movement/README.md:78:## Facing and attack movement
+design/movement/README.md:92:## Separation and contact
+design/movement/README.md:112:## Required object fields and failure states
+design/movement/README.md:130:## Player-facing movement rules
+design/movement/README.md:144:## Deferred extensions
+design/construction/README.md:5:## V1 building set
+design/construction/README.md:21:## Build lifecycle
+design/construction/README.md:31:1. The player selects the construction vehicle and moves a preview under the cursor.
+design/construction/README.md:32:2. The preview snaps to the logical map grid. Rotation is in `90°` increments; a rotated rectangular footprint is revalidated rather than visually assumed valid.
+design/construction/README.md:33:3. A valid placement command reserves the full cost, creates a blueprint, and
+design/construction/README.md:37:4. One builder constructs one blueprint at a time. If it moves, is stunned, or is destroyed, construction pauses. A completed building is independent of its builder.
+design/construction/README.md:38:5. The player may cancel an unfinished blueprint. It disappears and refunds `75%` of its reserved cost, rounded down. Enemy fire destroying it gives no refund. A completed building must be destroyed or sold by a future explicit rule; V1 has no sell command.
+design/construction/README.md:56:## Placement validation
+design/construction/README.md:60:- every footprint cell is inside the playable map and on the map's `buildable` layer;
+design/construction/README.md:61:- no footprint cell overlaps a unit, existing building, blueprint, resource node, objective exclusion zone, or map `no-build` marker;
+design/construction/README.md:62:- the footprint is within the declared radius of an eligible HQ/anchor or the
+design/construction/README.md:65:- the building's required facing is legal. V1 accepts all four cardinal rotations unless a building definition explicitly restricts one;
+design/construction/README.md:66:- the footprint does not occupy a primary route or disconnect the map's authored base-to-objective lanes. V1 maps mark these lanes as non-buildable, so validation remains a simple deterministic layer check;
+design/construction/README.md:67:- the player's bank contains the full unreserved cost and the builder is available.
+design/construction/README.md:86:## Production interaction
+design/construction/README.md:103:## Recovery and counterplay
+design/construction/README.md:107:- scouting reveals the builder and blueprint; attacking either delays or removes the investment;
+design/construction/README.md:108:- the player can cancel and recover most, but not all, of a threatened blueprint;
+design/construction/README.md:109:- a forward building trades safety for shorter travel and stronger local control;
+design/construction/README.md:110:- destroying the processor, Assembly, or builder removes a capability without deleting banked resource;
+design/construction/README.md:111:- a player with no builder can still fight and harvest, but cannot expand until a replacement is produced or the mode supplies one.
+design/construction/README.md:123:## Explicitly deferred
+design/interactions/README.md:8:## Common contract
+design/interactions/README.md:21:## Capture
+design/interactions/README.md:38:## Garrison and evacuate
+design/interactions/README.md:53:## Repair and heal
+design/interactions/README.md:62:## Reclaim and salvage
+design/interactions/README.md:71:## Neutral objects
+design/interactions/README.md:79:## Interaction ordering
+design/interactions/README.md:88:## Cross-system and player-facing contract
+design/interactions/README.md:102:## Deferred extensions
+design/combat/interactions.md:9:## Resolution pipeline
+design/combat/interactions.md:19:1. The source must be alive, operational enough to use the weapon, and in a
+design/combat/interactions.md:21:2. The target must be alive and currently targetable in the weapon's declared
+design/combat/interactions.md:23:3. Delivery geometry resolves against the stored impact point or declared
+design/combat/interactions.md:26:4. Domain permission filters the weapon's allowed target domains. Armor never
+design/combat/interactions.md:29:5. Each declared health channel resolves through the target's armor profile.
+design/combat/interactions.md:32:6. Resistance, immunity, stacking, decay, and threshold transitions are owned
+design/combat/interactions.md:35:7. Health reaching zero resolves destruction in the architecture destruction
+design/combat/interactions.md:39:## V1 hit result closure
+design/combat/interactions.md:48:## Domain matrix
+design/combat/interactions.md:54:| Target state | Ground | Low-air | High-air | Naval-surface | Submerged | Structure |
+design/combat/interactions.md:55:|---|---|---|---|---|---|---|
+design/combat/interactions.md:56:| Ground | legal if weapon permits | illegal unless weapon permits low-air | illegal by default | illegal | illegal | illegal |
+design/combat/interactions.md:57:| Low-air | legal only for weapons declaring low-air/ground interception | legal | legal only if declared | illegal by default | illegal | illegal |
+design/combat/interactions.md:58:| High-air | illegal by default | illegal by default | legal if weapon permits high-air | illegal | illegal | illegal |
+design/combat/interactions.md:59:| Naval-surface | illegal by default | illegal by default | legal only for declared air-to-naval weapons | legal | legal only for declared depth/transition weapons | illegal |
+design/combat/interactions.md:60:| Submerged | illegal | illegal | illegal by default | illegal by default | legal only for declared submerged weapons | illegal |
+design/combat/interactions.md:61:| Structure | legal only for anti-structure declarations | legal only for declared strike weapons | legal only for declared strike weapons | legal only for declared naval/shore weapons | illegal by default | legal |
+design/combat/interactions.md:68:## Armor and damage
+design/combat/interactions.md:78:- permitted target domains;
+design/combat/interactions.md:79:- armor interaction references;
+design/combat/interactions.md:80:- health conversion;
+design/combat/interactions.md:81:- secondary status or condition application;
+design/combat/interactions.md:82:- delivery and blocker requirements;
+design/combat/interactions.md:83:- friendly-fire and area behavior;
+design/combat/interactions.md:84:- attribution and experience behavior.
+design/combat/interactions.md:90:## Status and domain transitions
+design/combat/interactions.md:95:- modify movement, firing, sensing, or skill availability;
+design/combat/interactions.md:96:- add or remove a targetability domain;
+design/combat/interactions.md:97:- make a target conditionally crushable;
+design/combat/interactions.md:98:- begin a platform transition;
+design/combat/interactions.md:99:- destroy a platform as an explicit terminal outcome.
+design/combat/interactions.md:108:## Interaction examples
+design/combat/interactions.md:110:- A rifle against heavy armor is a legal domain attack whose damage profile
+design/combat/interactions.md:112:- A freeze weapon against an aircraft is legal only if its damage/status object
+design/combat/interactions.md:115:- A ground weapon against low-air is legal only when the weapon explicitly
+design/combat/interactions.md:117:- A torpedo against a submerged vessel requires submerged targetability,
+design/combat/interactions.md:120:- EMP can disable electronic weapons after a hit, but cannot remove physical
+design/combat/interactions.md:123:## V1 status precedence
+design/combat/interactions.md:132:## Authoring and validation requirements
+design/combat/README.md:14:## Combat promise
+design/combat/README.md:27:## Attack resolution
+design/combat/README.md:33:### Fire-time validation
+design/combat/README.md:37:1. The source is alive, not EMP-disabled, and its weapon is ready.
+design/combat/README.md:38:2. The source is allowed to attack in its current state (deployed, frozen,
+design/combat/README.md:40:3. The target is alive, inside maximum range and firing arc, and belongs to an
+design/combat/README.md:42:4. The source has the required detection/lock. A remembered target may be used
+design/combat/README.md:44:5. The line of fire is valid. Direct weapons need a clear ray unless their
+design/combat/README.md:52:### Impact-time validation
+design/combat/README.md:57:- Point and area attacks resolve at their stored impact point. They do not
+design/combat/README.md:59:- Homing projectiles may update their aim only within their declared tracking
+design/combat/README.md:62:- A projectile that hits terrain, a blocker, or an invalid domain is consumed.
+design/combat/README.md:63:- A target that left the legal domain is not damaged unless the projectile's
+design/combat/README.md:79:## Hit models
+design/combat/README.md:84:| Model | Meaning | Typical counterplay |
+design/combat/README.md:85:| --- | --- | --- |
+design/combat/README.md:86:| Point | One impact point applies damage to one legal target. | Dodge, cover, break lock, or force a cheaper target. |
+design/combat/README.md:87:| Projectile | A moving point with speed and collision radius. | Move, intercept, use terrain, or leave the target domain. |
+design/combat/README.md:88:| Beam | A ray checked from source to endpoint during active ticks. | Break line of sight, outrange, or interrupt windup. |
+design/combat/README.md:89:| Area | A pulse or impact around a center, with distance falloff. | Spread out, leave the warning, or attack the delivery unit. |
+design/combat/README.md:90:| Arc | A sector from source orientation with maximum angle and radius. | Attack from the rear/side, flank, or leave the sector. |
+design/combat/README.md:91:| Line | A corridor from source to endpoint with width and ordered hits. | Cross the corridor, use cover, or force a bad facing. |
+design/combat/README.md:92:| Attack run | A fixed-wing or similar pass firing along a declared path. | Anti-air, dispersal, and moving away from the run. |
+design/combat/README.md:94:### Area, arc, and line semantics
+design/combat/README.md:96:- Area includes every eligible entity whose collision center is within the
+design/combat/README.md:100:- Arc includes entities inside radius and within half-angle of source facing at
+design/combat/README.md:103:- Line is a capsule of declared width between origin and endpoint. Eligible
+design/combat/README.md:107:- Point, area, arc, and line impacts use the launcher's stored aim/facing;
+design/combat/README.md:120:## Range, vision, and acquisition
+design/combat/README.md:130:- **Direct:** fire at a currently visible and legal target.
+design/combat/README.md:131:- **Lock:** acquire for a windup; movement, stealth, EMP, or broken line of
+design/combat/README.md:133:- **Point/designated:** fire at a visible point or ally-designated position;
+design/combat/README.md:135:- **Indirect:** fire at a known point without direct line of sight, but requires
+design/combat/README.md:157:## Cooldown and rate of fire
+design/combat/README.md:190:## Damage and armor
+design/combat/README.md:218:- **Health** removes hit points after armor conversion.
+design/combat/README.md:219:- **Protection condition** fills a bounded condition track. At its threshold,
+design/combat/README.md:222:- **Structural** uses the structure column and is normally absent or weak on
+design/combat/README.md:224:- **Incendiary** creates a bounded hazard or damage-over-time effect; it does
+design/combat/README.md:226:- **Suppression** fills a bounded track that reduces weapon performance and
+design/combat/README.md:228:- **EMP** applies electronic disable/degradation and never directly removes
+design/combat/README.md:230:- **Freeze** fills a threshold track and changes state as described below.
+design/combat/README.md:232:## Health, repair, and destruction
+design/combat/README.md:253:## Status rules
+design/combat/README.md:259:### Suppression
+design/combat/README.md:267:### EMP
+design/combat/README.md:274:### Freeze
+design/combat/README.md:279:- partial freeze slows movement and attack recovery;
+design/combat/README.md:280:- full freeze disables movement, weapons, and skills for the freeze duration;
+design/combat/README.md:281:- a fully frozen ground unit may become conditionally crushable;
+design/combat/README.md:282:- a fully frozen aircraft enters its declared crash/destruction transition;
+design/combat/README.md:283:- freeze decays while not receiving freeze application and can be accelerated
+design/combat/README.md:296:## Movement and attack interaction
+design/combat/README.md:310:## Deterministic combat order
+design/combat/README.md:314:1. accept and validate commands;
+design/combat/README.md:315:2. advance transitions, statuses, and cooldowns;
+design/combat/README.md:316:3. update movement and collision reservations;
+design/combat/README.md:317:4. acquire/reacquire targets and validate weapon windups;
+design/combat/README.md:318:5. launch attacks and advance existing projectiles;
+design/combat/README.md:319:6. resolve impacts in `(impactTick, projectileId)` order;
+design/combat/README.md:320:7. apply damage, repair, statuses, and threshold transitions;
+design/combat/README.md:321:8. destroy defeated entities and publish combat events;
+design/combat/README.md:322:9. produce the fog-filtered game view.
+design/combat/README.md:336:## V1 combat acceptance cases
+design/combat/README.md:346:## V1 role spine
+design/numerics.md:7:## Representation
+design/numerics.md:9:- Use integers or fixed-point integers in simulation; floating-point authoring
+design/numerics.md:11:- Every quantity declares its unit. Percentages are integer percentages and
+design/numerics.md:13:- Health, damage, status points, resources, durations, and IDs are
+design/numerics.md:15:- Positions and radii use the declared world-distance unit; squared-distance
+design/numerics.md:18:## Time and determinism
+design/numerics.md:25:## Ownership and inheritance
+design/numerics.md:27:- A concrete number has exactly one canonical owner.
+design/numerics.md:28:- References inherit by ID; omission never silently means zero, unlimited, or
+design/numerics.md:30:- An override names the inherited field, replacement value, and reason in the
+design/numerics.md:32:- Schemas use explicit `N/A` for inapplicable fields and `TBD` only for a
+design/numerics.md:34:- Collection READMEs define fields and validation; object files own values.
+design/numerics.md:36:### Ownership map
+design/numerics.md:40:| Value | Canonical owner |
+design/numerics.md:41:|---|---|
+design/numerics.md:42:| Entity health, footprint, movement, sensing, weapon/skill parameters, cost, build time, and capacity | The unit or building card; a genuinely shared complete definition may own it instead. |
+design/numerics.md:43:| Damage/armor ratios and reusable timing or geometry defaults | The referenced first-class damage, armor, weapon, status, locomotor, sensing, or production object. |
+design/numerics.md:44:| Resource-node coordinates, reserves, exclusions, and map-local objective geometry | The specific map. |
+design/numerics.md:45:| Starting bank, starting roster, scenario-only availability, and mission setup | The specific scenario or mission. |
+design/numerics.md:46:| Capture/reward thresholds and objective state-machine values | The objective definition; a scenario may override them explicitly. |
+design/numerics.md:47:| Lifecycle ordering, rejection rules, reservation semantics, and deterministic tie-breaks | The owning system document. A system may own a default only when it applies across objects and is not a hidden entity balance stat. |
+design/numerics.md:53:## Validation
+design/naval-operations.md:15:## Ownership and schemas
+design/naval-operations.md:38:## Water movement and collision
+design/naval-operations.md:58:## Surface, dive, and amphibious states
+design/naval-operations.md:75:## Production, launch, repair, and capture
+design/naval-operations.md:98:## Commands and rejection reasons
+design/naval-operations.md:100:| Command | Required payload | Accepted when |
+design/naval-operations.md:101:|---|---|---|
+design/naval-operations.md:102:| produce | recipe and facility | facility, region, queue, and recipe are valid |
+design/naval-operations.md:103:| move | vessel ID and water point/path | locomotor and full footprint stay legal |
+design/naval-operations.md:104:| attack | vessel ID and target/point | weapon domain, detection, and geometry pass |
+design/naval-operations.md:105:| hold | vessel ID | vessel has a stable anchored/hold state |
+design/naval-operations.md:106:| dive | vessel ID | card allows diving from current stable state |
+design/naval-operations.md:107:| surface | vessel ID | card allows surfacing and depth is legal |
+design/naval-operations.md:108:| board | carrier and passenger IDs | transport interaction passes |
+design/naval-operations.md:109:| unload | carrier and destination/shore ID | exit footprint and passenger platform are legal |
+design/naval-operations.md:110:| beach | vessel ID and shore interaction ID | card and map allow beaching |
+design/naval-operations.md:111:| repair | source and target ID | repair source and target domain are valid |
+design/naval-operations.md:112:| skill | vessel ID and skill payload | card skill is legal in current state |
+design/naval-operations.md:121:## Sensing and targetability
+design/naval-operations.md:144:## Combat and interactions
+design/naval-operations.md:159:## Transport and shore lifecycle
+design/naval-operations.md:169:## Edge cases and deterministic behavior
+design/naval-operations.md:171:- EMP disables only named capabilities and does not force surfacing by default.
+design/naval-operations.md:172:- A destroyed facility cannot receive a hull or complete a service action.
+design/naval-operations.md:173:- A lost water route stops a vessel at its last legal cell; no automatic beaching.
+design/naval-operations.md:174:- An interrupted transition completes neither side effect and aborts to its last
+design/naval-operations.md:176:- Simultaneous launch, shore, depth, and collision claims use shared command
+design/naval-operations.md:178:- A vessel destroyed while carrying passengers resolves carrier destruction and
+design/naval-operations.md:180:- Capture, destruction, and same-tick damage use shared combat/objective order.
+design/naval-operations.md:182:## Presentation, events, and map interaction
+design/air-operations.md:16:## Ownership and schema
+design/air-operations.md:33:## Airspace and collision
+design/air-operations.md:56:## Facility lifecycle
+design/air-operations.md:81:## Takeoff, flight, and return
+design/air-operations.md:105:## Landing and service
+design/air-operations.md:128:## Commands and rejection reasons
+design/air-operations.md:132:| Command | Required payload | Accepted when |
+design/air-operations.md:133:|---|---|---|
+design/air-operations.md:134:| produce | recipe and facility | recipe is available and FIFO/cap are valid |
+design/air-operations.md:135:| launch | aircraft ID | aircraft is parked and lane/stand are clear |
+design/air-operations.md:136:| move | aircraft ID and air point/path | path is legal in the air layer |
+design/air-operations.md:137:| attack | aircraft ID and target/point | acquisition and movement are legal |
+design/air-operations.md:138:| attack-run | aircraft ID and lane/target | card owns attack-run delivery |
+design/air-operations.md:139:| hold | aircraft ID | aircraft has a stable hold state |
+design/air-operations.md:140:| return | aircraft ID | aircraft is not destroyed or already parked |
+design/air-operations.md:141:| land | aircraft ID and facility | facility and approach are valid |
+design/air-operations.md:142:| service | aircraft ID | aircraft is in a legal service state |
+design/air-operations.md:143:| skill | aircraft ID and skill payload | card skill is legal in current state |
+design/air-operations.md:151:## Sensing, targeting, and combat
+design/air-operations.md:168:## Interruptions and edge cases
+design/air-operations.md:170:- EMP disables only capabilities named by shared status or card rules.
+design/air-operations.md:171:- Destruction resolves once in the shared combat destruction phase; embarked
+design/air-operations.md:173:- A dead, captured, or invalid facility cannot receive a returning aircraft.
+design/air-operations.md:174:- A closed corridor stops the aircraft and emits a block; it does not crash.
+design/air-operations.md:175:- An interrupted transition creates neither duplicate aircraft nor completed
+design/air-operations.md:177:- Last-known targeting follows the weapon acquisition policy; fog memory never
+design/air-operations.md:179:- Simultaneous lane, stand, and service claims use shared command order; losers
+design/air-operations.md:182:## Presentation, events, and map interaction

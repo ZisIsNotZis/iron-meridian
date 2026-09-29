@@ -1,5 +1,9 @@
 # Iron Meridian ⚔️
 
+> **Status: paused (indefinite, 2026-09-29).** The initial prototype is built, but
+> it is deliberately not a pure game; development stays paused until an
+> interesting positioning emerges.
+
 English | 简体中文（中文简介见文末）
 
 Iron Meridian is a data-driven, browser-playable real-time strategy prototype.

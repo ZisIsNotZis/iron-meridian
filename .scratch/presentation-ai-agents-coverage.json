@@ -1,0 +1,1036 @@
+{
+  "generated_for": "temporary coverage audit",
+  "markdown_files": 58,
+  "unmapped": 19,
+  "items": [
+    {
+      "source": "design/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Iron Meridian Design",
+        "Naming",
+        "Domains"
+      ],
+      "tables": 0,
+      "numeric_tokens": 0
+    },
+    {
+      "source": "design/TODO.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Deferred Design TODOs",
+        "Deferred implementation tracks"
+      ],
+      "tables": 11,
+      "numeric_tokens": 0
+    },
+    {
+      "source": "design/agents/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "MCP Agent Control",
+        "Availability and transport",
+        "Identity, permissions, and session schema",
+        "Concrete tools",
+        "`ra2_session_open`",
+        "`ra2_game_observe`",
+        "`ra2_game_act`",
+        "`ra2_game_events`",
+        "`ra2_session_close`",
+        "Observation and action invariants",
+        "Error contract",
+        "Limits and fairness",
+        "Audit and acceptance"
+      ],
+      "tables": 27,
+      "numeric_tokens": 51
+    },
+    {
+      "source": "design/ai/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "AI Design",
+        "Boundary and promise",
+        "V1 scripted opponent",
+        "Reusable near-term skirmish AI",
+        "Difficulty levels",
+        "Mission scripting",
+        "Evaluation"
+      ],
+      "tables": 6,
+      "numeric_tokens": 4
+    },
+    {
+      "source": "design/ai/near-term.md",
+      "current_id": "ai.near-term",
+      "kind": "ai-profile",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Near-term AI contract",
+        "Decision cadence and blackboard",
+        "State table",
+        "Profiles",
+        "Role choice",
+        "Fixture inventory"
+      ],
+      "tables": 24,
+      "numeric_tokens": 49
+    },
+    {
+      "source": "design/air-operations.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Air Operations",
+        "Ownership and schema",
+        "Airspace and collision",
+        "Facility lifecycle",
+        "Takeoff, flight, and return",
+        "Landing and service",
+        "Commands and rejection reasons",
+        "Sensing, targeting, and combat",
+        "Interruptions and edge cases",
+        "Presentation, events, and map interaction"
+      ],
+      "tables": 12,
+      "numeric_tokens": 30
+    },
+    {
+      "source": "design/architecture/README.md",
+      "current_id": null,
+      "kind": "move|attack|stop|harvest|produce|construct|capture|skill|repair",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Architecture Design",
+        "Boundary",
+        "Simulation loop",
+        "Command boundary",
+        "Observation boundary",
+        "Determinism contract",
+        "Persistence and future seams",
+        "Data and verification"
+      ],
+      "tables": 11,
+      "numeric_tokens": 39
+    },
+    {
+      "source": "design/buildings/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Buildings and Defenses",
+        "Building platforms and roles",
+        "Building design card",
+        "Footprint, placement, and construction state",
+        "Targetability and defense",
+        "Production, repair, and capability loss",
+        "Special structures and skills",
+        "Status and scope labels",
+        "Presentation contract",
+        "Roster discipline"
+      ],
+      "tables": 11,
+      "numeric_tokens": 31
+    },
+    {
+      "source": "design/campaign/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Campaign Design",
+        "Scope and structure",
+        "The four-mission spine",
+        "1. Contact",
+        "2. Breakthrough",
+        "3. Isolation",
+        "4. Decision",
+        "Pacing and authored fairness",
+        "Campaign progression",
+        "Continuity contract"
+      ],
+      "tables": 0,
+      "numeric_tokens": 6
+    },
+    {
+      "source": "design/collisions/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Collision Objects",
+        "Schema"
+      ],
+      "tables": 0,
+      "numeric_tokens": 0
+    },
+    {
+      "source": "design/collisions.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Collision Principles"
+      ],
+      "tables": 0,
+      "numeric_tokens": 1
+    },
+    {
+      "source": "design/combat/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Combat Design",
+        "Combat promise",
+        "Attack resolution",
+        "Fire-time validation",
+        "Impact-time validation",
+        "Hit models",
+        "Area, arc, and line semantics",
+        "Range, vision, and acquisition",
+        "Cooldown and rate of fire",
+        "Damage and armor",
+        "Health, repair, and destruction",
+        "Status rules",
+        "Suppression",
+        "EMP",
+        "Freeze",
+        "Movement and attack interaction",
+        "Deterministic combat order",
+        "V1 combat acceptance cases",
+        "V1 role spine"
+      ],
+      "tables": 9,
+      "numeric_tokens": 98
+    },
+    {
+      "source": "design/combat/interactions.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Combat Interaction Matrix",
+        "Resolution pipeline",
+        "V1 hit result closure",
+        "Domain matrix",
+        "Armor and damage",
+        "Status and domain transitions",
+        "Interaction examples",
+        "V1 status precedence",
+        "Authoring and validation requirements"
+      ],
+      "tables": 8,
+      "numeric_tokens": 40
+    },
+    {
+      "source": "design/construction/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Construction Design",
+        "V1 building set",
+        "Build lifecycle",
+        "Placement validation",
+        "Production interaction",
+        "Recovery and counterplay",
+        "Explicitly deferred"
+      ],
+      "tables": 0,
+      "numeric_tokens": 28
+    },
+    {
+      "source": "design/control.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Control and UI Contract",
+        "V1 input",
+        "Selection and targeting",
+        "Camera contract",
+        "Information hierarchy",
+        "Feedback timing",
+        "Accessibility and onboarding",
+        "Match lifecycle and player-facing rules"
+      ],
+      "tables": 0,
+      "numeric_tokens": 28
+    },
+    {
+      "source": "design/economy/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Economy Design",
+        "Ownership",
+        "V1 resource lifecycle",
+        "Income timing and spending",
+        "Harvester behavior",
+        "V1 edge cases and ordering",
+        "V1 economy acceptance cases",
+        "Recovery and counterplay",
+        "Explicitly deferred"
+      ],
+      "tables": 0,
+      "numeric_tokens": 40
+    },
+    {
+      "source": "design/factions/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Faction Design",
+        "Canonical owners",
+        "Directorate–Coalition balance spine"
+      ],
+      "tables": 8,
+      "numeric_tokens": 14
+    },
+    {
+      "source": "design/game/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Game Design",
+        "Rule zero",
+        "Core promise",
+        "Match loop",
+        "Scope",
+        "Design gates"
+      ],
+      "tables": 0,
+      "numeric_tokens": 5
+    },
+    {
+      "source": "design/implementation/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Implementation Design",
+        "Delivery stages",
+        "V1 vertical slice",
+        "Near-term solo game",
+        "Far vision",
+        "Boundaries and data pipeline",
+        "Acceptance and failure recovery",
+        "Explicitly deferred"
+      ],
+      "tables": 0,
+      "numeric_tokens": 8
+    },
+    {
+      "source": "design/interactions/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "World Interactions",
+        "Common contract",
+        "Capture",
+        "Garrison and evacuate",
+        "Repair and heal",
+        "Reclaim and salvage",
+        "Neutral objects",
+        "Interaction ordering",
+        "Cross-system and player-facing contract",
+        "Deferred extensions"
+      ],
+      "tables": 0,
+      "numeric_tokens": 16
+    },
+    {
+      "source": "design/maps/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Map Design",
+        "Shared map contract",
+        "V1 battlefield: The Meridian Crossing",
+        "Symmetry and authored variation",
+        "Fog, terrain, and recovery",
+        "Near-term skirmish contract",
+        "Match settings",
+        "Explicitly deferred"
+      ],
+      "tables": 12,
+      "numeric_tokens": 9
+    },
+    {
+      "source": "design/modding/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Modding and Content Packages",
+        "Scope and capability policy",
+        "Package manifest",
+        "Archive and asset contract",
+        "Content operations and overrides",
+        "Dependencies and deterministic resolution",
+        "Trust boundary, signing, and sandbox",
+        "Errors, tooling, lifecycle, and compatibility",
+        "Ownership"
+      ],
+      "tables": 0,
+      "numeric_tokens": 24
+    },
+    {
+      "source": "design/movement/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Movement and Group Control",
+        "Movement pipeline",
+        "V1 pathfinding contract",
+        "Formations",
+        "Facing and attack movement",
+        "Separation and contact",
+        "Required object fields and failure states",
+        "Player-facing movement rules",
+        "Deferred extensions"
+      ],
+      "tables": 0,
+      "numeric_tokens": 33
+    },
+    {
+      "source": "design/multiplayer/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Multiplayer and Remote Players",
+        "Chosen authority model",
+        "Scope",
+        "Session and ruleset contract",
+        "Transport and message envelope",
+        "Authentication and authorization",
+        "Command protocol",
+        "Views, events, and cadence",
+        "Lobby, pause, surrender, and spectators",
+        "Failure and recovery",
+        "Acceptance contract"
+      ],
+      "tables": 0,
+      "numeric_tokens": 25
+    },
+    {
+      "source": "design/naval-operations.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Naval Operations",
+        "Ownership and schemas",
+        "Water movement and collision",
+        "Surface, dive, and amphibious states",
+        "Production, launch, repair, and capture",
+        "Commands and rejection reasons",
+        "Sensing and targetability",
+        "Combat and interactions",
+        "Transport and shore lifecycle",
+        "Edge cases and deterministic behavior",
+        "Presentation, events, and map interaction"
+      ],
+      "tables": 13,
+      "numeric_tokens": 36
+    },
+    {
+      "source": "design/numerics.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Numeric Principles",
+        "Representation",
+        "Time and determinism",
+        "Ownership and inheritance",
+        "Ownership map",
+        "Validation"
+      ],
+      "tables": 8,
+      "numeric_tokens": 14
+    },
+    {
+      "source": "design/objectives/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Objectives",
+        "V1 central objective",
+        "Deterministic capture rules",
+        "Income and hold victory",
+        "Counterplay and recovery",
+        "Explicitly deferred"
+      ],
+      "tables": 0,
+      "numeric_tokens": 39
+    },
+    {
+      "source": "design/persistence/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Persistence, Saves, Replays, and Versioning",
+        "Scope and artifact types",
+        "Canonical envelope",
+        "Save and checkpoint schema",
+        "Replay schema and playback",
+        "Slots, storage, and atomic operations",
+        "Load, corruption, and migration",
+        "Sharing and privacy",
+        "Ownership"
+      ],
+      "tables": 0,
+      "numeric_tokens": 42
+    },
+    {
+      "source": "design/presentation/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Presentation Design",
+        "Goal and priority",
+        "V1 visual target",
+        "Information and feedback grammar",
+        "Animation direction",
+        "Audio direction",
+        "FX direction",
+        "Camera and screen composition",
+        "Performance budgets",
+        "Asset ownership and delivery"
+      ],
+      "tables": 0,
+      "numeric_tokens": 30
+    },
+    {
+      "source": "design/presentation/accessibility.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Accessibility",
+        "V1 acceptance profile"
+      ],
+      "tables": 0,
+      "numeric_tokens": 11
+    },
+    {
+      "source": "design/presentation/animation.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Animation"
+      ],
+      "tables": 0,
+      "numeric_tokens": 2
+    },
+    {
+      "source": "design/presentation/assets.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Asset Production Contract",
+        "Ownership and layout",
+        "Global contract",
+        "Naming and import",
+        "Required state coverage",
+        "Icon system",
+        "2D model and sprite standard",
+        "Animation state matrix",
+        "Effect vocabulary",
+        "Entity presentation mapping",
+        "Performance and fallback"
+      ],
+      "tables": 34,
+      "numeric_tokens": 12
+    },
+    {
+      "source": "design/presentation/audio.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Audio"
+      ],
+      "tables": 0,
+      "numeric_tokens": 1
+    },
+    {
+      "source": "design/presentation/camera.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Camera",
+        "V1 presentation values"
+      ],
+      "tables": 0,
+      "numeric_tokens": 18
+    },
+    {
+      "source": "design/presentation/fx.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "FX"
+      ],
+      "tables": 0,
+      "numeric_tokens": 1
+    },
+    {
+      "source": "design/presentation/logo/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Iron Meridian Logo and Brand Direction",
+        "Brand idea",
+        "Primary mark",
+        "Color and material",
+        "Required variants",
+        "Motion and sound restraint",
+        "Usage rules",
+        "Delivery boundary"
+      ],
+      "tables": 0,
+      "numeric_tokens": 7
+    },
+    {
+      "source": "design/presentation/performance.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Presentation Performance"
+      ],
+      "tables": 0,
+      "numeric_tokens": 23
+    },
+    {
+      "source": "design/presentation/ui-feedback.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "UI Feedback",
+        "Battlefield channels",
+        "Persistent HUD"
+      ],
+      "tables": 0,
+      "numeric_tokens": 5
+    },
+    {
+      "source": "design/presentation/v1-spec.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "V1 Presentation Specification",
+        "HUD wireframe",
+        "Concrete UI states",
+        "Interaction mapping",
+        "Shared visual mappings",
+        "V1 animation profile",
+        "V1 FX profile",
+        "V1 audio profile",
+        "Placeholder asset set"
+      ],
+      "tables": 40,
+      "numeric_tokens": 30
+    },
+    {
+      "source": "design/production/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Production Objects",
+        "Schema",
+        "Availability resolution"
+      ],
+      "tables": 0,
+      "numeric_tokens": 2
+    },
+    {
+      "source": "design/production/recipes/README.md",
+      "current_id": "recipes.<scope>.<product_name>",
+      "kind": "recipe",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Production Recipes",
+        "Recipe schema",
+        "Resolution and queue rules",
+        "V1 recipe index"
+      ],
+      "tables": 0,
+      "numeric_tokens": 14
+    },
+    {
+      "source": "design/progression/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Experience and Veterancy",
+        "Experience events",
+        "Promotion state",
+        "Attribution and edge cases",
+        "Counterplay and readability",
+        "Balance and promotion edges",
+        "Required profile fields"
+      ],
+      "tables": 0,
+      "numeric_tokens": 12
+    },
+    {
+      "source": "design/scenarios/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Scenarios",
+        "Scenario schema",
+        "Scenarios"
+      ],
+      "tables": 0,
+      "numeric_tokens": 0
+    },
+    {
+      "source": "design/schema/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Content schema registry",
+        "Initial families",
+        "Unit and building card ownership",
+        "Migration stop conditions",
+        "World character ownership"
+      ],
+      "tables": 29,
+      "numeric_tokens": 12
+    },
+    {
+      "source": "design/schema/coverage-ambiguities.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Schema coverage ambiguities",
+        "Unresolved",
+        "Decision rule"
+      ],
+      "tables": 0,
+      "numeric_tokens": 3
+    },
+    {
+      "source": "design/tech/README.md",
+      "current_id": "tech.<faction>.<name>",
+      "kind": "tech-node",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Technology and Prerequisites",
+        "Graph model",
+        "Technology-node schema",
+        "Production relationship",
+        "Match-loop integration",
+        "Modes and progression",
+        "Validation and presentation",
+        "Deferred extensions"
+      ],
+      "tables": 0,
+      "numeric_tokens": 4
+    },
+    {
+      "source": "design/testing/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Testing, Build, Release, and Operations",
+        "Scope and evidence",
+        "Test taxonomy and inventory",
+        "Fixture and deterministic evidence",
+        "Behavioral, ownership, and property tests",
+        "Client, visual, accessibility, and browser tests",
+        "Performance, soak, and observability",
+        "Build, content, and asset pipeline",
+        "Versioning, deployment, and rollback",
+        "Security and privacy",
+        "Moderation, sharing, and ranked readiness",
+        "Ownership"
+      ],
+      "tables": 0,
+      "numeric_tokens": 25
+    },
+    {
+      "source": "design/transport.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "review-required",
+      "headings": [
+        "Transport Operations",
+        "Ownership and schemas",
+        "Eligibility and reservation",
+        "Boarding lifecycle",
+        "Embarked state",
+        "Unloading lifecycle",
+        "Commands and rejection reasons",
+        "Platform-specific interaction",
+        "Combat, sensing, ownership, and destruction",
+        "Edge cases and deterministic behavior",
+        "Presentation and events"
+      ],
+      "tables": 10,
+      "numeric_tokens": 35
+    },
+    {
+      "source": "design/units/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Unit Design",
+        "Unit design card",
+        "Numeric and asset inheritance"
+      ],
+      "tables": 0,
+      "numeric_tokens": 19
+    },
+    {
+      "source": "design/v1/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "V1 Scope",
+        "Rule #0",
+        "Product goal",
+        "Player experience",
+        "Authority and ownership",
+        "Included V1 systems",
+        "Canonical match content",
+        "Scenario and map",
+        "Initial buildings",
+        "Initial and buildable units",
+        "V1 recipe allow-list",
+        "V1 unavailable content",
+        "Commands and interaction surface",
+        "V1 UI contract",
+        "Acceptance gates",
+        "Content and boundary",
+        "Simulation and determinism",
+        "Player experience",
+        "Presentation, accessibility, and performance",
+        "Stop-ship conditions",
+        "Boundary after V1",
+        "Near-term solo game",
+        "Far vision",
+        "Known reconciliation notes"
+      ],
+      "tables": 49,
+      "numeric_tokens": 49
+    },
+    {
+      "source": "design/world/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "World Design",
+        "Canonical documents",
+        "Scope boundaries"
+      ],
+      "tables": 0,
+      "numeric_tokens": 0
+    },
+    {
+      "source": "design/world/characters/README.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": null,
+      "status": "retained-principle-or-index",
+      "headings": [
+        "Characters",
+        "Campaign cast"
+      ],
+      "tables": 0,
+      "numeric_tokens": 1
+    },
+    {
+      "source": "design/world/geography.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": "world.geography",
+      "status": "candidate",
+      "headings": [
+        "Geography",
+        "Regions",
+        "Meridian Crossing",
+        "Infrastructure as stakes",
+        "Climate and material language",
+        "Scope"
+      ],
+      "tables": 7,
+      "numeric_tokens": 3
+    },
+    {
+      "source": "design/world/history.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": "world.history",
+      "status": "candidate",
+      "headings": [
+        "History",
+        "The Union bargain",
+        "Stagnation and the Karsk War",
+        "The reform failure",
+        "The Meridian Crisis",
+        "Story posture"
+      ],
+      "tables": 0,
+      "numeric_tokens": 1
+    },
+    {
+      "source": "design/world/identity.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": "world.identity",
+      "status": "candidate",
+      "headings": [
+        "World Identity",
+        "Tone",
+        "Global marks",
+        "Naming and language",
+        "Sound motif",
+        "Scope rule"
+      ],
+      "tables": 0,
+      "numeric_tokens": 0
+    },
+    {
+      "source": "design/world/organizations.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": "world.organizations",
+      "status": "candidate",
+      "headings": [
+        "Organizations",
+        "Meridian Union institutions",
+        "Directorate institutions",
+        "Coalition institutions",
+        "Irregular Network institutions",
+        "Naming rule"
+      ],
+      "tables": 0,
+      "numeric_tokens": 2
+    },
+    {
+      "source": "design/world/relationships.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": "world.relationships",
+      "status": "candidate",
+      "headings": [
+        "Relationships",
+        "Directorate and Coalition",
+        "Irregular Network and the major factions",
+        "Foreign pressure",
+        "Campaign use"
+      ],
+      "tables": 6,
+      "numeric_tokens": 0
+    },
+    {
+      "source": "design/world/technology.md",
+      "current_id": null,
+      "kind": "prose",
+      "candidate": "world.technology",
+      "status": "candidate",
+      "headings": [
+        "Technology",
+        "Technological ceiling",
+        "Industrial inheritance",
+        "Digital systems and the crisis",
+        "Presentation rules"
+      ],
+      "tables": 0,
+      "numeric_tokens": 0
+    }
+  ]
+}

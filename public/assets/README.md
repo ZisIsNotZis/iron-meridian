@@ -54,6 +54,15 @@ Objective / resource:
 - `objective_beacon.svg` — central relay beacon (mast + ring, safety yellow).
 - `resource_node.svg` — resource deposit (ore/crystal cluster, cyan tint).
 
+Effects (transient event markers in the atlas):
+- `fx_tracer.svg`, `fx_impact.svg`, `fx_smoke.svg` — combat feedback.
+- `fx_capture.svg`, `fx_construction.svg`, `fx_reveal.svg` — capture,
+  construction-complete, and production-complete markers.
+
+UI icons:
+- `ui_order.svg`, `ui_objective.svg`, `ui_reject.svg`, `ui_status.svg` — order,
+  objective, rejection, and status glyphs loaded with the rest of the atlas.
+
 ## Verification loop (mandatory)
 
 For EVERY asset: write → render → view → fix → repeat:

@@ -83,7 +83,7 @@ python3 tools/audit_design.py # 审计保留的 Markdown 链接
 
 ## 如何参与
 
-欢迎提交 issue 和范围明确的 pull request。请写清问题、测试证据；涉及画面改动时附上截图。维护者会审核并合并通过的工作。
+欢迎提交 issue 和范围明确的 pull request。开工前请看 [`CONTRIBUTING.md`](CONTRIBUTING.md)，其中写明要跑的检查以及什么样的改动会被接受；提交时请写清问题、测试证据，涉及画面改动时附上截图。
 
 修改规则前先读 [`CONTEXT.md`](CONTEXT.md) 和[设计索引](design/README.md)。新的事实应写进它所属的设计记录，不要在多处复制。Agent 可以协助分类、调查、测试、写文档和实现已接受的 issue，但不能绕过维护者审核。
 

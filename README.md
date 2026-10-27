@@ -83,7 +83,7 @@ Before opening a pull request, run `npm run test:sim`, `npm run test:content`, a
 
 ## How to contribute
 
-Issues and focused pull requests are welcome. Include the problem, the test evidence, and screenshots for visual changes. Maintainers review and merge accepted work.
+Issues and focused pull requests are welcome. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) for the checks to run and what a reviewable change looks like; include the problem, the test evidence, and screenshots for visual changes.
 
 Read [`CONTEXT.md`](CONTEXT.md) and the [design index](design/README.md) before changing a rule. Keep new facts in their owning design record rather than duplicating prose. Agents may help triage, investigate, test, document, and implement accepted issues, but they do not bypass maintainer review.
 

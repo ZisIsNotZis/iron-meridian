@@ -2,6 +2,7 @@ node_modules/
 dist/
 *.tsbuildinfo
 test-results/
+.scratch/
 
 # Common local caches and temporary workspaces
 __pycache__/

@@ -1,79 +1,112 @@
-# Iron Meridian ⚔️
+<p align="center">
+  <img src="docs/media/logo.svg" alt="Iron Meridian emblem" width="112">
+</p>
 
-> **Status: paused (indefinite, 2026-09-29).** The initial prototype is built, but
-> it is deliberately not a pure game; development stays paused until an
-> interesting positioning emerges.
+<p align="center">
+  <strong>English</strong> · <a href="README.zh-CN.md">简体中文</a>
+</p>
 
-English | 简体中文（中文简介见文末）
+# Iron Meridian
 
-Iron Meridian is a data-driven, browser-playable real-time strategy prototype.
-It helps designers and developers test a serious RTS loop while keeping the
-simulation deterministic and content extensible through YAML manifests.
+### A near-future real-time strategy prototype that runs in the browser.
 
-## Quickstart
+**Scout the approaches, choose economy or army, and take the central relay — on a deterministic 30 Hz simulation where units, recipes, and balance data are readable YAML records.**
 
-Requires Node.js 20+ and npm.
+> **Status:** V1 is playable (`0.1.0`). Active development is paused; the code and design archive remain open for study, forks, and future work. See [project status](docs/project-status.md).
+
+![Iron Meridian battlefield: Coalition base, central relay objective, fog of war, and command deck](docs/media/battlefield.png)
+
+## Quick start
+
+Requires Node.js 20+.
 
 ```bash
+git clone https://github.com/ZisIsNotZis/iron-meridian.git
+cd iron-meridian
 npm install
-npm run test:sim
-npm run build
 npm run dev
 ```
 
-Open the Vite URL. Content validation runs with `node tools/check_content.mjs`.
-
-The [`design/`](design/) tree is data, not prose: rules and docs are strict-YAML
-records with exact dotted IDs derived from their paths. See
-[`design/README.md`](design/README.md) for the layout and validation commands.
-
-## Product shape
-
-The runtime boundary is `Command → simulation → observation`; Phaser renders
-the observation but does not own game rules. Authored content is a YAML single
-source of truth under [`design/content/`](design/content/) (gameplay data plus
-documentation records), validated against [`design/schema/`](design/schema/);
-`CONTEXT.md` is only the glossary. This keeps factions, maps, units, and
-scenarios modifiable without rewriting the simulation.
-
-Current status: `0.1.0` **playable** V1 vertical slice with a real top-down 2.5D
-asset pack, an active scripted AI opponent, and a full match loop (start → scout
-→ economy → production → construction → combat → objective → victory/defeat →
-restart). Confirmed by the deterministic headless self-check, the content
-manifest check, the 100-entity benchmark, and an in-browser visual smoke. See
-[`docs/project-status.md`](docs/project-status.md), the canonical design index at
-[`design/README.md`](design/README.md), and reviewed screenshots in
-[`docs/media/`](docs/media/).
-
-## Verification
+Open the URL Vite prints. The match starts with a skippable briefing. Prefer the headless proof?
 
 ```bash
-node tools/check_content.mjs        # validate every YAML record + references
-python3 tools/audit_design.py       # audit retained Markdown links
-npm run test:sim                    # deterministic headless simulation
-npm run test:content                # content manifest resolution
-npm run test:bench                  # 100-entity deterministic performance smoke
-npm run build                       # compile the browser client
-npm run dev                         # play the game locally
+npm run test:sim
+npm run test:content
+npm run test:bench
 ```
 
-## Future vision
+## What it can do now
 
-Grow the verified slice into a complete skirmish flow with richer combat,
-economy, production, campaign content, replay, and mod tooling. Multiplayer,
-large-scale content, and polished release media remain future work.
+- **Play a complete match loop:** scout, harvest, produce, construct, fight, capture the central relay, win or lose, and restart the same scenario.
+- **Trust the simulation:** fixed 30 Hz tick, seeded randomness, a state digest, and deterministic reproduction from the same seed and command log.
+- **Face a real scripted opponent:** the east AI uses the same fog-filtered view, develops its base, fields combined arms, and contests the objective.
+- **Use combined arms:** rifle infantry, scouts, main battle tanks, anti-tank teams, harvesters, and an MCV — with terrain, vision, armor classes, and readable counters.
+- **Change the game as data:** 284 strict-YAML records in `design/content/` cover units, factions, maps, recipes, and design notes; schemas and a validator catch broken references before runtime.
+- **Read the battlefield:** hand-authored SVG assets, fog of war, health bars, order markers, a minimap, production and construction panels, control groups, pause, and restart.
+- **Verify the claims:** a headless self-check, a content-manifest check, a 100-entity benchmark, and a design link audit ship with the repository.
 
-## Contributing
+More screenshots are in [`docs/media/`](docs/media/).
 
-Issues and focused pull requests are welcome. Include the problem, tests, and
-screenshots for visual changes; maintainers review and merge accepted work.
-Agents can help triage, investigate, test, document, and implement accepted
-issues, but do not bypass maintainer review. Read `CONTEXT.md` and the design
-index before changing a rule. Licensed under [AGPL-3.0-only](LICENSE).
+## Architecture
 
-## 中文简介
+```text
+design/content + design/schema
+             |
+             v
+        src/content  ---->  src/sim  ---->  observation  ---->  src/app (Phaser)
+                              ^                                      |
+                              +--------------- commands -------------+
+```
 
-Iron Meridian 是一个由数据驱动、可在浏览器运行的即时战略原型，帮助设计师和
-开发者验证严肃的 RTS 核心循环。模拟器保持确定性，阵营、地图、单位和战役通过
-YAML 内容扩展。安装 Node.js 20+ 后运行上述命令；当前版本为 `0.1.0`。未来将
-完善遭遇战、战斗、经济、生产、战役、回放和模组工具。项目采用 AGPL-3.0-only。
+- [`design/`](design/) is the single source of truth: YAML records for gameplay data and design documentation, plus the schemas that validate them.
+- [`src/sim/`](src/sim/) is the engine-independent simulation: deterministic state, the command boundary, combat, economy, fog, objective control, and the scripted AI.
+- [`src/content/`](src/content/) resolves and validates content manifests for both Node and the browser.
+- [`src/app/`](src/app/) is the Phaser presentation layer. It renders observations and translates input into commands; it does not own game rules.
+- [`tools/`](tools/) and [`tests/`](tests/) hold the content validator, asset renderer, link audit, self-checks, and benchmark.
+
+The full design index is [`design/README.md`](design/README.md); the glossary is [`CONTEXT.md`](CONTEXT.md).
+
+## How to develop
+
+```bash
+npm install
+npm run dev                  # Phaser client with hot reload
+npm run build                # production browser build
+npm run test:sim             # deterministic headless simulation self-check
+npm run test:content         # content manifest resolution check
+npm run test:bench           # 100-entity deterministic performance smoke
+node tools/check_content.mjs # validate every YAML record and reference
+python3 tools/audit_design.py # audit retained Markdown links
+```
+
+Before opening a pull request, run `npm run test:sim`, `npm run test:content`, and `node tools/check_content.mjs`. Content changes belong in [`design/content/`](design/content/) and are validated against [`design/schema/`](design/schema/).
+
+## How to contribute
+
+Issues and focused pull requests are welcome. Include the problem, the test evidence, and screenshots for visual changes. Maintainers review and merge accepted work.
+
+Read [`CONTEXT.md`](CONTEXT.md) and the [design index](design/README.md) before changing a rule. Keep new facts in their owning design record rather than duplicating prose. Agents may help triage, investigate, test, document, and implement accepted issues, but they do not bypass maintainer review.
+
+## Roadmap
+
+### Implemented in 0.1.0
+
+- [x] Deterministic headless simulation with a command boundary, fixed clock, seeded randomness, and state digest.
+- [x] Full match loop: scouting, economy, production, construction, combat, fog of war, objective capture, victory, defeat, and restart.
+- [x] Scripted opponent that harvests, builds, produces a mixed force, and pushes the relay.
+- [x] One-map Coalition mirror skirmish on Meridian Crossing.
+- [x] Data-driven YAML content tree with schema validation and reference resolution.
+- [x] Browser client with selection, orders, minimap, production and construction panels, control groups, pause, and reduced-motion support.
+- [x] Verification harness: simulation self-check, content check, link audit, asset renderer, and 100-entity benchmark.
+
+### Planned
+
+- [ ] Near-term solo game: distinct Coalition and Directorate factions, authored campaign missions, four skirmish maps, non-cheating AI difficulties, saves and checkpoints, replays, settings, localization, and richer assets.
+- [ ] Promoted expansion systems: playable Irregular Network, air, naval, and transport layers, each behind its own scope decision.
+- [ ] Online and tooling work: multiplayer, MCP agents, distributed mod packages, and ranked operations.
+
+**Future vision.** V1 proves the command loop and the content pipeline on one mirrored skirmish. The next step is a complete solo skirmish game: two distinct factions, authored campaign missions, more maps, saves and replays, and a tested mod path. Anything beyond that — online play, air and naval layers, the Irregular Network — waits for its own contract and evidence, not for a promise in this README.
+
+## License
+
+[AGPL-3.0-only](LICENSE).

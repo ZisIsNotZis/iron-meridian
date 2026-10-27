@@ -18,7 +18,7 @@ objective → victory/defeat → restart).
   slot harvests, builds an Infantry Center, fields a mixed force (scouts, MBTs,
   Line Rifle, Javelin teams), pushes the objective, and engages. Deterministic:
   same seed + command log reproduce the same result.
-- **Real asset pack** (`public/assets/`, 20 SVGs): top-down 2.5D Coalition
+- **Real asset pack** (`public/assets/`, 24 SVGs): top-down 2.5D Coalition
   silhouettes for all six units and four V1 buildings, terrain tiles, objective
   beacon and resource node, plus FX (tracer, impact, smoke, capture, reveal,
   construction) and UI icons. Authored to the Coalition palette and the

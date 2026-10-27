@@ -1,8 +1,11 @@
 # Iron Meridian — media
 
-Reviewed screenshots from the playable V1 slice, captured in headless Chromium
-at 1280×720. All are visual verification artifacts of the real asset pack and
-the live match loop.
+Brand mark and reviewed screenshots from the playable V1 slice. The screenshots
+were captured in headless Chromium at 1280×720 and are visual verification
+artifacts of the real asset pack and the live match loop.
+
+- `logo.svg` — the Iron Meridian emblem: a pale meridian crossing a shorter
+  horizontal bar, with an amber signal at the intersection.
 
 - `battlefield.png` — battle view at start: Coalition base, units with health
   bars, objective relay, resource nodes, and minimap.
@@ -14,5 +17,6 @@ the live match loop.
 - `battle-late.png` — mid-match as the scripted AI pushes and contests the relay.
 - `result-screen.png` — the result screen (defeat by objective-held).
 
-Regenerate with `node .scratch/visual.mjs` against a served `npm run build`
-output (requires `playwright-core`).
+Screenshots are captured from a served `npm run build` output with a headless
+Chromium script using `playwright-core`; the capture script is local tooling and
+is not part of the repository.
